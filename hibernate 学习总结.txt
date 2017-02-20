@@ -1,0 +1,25 @@
+hql语句：
+	
+查询
+	FROM Person as p WHERE p.id=?
+Query q=this.session.createQuery(hql);
+q.setString(0,id);
+List l=q.list();
+Iterator iter=l.iterator();
+if(iter.hasNext())
+{
+p=(Person)iter.next();//因为通过ID查询只可能查处一个结果。
+}
+
+save方法
+	hibernate自带的save()方法配上uuid的主键取得方式，既可以实现插入也可以实现修改。但修改时不可
+以自己设主健。attachdirctor也一样
+	
+注意Person是个类不是表所以首字母要大写
+
+删除
+	String hql=DELETE Person WHERE id=?
+	Query q=this.sission.createQuery(hql);
+	q.serString(0,id);
+	q.executeUpdate();
+this.session.beginTransaction().commit();

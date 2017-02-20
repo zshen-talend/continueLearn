@@ -1,0 +1,149 @@
+//文件的输入输出FileOutputStream
+File f = new File("count.txt");
+FileOutputStream fos = null;
+BufferedOutputStream bos = null;
+DataOutputStream dos = null;
+try {
+	fos = new FileOutputStream(f);// 底层IO流
+	bos = new BufferedOutputStream(bos);// 中间层IO流
+	dos = new DataOutputStream(fos);// 顶层IO流
+
+	dos.writeUTF("ab中国");// UTF
+	dos.writeBytes("ab中国");//
+	dos.writeChars("ab中国");//
+	dos.close();
+} catch (Exception e) {
+}
+当写入有问题时需要把写入的编码先转换成特定的编码然后再输出
+StringCoding.encode("UTF-8",value.toCharArray(), 0, value.length())
+
+
+// 读
+FileInputStream fis = null;
+BufferedInputStream bis = null;
+DataInputStream dis = null;
+
+	fis=new FileInputStream(f);
+	bis=new BufferedInputStream(fis);
+	dis=new DataInputStream(bis);
+	System.out.println(dis.readUTF());//好的方式
+			
+	byte[] buf2=new byte[1024];
+	int len=dis.read(buf2);
+	System.out.println("this="+new String(buf2,0,len));
+读的时候也应该是同理的先解码。其中StringCoding类是在java.lang里的，默认限制级别为default(即包内可见)我们要复制它然后修改他的限制级别。
+
+
+
+//管道PipedOutputStream
+private PipedOutputStream out = new PipedOutputStream();
+out.write(info.getBytes());
+out.close();
+private PipedInputStream in = new PipedInputStream();
+int len=in.read(buf);
+in.close();
+t1.getOut().connect(t2.getIn()) ;
+
+//文件的读写FileWriter FileReader
+File f=new File("hello.txt");
+		FileWriter fw=null;
+		FileReader fr=null;
+		
+		fw=new FileWriter(f);
+			fw.write("你好！");
+			fw.close();
+			char[] cbuf=new char[1024];
+			fr=new FileReader(f);
+			int len=fr.read(cbuf);
+
+
+FileOutputStream out =null;		
+		File f=new File("hell.txt");
+		
+			out=new FileOutputStream(f);
+			out.write("how are you!".getBytes());
+			out.close();
+FileInputStream in=null;
+		
+			in=new FileInputStream(f);
+			byte[] buf=new byte[1024];
+			int len=in.read(buf);
+
+//字节数组的读写ByteArrayInputStream
+ByteArrayInputStream in=new ByteArrayInputStream(src);
+		ByteArrayOutputStream out=new ByteArrayOutputStream();		
+		
+		changeaToA(in,out);
+		byte[] result=out.toByteArray();
+		System.out.println(new String(result));
+		
+		
+	}
+	
+	public static void changeaToA(InputStream in,OutputStream out){
+		int ch=0;
+		try {
+			while((ch=in.read())!=-1){
+				int upperCh=Character.toUpperCase((char)ch);//97--a--A
+				out.write(upperCh);//
+
+String和byte[]之间转换的乱码问题
+stringObject.getBytes("utf-8")
+
+注意事项，在用流生成File时，需要关闭流的文件，否则再对该文件的删除会不能进行。
+example for:
+public void start() { 
+    File f = new File(this.archivePath + "\\" + this.currentFile.getName()); 
+    this.Copy(this.currentFile, f); 
+ 
+    if(!this.currentFile.canWrite()){ 
+        System.out.println("Write protected file " + 
+           this.currentFile.getAbsolutePath()); 
+ 
+        return; 
+    } 
+ 
+ 
+    boolean ok = this.currentFile.delete(); 
+    if(ok == false){ 
+        System.out.println("Failed to remove " + this.currentFile.getAbsolutePath()); 
+        return; 
+    } 
+} 
+ 
+private void Copy(File source, File dest) throws IOException { 
+    FileInputStream fin; 
+    FileOutputStream fout; 
+    FileChannel cin = null, cout = null; 
+    try { 
+        fin = new FileInputStream(source); 
+        cin = fin.getChannel(); 
+        fout = new FileOutputStream(dest); 
+        cout = fout.getChannel(); 
+ 
+        long size = cin.size(); 
+        MappedByteBuffer buf = cin.map(FileChannel.MapMode.READ_ONLY, 0, size); 
+ 
+        cout.write(buf); 
+        buf.clear(); 
+        buf = null; 
+ 
+        cin.close(); 
+        cin = null; 
+ 
+        fin.close(); 
+        fin = null; 
+ 
+        cout.close(); 
+        cout = null; 
+ 
+        fout.close(); 
+        fout = null; 
+ 
+        System.gc(); 
+ 
+    } catch (Exception e){ 
+        this.message = e.getMessage(); 
+        e.printStackTrace(); 
+    } 
+} 

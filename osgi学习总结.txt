@@ -1,0 +1,40 @@
+1.osgi常用命令:
+	ss： 					显示当前插件的列表以及状态。
+	start index:				启动一个列表中的插件（index 代表插件在列表中的位置）	
+	stop index:				停止一个列表中的插件 (index 代表插件在列表中的位置)
+	install reference:file:bundles/jarname	安装一个jar文件到osgi系统，其中jarname时所要安装的jar文件的名称
+
+
+2.启动osgi jar包的命令:
+	cmd窗口输入: jave -jar equinox.jar(osgi包名称) -console注意执行的目录应该是当前目录，也可以把上面的命令放到.bat中去执行
+
+
+3.osgi configuration文件的编写:
+
+
+4.MANIFEST.MF文件的编写
+	每项用“,”分隔，用“；”来分隔项内属性
+	1)过滤
+		【1】版本过滤
+			import-package: org.osgichina.demo.helloworld;version="[1.0,2.3)"
+		【2】元数据信息过滤
+			import-package: org.osgichina.demo.helloworld;bundle-symolic-name=HelloWorld
+		【3】自定义属性过滤
+			import-package: org.osgichina.demo.helloworld;company=Osgichina
+
+		【4】限定只有接口并且以val开头的类需要被暴露
+			export -package: org.osgichina.demo.helloworld;exculde="*impl";include="val*"
+
+		【5】动态导入package(用的时候才检查，懒加载)
+			1.DynamicImport -package: org.osgichina.demo.helloworld
+			2.Import -package: org.osgichina.demo.helloworld;resolution:=optional
+
+5.bundle六种状态转换关系(http://www.ibm.com/developerworks/cn/opensource/os-ecl-osgibdev/images/image004.jpg)
+
+	1)INSTALLED：安装完成，本地资源成功加载。
+	2)RESOLVED：依赖关系满足，这个状态意味该Bundle要么已经准备好运行，要么是被停止了。
+	3)STARTING：Bundle正在被启动，BundleActivator的start()方法已经被调用但是还没有返回。
+	4)STOPPING：Bundle正在被停止，BundleActivator的stop()方法已经被调用但是还没有返回。
+	5)ACTIVE：Bundle 被成功启动并且在运行。
+	5)UNINSTALLED：bundle被卸载并且无法进入其他状态。
+	Bundle接口定义了getState()方法来返回Bundle的状态。

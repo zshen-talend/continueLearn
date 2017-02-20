@@ -1,0 +1,15 @@
+1.sqlserver
+	database->Schema->Table
+	user与它们是关联关系，并无包含关系。
+
+2.mysql
+	Schema(DataBase)->Table
+
+3.安装oracle10g后，
+	要配置net Manager和，Listener
+	运行的数据库可看成Oracle Server，
+	server包含一个database和一个与之对应的Instance(8i ops，9i RAC除外)
+	database->scheam->table
+
+4.数据库的ODBC连接
+	ODBC比JDBC连接支持的驱动功能要少很多，但是可以支持像excel这样的数据文件模式，但是其中要值得注意的是sqlServer的ODBC连接在查询数据的时候，要求查询列的顺序与取得列的顺序一致，即结果集指针不能后退。

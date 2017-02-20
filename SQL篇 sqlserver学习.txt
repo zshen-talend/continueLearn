@@ -1,0 +1,26 @@
+1.synonym 存储的位置
+select * from sys.synonyms 
+
+2.Sql Server 不如Oracle,自带正则表达式，不过还是有办法实现的。使用这个SP就可以啦。
+
+使用方法：
+
+1).复制 xp_pcre.dll 到 \Program Files\Microsoft SQL Server\MSSQL\binn 目录下；
+
+2).运行安装脚本 INSTALL.SQL；
+
+3).然后就可以使用啦，主要有以下6个SP：
+
+(1).xp_pcre_match
+(2).xp_pcre_match_count
+(3).xp_pcre_replace
+(4).xp_pcre_format
+(5).xp_pcre_split
+(6).xp_pcre_show_cache
+
+其中:
+	xp_pcre在同名压缩包中
+
+2.sqlserver 使用pattern
+函数名称master.dbo.fn_pcre_match(nvarchar1,'b')
+pattern indicator的查询语句 SELECT COUNT(CASE WHEN MASTER.DBO.FN_PCRE_MATCH(<%=__COLUMN_NAMES__%>,<%=__PATTERN_EXPR__%>)=1 THEN 1 END) , COUNT(*)  FROM <%=__TABLE_NAME__%> <%=__WHERE_CLAUSE__%>

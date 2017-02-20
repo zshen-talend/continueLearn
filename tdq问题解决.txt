@@ -1,0 +1,73 @@
+1.启动进度条停在load component...
+原因：
+	不详
+解决：
+	重新配置启动项
+
+2.登录对话框不是tdq样式
+原因:
+	缺少org.talend.datacleaning.core.ui插件
+解决:
+	加上
+
+3.启动不正常，每次都要clear workspace
+原因:
+	org.talend.rcp 下Application缺少try catch
+
+解决:
+加try catch
+	try {
+                        instanceLoc.set(url, false);
+                    } catch (IllegalStateException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    } catch (IOException e) {
+                        // TODO Auto-generated catch block
+                        e.printStackTrace();
+                    }
+4.tdqee lisence can see hadoop component
+
+ComponentsFactory.java
+5.4以后有这样的限制
+ // tdqee lisence can see hadoop component
+
+                        // Collection<IComponentFactoryFilter> filters = ComponentsFactoryProviderManager.getInstance()
+                        // .getProviders();
+                        // for (IComponentFactoryFilter filter : filters) {
+                        // if (!filter.isAvailable(currentComp.getName())) {
+                        // hiddenComponent = true;
+                        // break;
+                        // }
+                        // }
+                        // tdqee lisence can see hadoop component
+
+6.mdm node is not display
+
+org.talend.libraries.mdm dependency rg.talend.repository.mdm  is lost
+it can not be added on the TDQ-feature
+
+7.error view is not display
+
+add org.talend.platform.logging plugin
+
+8.right click on the DI job node then exit stdio
+lost license
+
+9.test exception AbstractNodeTester.test
+lost mdm plugin
+
+10.maven plugin need to modify
+org.ops4j.pax.url.mvn this plugin need to be started by hand
+
+11.job对应的jar包总不是最新的
+1).清空扩展libraries(D:\code\g5\.metadata\.plugins\org.eclipse.pde.core\.external_libraries)
+2).清workspace下的jar包D:\worspace\g5_master\tdq\.Java\lib
+3).清.m2下的jar包
+
+12.Error: Could not find or load main class
+有这个问题是因为job code没有被编译。
+最近发现的问题是maven的某个jar包无效所以引起不编译。
+解决办法就是下一个最新的
+
+13.job不能被导入
+org.talend.components.api.service.osgi 要设置成自动启动

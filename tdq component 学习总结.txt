@@ -1,0 +1,15 @@
+1.component主文件(xml)
+	这个文件要在ComponentFileChecker中被org.talend.model/model/Component.xsd检查
+	里面定义的element的出现顺序，如果打开stdio找不到相应组件，可以试图检查这里。
+
+2.ComponentProviderManager
+	这个类控制着Component的加载，通过扩展点的方式。
+
+3.tmatchgroup跟踪数据传输
+	先从stdio找到ConfigMatchGroupData.java类的tSocketOutput_gen begin代码部分，加断点使服务打开。
+	然后从代码找到PreviewSocketServer类运行
+	交替运行，看数据传出
+
+4.tmatchGroupHadoop 执行后的查看位置
+	http://hadoopmaster1.talend.lan:50070/ 文件查看
+	http://hadoopmaster1.talend.lan:50030/ 运行结果查看

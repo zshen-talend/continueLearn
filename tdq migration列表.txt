@@ -1,0 +1,15 @@
+TDCPFolderMergeTask   			1.3.0 		移动top files到TOS project 并且替换各种文件中的目录名称
+
+CreateDQRulesFolderTask 		1.2.0		创建DQRules 文件夹并且拷贝DQRule_Demo file
+
+EncryptAndDecryptPasswordTask		1.2.0		为connection的password加密
+
+CreateExchangeFolderTask		3.1.0		创建exchange folder
+
+ReorderingLibraryFoldersTask		3.2.0		1.在Pattern下创建Regex文件夹并且移动原来Item到这里
+							2.在Pattern下创建sql文件夹并且移动原来的item到这里,删除原来的SQL Patterns文件夹
+							3.在Libraries下创建Rules文件夹并移动原来的item，并且删除原来的DQ Rules
+							4.在Libraries下创建JRXML Template文件夹并移动原来的item,并且删除原来的JRXML Reports
+
+CreateUserDefIndicatorFolderTask	3.2.0		在Libraries下创建Indicator文件夹以及创建User Defined Indicators文件夹
+							Indicator文件夹的属性设置为ResourceConstant.NO_SUBFOLDER

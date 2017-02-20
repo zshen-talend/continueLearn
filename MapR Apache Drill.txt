@@ -1,0 +1,8 @@
+1.想使用sql语句进行查询
+sqlline
+
+2.用户名密码
+mapr/mapr
+
+3.Web URL console
+http://192.168.56.101:8047/

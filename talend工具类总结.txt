@@ -1,0 +1,275 @@
+公共类
+  1.FactoriesUtil
+	作用:提供多种后缀名，并帮助判断文件类型。
+	     通过item得到后缀名对应的集合类:EElementEName
+  2.ResourceManager
+	存放了我们能项目中的folder和project路径
+  3.DQStructureManager
+	存放了构建项目的方法和过程，包括转移文件的方法。
+  4.ProjectManager
+	存放当前Project的相关信息
+	取得FolderItem
+
+  5.刷新workspace和DQview
+	CorePlugin.getDefault().refreshWorkSpace();
+	CorePlugin.getDefault().refreshDQView();
+	
+	
+  6.PasswordEncryptUtil
+	密码的加密和解密工作
+
+  7.ERepositoryObjectType
+	存储了Repository的所有节点
+	可以通过getFolderName()方法获得这个类型的根文件夹路径
+
+  8.PluginConstant
+	存储了一些常量，包括创建connection时用的以及一些TaggedValue的key值。
+
+  9.TableType
+	存储了从数据库读取Table信息时不同类型(Table\View\Synonyms)
+
+  10.EcoreUtil
+	用来操作EMF模型，包括恢复resource(EcoreUtil.resolve(proxy, resourceSet))和产生新的uuid(EcoreUtil.generateUUID())
+
+  11.WorkspaceUtils
+	用来转换FileToIFile
+	plateform到File的转换
+
+  12.MessageUI
+	打开各种对话框
+
+  13.PerspectiveReviewUtil
+	关于透视图的操作，里面定义了透视图的监听，当透视图转换时隐藏和显示相应视图。
+	相关的一个透视图监听:HideCheetSheetWithPerspectiveStartup，负责隐藏和显示cheatsheet
+
+  14.ComponentUtilities
+	包含组件中一些属性的取得方法Node->NodeType
+
+  15.FilesUtils
+	位置:org.talend.commons
+	关于file的各种操作，取得url、拷贝文件、xml文件解析取得uuid、压缩文件
+
+  16.IComponentsService
+	位置:org.talend.core.runtime
+	包含两个工具类:
+	1:IComponentsFactory
+		创建和取得想要的ComponentFactory
+	2:IComponentFileNaming
+		通过Component 的名字找到对应的插件等信息
+
+  17.CoreRuntimePlugin
+	里面有各种各样的servic, 可以说是一个service大全
+
+  18.PluginChecker
+	用来检测和判断当前插件是否top还是tdq
+
+  19.EMFSharedResources
+	操作resouce的加载和卸载等。
+
+  20.ConnectionContextHelper
+	导出或者初始化context类型参数的辅助类
+
+  21.DBConnectionContextUtils
+	context中基本参数名称的声明类
+	revertContext的方法实现在这里
+
+  22.EDatabaseConnTemplate
+	connection url创建的模板
+
+  23.LocalLibraryManager
+	getJarPath()找到某个jar的存放路径
+
+  24.取得java/lib路径，代码中通常是D:\code\g6.0\.metadata\.plugins\org.eclipse.pde.core\TDQEE_WINDOWS\lib\java
+ 	LibrariesManagerUtils.getLibrariesPath(ECodeLanguage.JAVA)
+
+  25.内存中jar和所在插件下jar包路径的对应关系
+        LibrariesIndexManager.getInstance().getStudioLibIndex().getJarsToRelativePath()
+
+  26.IRepositoryViewObject
+	通过node取modelElement
+	((ISubRepositoryObject) currentObject).getModelElement();
+	IRepositoryViewObject currentObject = modelElementRepositoryNode.getObject();
+
+tos
+  1.ResourceFilenameHelper
+	作用:帮助构建可以帮助取得相应item的名称(label,version)
+
+  2.EDatabaseTypeName
+	作用:TOS中数据库的相关信息
+
+  3.EDatabaseVersion4Drivers
+	作用:数据库版本和数据库间的关系
+
+  4.ERepositoryObjectType
+	存放对象类型，以及对应文件夹的位置
+
+  5.PasswordEncryptUtil
+	对于密码项有编码和解码的功能
+
+  6.ExtractMetaDataUtils
+	Tos中与java.sql.Connection进行交互的帮助类，包括连接和创建connection等等的信息。
+	还包装了很多从MetaData中取得相应列值的方法，其中取得String类型值的时候有对关键值的审查，值得借鉴。
+		审查的关键字包括dbMetadata.getSystemFunctions()、..getNumericFunctions()、..dbMetadata.getStringFunctions()、..dbMetadata.getTimeDateFunctions()
+
+  7.ComponentUnit
+	取得所有的Component===>getTalendComponents()
+	这里面实际取得的components是和当前应用的product相关的，所以用到了service来初始化提供这些component的方法，关于tdq的components在localprovider中，类叫做ComponentsService
+
+  8.EDatabase4DriverClassName
+	驱动的枚举类
+
+  9.SelectorTableForm TOS retrive 的位置
+
+  10.MigrationToolService
+	TOS migration的总控制类
+
+  11.GetTasksHelper
+	用来取得projectTask和workspaceTask
+
+  12.ConnectionContextHelper
+	用来转换context模式和非context模式，找到connectionItem对应的ContextItem
+
+  13.DBConnectionContextUtils
+	用来复制connection属性
+
+  14.ConvertionHelper
+	用来转化connection和IMetadataConnection
+
+  15.VersionUtils
+	用来控制版本号的读取和设置
+	例
+		-Dstudio.version=5.0.1NB.75045
+
+  16.JavaProcessorUtilities
+	.java 项目的初始化工具类
+
+  17.EParameterName
+	Node节点上属性名称的集合类
+
+  18.org.talend.designer.core.generators
+	tos Components 的UI类扩展点，包括list check等等
+
+  19.ComponentProviderManager
+	通过扩展点的方式控制Component的加载。
+
+  20.CodeGenerator
+	component产生代码的类，有什么产生代码的问题直接找这里
+
+tdq
+  1.DqRepositoryViewService
+	作用:可以取得connection下的table和view信息，以及通过ModelElement和扩展名创建相应的文件名(以前的prv)。
+	区别:
+		不同于CatalogHelper和SchemaHelper,它可以从sql.connection取得实际的信息，但前面两个方法却是从对象中取得现成的值。
+	判断当前modelElement是否是来自于referenceProject
+
+  2.SupportDBUrlType
+	作用:存储了很多数据库的关键信息
+	初始化了dabase列表中选项字符串
+
+
+  3.DQStructureManager
+	作用:创建project结构
+
+  4.CryptoHelper
+	作用:编码password
+
+  5.EDriverName
+	一个枚举类存储了各种数据库的驱动类名(dbDriver)、id(sqlEid)、所在jar包(jars)等信息。
+	配合SQLExplorerPlugin类以及default_drivers.xml文件，完成了数据库驱动的初始化操作。
+	通过ManagedDriver存储这些驱动信息并且通过DriverManager管理这些驱动。
+	 这里使用了插件的查找技术，在某个插件中获得指定的jar文件，方法在标题类的getJars()方法中。有时间了解一下
+
+  6.IndicatorTreeModelBuilder
+	indicator的初始化方法类，从这里可以取得所有的indicator实例，并且以目录的形式。
+ 
+  7.ResourceHelper
+	取得uuid、比较两个对象是否相等
+
+  8.WorkspaceUtils
+	在ifile和file间进行转换
+
+  9.PatternLanguageType
+	存储pattern和indicator各表达式对应的数据库语言类型或者执行语言
+
+  10.PatternUtilities
+	pattern的可适性判断，拖拽等等
+	通过columnViewerDND 调用abstractColumnDropTree中的createOneUnit方法创建pattern对应item的
+
+  11.UDIHelper
+	包括加载java UDI的jar文件、判断indicator的类型、效验indicatorDefinition等等。
+
+  12.EResourceConstant
+	存放了目录树中各个默认结点的名称和路径
+
+  13.ResourceHelper
+	取得resouce的id
+
+  14.TDQResourceChangeHandler
+	监听TOS对resource的操作，关于添加删除以及unload
+
+  15.ModelElementIndicatorRule
+	indicator的判断规则，主要体现在column Analysis选择indicator的时候。
+
+  16.HibernateUtil
+	控制report的数据库配置信息，与ReportDBManager一起起作用
+
+  17.IndicatorEnum
+	存储了对indicator的分组和基本定义
+
+  18. DatamartUtils
+      	创建持久化report的数据库
+
+  19.WorkspaceVersionHelper
+	取得当前worksapce的版本信息(version.txt WorkspaceVersionHelper.getVesion())
+
+  20.GenericSQLHandler
+	indicator中的模板信息
+
+  21.ProxyRepositoryManager刷新TOS
+	ProxyRepositoryManager.getInstance().refresh();
+
+  22.TdqAnalysisConnectionPoolMap
+	以Analysis做key以对应的TdqAnalysisConnectionPool作值的map
+	作为Analysis的连接池，可用连接数定义在Analysis上，
+	取得方法:AnalysisHandler.getNumberOfConnectionsPerAnalysis();
+
+  23.UnitTestBuildHelper
+	写Junit Test的工具类
+
+  24.列表总结
+	SupportDBUrlType(ENUM)
+		dbType的列表(创建connection的时候类型列表(dbkey属性)，pattern和indicator的lanuage列表(lanuage属性))
+
+  25.DQStructureComparer
+	定义了各种compare临时文件的名称
+	以及创建和删除这些文件的方法
+
+26.EObjectHelper 深度克隆
+	EObjectHelper.deepCopy()
+
+
+数据库相关总结
+	SupportDBUrlType->TDQ的databaseType列表
+	EDatabaseTypeName->TOS的databaseType列表
+	EDatabaseVersion4Drivers->TOS各类型数据库下版本对应driver的总结
+	EDriverName->TDQ的加载jar包和数据库类型的对应关系映射集合
+	
+
+TOS和TOP共用的插件
+-org.talend.common.ui.runtime
+ -org.talend.commons
+ -org.talend.core.repository
+ -org.talend.core.runtime
+ -org.talend.cwm.mip(edit,editor)
+ -org.talend.libraries(舍去)
+ -org.talend.metadata.management
+ -org.talend.model(edit,editor)
+ -org.talend.uitils
+ - org.talend.commons.ui
+ - org.talend.metadata.management.ui
+----------------------------------------------------------------------
+Oracle with Service Name->Oracle with service name
+SQLite3->SQLITE
+DB2->IBM DB2
+DB2 ZOS->IBM DB2 ZOS
+Sybase->Sybase (ASE and IQ)

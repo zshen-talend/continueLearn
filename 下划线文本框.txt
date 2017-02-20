@@ -1,0 +1,14 @@
+input{
+font:14px Arial;
+}
+.txt{
+	border-bottom:1px solid #005aa7;
+	color:#005aa7;
+	border-top:0px;border-left:0px;
+	border-right:0px;
+	background-color:transparent;
+}
+.btn{
+	background-color:transparent;
+	border:0px;
+}

@@ -1,0 +1,153 @@
+eclipse启动参数设置【Eclipse 使用】 2010-09-03 10:09:16 阅读124 评论0   字号：大中小 订阅 
+-arch [processor architecture] 
+描述：指定所使用的处理器的类别 
+举例：eclipse -arch x86或eclipse -arch sparc 
+
+-application [id] 
+描述：指定要运行的应用，id为扩展org.eclipse.core.applications扩展点的插件id加扩展id 
+举例：例如有个插件id为edu.sdu.app，扩展id为myapp，则eclipse -application edu.sdu.app.myapp，就会执行你的扩展应用 
+
+-clean 
+描述：清空插件缓存内容 
+举例：eclipse -clean，有时插件显示不出来是因为Eclipse将插件进行了缓存以加速启动过程，若指定此参数则会清空缓存，从头加载 
+
+-configuration [cofigfile location] 
+描述：指定配置文件的位置，在启动时使用此目录下的配置文件config.ini来启动 
+举例：eclipse -configuration d:/eclipse/configuration 
+
+-data [workspace location] 
+描述：指定启动时的Workspace位置 
+举例：例如Workspace位置设在D:/myworkspace，则eclipse -data D:/myworkspace 
+
+-debug [option file] 
+描述：以Debug状态启动Eclipse，所有的Debug开关在.options文件中指定 
+举例：eclipse -debug d:/eclipse/.options 
+
+-dev [classpath entry] 
+描述：以开发状态启动Eclipse，这会添加所有指定的路径作为每个插件的Classpath 
+举例：例如eclipse -dev bin，会将产生在bin目录下的所有类加载到类路径中，这在开发插件时非常有用 
+
+-nosplash 
+描述：指定启动时不显示闪屏 
+举例：eclipse -nosplash 
+
+-vm [jre path] 
+描述：指定启动时所使用的Java虚拟机 
+举例：例如要使用自己的Java虚拟机，则eclipse -vm D:/j2sdk1.4.2_04/jre/bin/java.exe，这样还有一个好处，就是可以开启一个Console，能够显示控制台信息，当然若使用eclipse -vm D:/j2sdk1.4.2_04/jre/bin/javaw.exe则不会再显示控制台 
+
+-vmargs [Java VM arguments] 
+描述：指定启动时要使用的Java虚拟机参数 
+举例：例如要指定使用的内存容量，则eclipse -vmargs "-Xms256m -Xmx1024m" 
+注：此参数一定要放在所有参数变量的最后面
+
+-Duser.name
+指定eclipse中${user}的属性值，自动添加注释用
+
+
+-Dtalend.studio.version=5.0.1NB.75045 -Xms40m
+添加system.getProperty()中的参数在vm arguments
+
+------------------------
+
+Eclipse 运行命令行参数大全  
+  包括英文版本和中文版本两种的说明, 特别需要值得一提的是那个 -nl 参数, 可以指定程序启动时所使用的语言. 例如:
+eclipse -nl en_US
+将启动英文语言, 这个特性在安装了国际化语言包以后特别有用, 可以方便的切换各个语言的版本. 注意 IBM WSAD v5.1 也支持这个功能. 
+
+运行 Eclipse
+将 Eclipse 驱动程序安装（解压缩）到某个目录（例如，c:\eclipse）中之后，通过运行顶级安装目录中的 Eclipse 可执行文件来启动"工作台"。在 Windows 系统上，该可执行文件称为 eclipse.exe，而在 Linux 系统上称为 eclipse。注意：下列讨论描述 Windows 系统上的设置。Linux 上的设置是相似的。
+
+如果您没有另行指定，则平台将缺省工作区目录创建为可执行文件的兄弟目录（例如 c:\eclipse\workspace）。此工作区目录用作项目的缺省内容区，还用于保存任何必需的元数据。要进行共享安装或多工作区安装，应明确指出工作区的位置而不是使用缺省值。有两种控制工作区位置的方法：使用当前工作目录或使用 -data 命令行自变量。
+
+将工作区位置设置为在当前工作目录内
+在此方案中，工作区位置将是当前工作目录中称为 workspace 的目录。
+
+实现此目的最容易的方法可能是使用下列步骤来创建快捷方式：
+
+导航到 Windows 资源管理器中的 eclipse.exe 并使用右键拖动来创建 eclipse.exe 的快捷方式。 
+编辑快捷方式的属性，以使启动位置：字段标识工作区位置的父目录（例如，c:\users\robert）。 
+关闭属性对话框并双击快捷方式（如果提供的目录为 c:\users\robert，则工作区位置将为 c:\users\robert\workspace）。 
+当然，您也可以使用命令提示符（通过将目录切换为工作区父目录然后运行 eclipse.exe）来获得同样的效果。
+
+使用 -data 设置工作区的特定位置
+要使用 -data 命令行自变量，只要将 -data your_workspace_location（例如，-data c:\users\robert\myworkspace）添加至快捷方式属性中的目标字段或显式地将它包括在命令行上。
+
+使用 -vm 设置 java VM
+建议显式指定在运行 Eclipse 时要使用哪个 Java VM。使用 -vm 命令行自变量（例如，-vm c:\jre\bin\javaw.exe）可以实现此目的。如果不使用 -vm，则 Eclipse 将使用在 O/S 路径上找到的一个 Java VM。当安装其它产品时，它们可更改您的路径，导致在下一次启动 Eclipse 时使用另一 Java VM。
+
+运行 Eclipse 中的高级主题
+Eclipse 可执行文件及平台本身提供了人们感兴趣的开发或调试 Eclipse 各部件的许多执行选项。运行 Eclipse 可执行文件的一般格式是：
+
+eclipse [platform options] [-vmargs [Java VM arguments]]
+Eclipse 启动参数  命令 描述  原因 
+-arch architecture
+ 定义 Eclipse 平台在其上运行的处理器体系结构。Eclipse 平台通常使用 Java os.arch 属性的常用值来计算最佳设置。如果在此处指定该项，则这是 Eclipse 平台使用的值。此处指定的值可作为 BootLoader.getOSArch() 用于插件。示例值有："x86"、"sparc"、"PA-RISC"和"ppc"。 2.0 
+-application applicationId
+ 要运行的应用程序。应用程序由向 org.eclipse.core.runtime.applications 扩展点提供扩展的插件来声明。通常不需要此自变量。如果指定了此项，则该值会覆盖配置提供的值。如果不指定此项，则会运行"Eclipse 工作台"。 1.0 
+-boot bootJarURL
+ （建议不使用；用 -configuration 代替；支持 1.0 兼容）。Eclipse 平台的引导插件代码（boot.jar）的位置，表示为 URL。如果指定此项，则会用它来为装入 Eclipse 平台引导程序类装入器的类装入器设置类路径。仅当更改 startup.jar 和 boot.jar 的相对位置时才需要它。注意，不允许使用相对 URL。  *1.0 
+-classloaderproperties [file]
+ 如果指定的话，则使用给定位置处的类装入器属性文件来激活平台类类装入器增强。文件自变量可以是文件路径或 URL。注意，不允许使用相对 URL。单击此处以获得更多详细信息。 2.0.2 
+-configuration configurationFileURL
+ Eclipse 平台配置文件的位置，表示为 URL。配置文件确定 Eclipse 平台、可用插件集和主要功能部件的位置。注意，不允许使用相对 URL。当安装或更新 Eclipse 平台时配置文件被写至此位置。  2.0 
+-consolelog
+ 将 Eclipse 平台的错误日志镜像到用来运行 Eclipse 的控制台。与 -debug 组合时很方便使用。 1.0 
+-data workspacePath
+ 要运行 Eclipse 平台的工作区的路径。工作区位置也是项目的缺省位置。相对于从中启动 eclipse 的目录来解释相对路径。 1.0 
+-debug [optionsFile]
+ 将平台置于调试方式，并从给定位置处的文件装入调试选项（如果指定的话）。此文件指示哪些调试点可用于插件以及是否已启用它们。如果未给出文件位置，则平台在启动 eclipse 的目录中查找称为".options"的文件。URL 和文件系统路径都可作为文件位置。 1.0 
+-dev [classpathEntries]
+ 将平台置于开发方式。将可选类路径条目（用逗号分隔的列表）添加至每个插件的运行时类路径。例如，当工作区包含要开发的插件时，指定 -dev bin 会为每个插件项目的名为 bin 的目录添加类路径条目，允许在其中存储最新生成的类文件。除去了冗余或不存在的类路径条目。 1.0 
+-endsplash params
+ 用于在 Eclipse 平台启动并运行时关闭闪屏的内部选项。此选项在闪屏处理链中不同的位置有不同的语法和语义。 2.0 
+-feature featureId
+ 主要功能部件的标识。主要功能部件为 Eclipse 的已启动实例提供了产品个性，并确定使用的产品定制信息。 2.0 
+-keyring keyringFilePath
+ 磁盘上授权数据库（或"密钥环"文件）的位置。此自变量必须与 -password 选项配合使用。相对于从中启动 eclipse 的目录来解释相对路径。 1.0 
+-nl locale
+ 定义 Eclipse 平台在其上运行的语言环境的名称。Eclipse 平台通常自动计算最佳设置。如果在此处指定该项，则这是 Eclipse 平台使用的值。此处指定的值可作为 BootLoader.getNL() 用于插件。示例值有："en_US"和"fr_FR_EURO"。 2.0 
+-nolazyregistrycacheloading
+ 取消激活装入优化的平台插件注册表高速缓存。缺省情况下，仅当需要时才从注册表高速缓存（可用时）中装入扩展的配置元素，以减少内存占用。此选项将在启动时强制完全装入注册表高速缓存。 2.1 
+-noregistrycache
+ 绕过读写内部插件注册表高速缓存文件。 2.0 
+-nosplash
+ 运行平台而不显示闪屏。 1.0 
+-os operatingSystem
+ 定义 Eclipse 平台在其上运行的操作系统。Eclipse 平台通常使用 Java os.name 属性的常用值来计算最佳设置。如果在此处指定该项，则这是 Eclipse 平台使用的值。此处指定的值可作为 BootLoader.getOS() 用于插件，并用于解析插件清单文件中提及的路径中 $os$ 变量的出现。示例值有："win32"、"linux"、"hpux"、"solaris"和"aix"。 1.0 
+-password password
+ 授权数据库的密码。与 -keyring 选项配合使用。 1.0 
+-perspective perspectiveId
+ 启动时要在活动工作台窗口中打开的透视图。如果没有指定该参数，则将打开关闭时活动的透视图。 1.0 
+-plugincustomization   propertiesFile
+ 包含插件首选项缺省设置的属性文件的位置。这些缺省设置覆盖在主要功能部件中指定的缺省设置。相对于从中启动 eclipse 的目录来解释相对路径。 2.0 
+-plugins pluginsFileURL
+ （建议不使用；用 -configuration 代替；支持 1.0 兼容）。 指定 Eclipse 平台查找插件的文件的位置，表示为 URL。该文件为属性文件格式，其中键是任意用户定义名称，值是指向 plugin.xml 文件的显式路径或指向包含插件的目录的路径的用逗号分隔的列表。注意，不允许使用相对 URL。如果指定此项，则此选项会导致创建适当的临时配置。 *1.0 
+-refresh 
+ 启动时执行工作区的全局刷新的选项。这将使从上次平台运行以来在文件系统中所做的任何更改一致。 1.0 
+-showlocation 
+ 用于在窗口标题栏中显示工作区的位置的选项。在发行版 2.0 中，此选项仅与 -data 命令行自变量一起使用。 2.0 
+-showsplash params
+ 用于显示闪屏（由可执行的 Eclipse 平台启动器执行）的内部选项。此选项在闪屏处理链中不同的位置有不同的语法和语义。 2.0 
+-vm vmPath
+ 要用来运行 Eclipse 平台的"Java 运行时环境"（JRE）的位置。如果不指定此项，则 JRE 位于 jre（它是 Eclipse 可执行文件的兄弟目录）。相对于从中启动 eclipse 的目录来解释相对路径。 1.0 
+-ws windowSystem
+ 定义 Eclipse 平台在其上运行的 Windows 系统。Eclipse 平台通常使用 Java os.name 属性的常用值来计算最佳设置。如果在此处指定该项，则这是 Eclipse 平台使用的值。此处指定的值可作为 BootLoader.getWS() 用于插件、用于配置 SWT 以及用于解析插件清单文件中提及的路径中 $ws$ 变量的出现。示例值有："win32"、"motif"和"gtk"。 1.0 
+
+将 -vmargs 条目后面的所有自变量（但不包括 -vmargs）作为虚拟机自变量（即，在要运行的类的前面）直接传递到所指示的 Java VM。注意：如果 Eclipse 启动在 Java vm 自变量（-vmargs）之后提供的自变量（例如，-data），则 Eclipse 将不会启动并且您将接收到"JVM 已终止。出口代码为 1"的错误。
+
+在不同的 VM 上运行 
+在 J9 上运行 Eclipse
+当在 J9 版本 1.5 上运行 Eclipse 时，建议使用以下 VM 选项： 
+
+eclipse.exe [eclipse arguments] -vm path_to_j9w.exe             -vmargs -ms:32 -mm:2048 -mo:32768 -moi:32768 -mca:32 -mco:128 -mx:2000000
+当在 J9 版本 2.0 上运行 Eclipse 时，J9W 选择的缺省自变量应为合适的选项。但是，要覆盖 Eclipse 可执行文件以内部方式自动设置的参数，必须指定 -vmargs 不带任何参数，如下所示： 
+
+eclipse.exe [eclipse arguments] -vm path_to_j9w.exe -vmargs
+有关进一步信息，参考 J9 VM 文档和帮助。
+
+在 IBM Developer Kit, Java(TM) Technology Edition VM 上运行 Eclipse
+IBM Developer Kit, Java(TM) Technology Edition 1.3 Linux 的缺省 VM 设置适合进行初期研究工作，但在进行大型开发时是不够的。对于大型开发，应修改 VM 自变量以使有更多的堆可用。例如，下列设置将允许 Java 堆增大为 256MB：
+
+-console -noexit
+在启动的时候打开一个控制台
+osgi> 输入 bundel 插件id就可以知道当前插件是否被加载

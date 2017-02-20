@@ -1,0 +1,10 @@
+1.modify Talend-Studio-XXX.ini file as below
+-Xdebug 
+-agentlib:jdwp=server=y,transport=dt_socket,suspend=y,address=9194
+
+2.Create Remote Java Application
+project used org.talend.dataclean.ui project
+host: localhost
+port: 9194
+
+先启动产品后启动代码

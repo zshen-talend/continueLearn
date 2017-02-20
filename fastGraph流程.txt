@@ -1,0 +1,11 @@
+在包外画圆
+FastCircleView extends FastVertexView
+以上类中有一个属性:
+	public static transient JGraphEllipseRenderer renderer = new JGraphEllipseRenderer();
+	这个属性所保存的对象有重载了圆的画法
+		对象的类为:public static class JGraphEllipseRenderer extends VertexRenderer
+
+FastCellViewFactory implements CellViewFactory, Serializable
+以上类是所有图元创建的工厂，在其中经过判断参数cell是属于边、顶点还是节点从而确定返回的是哪种视图。这样，在各自的视图中就可以通过相应的渲染器来绘制(paint())图片。
+	
+	在Graph的类中调用insert方法，该方法会创建图形属性，重载其方法createDefaultGraphCell()创建自己的图元，加入自己的属性集，节点！由于insert方法是GraphLayoutCache类中的，而我们的工厂就在这个类中，所以它可以根据图元的种类，找到自己的绘制方案。

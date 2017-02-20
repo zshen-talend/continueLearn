@@ -1,0 +1,43 @@
+1.ajax的核心功能之一:使用XMLHttpRequest对象和服务器进行异步通信
+	XMLHttpRequest
+		在IE中创建方法:new ActiveXObject('Microsoft.XMLHTTP')
+	
+		readyState XMLHttpRequest当前请求状态
+			4---请求已经完成
+		
+		status	HTTP请求的返回状态码
+			200正常返回 404找不到网页 500服务器内部错误
+
+		responseText 请求正常完成后，它表示要返回页面的文本形式内容。
+
+		onreadystatechange 事件
+			当对象中readyState改变时将触发这个事件。
+
+		open方法 打开一个链接
+
+		send方法 开始一个请求，如果是post方式的，参数为需要提交到服务器的数据。
+		
+
+2.ajax编码问题:
+我们要把第二句代码改为：
+
+xmlhttp.setRequestHeader( "Content-Type", "text/html;charset=UTF-8" );
+ 
+
+response.setContentType( "text/xml" );
+response.setCharacterEncoding( "UTF-8" );
+
+是不是很简单，一点都不麻烦呢？
+如果要问为什么的话，其实我们可以把xmlhttp看成是一个临时页面，它由浏览器动态生成，主要作用是在后台获得请求的数据（可以看成是一个高级的iframe）。所以对于普通页面设置的编码，对它也要同样设置。而在servlet中返回数据为什么要设置contentType和encoding其道理也是一样的。众所周知，jsp的最后形态就是servlet，而jsp页首设置的那个内容其实也就是让生成的servlet中生成这么两句话：
+
+
+response.setContentType( "text/html" );
+response.setCharacterEncoding( "UTF-8" );
+
+而pageEncoding则是跟jvm说明了这个页面的内容要使用什么编码保存（这跟之后生成的CLASS有关系）。所以在servlet设置response的编码也是理所当然的了
+
+而且form的post方法提交要改成get方法，这样才能走uri编码的方式
+
+
+3.getParameter()函数的自动解码
+当调用request.getParameter()函数时，会自动进行一次URI的解码过程，调用时内置的解码过程会导致乱码出现。	

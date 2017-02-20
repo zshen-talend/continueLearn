@@ -1,0 +1,62 @@
+1.mysql的功能函数定义
+DELIMITER $$
+
+USE `testtable`$$
+
+DROP FUNCTION IF EXISTS `yy111`$$
+
+CREATE DEFINER=`shenze`@`%` FUNCTION `yy111`(num int) RETURNS int(11)
+BEGIN
+DECLARE result INT;
+SET result=1;
+/*while result < num Do
+SET result=result+2;
+END while;*/
+add_num: loop
+SET result=result+2;
+if result>num then leave add_num;
+end if;
+end loop add_num;
+RETURN result;
+END$$
+
+DELIMITER ;
+
+2.驱动3.0和3.1的区别(noDatetimeStringSync=true和zeroDateTimeBehavior='convertToNull')
+
+ 具有全0组分的Datetimes（0000-00-00 ...）：在Java中，无法可靠地表示这些值。从结果集读取它们时，Connector/J 3.0.x总是会将其转换为NULL。
+默认情况下，遇到这类值时，Connector/J 3.1将抛出异常，这是因为，根据JDBC和SQL标准，这是最正确的行为方式。可以使用“zeroDateTimeBehavior”配置属性改变该行为。
+允许的值包括：“exception”，（默认值），用代码为“S1009”的SQLState抛出SQLException；“convertToNull”，返回NULL而不是数据；以及“round”，对日期进行舍入处理，
+使之成为最接近的值，即“0001-01-01”。
+从Connector/J 3.1.7开始，能够使用“noDatetimeStringSync=true”（默认值为“假”），将ResultSet.getString()与该行为分离开，从而能够以字符串的形式提取未被改变的全0值。
+请注意，这也会阻止使用任何时区转换功能，因此，驱动程序将禁止同时启用noDatetimeStringSync和useTimezone。
+
+
+3.关于大小写的区分regex BINARY
+	MySQL中正则表达式匹配（从版本3.23.4后）不区分大小写 。如果要区分小写，应该使用BINARY关键字，如where post_name REGEXP BINARY 'Hello .000'
+
+4.java.sql.SQLException: Value '0000-00-00 00:00:00' can not be represented as java.sql.Timestamp
+日期类型输入值为空且没有默认值的情况，数据库自动转成'0000-00-00 00:00:00' 
+
+使用参数zeroDateTimeBehavior：
+取值exception：
+driver-url=jdbc:mysql://127.0.0.1/test?zeroDateTimeBehavior=exception
+结果：
+java.sql.SQLException: Value '0000-00-00 00:00:00' can not be represented as java.sql.Timestamp
+ 
+取值convertToNull：
+driver-url=jdbc:mysql://127.0.0.1/test?zeroDateTimeBehavior=convertToNull
+结果：
+ClientDto[id:1,email:test@hotmail.com,civilite: 测试用户,prenom:贾,nom:某某,birthday:1992-03-18,telephone:12312345678,address:测 试用户的住址,regionid:1,postcode:111000,city:大 连,country:france,batiment:110#,escalier:2,code:151515,interphone:050505,etage: 东侧走廊,appartment:205,createdate:2010-03-16 09:30:21.0,status:0,totalprice:0.00,totalnum:0,lastdate:null,lasttotal:0.00,]
+ 
+取值round：
+driver-url=jdbc:mysql://127.0.0.1/test?zeroDateTimeBehavior=round
+结果：
+ClientDto[id:1,email:test@hotmail.com,civilite: 测试用户,prenom:贾,nom:某某,birthday:1992-03-18,telephone:12312345678,address:测 试用户的住址,regionid:1,postcode:111000,city:大 连,country:france,batiment:110#,escalier:2,code:151515,interphone:050505,etage: 东侧走廊,appartment:205,createdate:2010-03-16 09:30:21.0,status:0,totalprice:0.00,totalnum:0,lastdate:0001-01-01 00:00:00.0,lasttotal:0.00,]
+ 
+另一参数noDatetimeStringSync：
+driver-url=jdbc:mysql://127.0.0.1/test?noDatetimeStringSync=true
+结果：
+ClientDto[id:1,email:test@hotmail.com,civilite: 测试用户,prenom:贾,nom:某某,birthday:1992-03-18,telephone:12312345678,address:测 试用户的住址,regionid:1,postcode:111000,city:大 连,country:france,batiment:110#,escalier:2,code:151515,interphone:050505,etage: 东侧走廊,appartment:205,createdate:2010-03-16 09:30:21,status:0,totalprice:0.00,totalnum:0,lastdate:0000-00-00 00:00:00,lasttotal:0.00,]
+ 
+个人感觉按通用性来说结果是Null可能好些，但是结果是一串零的更能贴近空时间的概念，所以具体选择看各自项目的需求选择使用吧。

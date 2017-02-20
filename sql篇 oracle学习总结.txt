@@ -1,0 +1,350 @@
+primary--主键约束
+foreign--外键约束
+not null--非空约束
+unique--唯一约束
+check--检查约束
+
+--存储回滚点
+savepoint insertpoint 
+--回滚到某点
+rollback to insertpoing
+
+
+prompt 向用户Toyz授予connect,resource角色权限
+grant connect,resource to Toyz;
+
+prompt 如果有Toyz用户则删除
+drop user Toyz cascade;
+
+--删除行
+delete shenze.student2  where nc_pk=1
+
+--删除表
+--可回滚
+drop table 表名
+
+
+--不可回滚
+truncate table 表名
+
+--修改表
+update shenze.student2 set stu_age=30  where nc_pk=1;
+update shenze.student2 set nc_pk=3  where nc_pk=21;
+--嵌套修改
+update 表名 set(select 字段名 from 表名 where 条件)--当要在原字段值的基础上加减操作时
+
+--查询表
+select * from shenze.student2
+select distinct job from scott.emp --distinct
+
+--插入行
+--单行
+insert into表名(字段名[,..]..) values(对应的值...)
+--多行
+insert into表名(字段名[,..]..) (select 对应的字段项 from 表名 where 条件)
+
+--创建自增函数
+create sequence my_add3 start with 2 increment by 1 nomaxvalue;
+insert into shenze.student2(nc_pk,stu_id,stu_code) values(my_add3.nextval,'600414','14')
+
+--创建表
+--一般方法
+create table shenze.student2 (--加双引号的话会使得名称个是不能被系统自动格式化，造成不必要的麻烦，到处加双引号
+   nc_pk              int                        not null,
+   stu_id             CHAR(36)                        not null,
+   stu_code           VARCHAR2(32)                    not null,
+   stu_name           VARCHAR2(32),
+   stu_age            SMALLINT,
+   stu_birthday       CHAR(10),
+   stu_sex            SMALLINT,
+   ts                 CHAR(19),
+   dr                 SMALLINT,
+   reg_mon            DECIMAL(20,8),
+   temp_var1          VARCHAR2(20),
+   temp_var2          VARCHAR2(20),
+   temp_var3          VARCHAR2(20),
+   temp_int1          INTEGER,
+   temp_int2          INTEGER,
+   constraint PK_STUDENT2 primary key (stu_id, nc_pk, stu_code)
+);
+--表间数据复制
+creat table 表名
+as
+(select 属性名 from 表名 where 条件);
+
+'='等于 '!='不等于 '^='不等于 '<>'不等于 '<'小于 '<='小于等于 '>='大于等于 'in'在列表 'not in'不在列表
+'any'任何一 >any(select sal from scott.emp where job='manager');
+'some'和'any'具有相同的用法--两者真的一样吗？
+'all'所有 >all....
+'exists' 存在 esists(select...)
+ceil上整 floor下整 mod求余 power（n，m）n的m次方 round（m,n）把m保留n位 sign取符号 avg求平均值 count求次数 min球最小值 max求最大值 sum求和 stddev求标准差 VARIANCE(x)求方差
+
+方差
+s = [（x1-a）^2+（x2-a）^2+（x3-a）^2+……（xn-a）^2]/(n-1)
+
+标准差
+s^1/2
+
+not的用法
+
+distinct的使用与其相反all（保存所有相同的纪录）
+select distinct 字段名 from 表名
+
+排序命令
+order by asc desc需放在where后
+
+并操作union
+(select deptno from scott.emp)
+union
+(select deptno from scott.dept);
+
+交操作intersect
+(select deptno from scott.emp)
+intersect
+(select deptno from scott.dept);--分号加在这里的意义若何？
+
+差操作minus
+(select deptno from scott.dept) 
+minus
+(select deptno from scott.emp);
+
+以上方法要求查询出的字段数一致才可以。
+
+//创建数据表空间
+create tablespace mytest_data logging datafile 'E:\Program\oracle\product\10.1.0\oradata\orcl\mytest_data.dbf' size 32m autoextend on next 32m maxsize 1024m extent management local;
+
+//创建用户并指定表空间
+create user testaccount identified by testpwd default tablespace mytest_data temporary tablespace mytest;
+
+//oracle10g 的回收站表
+select object_name from recyclebin
+
+//清空回收站
+purge recyclebin
+
+
+
+一直以来，我都认为只要指定用户的默认表空间，向该用户导入数据时，会自动进入到默认表空间。后来发现从System导出的dmp文件在导入时，即使指定新用户的默认表空间，还是要往System表空间中导数据。
+
+上网搜了一下，还是有解决方法的，常见的方法如下：
+
+SQL> create user myhuang identified by myhuang default tablespace myhuang;
+
+SQL> grant resource,connect to myhuang;
+
+SQL> grant dba to myhuang;//赋DBA权限
+
+SQL> revoke unlimited tablespace from myhuang;//撤销此权限
+
+SQL> alter user myhuang quota 0 on system;//将用户在System表空间的配额置为0
+
+SQL> alter user myhuang quota unlimited on myhuang;//设置在用户在myhuang表空间配额不受限。
+
+ 
+
+经过上述设置后，就可以用imp导入数据，数据将会进入指定的myhuang表空间：
+
+C:\Documents and Settings\myhuang>imp system/123456@vdb fromuser=lnxh tous
+
+er=myhuang file=G:\myhuang\lnxh.dmp ignore=y grants=n
+
+ 
+
+顺便说两个小问题：
+
+（1）IMP-00003: 遇到 ORACLE 错误 1658
+
+ORA-01658: 无法为表空间 MYHUANG 中的段创建 INITIAL 区
+
+通常这个问题可以通过Resize增加表空间数据文件大小来解决。
+
+ 
+
+（2）删除表空间
+
+SQL> drop tablespace myhuang including contents and datafiles;
+
+在10g中实验，drop表空间之后，仍然需要手动去删除数据文件。
+
+表空间建立(2)
+CREATE tablespace MYTEST DATAFILE 'D:\oracle\oradata\MYTEST.dbf' SIZE 5M
+--TEMPFILE ' 路径\***.dbf ' size *M
+AUTOEXTEND on  --自动增长
+DEFAULT STORAGE(
+  INITIAL 409600
+  NEXT 51200 
+  MINEXTENTS 1 
+  MAXEXTENTS UNLIMITED
+  PCTINCREASE 1
+ )
+ONLINE;
+--手动增加数据文件尺寸
+ALTER DATABASE DATAFILE 'D:\oracle\oradata\MYTEST.dbf'
+RESIZE 10M;
+--设定数据文件自动扩展
+ALTER DATABASE DATAFILE 'D:\oracle\oradata\MYTEST.dbf'
+AUTOEXTEND ON NEXT 2M
+MAXSIZE 20M;
+--删除表空间
+DROP TABLESPACE MYTEST INCLUDING CONTENTS AND DATAFILES;
+
+
+--建立临时表空间
+CREATE TEMPORARY TABLESPACE MYTEST_TMP
+TEMPFILE 'D:\oracle\oradata\MYTEST_TMP.dbf'' SIZE 50M EXTENT 
+MANAGEMENT LOCAL UNIFORM SIZE 1M;
+ 
+--建立用户
+CREATE USER MYTEST IDENTIFIED BY MYTEST DEFAULT TABLESPACE MYTEST 
+--为用户授权
+GRANT CONNECT,RESOURCE TO MYTEST;
+--CONNECT 角色 — 该角色使用户可以连接数据库以及执行基本的操作，如创建自己的表。默认情况下，该角色不能访问其他用户的表。 
+--RESOURCE 角色 — RESOURCE 角色与 CONNECT 角色相似，但它允许用户拥有较多的系统权限，如创建触发器或存储过程。 
+--DBA 角色 — 允许用户拥有所有系统权限。 
+--授权
+--grant create session to 用户名;
+--grant create table to  用户名;
+--grant create tablespace to  用户名;
+--grant create view to  用户名
+--授予用户使用表空间的权限：
+--ALTER USER MYTEST QUOTA UNLIMITED ON MYTEST;
+
+--修改用户角色
+ALTER USER MYTEST DEFAULT ROLE ALL;
+
+表test中有   testaaa字段，如何把testaaa字段中的数据aaxxxbbb中的x替换为m?怎样用sql语句实现？ 
+
+批量更改数据库中数据
+update   表名   set   列名=replace(列名,'被改值','要改值'); 
+
+授权
+
+--create tablespace
+drop user sxyj cascade;
+create user _user_name identified by _password default tablespace _table_space_name;
+grant connect,dba,resource,select any table,create any view,unlimited tablespace to gj;
+
+pl/sql执行sql文件
+
+打开并登录 PL/SQL Developer ，然后选择菜单 文件-> 新建 -> 命令窗口 ， 
+在显示的命令窗口中输入：(假设脚本文件为test.sql 在本地D盘的根目录下) 
+@ d:\test.sql 
+
+级联删除子eaeid对应的父supereaeid，分别从eaeid为3和2的时候查起
+delete T_PG_YJNL_ZBB where T_PG_YJNL_ZBB.eaeid in (select eaeid from t_pg_yjnl_zbb connect by prior eaeid = supereaeid start with eaeid in(3,2));
+
+连接字符串的写法
+update yz_seqno set order_no = (tran_brch,4,8) || substr(to_char(plat_date,'yyyymmdd'),5,8) || substr(order_no,10,12) 
+
+解锁被锁定用户
+ALTER USER username ACCOUNT UNLOCK;
+
+删除表的同时删除约束
+drop table T_PG_YJNL_ZJDFHZSJB  cascade constraint
+
+drop user pinggu;
+create user pinggu identified by pinggu default tablespace LNYJ_SPACE;
+grant connect,dba,resource,select any table,create any view,unlimited tablespace to pinggu;
+
+--修改表
+添加字段
+alter table tableName add columnName type
+删除字段
+alter table tableName drop column columnName
+
+字段类型的转换CAST
+可以通过CAST函数进行字段的类型转换格式如下:
+CAST(columnName AS converType);
+
+
+时间字段的查询和插入
+把数据库中的系统时间字段转换成符合指定格式的字符串
+SELECT TO_CHAR(SYSDATE, 'YYYY-MM-DD HH:MI:SS') FROM DUAL; 
+把给定字符串按时间格式转换成date类型插入数据库
+insert into table values(to_date('2002-1-1','yyyy-mm-dd')
+
+左连接和右连接的区别与使用
+1)形式和命名:
+	左连接:a.col1=b.col1(+) //连接的命名，以加号的另一边的相对位置为准
+	右连接:a.col1(+)=b.col1
+2)作用和意义
+	左连接:会让左边的数据不受右边数据的限制，即不管右边有没有数据，左边数据都会被现实。
+	右连接:同理。
+
+
+oracle10g中垃圾表的删除方法(下面的命令都需要运行在Command Window)
+	SHOW RECYCLEBIN; 	显示这些垃圾文件
+	PURGE TABLE "名字";	删除某个垃圾表
+	PURGE RECYCLEBIN;	删除所有的垃圾表
+
+注意事项
+1:嵌套查询，当使用select...(select...))的时候括号中的select语句不能有order by操作，否则不能执行。
+
+join的使用方式
+	join 默认为右连接 on 为连接条件
+	left join
+	right join
+	inner join
+	outer join
+	full join
+	
+
+在pl/sql中通过命令修改表中数据
+在查询语句后添加for update
+
+--数据库版本号查询
+mysql/mssql:
+SELECT @@version
+
+oracle:
+select * from sys.v_$version;
+
+mssql:
+SELECT SERVERPROPERTY('productversion'), SERVERPROPERTY ('productlevel'), SERVERPROPERTY ('edition')
+
+--synonyms 数据库同义词查询
+select * from dba_tab_columns where table_name in (select table_name from user_synonyms)
+
+--统计信息
+ANALYZE table TEST0001 COMPUTE STATISTICS
+delete  from DBA_TAB_COL_STATISTICS where owner='SHENZE' and Table_name='TEST0001' for update 需要在sys的用户下
+exec dbms_stats.delete_column_stats('SHENZE','TEST0001',null);需要在sys的用户下
+
+
+Oracle 的Statistic 信息的收集分两种：自动收集和手工收集。　在这里，我们看一下自动收集的部分。　其他内容参考Oracle 的联机文档。
+
+ 
+
+            Oracle 的Automatic Statistics Gathering 是通过Scheduler 来实现收集和维护的。 Job 名称是GATHER_STATS_JOB, 该Job收集数据库所有对象的2种统计信息：
+
+            （1）Missing statistics（统计信息缺失）
+
+            （2）Stale statistics（统计信息陈旧）
+
+ 
+
+            该Job 是在数据库创建的时候自动创建，并由Scheduler来管理。Scheduler 在maintenance windows open时运行gather job。 默认情况下，job 会在每天晚上10到早上6点和周末全天开启。该过程首先检测统计信息缺失和陈旧的对象。然后确定优先级，再开始进行统计信息。
+
+ 
+
+            Scheduler Job的 stop_on_window_close 属性控制GATHER_STATS_JOB 是否继续。该属性默认值为True. 如果该值设置为False，那么GATHER_STATS_JOB 会中断， 而没有收集完的对象将在下次启动时继续收集。
+
+ 
+
+            Gather_stats_job 调用dbms_stats.gather_database_stats_job_proc过程来收集statistics 的信息。 该过程收集对象statistics的条件如下：
+
+            （1）对象的统计信息之前没有收集过。
+
+            （2）当对象有超过10%的rows 被修改，此时对象的统计信息也称为stale statistics。 
+
+ 
+
+查看该Job 信息：
+
+SQL> select job_name, program_name,enabled,stop_on_window_close  from dba_scheduler_jobs where job_name = 'gather_stats_job';
+
+--查询用户最近的修改信息
+select * from user_tab_modifications
+
+--自动执行统计信息的job查询
+select job_name, program_name,enabled,stop_on_window_close  from dba_scheduler_jobs where job_name = 'gather_stats_job';

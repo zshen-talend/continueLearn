@@ -1,0 +1,46 @@
+1.dom的取得方式
+function createDomDoc()
+{
+
+var flag = [
+      "Msxml2.DOMDocument.5.0",
+      "Msxml2.DOMDocument.4.0",
+      "Msxml2.DOMDocument.3.0",
+      "Msxml2.DOMDocument",
+      "Microsoft.XmlDom"
+      ];
+for(var i =0;i<flag.length;i++)
+{
+   try{
+       var domDoc = new ActiveXObject(flag[i]);
+       return domDoc;
+   
+}catch(e){}
+}
+return null;
+}
+
+2.取得在text属性为Giada De Laurentiis的节点前面的标签名为title并且带lang属性为en1的所有节点集合此例可以在C:\Documents and Settings\OWNER\桌面\计算机\xml\xpath\试验中找到
+var xmlDoc = createDomDoc();
+alert(xmlDoc);
+if(xmlDoc!=null)
+{
+xmlDoc.async="false"
+//xmlDoc.load("book.xml");
+//var xpath="//author[contains(text(),'Giada De Laurentiis')]/preceding-sibling::title[@lang='en1']";
+xmlDoc.load("pg.xml");
+var xpath="//Field[@Name='evalprojectid'][contains(text(),'0')]/preceding-sibling::Field[@Name='evalprojectentime']";
+
+var   nodes=xmlDoc.selectNodes(xpath);
+alert(nodes.length);
+for(var i= 0 ;i<nodes.length;i++)
+{
+    objNode = nodes.nextNode();
+    alert(objNode.nodeName);
+    alert(objNode.text);
+  
+}}
+else
+{
+alert("请使用IE进行测试");
+}

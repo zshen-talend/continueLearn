@@ -1,0 +1,207 @@
+MS SQL SERVER 2000 常用 Tran-SQL 语句
+MS SQL SERVER 2000 常用 Tran-SQL 语句
+------boyi55
+一.创建数据库:
+create database mydb—创建数据库mydb
+on primary—在primary文件组中
+( name = mydb_data1,
+filename = 'd:\sql data\mydb_data1.mdf',
+size = 1,
+--maxsize = unlimited,
+filegrowth = 10% ),
+filegroup data2—创建文件组data2
+( name = mydb_data2,
+filename = 'd:\sql data\mydb_data2.ndf',
+size = 2,
+maxsize = 100,
+filegrowth = 1 ),
+filegroup data3
+( name = mydb_data3,
+filename = 'd:\sql data\mydb_data3.ndf',
+size = 3,
+maxsize = 50,
+filegrowth = 500kb )
+log on—日志文件
+( name = 'mydb_log1',
+filename = 'd:\sql data\mydb_log1.ldf',
+size = 1mb,
+maxsize = 25mb,
+filegrowth = 10% ),
+( name = 'mydb_log2',
+filename = 'd:\sql data\mydb_log2.ldf',
+size = 1mb,
+maxsize = 10mb,
+filegrowth = 10% ),
+( name = 'mydb_log3',
+filename = 'd:\sql data\mydb_log3.ldf',
+size = 1mb,
+maxsize = 5mb,
+filegrowth = 512kb )
+增加数据库文件到filegroup中.
+USE master
+GO
+ALTER DATABASE Test1
+ADD FILEGROUP Test1FG1
+GO
+ALTER DATABASE Test1 
+ADD FILE 
+( NAME = test1dat3,
+  FILENAME = 'c:\Program Files\Microsoft SQL Server\MSSQL\Data\t1dat3.ndf',
+  SIZE = 5MB,
+  MAXSIZE = 100MB,
+  FILEGROWTH = 5MB),
+( NAME = test1dat4,
+  FILENAME = 'c:\Program Files\Microsoft SQL Server\MSSQL\Data\t1dat4.ndf',
+  SIZE = 5MB,
+  MAXSIZE = 100MB,
+  FILEGROWTH = 5MB)
+TO FILEGROUP Test1FG1
+二.备份数据库
+更改恢复模式为大容量日志：alter database student set recovery bulk_logged 
+更改恢复模式为简单模式：alter database student set recovery simple 
+更改恢复模式为完全模式：alter database student set recovery full
+备份数据库到c:下的 backup.bak:backup.bak backup database student to disk='c:\backup.bak' 
+创建备份设备:sp_addumpdevice ‘disk’, ’studevice’(备份设备名), ’c:\studevice.bak’
+备份数据库到备份设备:backup database student(数据库名) to studevice(备份设备) with differential(差异备份),init(重写备份设备上的所有备份集)
+完全备份:backup database student to studevice
+差异备份:backup database student to studeivice with differential
+事务日志备份:backup log student to studevice [with no_log]
+三.恢复数据库:
+完全恢复:restore database student from studevice with file=1,norecovery
+事务日志恢复:Restore log student from studevice with file=2
+恢复数据库为另一个数据库:Restore database stu from studevice with norecovery,move ‘student’ to ‘c:\stu.mdf’,move ‘student_log’ to ‘c:\stu_log.ldf’
+--recovery允许访问
+--norecovery不允许访问
+--standby只读
+四.拆分数据库:sp_detach_db ‘stu’,’true’
+五.附加数据库:
+sp_attach_db   @dbname='sb',
+@filename1='d:\students.mdf',
+@filename2='d:\students_log.ldf'
+六.增加登陆帐号:
+sp_addlogin 'a3','a3'
+sp_droplogin ‘a3’—删除登陆
+sp_revokelogin ‘b’—删除windosw NT用户或组
+七. 增加数据库用户:
+sp_adduser 'a3','a3','r11'，--第一个a3为登陆帐号.第二个a3为数据库中对应的用户(默认与登陆帐号相同).r11为角色(即同时将a3加入到r11角色中,默认为空).此系统存储过程为了向以前兼容。可用sp_grantdbaccess替代
+sp_grantdbaccess ‘a3’
+sp_revokedbaccess ‘a3’—删除用户
+八. 赋予角色权限:
+grant select on table1 to r11 
+revoke select on table1 from r11
+grant select on table1 to rll with grant option—赋予r11角色的用户的权限.r11角色的用户可以授予其它的用户.
+Revoke select on table1 from r11 cascade—回收r11角色的用户的权限.同时回收r11角色的用户授予别的用户的权限
+九. 增加角色:
+sp_addrole 'r11'
+sp_droprole ‘r11’—删除角色
+十. 将用户添加到角色里:
+sp_addrolemember 'r22','c3'—第一个为角色名,第二个为用户名
+sp_droprolemember ‘r22’,’c3’—删除角色中的用户
+十一. 添加登录，使其成为固定服务器角色的成员
+sp_addsrvrolemember 'd3','sysadmin'
+sp_dropsrvrolemember ‘d3’,sysadmin’—将d3从固定服务器角色中删除
+固定服务器角色 描述 
+sysadmin 可以在 SQL Server 中执行任何活动。 
+serveradmin 可以设置服务器范围的配置选项，关闭服务器。 
+setupadmin 可以管理链接服务器和启动过程。 
+securityadmin 可以管理登录和 CREATE DATABASE 权限，还可以读取错误日志和更改密码。 
+processadmin 可以管理在 SQL Server 中运行的进程。 
+dbcreator 可以创建、更改和除去数据库。 
+diskadmin 可以管理磁盘文件。 
+bulkadmin 可以执行 BULK INSERT 语句。
+十二.//用SQL Server登录到远程计算机中
+1.返回当前目录的目录列表:
+Xp_cmdshell ‘dir c:\’
+2.在远程计算机上增加用户
+  xp_cmdshell 'net user b /add'--增加用户b
+3.在远程计算机上将用户b 加入到管理员组中
+  xp_cmdshell 'net localgroup administrators b /add'
+4.将远程计算机上用户administrator的密码改为空
+  xp_cmdshell 'net user administrator ""'
+5.删除扩展存储过程
+  sp_dropextendedproc 'xp_cmdshell'
+
+十三.//修改数据库中的表
+增加列
+
+alter table tablename add colname coltype //增加 
+
+删除列
+
+alter table tablename drop column colname //删除 
+
+加索引
+
+create index index_name ON tablename(colname) //索引 
+
+ 
+  A.   重命名表   
+  下例将表   customers   重命名为   custs。   
+    
+  EXEC   sp_rename   'customers',   'custs'   
+    
+  B.   重命名列   
+  下例将表   customers   中的列   contact   title   重命名为   title。   
+    
+  EXEC   sp_rename   'customers.[contact   title]',   'title',   'COLUMN'   
+
+
+
+
+
+
+
+create table [表名] 
+( 
+[自动编号字段] int IDENTITY (1,1) PRIMARY KEY , 
+[字段1] nVarChar(50) default '默认值' null , 
+[字段2] ntext null , 
+[字段3] datetime, 
+[字段4] money null , 
+[字段5] int default 0, 
+[字段6] Decimal (12,4) default 0, 
+[字段7] image null , 
+) 
+
+删除表： 
+Drop table [表名] 
+
+插入数据： 
+INSERT INTO [表名] (字段1,字段2) VALUES (100,'51WINDOWS.NET') 
+
+删除数据： 
+DELETE FROM [表名] WHERE [字段名]>100 
+
+更新数据： 
+UPDATE [表名] SET [字段1] = 200,[字段2] = '51WINDOWS.NET' WHERE [字段三] = 'HAIWA' 
+
+新增字段： 
+ALTER TABLE [表名] ADD [字段名] NVARCHAR (50) NULL 
+
+删除字段： 
+ALTER TABLE [表名] DROP COLUMN [字段名] 
+
+修改字段： 
+ALTER TABLE [表名] ALTER COLUMN [字段名] NVARCHAR (50) NULL 
+
+重命名表：(Access 重命名表，请参考文章：在Access数据库中重命名表) 
+sp_rename '表名', '新表名', 'OBJECT' 
+
+新建约束： 
+ALTER TABLE [表名] ADD CONSTRAINT 约束名 CHECK ([约束字段] <= '2000-1-1') 
+
+删除约束： 
+ALTER TABLE [表名] DROP CONSTRAINT 约束名 
+
+新建默认值 
+ALTER TABLE [表名] ADD CONSTRAINT 默认值名 DEFAULT '51WINDOWS.NET' FOR [字段名] 
+
+删除默认值 
+ALTER TABLE [表名] DROP CONSTRAINT 默认值名 
+
+删除Sql Server 中的日志，减小数据库文件大小 
+dump transaction 数据库名 with no_log 
+backup log 数据库名 with no_log 
+dbcc shrinkdatabase(数据库名) 
+exec sp_dboption '数据库名', 'autoshrink', 'true' 
+

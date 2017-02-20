@@ -1,0 +1,36 @@
+标号变量的命名规范
+	(1)可以用数字、字母、下划线及符号@、$和?
+	(2)第一个符号不能是数字
+	(3)长度不能超过240字符
+	(4)不能使用指令名等关键字
+	(5)在作用域内是唯一的
+
+1.Windows.inc
+	包含了	messagebox中按钮图标的常量(WM_xxx)定义。
+		几乎所有的Win32 API参数中的常量和数据结构定义。
+
+2.User32.inc
+	包含了MessageBox函数
+
+3.Kernel32.inc
+	包含了ExitProcess函数
+
+4.寄存器的使用
+	eax,存放程序的返回值(invoke、DefWindowProc等)
+
+5.ret
+	过程或子程序的返回标志
+
+6.pushad
+	将所有的寄存器存入堆栈，在子程序执行前使用保护寄存器的值。
+WndProc: [0006]WM_ACTIVATE               00000000 00000000
+WndProc: [001c]WM_ACTIVATEAPP            00000000 0000143c
+WndProc: [0008]WM_KILLFOCUS              00000000 00000000
+[c0a8]Message gotten
+Dispatching Message...
+DispatchMessage end
+Getting Message...
+[0113]Message gotten
+
+7.popad
+	将堆栈中的寄存器值取回寄存器，在子程序返回前使用，恢复寄存器原有的值。

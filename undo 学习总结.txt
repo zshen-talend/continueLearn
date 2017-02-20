@@ -1,0 +1,1 @@
+indexOfNextAdd是操作的一个指针它指向当前操作的前一个Edit

@@ -1,0 +1,14 @@
+1.系统的临时文件的存放位置
+	C:\Documents and Settings\OWNER\Local Settings
+
+2.打开系统的组策略项
+	gpedit.msc
+
+3.打开系统的自启动项
+	msconfig
+
+4.一些聊天工具默认保存信息的位置
+	C:/Documents and Settings/你的账户下的/Application Data
+
+5.内部域名的配置
+	C:\WINDOWS\system32\drivers\etc

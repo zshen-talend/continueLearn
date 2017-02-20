@@ -1,0 +1,2037 @@
+﻿<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3c.org/TR/1999/REC-html401-19991224/loose.dtd">
+<!-- saved from url=(0063)http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx -->
+<HTML lang=en xml:lang="en" xmlns="http://www.w3.org/1999/xhtml"><HEAD 
+id=ctl00_Head1><TITLE>WPF Tutorial</TITLE>
+<META http-equiv=Content-Type content="text/html; charset=utf-8"><LINK 
+href="WPF Tutorial.files/ResourceHandler.css" type=text/css rel=stylesheet><LINK 
+href="C:\Documents and Settings\Administrator\桌面\WPF Tutorial.files\ResourceHandler(1).css" 
+type=text/css rel=stylesheet>
+<SCRIPT src="WPF Tutorial.files/ResourceHandler.ashx" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT 
+src="C:\Documents and Settings\Administrator\桌面\WPF Tutorial.files\ResourceHandler(1).ashx" 
+type=text/javascript></SCRIPT>
+
+<META content=index,follow name=robots>
+<META content="INDEX, FOLLOW" name=robots>
+<META content=DotNetSlackers name=copyright>
+<META content="Sonu Kapoor" name=author>
+<META content=1 name=revisit-after><LINK title="DotNetSlackers Latest News" 
+href="http://dotnetslackers.com/feeds/rss.aspx" type=application/rss+xml 
+rel=alternate><LINK title="DotNetSlackers Latest Articles" 
+href="http://dotnetslackers.com/articles/rss.aspx" type=application/rss+xml 
+rel=alternate><LINK href="/favicon.ico" type=image/ico rel=icon><LINK 
+href="/favicon.ico" rel="SHORTCUT ICON">
+<SCRIPT type=text/javascript>
+var gaJsHost = (("https:" == document.location.protocol) ? "https://ssl." : "http://www.");
+document.write(unescape("%3Cscript src='" + gaJsHost + "google-analytics.com/ga.js' type='text/javascript'%3E%3C/script%3E"));
+</SCRIPT>
+
+<SCRIPT type=text/javascript>
+var pageTracker = _gat._getTracker("UA-141188-1");
+pageTracker._trackPageview();
+</SCRIPT>
+<LINK href="WPF Tutorial.files/menu.css" type=text/css rel=stylesheet><LINK 
+href="WPF Tutorial.files/styles.css" type=text/css rel=stylesheet>
+<META 
+content="With all the new technology that Microsoft is releasing, it's hard to keep up. WPF is one such technology. It is a completely different metaphor for user interface construction than previous frameworks. This article is intended to give a general overview of the key concepts and innovations of WPF, hopefully educating readers enough to make intelligent UI technology decisions and smooth the learning curve for those beginning to work with this framework. " 
+name=Description>
+<META content="wpf, xaml, .net, flash, silverlight, asp.net, dotnetslackers" 
+name=Keywords>
+<META content="MSHTML 6.00.2900.5921" name=GENERATOR></HEAD>
+<BODY>
+<FORM id=aspnetForm name=aspnetForm action=WPFTutorial.aspx method=post>
+<DIV><INPUT id=__EVENTTARGET type=hidden name=__EVENTTARGET> <INPUT 
+id=__EVENTARGUMENT type=hidden name=__EVENTARGUMENT> <INPUT id=__VIEWSTATE 
+type=hidden 
+value=/wEPDwUBMA9kFgJmD2QWAgIDD2QWBAIED2QWGAIBDxYCHglpbm5lcmh0bWwFyAE8aW1nIHNyYz0nL2Ruc2ltYWdlcy9zdGFyX2FjdGl2ZS5naWYnIC8+PGltZyBzcmM9Jy9kbnNpbWFnZXMvc3Rhcl9hY3RpdmUuZ2lmJyAvPjxpbWcgc3JjPScvZG5zaW1hZ2VzL3N0YXJfYWN0aXZlLmdpZicgLz48aW1nIHNyYz0nL2Ruc2ltYWdlcy9zdGFyX2FjdGl2ZS5naWYnIC8+PGltZyBzcmM9Jy9kbnNpbWFnZXMvc3Rhcl9hY3RpdmUuZ2lmJyAvPmQCAw8WAh8ABQE2ZAIFDxYCHwAFBzI2Nyw5MDRkAgcPFgIfAAUZPGEgaHJlZj0nI2NvbW1lbnRzJz43PC9hPmQCCQ8WAh8ABS88YSBocmVmPScvYXJ0aWNsZXMvc2lsdmVybGlnaHQnPlNpbHZlcmxpZ2h0PC9hPmQCCw8WAh8ABUQ8YSBocmVmPScvYXJ0aWNsZXMvUHJpbnRBcnRpY2xlLmFzcHg/QXJ0aWNsZUlkPTk1Jz5QcmludCBBcnRpY2xlPC9hPmQCDQ8WAh8ABWhQbGVhc2UgPGEgaHJlZj0namF2YXNjcmlwdDo7JyBvbmNsaWNrPSdqYXZhc2NyaXB0OnNob3dMb2dpbigpOyc+bG9naW48L2E+IHRvIHJhdGUgb3IgdG8gbGVhdmUgYSBjb21tZW50LmQCDw8WBB8ABQtTaWx2ZXJsaWdodB4EaHJlZgUVL2FydGljbGVzL3NpbHZlcmxpZ2h0ZAIRDxYCHwAFDFdQRiBUdXRvcmlhbGQCEw8WAh8ABQsxNiBNYXkgMjAwN2QCFQ8WAh8ABUA8YSBocmVmPScvY29tbXVuaXR5L21lbWJlcnMvcm9iZWlzZW5iZXJnLmFzcHgnPlJvYiBFaXNlbmJlcmc8L2E+ZAIZDxYCHwAFyQNXaXRoIGFsbCB0aGUgbmV3IHRlY2hub2xvZ3kgdGhhdCBNaWNyb3NvZnQgaXMgcmVsZWFzaW5nLCBpdCdzIGhhcmQgdG8ga2VlcCB1cC4gV1BGIGlzIG9uZSBzdWNoIHRlY2hub2xvZ3kuIEl0IGlzIGEgY29tcGxldGVseSBkaWZmZXJlbnQgbWV0YXBob3IgZm9yIHVzZXIgaW50ZXJmYWNlIGNvbnN0cnVjdGlvbiB0aGFuIHByZXZpb3VzIGZyYW1ld29ya3MuIFRoaXMgYXJ0aWNsZSBpcyBpbnRlbmRlZCB0byBnaXZlIGEgZ2VuZXJhbCBvdmVydmlldyBvZiB0aGUga2V5IGNvbmNlcHRzIGFuZCBpbm5vdmF0aW9ucyBvZiBXUEYsIGhvcGVmdWxseSBlZHVjYXRpbmcgcmVhZGVycyBlbm91Z2ggdG8gbWFrZSBpbnRlbGxpZ2VudCBVSSB0ZWNobm9sb2d5IGRlY2lzaW9ucyBhbmQgc21vb3RoIHRoZSBsZWFybmluZyBjdXJ2ZSBmb3IgdGhvc2UgYmVnaW5uaW5nIHRvIHdvcmsgd2l0aCB0aGlzIGZyYW1ld29yay4gZAIMD2QWAgICD2QWAmYPZBYCAgEPDxYCHgdWaXNpYmxlZ2QWAgIBDxYCHgtfIUl0ZW1Db3VudAIHFg4CAQ9kFgJmDxUPATAEMTA3NQQxMDc1BDEwNzUjPGI+ZGVmYXVsdCBjb250ZW50IHByb3BlcnR5ID8/PzwvYj48PGltZyBzcmM9Jy9kbnNJbWFnZXMvdXNlcjhfMTZ4MTYuZ2lmJyB0aXRsZT0nQ29udHJpYnV0b3InIC8+QDxhIGhyZWY9Jy9jb21tdW5pdHkvbWVtYmVycy9GYWNoYmVyZWljaCBJVC5hc3B4Jz5VdmUgTcO8bGxlcjwvYT4QNy8zLzIwMDkgNDozNSBBTQQxMDc1AjMwjgtIaTxzcGFuIGlkPSJjdGwwMF9haV9hdXRob3IiPiBSb2I8L3NwYW4+Ljxicj48YnI+IEkgaGF2ZSBhIHF1ZXN0aW9uIHJlZ2FyZGluZyBYQU1MIGVsZW1lbnRzIGhpZXJhcmNoeS48YnI+IEkKb25lIG9mIHRoZSB0dXRvcmlhbHMgSSBoYXZlIHJlYWQgdGhhdCBpZiB0aGVyZSBpcyBubwpFbGVtZW50TmFtZS5BdHRyaWJ1dGVOYW1lIHBhdHRlcm4sIGNoaWxkIGVsZW1lbnRzIGFyZSBhc3NpZ25lZCB0byB0aGUKZGVmYXVsdCBjb250ZW50IHByb3BlcnR5LiBJcyB0aGF0IHRydWUgZm9yIHRoZSB3aG9sZSBoaWVyYXJjaHkgc3RhcnRpbmcKd2l0aCB3aW5kb3cgZWxlbWVudCBkb3duIHRvIHRoZSBtb3N0IGVuY2xvc2VkIG9uZT8gPGJyPiBGb3IgZXhhbXBsZTo8YnI+IDxicj4gJmx0O1dpbmRvdyB4OkNsYXNzPSJXcGZBcHBsaWNhdGlvbjEuV2luZG93MSI8YnI+ICZuYnNwOyZuYnNwOyZuYnNwOyB4bWxucz0iaHR0cDovL3NjaGVtYXMubWljcm9zb2Z0LmNvbS93aW5meC8yMDA2L3hhbWwvcHJlc2VudGF0aW9uIjxicj4gJm5ic3A7Jm5ic3A7Jm5ic3A7IHhtbG5zOng9Imh0dHA6Ly9zY2hlbWFzLm1pY3Jvc29mdC5jb20vd2luZngvMjAwNi94YW1sIjxicj4gJm5ic3A7Jm5ic3A7Jm5ic3A7IFRpdGxlPSJXaW5kb3cxIiBIZWlnaHQ9IjMwMCIgV2lkdGg9IjMwMCImZ3Q7PGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsgJmx0O1N0YWNrUGFuZWwmZ3Q7PGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsmbmJzcDsgJmx0O0J1dHRvbiBIZWlnaHQ9IjIzIiBNYXJnaW49IjExMCwxMDMsOTQsMCIgTmFtZT0iYnV0dG9uMSIgVmVydGljYWxBbGlnbm1lbnQ9IlRvcCImZ3Q7QnV0dG9uJmx0Oy9CdXR0b24mZ3Q7PGJyPiAmbmJzcDsmbmJzcDsmbmJzcDsgJmx0Oy9TdGFja1BhbmVsJmd0Ozxicj4gJmx0Oy9XaW5kb3cmZ3Q7PGJyPiA8YnI+CklzIGluIHRoZSBjb2RlIGFib3ZlICJCdXR0b24iIGFzc2lnbmVkIHRvIHRoZSBCdXR0b24gZWxlbWVudCdzIGRlZmF1bHQKY29udGVudCBwcm9wZXJ0eSwgQnV0dG9uIGVsZW1lbnQgaXMgYXNzaWduZWQgdG8gdGhlIFN0YWNrUGFuZWwncwpkZWZhdWx0IGNvbnRlbnQgcHJvcGVydHkgYW5kIFN0YWNrUGFuZWwgZWxlbWVudCBpcyBhc3NpZ25lZCB0byB0aGUKV2luZG93J3MgZGVmYXVsdCBjb250ZW50IHByb3BlcnR5PyBJZiBmb3IgZXhhbXBsZSBhIFdpbmRvdyBlbGVtZW50CmNvbnRhaW5zIG1vcmUgY2hpbGQgZWxlbWVudHMsIHRoYXQgbWVhbnMgdGhhdCBlYWNoIG9mIHRoZW0gaXMKc2VxdWVudGlhbGx5IGFzc2lnbmVkIHRvIHRoZSBXaW5kb3cncyBkZWZhdWx0IGNvbnRlbnQgcHJvcGVydHkgYW5kIHRoZW4KV1BGIEZyYW1ld29yayBpcyByZXNwb25zYWJsZSBmb3IgcmVuZGVyaW5nIHRoZW0gcHJvcGVybHk/PGJyPiBUaGFua3MgYW5kIGJlc3QgcmVnYXJkcy45PHAgc3R5bGU9J2JvcmRlci10b3A6IDFweCBzb2xpZCByZ2IoMjA0LCAyMDQsIDIwNCk7Jz48L3A+BDEwNzUcZGVmYXVsdCBjb250ZW50IHByb3BlcnR5ID8/PysvYXJ0aWNsZXMvc2lsdmVybGlnaHQvV1BGVHV0b3JpYWwuYXNweCMxMDc1ZAICD2QWAmYPFQ8CMzAEMTA3NgQxMDc2BDEwNzYgUkU6IGRlZmF1bHQgY29udGVudCBwcm9wZXJ0eSA/Pz9GPGltZyBzcmM9Jy9kbnNJbWFnZXMvdXNlcjhfKGVkaXQpXzE2eDE2LmdpZicgdGl0bGU9J0FydGljbGUgQXV0aG9yJyAvPno8YSBocmVmPScvY29tbXVuaXR5L21lbWJlcnMvcm9iZWlzZW5iZXJnLmFzcHgnPjxiPjxhIGhyZWY9Jy9jb21tdW5pdHkvbWVtYmVycy9yb2JlaXNlbmJlcmcuYXNweCc+Um9iIEVpc2VuYmVyZzwvYT48L2I+PC9hPhA3LzMvMjAwOSA5OjIyIEFNBDEwNzYCNjD/CjxzcGFuIHN0eWxlPSJjb2xvcjogcmdiKDAsIDAsIDApOyBmb250LWZhbWlseTogYXJpYWw7IGZvbnQtc2l6ZTogMTNweDsgYm9yZGVyLWNvbGxhcHNlOiBjb2xsYXBzZTsgIj5HZW5lcmFsbHkgc3BlYWtpbmcsIHlvdSBoYXZlIHRocmVlIHR5cGVzIG9mIGVsZW1lbnRzIGluIFdQRjogJm5ic3A7Q29udGVudENvbnRyb2xzLCBJdGVtc0NvbnRyb2xzIGFuZCBQYW5lbHMuICZuYnNwO0NvbnRlbnRDb250cm9scyBjYW4gb25seSBoYXZlIG9uZSBjaGlsZCwgd2hpbGUgSXRlbXNDb250cm9scyBhbmQgUGFuZWxzIGNhbiBoYXZlIG11bHRpcGxlIGNoaWxkcmVuLiAmbmJzcDtBIFBhbmVsIHNwZWNpZmllcyBob3cgaXRzIGNoaWxkcmVuIGFyZSBhcnJhbmdlZCBvbiB0aGUgc2NyZWVuIGFuZCBhbiBJdGVtc0NvbnRyb2wgdXNlcyBhbiBpbnRlcm5hbCBQYW5lbCB0byBsYXlvdXQgaXRzIGNoaWxkcmVuICh0aGlzIGNhbiBhbHNvIGJlIGN1c3RvbWl6ZWQgdXNpbmcgSXRlbXNQYW5lbFRlbXBsYXRlKS4gJm5ic3A7QSBXaW5kb3cgaXMgYSBDb250ZW50Q29udHJvbCwgc28gaXQgY2FuIG9ubHkgaGF2ZSBvbmUgY2hpbGQsIHR5cGljYWxseSB0aGlzIHdvdWxkIGJlIGEgUGFuZWwuICZuYnNwO0luIHRoZSBleGFtcGxlIGFib3ZlLCBXaW5kb3cgKENvbnRlbnRDb250cm9sKSBoYXMgb25lIGNoaWxkLCBTdGFja1BhbmVsIChQYW5lbCksIHdoaWNoIGNhbiBoYXZlIG11bHRpcGxlIGNoaWxkcmVuLiAmbmJzcDtJbiB0aGlzIGNhc2UgaXQgaGFzIG9ubHkgb25lOiBCdXR0b24uICZuYnNwO0J1dHRvbiBpcyBhIENvbnRlbnRDb250cm9sLCB3aGljaCBhcyB0aGUgdGV4dCAiQnV0dG9uLCIgYXMgaXRzIGNoaWxkLCB3aGljaCBnZXRzIHRyYW5zbGF0ZWQgdG8gYSBUZXh0QmxvY2sgYXQgcnVudGltZS4gJm5ic3A7QWxsIENvbnRlbnRDb250cm9scyBhcmUgZGVjb3JhdGVkIHdpdGggYSBDb250ZW50UHJvcGVydHlBdHRyaWJ1dGUsIHdoaWNoIHRlbGxzIHRoZSBYYW1sIHBhcnNlciB3aGF0IHByb3BlcnR5IG9mIHRoZSBlbGVtZW50IGl0cyBYYW1sIGNoaWxkIHNob3VsZCBiZSBzZXQgdG8uICZuYnNwO0ZvciBpdGVtcyBjb250cm9scyBhbmQgUGFuZWxzLCB0aGV5IGltcGxlbWVudCBhIHNwZWNpYWwgaW50ZXJmYWNlLCBJQWRkQ2hpbGQsIHdoaWNoIHRoZSBYYW1sIHBhcnNlciBhbHNvIGxvb2tzIGZvciBhbmQgdXNlcyB0byBhZGQgbXVsdGlwbGUgY2hpbGRyZW4uICZuYnNwO0lmIGEgVUlFbGVtZW50IGRvZXMgbm90IGhhdmUgdGhlIENvbnRlbnRQcm9wZXJ0eUF0dHJpYnV0ZSBvciBpbXBsZW1lbnQgSUFkZENoaWxkLCB0aGUgWGFtbCBwYXJzZXIgd2lsbCBub3QgYWxsb3cgY2hpbGQgbm9kZXMsIHVubGVzcyB0aGUgZWxlbWVudCBpdHNlbGYgaXMgYSBrbm93biBjb2xsZWN0aW9uIHR5cGUuPC9zcGFuPjk8cCBzdHlsZT0nYm9yZGVyLXRvcDogMXB4IHNvbGlkIHJnYigyMDQsIDIwNCwgMjA0KTsnPjwvcD4EMTA3NiBSRTogZGVmYXVsdCBjb250ZW50IHByb3BlcnR5ID8/PysvYXJ0aWNsZXMvc2lsdmVybGlnaHQvV1BGVHV0b3JpYWwuYXNweCMxMDc2ZAIDD2QWAmYPFQ8BMAMxNTcDMTU3AzE1NxA8Yj5HcmVhdCBKb2I8L2I+PDxpbWcgc3JjPScvZG5zSW1hZ2VzL3VzZXI4XzE2eDE2LmdpZicgdGl0bGU9J0NvbnRyaWJ1dG9yJyAvPjk8YSBocmVmPScvY29tbXVuaXR5L21lbWJlcnMvSGFzYW4uYXNweCc+SGFzYW4gTWFobW9vZDwvYT4RNi8xNS8yMDA3IDY6MzkgQU0DMTU3AjMwVVRoYW5rIHlvdSBmb3IgeW91ciBhcnRpY2xlLiBXZSBhcmUgaW50cm9kdWNpbmcgTElOUSBpbiBvdXIgbmV4dCBwcm9qZWN0LiBCeWUuLi4uaGFzYW45PHAgc3R5bGU9J2JvcmRlci10b3A6IDFweCBzb2xpZCByZ2IoMjA0LCAyMDQsIDIwNCk7Jz48L3A+AzE1NwlHcmVhdCBKb2IqL2FydGljbGVzL3NpbHZlcmxpZ2h0L1dQRlR1dG9yaWFsLmFzcHgjMTU3ZAIED2QWAmYPFQ8BMAM1NzMDNTczAzU3MxE8Yj5FeGNlbGxlbnQhPC9iPjw8aW1nIHNyYz0nL2Ruc0ltYWdlcy91c2VyOF8xNngxNi5naWYnIHRpdGxlPSdDb250cmlidXRvcicgLz45PGEgaHJlZj0nL2NvbW11bml0eS9tZW1iZXJzL2FsZm9ybm8uYXNweCc+TWFyayBIYXJtb248L2E+ETMvMjQvMjAwOCAyOjEzIFBNAzU3MwIzMCFUaGFua3MsIHRoaXMgaXMgYSBncmVhdCByZXNvdXJjZS45PHAgc3R5bGU9J2JvcmRlci10b3A6IDFweCBzb2xpZCByZ2IoMjA0LCAyMDQsIDIwNCk7Jz48L3A+AzU3MwpFeGNlbGxlbnQhKi9hcnRpY2xlcy9zaWx2ZXJsaWdodC9XUEZUdXRvcmlhbC5hc3B4IzU3M2QCBQ9kFgJmDxUPATADNjUzAzY1MwM2NTMnPGI+QSBNdXN0IFJlYWQgZm9yIHRob3NlIG5ldyB0byBXUEY8L2I+PDxpbWcgc3JjPScvZG5zSW1hZ2VzL3VzZXI4XzE2eDE2LmdpZicgdGl0bGU9J0NvbnRyaWJ1dG9yJyAvPjg8YSBocmVmPScvY29tbXVuaXR5L21lbWJlcnMvcnlhbmJvc3QuYXNweCc+UnlhbiBCb3N0PC9hPhE2LzYvMjAwOCAxMDo1OSBBTQM2NTMCMzDeAUkgYW0gYSBsb25nIHRpbWUgQVNQLk5FVCBhbmQgV2luRm9tcyBkZXZlbG9wZXIuJm5ic3A7IEkgaGF2ZSByZWNlbnRseSBiZWdhbiBsZWFybmluZyBXUEYuJm5ic3A7IFRoaXMgdHV0b3JpYWwgaXMgYnkgZmFyIHRoZSBiZXN0IEkgaGF2ZSBmb3VuZCBvbiB0aGUgc3ViamVjdC4mbmJzcDsgVHJlbWVuZG91cyBqb2IgYW5kIHRoYW5rIHlvdSBmb3IgdGhlIGVubGlnaHRlbm1lbnQuJm5ic3A7IDk8cCBzdHlsZT0nYm9yZGVyLXRvcDogMXB4IHNvbGlkIHJnYigyMDQsIDIwNCwgMjA0KTsnPjwvcD4DNjUzIEEgTXVzdCBSZWFkIGZvciB0aG9zZSBuZXcgdG8gV1BGKi9hcnRpY2xlcy9zaWx2ZXJsaWdodC9XUEZUdXRvcmlhbC5hc3B4IzY1M2QCBg9kFgJmDxUPATADNzc0Azc3NAM3NzQYPGI+QXdlc29tZSBhcnRpY2xlISA8L2I+PDxpbWcgc3JjPScvZG5zSW1hZ2VzL3VzZXI4XzE2eDE2LmdpZicgdGl0bGU9J0NvbnRyaWJ1dG9yJyAvPjQ8YSBocmVmPScvY29tbXVuaXR5L21lbWJlcnMvRHJvci5hc3B4Jz5Ecm9yIERyb3I8L2E+EzEwLzEwLzIwMDggMTI6NDkgUE0DNzc0AjMwJUVuam95ZWQgcmVhZGluZyBpdCBhcyBhIFdQRiBiZWdpbm5lci45PHAgc3R5bGU9J2JvcmRlci10b3A6IDFweCBzb2xpZCByZ2IoMjA0LCAyMDQsIDIwNCk7Jz48L3A+Azc3NBFBd2Vzb21lIGFydGljbGUhICovYXJ0aWNsZXMvc2lsdmVybGlnaHQvV1BGVHV0b3JpYWwuYXNweCM3NzRkAgcPZBYCZg8VDwEwAjg0Ajg0Ajg0EjxiPkdyZWF0IHdvcmshPC9iPjw8aW1nIHNyYz0nL2Ruc0ltYWdlcy91c2VyOF8xNngxNi5naWYnIHRpdGxlPSdDb250cmlidXRvcicgLz48PGEgaHJlZj0nL2NvbW11bml0eS9tZW1iZXJzL2FudHJhZC5hc3B4Jz5BbnRvbmlvIFJhZGVzY2E8L2E+ETUvMTkvMjAwNyA4OjQ5IEFNAjg0AjMwH0dyZWF0IHdvcmshClRoYW5rcyEKQnllIEFudG9uaW85PHAgc3R5bGU9J2JvcmRlci10b3A6IDFweCBzb2xpZCByZ2IoMjA0LCAyMDQsIDIwNCk7Jz48L3A+Ajg0C0dyZWF0IHdvcmshKS9hcnRpY2xlcy9zaWx2ZXJsaWdodC9XUEZUdXRvcmlhbC5hc3B4Izg0ZBgBBR5fX0NvbnRyb2xzUmVxdWlyZVBvc3RCYWNrS2V5X18WAQUQY3RsMDAkdG9wbmF2JFJNMa8RZQa2uXbvobeUvStpxAGRfKjz name=__VIEWSTATE> </DIV>
+<SCRIPT type=text/javascript>
+//<![CDATA[
+var theForm = document.forms['aspnetForm'];
+if (!theForm) {
+    theForm = document.aspnetForm;
+}
+function __doPostBack(eventTarget, eventArgument) {
+    if (!theForm.onsubmit || (theForm.onsubmit() != false)) {
+        theForm.__EVENTTARGET.value = eventTarget;
+        theForm.__EVENTARGUMENT.value = eventArgument;
+        theForm.submit();
+    }
+}
+//]]>
+</SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/WebResource.axd" type=text/javascript></SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/ScriptResource.axd" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT type=text/javascript>
+//<![CDATA[
+Sys.Services._AuthenticationService.DefaultWebServicePath = '../../Authentication_JSON_AppService.axd';
+//]]>
+</SCRIPT>
+
+<SCRIPT 
+src="C:\Documents and Settings\Administrator\桌面\WPF Tutorial.files\ScriptResource(1).axd" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/Authentication-full.js" 
+type=text/javascript></SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/js" type=text/javascript></SCRIPT>
+
+<DIV><INPUT id=__EVENTVALIDATION type=hidden 
+value=/wEWAgL9nO2XDAK42aTkD1qWCUZouli1cs7n46tumrOnZcKD name=__EVENTVALIDATION> 
+</DIV>
+<SCRIPT type=text/javascript>
+//<![CDATA[
+Sys.WebForms.PageRequestManager._initialize('ctl00$sm1', document.getElementById('aspnetForm'));
+Sys.WebForms.PageRequestManager.getInstance()._updateControls(['tctl00$ArticleRater1$UpdatePanel1','tctl00$ViewAddArticleComments1$UpdatePanel1'], [], [], 90);
+//]]>
+</SCRIPT>
+
+<DIV id=container>
+<DIV id=header>
+<DIV id=logo><A href="http://dotnetslackers.com/"><IMG alt=DotNetSlackers.com 
+src="WPF Tutorial.files/header_logo.gif"></A> </DIV>
+<DIV id=adbanner><!-- Begin -  Site: DotNetSlackers Zone: 728 x 90 (Top) -->
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=6&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X=' + browDateTime + '" width=728 height=90 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<s'+'cript src="http://ads.dotnetslackers.com/a.aspx?ZoneID=6&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<a href="http://ads.dotnetslackers.com/a.aspx?ZoneID=6&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" target="_blank"><img src="http://ads.dotnetslackers.com/a.aspx?ZoneID=6&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" width="728" height="90" border="0" alt=""></a>'); } }
+else
+     { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=6&amp;Task=Get&amp;SiteID=1&amp;X=' + browDateTime + '" width=728 height=90 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=6&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=36202" 
+target=_blank><IMG height=90 alt="" 
+src="WPF Tutorial.files/ASP.NET%20MVC%20728x90.jpg" width=728 border=0></A> 
+</NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: 728 x 90 (Top) --></DIV></DIV>
+<DIV id=navbar>
+<DIV class="radmenu RadMenu_CssBlue " id=ctl00_topnav_RM1><!-- 4.3.2 --><SPAN 
+id=ctl00_topnav_RM1StyleSheetHolder style="DISPLAY: none"></SPAN>
+<UL class="horizontal rootGroup">
+  <LI class="item first"><A class=link id=ctl00_topnav_RM1_m0 
+  href="http://dotnetslackers.com/community/forums"><SPAN 
+  class=text>Forums</SPAN></A></LI>
+  <LI class=item><A class=link id=ctl00_topnav_RM1_m1 
+  href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#"><SPAN 
+  class=text>Community</SPAN></A>
+  <DIV class=slide>
+  <UL class="vertical group level1">
+    <LI class="item first"><A class=link id=ctl00_topnav_RM1_m1_m0 
+    href="http://dotnetslackers.com/community/blogs"><SPAN 
+    class=text>Blogs&nbsp;&nbsp;&nbsp;</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m1_m1 
+    href="http://dotnetslackers.com/codesnippets"><SPAN class=text>Code 
+    snippets&nbsp;&nbsp;&nbsp;</SPAN></A></LI>
+    <LI class="item last"><A class=link id=ctl00_topnav_RM1_m1_m2 
+    href="http://dotnetslackers.com/community/files/"><SPAN 
+    class=text>Files&nbsp;&nbsp;&nbsp;</SPAN></A> </LI></UL></DIV></LI>
+  <LI class=item><A class=link id=ctl00_topnav_RM1_m2 
+  href="http://dotnetslackers.com/news/RecentAspDotNetNews.aspx"><SPAN 
+  class=text>News</SPAN></A>
+  <DIV class=slide>
+  <DIV class="scrollWrap group level1" style="HEIGHT: 320px">
+  <UL class=vertical>
+    <LI class="item first"><A class=link id=ctl00_topnav_RM1_m2_m0 
+    href="http://dotnetslackers.com/_NET/re-default.aspx"><SPAN 
+    class=text>.NET</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m1 
+    href="http://dotnetslackers.com/Agile/re-default.aspx"><SPAN 
+    class=text>Agile</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m2 
+    href="http://dotnetslackers.com/Ajax/re-default.aspx"><SPAN 
+    class=text>Ajax</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m3 
+    href="http://dotnetslackers.com/Architecture/re-default.aspx"><SPAN 
+    class=text>Architecture</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m4 
+    href="http://dotnetslackers.com/ASP_NET/re-default.aspx"><SPAN 
+    class=text>ASP.NET</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m5 
+    href="http://dotnetslackers.com/BizTalk/re-default.aspx"><SPAN 
+    class=text>BizTalk</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m6 
+    href="http://dotnetslackers.com/CSharp/re-default.aspx"><SPAN 
+    class=text>C#</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m7 
+    href="http://dotnetslackers.com/Certification/re-default.aspx"><SPAN 
+    class=text>Certification</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m8 
+    href="http://dotnetslackers.com/Data/re-default.aspx"><SPAN 
+    class=text>Data</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m9 
+    href="http://dotnetslackers.com/DataGrid/re-default.aspx"><SPAN 
+    class=text>DataGrid</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m10 
+    href="http://dotnetslackers.com/DataSet/re-default.aspx"><SPAN 
+    class=text>DataSet</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m11 
+    href="http://dotnetslackers.com/Debugger/re-default.aspx"><SPAN 
+    class=text>Debugger</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m12 
+    href="http://dotnetslackers.com/DotNetNuke/re-default.aspx"><SPAN 
+    class=text>DotNetNuke</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m13 
+    href="http://dotnetslackers.com/Events/re-default.aspx"><SPAN 
+    class=text>Events</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m14 
+    href="http://dotnetslackers.com/GridView/re-default.aspx"><SPAN 
+    class=text>GridView</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m15 
+    href="http://dotnetslackers.com/IIS/re-default.aspx"><SPAN 
+    class=text>IIS</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m16 
+    href="http://dotnetslackers.com/Indigo/re-default.aspx"><SPAN 
+    class=text>Indigo</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m17 
+    href="http://dotnetslackers.com/JavaScript/re-default.aspx"><SPAN 
+    class=text>JavaScript</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m18 
+    href="http://dotnetslackers.com/Mobile/re-default.aspx"><SPAN 
+    class=text>Mobile</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m19 
+    href="http://dotnetslackers.com/Mono/re-default.aspx"><SPAN 
+    class=text>Mono</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m20 
+    href="http://dotnetslackers.com/Patterns_and_Practices/re-default.aspx"><SPAN 
+    class=text>Patterns and Practices</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m21 
+    href="http://dotnetslackers.com/Performance/re-default.aspx"><SPAN 
+    class=text>Performance</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m22 
+    href="http://dotnetslackers.com/Podcast/re-default.aspx"><SPAN 
+    class=text>Podcast</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m23 
+    href="http://dotnetslackers.com/Refactor/re-default.aspx"><SPAN 
+    class=text>Refactor</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m24 
+    href="http://dotnetslackers.com/Regex/re-default.aspx"><SPAN 
+    class=text>Regex</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m25 
+    href="http://dotnetslackers.com/Security/re-default.aspx"><SPAN 
+    class=text>Security</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m26 
+    href="http://dotnetslackers.com/Sharepoint/re-default.aspx"><SPAN 
+    class=text>Sharepoint</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m27 
+    href="http://dotnetslackers.com/Silverlight/re-default.aspx"><SPAN 
+    class=text>Silverlight</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m28 
+    href="http://dotnetslackers.com/Smart_Client_Applications/re-default.aspx"><SPAN 
+    class=text>Smart Client Applications</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m29 
+    href="http://dotnetslackers.com/Software/re-default.aspx"><SPAN 
+    class=text>Software</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m30 
+    href="http://dotnetslackers.com/SQL/re-default.aspx"><SPAN 
+    class=text>SQL</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m31 
+    href="http://dotnetslackers.com/VB_NET/re-default.aspx"><SPAN 
+    class=text>VB.NET</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m32 
+    href="http://dotnetslackers.com/Visual_Studio/re-default.aspx"><SPAN 
+    class=text>Visual Studio</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m33 
+    href="http://dotnetslackers.com/W3/re-default.aspx"><SPAN 
+    class=text>W3</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m34 
+    href="http://dotnetslackers.com/WCF/re-default.aspx"><SPAN 
+    class=text>WCF</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m35 
+    href="http://dotnetslackers.com/WinFx/re-default.aspx"><SPAN 
+    class=text>WinFx</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m36 
+    href="http://dotnetslackers.com/WPF/re-default.aspx"><SPAN 
+    class=text>WPF</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m37 
+    href="http://dotnetslackers.com/WSE/re-default.aspx"><SPAN 
+    class=text>WSE</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m38 
+    href="http://dotnetslackers.com/XAML/re-default.aspx"><SPAN 
+    class=text>XAML</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m39 
+    href="http://dotnetslackers.com/XLinq/re-default.aspx"><SPAN 
+    class=text>XLinq</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m2_m40 
+    href="http://dotnetslackers.com/XML/re-default.aspx"><SPAN 
+    class=text>XML</SPAN></A></LI>
+    <LI class="item last"><A class=link id=ctl00_topnav_RM1_m2_m41 
+    href="http://dotnetslackers.com/XSD/re-default.aspx"><SPAN 
+    class=text>XSD</SPAN></A> </LI></UL></DIV></DIV></LI>
+  <LI class=item><A class=link id=ctl00_topnav_RM1_m3 
+  href="http://dotnetslackers.com/articles/"><SPAN 
+class=text>Articles</SPAN></A>
+  <DIV class=slide>
+  <DIV class="scrollWrap group level1" style="HEIGHT: 320px">
+  <UL class=vertical>
+    <LI class="item first"><A class=link id=ctl00_topnav_RM1_m3_m0 
+    href="http://dotnetslackers.com/articles/status.aspx"><SPAN class=text>View 
+    upcoming articles</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m1 
+    href="http://dotnetslackers.com/articles/NET/default.aspx"><SPAN 
+    class=text>.NET</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m2 
+    href="http://dotnetslackers.com/articles/ADO_NET/default.aspx"><SPAN 
+    class=text>ADO.NET</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m3 
+    href="http://dotnetslackers.com/articles/AJAX/default.aspx"><SPAN 
+    class=text>AJAX/Javascript</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m4 
+    href="http://dotnetslackers.com/articles/ASPNET/default.aspx"><SPAN 
+    class=text>ASP.NET</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m5 
+    href="http://dotnetslackers.com/articles/CSharp/default.aspx"><SPAN 
+    class=text>C#</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m6 
+    href="http://dotnetslackers.com/articles/Charts/default.aspx"><SPAN 
+    class=text>Charts</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m7 
+    href="http://dotnetslackers.com/articles/CustomConfiguration/default.aspx"><SPAN 
+    class=text>Custom Configuration</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m8 
+    href="http://dotnetslackers.com/articles/Collections/default.aspx"><SPAN 
+    class=text>Collections</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m9 
+    href="http://dotnetslackers.com/articles/Controls/default.aspx"><SPAN 
+    class=text>Controls</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m10 
+    href="http://dotnetslackers.com/articles/DotNetNuke/default.aspx"><SPAN 
+    class=text>DotNetNuke</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m11 
+    href="http://dotnetslackers.com/articles/Datagrid/default.aspx"><SPAN 
+    class=text>Datagrid</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m12 
+    href="http://dotnetslackers.com/articles/DesignPatterns/default.aspx"><SPAN 
+    class=text>Design Patterns</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m13 
+    href="http://dotnetslackers.com/articles/Gridview/default.aspx"><SPAN 
+    class=text>Gridview</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m14 
+    href="http://dotnetslackers.com/articles/IIS/default.aspx"><SPAN 
+    class=text>IIS</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m15 
+    href="http://dotnetslackers.com/articles/Iterators/default.aspx"><SPAN 
+    class=text>Iterators</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m16 
+    href="http://dotnetslackers.com/articles/ORACLE/default.aspx"><SPAN 
+    class=text>Oracle</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m17 
+    href="http://dotnetslackers.com/articles/Security/default.aspx"><SPAN 
+    class=text>Security</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m18 
+    href="http://dotnetslackers.com/articles/Silverlight/default.aspx"><SPAN 
+    class=text>Silverlight</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m19 
+    href="http://dotnetslackers.com/articles/SQL/default.aspx"><SPAN 
+    class=text>SQL</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m20 
+    href="http://dotnetslackers.com/articles/VS_AddIn/default.aspx"><SPAN 
+    class=text>Visual Studio</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m21 
+    href="http://dotnetslackers.com/articles/WindowsForms/default.aspx"><SPAN 
+    class=text>Windows Forms</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m22 
+    href="http://dotnetslackers.com/articles/WF/default.aspx"><SPAN 
+    class=text>Windows Workflow Foundation</SPAN></A></LI>
+    <LI class=item><A class=link id=ctl00_topnav_RM1_m3_m23 
+    href="http://dotnetslackers.com/articles/WPF/default.aspx"><SPAN 
+    class=text>WPF</SPAN></A></LI>
+    <LI class="item last"><A class=link id=ctl00_topnav_RM1_m3_m24 
+    href="http://dotnetslackers.com/articles/XML/default.aspx"><SPAN 
+    class=text>XML</SPAN></A> </LI></UL></DIV></DIV></LI>
+  <LI class="item last"><A class=link id=ctl00_topnav_RM1_m4 
+  href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#"><SPAN 
+  class=text>Columns</SPAN></A>
+  <DIV class=slide>
+  <UL class="vertical group level1">
+    <LI class="item first"><A class=link id=ctl00_topnav_RM1_m4_m0 
+    href="http://dotnetslackers.com/columns/ajax/"><SPAN 
+    class=text>AJAX</SPAN></A></LI>
+    <LI class="item last"><A class=link id=ctl00_topnav_RM1_m4_m1 
+    href="http://dotnetslackers.com/columns/data/"><SPAN 
+    class=text>Data</SPAN></A> </LI></UL></DIV></LI></UL><INPUT 
+id=ctl00_topnav_RM1_Hidden type=hidden name=ctl00$topnav$RM1>
+<SCRIPT type=text/javascript>window["ctl00_topnav_RM1"] = RadMenu.Create("ctl00_topnav_RM1");window["ctl00_topnav_RM1"].Initialize({"ExpandAnimation":{"Type":"None","Duration":0},"CollapseAnimation":{"Type":"None","Duration":1000},"Skin":"CssBlue","Enabled":true},{"ctl00_topnav_RM1_m1":{"NavigateAfterClick":false},"ctl00_topnav_RM1_m4":{"NavigateAfterClick":false}});</SCRIPT>
+ </DIV>
+<DIV id=userbar><A style="HEIGHT: 20px; BACKGROUND-COLOR: #ff9000" 
+href="http://twitter.com/dotnetslackers" rel=nofollow>Follow us on twitter <IMG 
+height=20 src="WPF Tutorial.files/twitter-icon.png" width=41 
+align=absMiddle></A> 
+<DIV id=ctl00_topnav_pnlNotRegistered><A 
+href="http://dotnetslackers.com/users/register.aspx">Register</A> <A 
+onclick=javascript:showLogin(); href="javascript:;">Forgot Password</A> <A 
+onclick=javascript:showLogin(); href="javascript:;">Login</A> <LINK 
+href="WPF Tutorial.files/authentication.css" type=text/css rel=stylesheet>
+<DIV class=dimBackground id=divDimBackground style="DISPLAY: none"></DIV>
+<DIV class=modalBox id=divMembershipBox style="DISPLAY: none; WIDTH: 440px">
+<DIV class=titleContainer>
+<DIV class=title>DotNetSlackers.com</DIV>
+<DIV class=closeButton id=divMembershipClose title=Close 
+onclick=javascript:hideLogin();></DIV></DIV>
+<DIV class=contentContainer>
+<DIV id=divLogin>
+<DIV class=form>
+<H3>Login</H3>
+<P><LABEL class=label for=txtLoginUserName>User Name:</LABEL> <INPUT 
+class=textbox id=txtLoginUserName> <SPAN class=validator id=valLoginUserName 
+style="DISPLAY: none"></SPAN></P>
+<P><LABEL class=label for=txtLoginPassword>Password:</LABEL> <INPUT 
+class=textbox id=txtLoginPassword type=password> <SPAN class=validator 
+id=valLoginPassword style="DISPLAY: none"></SPAN></P>
+<P><LABEL class=label></LABEL><LABEL><INPUT id=chkLoginRememberMe 
+type=checkbox>Remember me on this computer</LABEL> </P><SPAN class=message 
+id=loginMessage style="DISPLAY: none"></SPAN>
+<P><LABEL class=label></LABEL><INPUT class=button id=btnLogin onclick=javascript:OnClickLogin(); type=button value=Login> 
+</P></DIV>
+<DIV class=divider></DIV>
+<DIV class=form>
+<H3>Lost Password?</H3>
+<P><LABEL class=label for=txtForgotEmail>Email:</LABEL> <INPUT class=textbox 
+id=txtForgotEmail> <SPAN class=validator id=valForgotEmail 
+style="DISPLAY: none"></SPAN></P>
+<P><LABEL class=label></LABEL><INPUT class=button id=btnPassword onclick=javascript:sendPassword(); type=button value="Send Password"> 
+</P><SPAN id=passwordMessage 
+style="DISPLAY: none"></SPAN></DIV></DIV></DIV></DIV></DIV></DIV></DIV>
+<DIV class=clear>&nbsp;</DIV>
+<DIV id=sidebar><INPUT class=searchbox 
+onkeypress="return SubmitOnEnter(this,event)" id=q1 size=15 name=q1> 
+<DIV style="MARGIN-TOP: 4px; MARGIN-BOTTOM: 4px"><INPUT onclick=SearchSite1(); type=button value=Search name=sa></DIV><!-- Begin -  Site: DotNetSlackers Zone: 120X80 -->
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X=' + browDateTime + '" width=120 height=80 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<s'+'cript src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<a href="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" target="_blank"><img src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" width="120" height="80" border="0" alt=""></a>'); } }
+else
+     { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Get&amp;SiteID=1&amp;X=' + browDateTime + '" width=120 height=80 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=17&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=79511" 
+target=_blank><IMG height=80 alt="" 
+src="WPF Tutorial.files/img120x80_Ani_SSRS.gif" width=120 border=0></A> 
+</NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: 120X80 -->
+<DIV class=clear></DIV><BR><!-- Begin -  Site: DotNetSlackers Zone: 120 x 600 (Right Bar) -->
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=5&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X=' + browDateTime + '" width=120 height=600 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<s'+'cript src="http://ads.dotnetslackers.com/a.aspx?ZoneID=5&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<a href="http://ads.dotnetslackers.com/a.aspx?ZoneID=5&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" target="_blank"><img src="http://ads.dotnetslackers.com/a.aspx?ZoneID=5&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" width="120" height="600" border="0" alt=""></a>'); } }
+else
+     { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=5&amp;Task=Get&amp;SiteID=1&amp;X=' + browDateTime + '" width=120 height=600 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=5&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=97653" 
+target=_blank><IMG height=600 alt="" src="WPF Tutorial.files/ORM_120x600.jpg" 
+width=120 border=0></A> </NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: 120 x 600 (Right Bar) -->
+<P><!-- Begin -  Site: DotNetSlackers Zone: 125X125 -->
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var SiteID = 1;
+var ZoneID = 15;
+var browDateTime = (new Date()).getTime();
+if (browName=='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://ads.dotnetslackers.com/a.aspx?ZoneID=' + ZoneID + '&amp;Task=Get&amp;IFR=False&amp;Browser=NETSCAPE4&amp;PageID=87761&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+if (browName!='Netscape')
+{
+document.write('<s'+'cript lang' + 'uage="jav' + 'ascript" src="http://ads.dotnetslackers.com/a.aspx?ZoneID=' + ZoneID + '&amp;Task=Get&amp;IFR=False&amp;PageID=87761&amp;SiteID=' + SiteID + '&amp;Random=' + browDateTime + '">'); document.write('</'+'scr'+'ipt>');
+}
+// --> 
+</SCRIPT>
+<NOSCRIPT><A 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=15&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=87761" 
+target=_blank><IMG height=125 alt="" src="WPF Tutorial.files/blank.gif" 
+width=125 border=0></A> </NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: 125X125 --></P>
+<DIV class=textadsBox><A href="http://www.maximumasp.com/">MaximumASP</A><BR><A 
+href="http://www.tamos.com/products/commview/">Packet Sniffer</A><BR></DIV>
+<DIV class=textadsBox>
+<SCRIPT type=text/javascript> 
+<!-- 
+lqm_channel=1;
+lqm_publisher=70;
+lqm_zone=1;
+lqm_format=2;
+//-->
+</SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/s.js" type=text/javascript></SCRIPT>
+<BR><BR>
+<SCRIPT type=text/javascript> 
+<!-- 
+lqm_channel=1;
+lqm_publisher=70;
+lqm_zone=1;
+lqm_format=2;
+//-->
+</SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/s.js" type=text/javascript></SCRIPT>
+</DIV></DIV>
+<DIV id=content><A name=top></A>
+<DIV class=ArticleInfoBox><SPAN id=ctl00_ArticleInfo1_ri 
+title="Scroll to the bottom to vote for this article."><IMG 
+src="WPF Tutorial.files/star_active.gif"><IMG 
+src="WPF Tutorial.files/star_active.gif"><IMG 
+src="WPF Tutorial.files/star_active.gif"><IMG 
+src="WPF Tutorial.files/star_active.gif"><IMG 
+src="WPF Tutorial.files/star_active.gif"></SPAN><BR>Total votes: <SPAN 
+id=ctl00_ArticleInfo1_vo>6</SPAN><BR>Views: <SPAN 
+id=ctl00_ArticleInfo1_vi>267,904</SPAN><BR>Comments: <SPAN 
+id=ctl00_ArticleInfo1_co><A 
+href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#comments">7</A></SPAN><BR>Category: 
+<SPAN id=ctl00_ArticleInfo1_ca><A 
+href="http://dotnetslackers.com/articles/silverlight">Silverlight</A></SPAN><BR>Print: 
+<SPAN id=ctl00_ArticleInfo1_print><A 
+href="http://dotnetslackers.com/articles/PrintArticle.aspx?ArticleId=95">Print 
+Article</A></SPAN><BR><BR>
+<SCRIPT src="" type=text/javascript></SCRIPT>
+<BR><BR><SPAN id=ctl00_ArticleInfo1_l>Please <A onclick=javascript:showLogin(); 
+href="javascript:;">login</A> to rate or to leave a comment.</SPAN> </DIV>
+<DIV class=breadcrumb>
+<DIV class=right style="MARGIN-RIGHT: 20px"><!-- AddThis Button BEGIN -->
+<DIV class="addthis_toolbox addthis_default_style"><A 
+class=addthis_button_email></A><A class=addthis_button_facebook></A><A 
+class=addthis_button_myspace></A><A class=addthis_button_stumbleupon></A><A 
+class=addthis_button_digg></A><A class=addthis_button_dotnetkicks></A><SPAN 
+class=addthis_separator>|</SPAN> <A class=addthis_button_expanded>More</A> 
+</DIV>
+<SCRIPT src="WPF Tutorial.files/addthis_widget.js" 
+type=text/javascript></SCRIPT>
+</DIV><A href="http://dotnetslackers.com/articles/">Recent Articles</A> » <A 
+id=ctl00_ArticleInfo1_linkCurrentCategory 
+title="See all articles in this category" 
+href="http://dotnetslackers.com/articles/silverlight">Silverlight</A> 
+<H2><SPAN id=ctl00_ArticleInfo1_articletitle>WPF Tutorial</SPAN></H2></DIV>
+<P>Published: <SPAN id=ctl00_ArticleInfo1_pubdate>16 May 2007</SPAN><BR>By: 
+<SPAN id=ctl00_ArticleInfo1_author><A 
+href="http://dotnetslackers.com/community/members/robeisenberg.aspx">Rob 
+Eisenberg</A></SPAN> <SPAN id=ctl00_ArticleInfo1_download></SPAN></P>
+<P><SPAN id=ctl00_ArticleInfo1_desc>With all the new technology that Microsoft 
+is releasing, it's hard to keep up. WPF is one such technology. It is a 
+completely different metaphor for user interface construction than previous 
+frameworks. This article is intended to give a general overview of the key 
+concepts and innovations of WPF, hopefully educating readers enough to make 
+intelligent UI technology decisions and smooth the learning curve for those 
+beginning to work with this framework. </SPAN></P>
+<DIV class=KonaBody>
+<TABLE id=toc>
+  <THEAD>
+  <TR>
+    <TH>Contents<SPAN class=toctoggle> [<A id=togglelink 
+      href="javascript:toggleToc()">hide</A>]</SPAN></TH></TR></THEAD>
+  <TBODY>
+  <TR>
+    <TD>
+      <UL>
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s1">1 
+        Introduction</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s2">2 
+        XAML</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s3">3 
+        UI Layout</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s4">4 
+        Databinding</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s5">5 
+        Styles and Control Templates</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s6">6 
+        Animation and 3D</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s7">7 
+        WPF: Present and Future</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s8">8 
+        Summary</A> 
+        <LI><A 
+        href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#s9">9 
+        Resources</A> </LI></UL></TD></TR></TBODY></TABLE><A name=s1></A>
+<H3>Introduction</H3>
+<P>Windows Presentation Foundation (hereafter referred to as <CODE>WPF</CODE>) 
+is a new API for creating graphical user interfaces for the Windows platform. It 
+is an alternative to WinForms that further empowers developers by providing an 
+API capable of taking full advantage of the multimedia facilities of the modern 
+PC. Unlike WinForms, it does not wrap Win32 but is completely new, built from 
+the ground up using .NET. The fundamental power of <CODE>WPF</CODE> comes from 
+the fact that it is vector based, hardware accelerated and resolution 
+independent. </P>
+<P>Reminiscent of WinForms, you’ll find many of the controls you are used to 
+when building applications: <CODE>Button</CODE>, <CODE>ComboBox</CODE>, 
+<CODE>ListBox</CODE>, etc. However, in <CODE>WPF</CODE>, your UI design is 
+represented in a completely different fashion. Instead of using a designer 
+generated code file or a resource file as the source of a UI definition, 
+<CODE>WPF</CODE> uses <CODE>XML</CODE>. Specifically, it uses <CODE>XAML</CODE>. 
+Please, don’t let this frighten or dissuade you. It’s surprisingly intuitive and 
+much easier than you would think (not to mention fun). There are many other new 
+features in <CODE>WPF</CODE>, too many to discuss in this tutorial. Below, you 
+can see a chart depicting what I consider to be some of the most important 
+features/innovations in <CODE>WPF</CODE>. </P>
+<H4>Figure 1: Important WPF Features</H4>
+<P><IMG alt="Important WPF Features" 
+src="WPF Tutorial.files/wpffeatures.jpg"></P>
+<P>The right column of the chart lists some technologies that you may be 
+familiar with that parallel the ideas in <CODE>WPF</CODE>. Hopefully this gives 
+you a starting point for understanding the terms on the left. Don’t take the 
+parallels too literally; there are differences. We’ll talk about each of these 
+areas over the course of this article and I will provide additional resources 
+for going into greater depth as well. </P>
+<P>Besides the above mentioned features, there is a new type of application. The 
+standard Windows application is alive and kicking, but you now have an 
+additional option: the <CODE>XAML</CODE> Browser Application (.xbap). When you 
+deploy this type of application to a web server, users can navigate to a URL and 
+run your program from within the IE sandbox. The experience is similar to using 
+a <CODE>Flash</CODE> application, but is restricted to users of IE (versions 6 
+and 7 and any browser that supports the <CODE>WebControl</CODE>, such as Firefox 
+through its IE tab). You can begin to imagine the types of rich intranet 
+applications you could build for a company if you were given IE and 
+<CODE>WPF</CODE> as the platform. At the same time, it’s too bad that it only 
+works in IE. To address this issue, Microsoft is currently working on 
+<CODE>Silverlight</CODE> (formerly <CODE>WPF/E</CODE>), a cross-platform, 
+cross-browser subset of the .NET Framework and <CODE>WPF</CODE>. </P>
+<P>If you want to work with <CODE>WPF</CODE> (part of .NET 3.0) there are a few 
+things you are going to need. First off, .NET 3.0 was designed to work on Vista, 
+XP (SP2) and Windows Server 2003 (SP1). Any one of these OS’s and the .NET 3.0 
+runtime will allow you to run applications built with <CODE>WPF</CODE>. You can 
+get the current version of the runtime <A 
+href="http://www.microsoft.com/downloads/details.aspx?FamilyId=10CC340B-F857-4A14-83F5-25634C3BF043&amp;displaylang=e%0A%0An" 
+rel=nofollow>here</A>. Installing the runtime will add .NET 2.0 if you don’t 
+have it and if you do, it will just add the new assemblies (marked with a 3.0 
+version designation). I’m guessing that most of you will want to do some 
+development; for that you will need a few more things. The necessities are a 
+version of Visual Studio 2005 and the <A 
+href="http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&amp;displaylang=e%0A%0An" 
+rel=nofollow>Windows SDK</A>. (Watch out! The download size is rather large.) If 
+you want to have a more pleasant development experience, you should install the 
+Visual Studio S2005 <A 
+href="http://www.microsoft.com/downloads/details.aspx?FamilyId=F54F5537-CC86-4BF5-AE44-F5A1E805680D&amp;displaylang=e%0A%0An" 
+rel=nofollow>extensions</A>. Once you get up and running with these pieces I 
+recommend you explore the <A href="http://www.netfx3.com/" 
+rel='nofollow""'>official site</A> a little bit. </P>
+<P>Before I dig into more technical issues I would like to mention a few general 
+items available for learning and working with <CODE>WPF</CODE>. If you have 
+installed the VS extensions for .NET 3.0, then you now have the <EM>Orcas</EM> 
+designer available to you. This is a tool much like the WinForms designer, but 
+it is obviously for creating <CODE>WPF</CODE> UIs. It has a tabbed design, so 
+that you can switch back and forth between the visual designer and 
+<CODE>XAML</CODE> markup. The powerhouse design tool is <CODE>Blend</CODE> 
+(formerly Expression Interactive Designer), which you can get <A 
+href="http://www.microsoft.com/products/expression/en/expression-blend/try.mspx" 
+rel=nofollow>here</A>. If you are more graphically inclined, you are going to 
+want to check this out. It is similar to using a tool like Adobe Illustrator, 
+but it generates <CODE>XAML</CODE> and integrates with the VS solution and 
+MSBuild. This is a landmark tool because it makes designers fully fledged 
+members of the development team. No longer do they need to do a UI mockup and 
+deliver it to a developer to implement (or turn down because of its complexity). 
+They can simply build the UI using a set of tools that they are familiar with. A 
+similar third party tool is <A href="http://www.mobiform.com/" 
+rel=nofollow>Mobiform’s Aurora</A>. I highly recommend investigating it. There 
+are also numerous plug-ins for exporting 2D/3D art to <CODE>XAML</CODE> from 
+most popular programs. Regardless of whether you are approaching 
+<CODE>WPF</CODE> from a developer or designer’s perspective, you are probably 
+going to want a good book on the technology. Currently, the two best resources I 
+know of are Charles Petzold’s book <A 
+href="http://www.amazon.com/Applications-Code-Markup-Presentation-Foundation/dp/0735619573/ref=pd_bbs_sr_1/102-8593466-6167351?ie=UTF8&amp;s=books&amp;qid=1177886048&amp;sr=8-1" 
+rel=nofollow>Applications = Code + Markup</A> and Adam Nathan’s book <A 
+href="http://www.amazon.com/Windows-Presentation-Foundation-Unleashed-WPF/dp/0672328917/ref=pd_bbs_sr_1/102-8593466-6167351?ie=UTF8&amp;s=books&amp;qid=1177886109&amp;sr=1-1" 
+rel=nofollow>Windows Presentation Foundation Unleashed</A>. </P><A name=s2></A>
+<H3>XAML</H3>
+<P><CODE>XAML</CODE> stands for <CODE>eXtensible Application Markup 
+Language</CODE>. You can think of it as <CODE>HTML</CODE> for Windows 
+applications, but it is really quite a bit more expressive and powerful. For 
+those of you code junkies out there, <CODE>XAML</CODE> is really no more than a 
+special type of <CODE>CLR</CODE> object serialization. It was intentionally 
+architected to serialize <CODE>CLR</CODE> object graphs into an <CODE>XML</CODE> 
+representation that is both verbose and human readable. The reasoning behind 
+this was to make it possible for developers to easily edit the markup by hand 
+and enable the creation of powerful graphical tools that could generate markup 
+for you behind the scenes. When you compile an application that contains 
+<CODE>XAML</CODE> files, the markup gets converted into <CODE>BAML</CODE>. 
+<CODE>BAML</CODE> is a tokenized, binary representation of <CODE>XAML</CODE>. 
+This binary representation is then stored inside the application’s resources and 
+loaded as needed by <CODE>WPF</CODE> during the execution of your program. The 
+main advantage of this approach is that you get a faster UI load time by reading 
+a binary stream than through parsing <CODE>XML</CODE>. </P>
+<P>The best way to get to know <CODE>XAML</CODE> is by looking at some examples. 
+So without further ado, let’s begin by comparing two markup fragments: </P>
+<H4>HTML Fragment</H4><TEXTAREA class=xml name=t1>&lt;div style="border: solid 5px black; margin: 10px; padding: 5px"&gt;
+  &lt;input type="button" value="Click Me!" /&gt;
+&lt;/div&gt;
+</TEXTAREA> 
+<H4>XAML Fragment</H4><TEXTAREA class=xml name=t2>&lt;Border BorderBrush="Black" BorderThickness="5" Margin="10" Padding="5"&gt;
+  &lt;Button&gt;Click Me!&lt;/Button&gt;
+&lt;/Border&gt;
+</TEXTAREA> 
+<H4>Figure 2: A Button with Border</H4>
+<P><IMG alt="A Button with Border." src=""></P>
+<P>Both of these fragments accomplish the same effect on their respective 
+platforms: creating a <CODE>button</CODE> with a border around it (Note: 
+Declaring styles inline is not a best practice in <CODE>XAML</CODE> any more 
+than <CODE>HTML</CODE>; this is for demonstration purposes only.). I started 
+with this example so that we could compare <CODE>XAML</CODE> to something more 
+familiar, <CODE>HTML</CODE>. I think that if you are honest, however, you will 
+agree that the <CODE>XAML</CODE> fragment is much more expressive than the 
+<CODE>HTML</CODE> fragment. It is intuitive. One of the reasons for this is 
+that, generally speaking, the element tags map directly to <CODE>Types</CODE> 
+and the attributes map to <CODE>Properties</CODE> on those Types. Since WPF’s 
+class hierarchy was very carefully designed, you’ll find that many elements have 
+the same available attributes. This consistency makes for smooth, natural 
+learning. </P>
+<P>Using <CODE>XAML</CODE>, you can represent a wide variety of UI related 
+constructs. These include things like <CODE>controls</CODE>, <CODE>layout 
+panels</CODE>, <CODE>graphics primitives</CODE>, 3D content and even 
+<CODE>animations</CODE>. Let’s look at another example. This time we will draw a 
+graphics primitive: </P><TEXTAREA class=xml name=t3>&lt;Ellipse Width="200" Height="150"&gt;
+   &lt;Ellipse.Fill&gt;
+      &lt;LinearGradientBrush&gt;
+         &lt;GradientStop Offset="0" Color="Teal"/&gt;
+         &lt;GradientStop Offset="1" Color="Aqua"/&gt;
+      &lt;/LinearGradientBrush&gt;
+   &lt;/Ellipse.Fill&gt;
+&lt;/Ellipse&gt;
+</TEXTAREA> 
+<H4>Figure 3: An Ellipse</H4>
+<P><IMG alt="An Ellipse" src="WPF Tutorial.files/xaml2.jpg"></P>
+<P>The first line of this example is pretty simple. We have an 
+<CODE>Ellipse</CODE> whose <CODE>Height</CODE> and <CODE>Width</CODE> properties 
+are being set. The child element of <CODE>Ellipse</CODE>, on the other hand, is 
+something different than what we have previously seen. In this case we wanted to 
+represent a linear gradient brush for filling the <CODE>Ellipse</CODE>. But how 
+could we represent all of that information using the standard attribute syntax? 
+It turns out that this is a very common scenario, and to solve the problem we 
+have something called <EM>Property Element Syntax</EM>. In <CODE>XAML</CODE>, 
+you can turn any attribute (property on the class) into a child element by using 
+this pattern: <CODE>ElementName.AttributeName</CODE> 
+(<CODE>TypeName.PropertyName</CODE>). So in this case we are assigning the 
+enclosed linear gradient brush to the <CODE>Fill</CODE> property of the 
+<CODE>Ellipse</CODE>. If you’re very keen, you’ll notice that there is a 
+discrepancy between what I just told you and what is happening with the child 
+nodes of <CODE>LinearGradientBrush</CODE>. I have defined a set of gradient 
+stops for the brush, but what property are they being assigned to on the brush? 
+In fact they are being assigned to the <CODE>GradientStops</CODE> property, but 
+where is the element name <CODE>LinearGradientBrush.GradientStops</CODE>? How 
+does the <CODE>XAML</CODE> parser know to assign to this property? Again, we 
+have a common scenario. Any object can declare a default content property to 
+which its child nodes will be assigned automatically. In this case 
+<CODE>GradientStops</CODE> is the default content property. You have actually 
+seen this in action in the very first example: </P><TEXTAREA class=xml name=t4>&lt;Button&gt;Click Me!&lt;/Button&gt;
+</TEXTAREA> 
+<P>On the button there is a property called <CODE>Content</CODE> that is set as 
+the default content property for the <CODE>button</CODE>. This is how the 
+<CODE>XAML</CODE> parser knows what to do with the text <EM>Click Me!</EM> Let’s 
+do one final example. This time we’ll do something different with the button’s 
+content, since it is a bit of a special property: </P><TEXTAREA class=xml name=t5>&lt;Button&gt;
+   &lt;Ellipse Width="200" Height="150"&gt;
+      &lt;Ellipse.Fill&gt;
+         &lt;LinearGradientBrush&gt;
+            &lt;GradientStop Offset="0" Color="Teal"/&gt;
+            &lt;GradientStop Offset="1" Color="Aqua" /&gt;
+         &lt;/LinearGradientBrush&gt;
+      &lt;/Ellipse.Fill&gt;
+   &lt;/Ellipse&gt;
+&lt;/Button&gt;
+</TEXTAREA> 
+<H4>Figure 4: A Button with Ellipse content</H4>
+<P><IMG alt="A Button with Ellipse content." 
+src="WPF Tutorial.files/xaml3.jpg"></P>
+<P>It happens that the <CODE>Button</CODE> (and many other controls) inherits 
+from a class called <CODE>ContentControl</CODE>. This is where it gets its 
+Content property, mentioned earlier. The type of <CODE>Content</CODE> is 
+<CODE>object</CODE>, which allows you to fill it with any <CODE>CLR</CODE> type. 
+For most objects, <CODE>WPF</CODE> will simply call <CODE>ToString()</CODE> and 
+render the value. However, you can also set the content to any renderable 
+<CODE>WPF</CODE> object. This means that the button’s content could just as 
+easily have been an image, a 3D animation or video. This is not a feature of 
+<CODE>XAML</CODE>, but is part of the design of <CODE>WPF</CODE>, sometimes 
+referred to as the <CODE>Content Model</CODE>. The flexibility of this 
+architecture makes for seemingly endless possibilities when composing 
+<CODE>WPF</CODE> UI’s. </P>
+<P>If <CODE>XAML</CODE> hasn’t totally clicked yet, don’t worry. You are going 
+to see many more examples. The more you look at it, the more it will make sense. 
+Nevertheless, the best way to learn <CODE>XAML</CODE> is to play with it 
+yourself. For that, I would recommend <CODE>XamlPad</CODE>; a text editor that 
+renders your <CODE>XAML</CODE> on the fly. It comes with the SDK. There are 
+several other similar tools that can be found on the web. </P><A name=s3></A>
+<H3>UI Layout</H3>
+<P>When building a UI, one of the first issues you will deal with is how to 
+arrange all of the UI pieces on screen. In previous MS technologies we have had 
+limited support for layout. .NET 2.0 offers WinForms developers some long 
+awaited options in this area. <CODE>WPF</CODE>, however, has made layout a first 
+class citizen from the beginning. There is quite a variety of layout options to 
+choose from. I can only cover a few here, so be sure to look in the SDK for 
+things that inherit from Panel in order to see more of what is available. Let’s 
+begin with an example: </P><TEXTAREA class=xml name=t6>&lt;StackPanel&gt;
+   &lt;TextBlock&gt;My UI&lt;/TextBlock&gt;
+   &lt;ListBox&gt;
+      &lt;ListBoxItem&gt;Item 1&lt;/ListBoxItem&gt;
+      &lt;ListBoxItem&gt;Item 2&lt;/ListBoxItem&gt;
+   &lt;/ListBox&gt;
+   &lt;RichTextBox/&gt;
+&lt;/StackPanel&gt;
+</TEXTAREA> 
+<H4>Figure 5: A StackPanel layout</H4>
+<P><IMG height=256 alt="A StackPanel layout." 
+src="WPF Tutorial.files/layout1.jpg"> </P>
+<P><CODE>StackPanel</CODE> is one of the simplest layout options available. It 
+does exactly what its name implies: stack elements, either vertically or 
+horizontally. <CODE>Vertical</CODE> is the default, but you can specify 
+<CODE>horizontal</CODE> by setting the <CODE>Orientation</CODE> property. Most 
+layouts will require more advanced functionality. A typical application will 
+likely use <CODE>DockPanel</CODE> as its root layout element: </P><TEXTAREA class=xml name=t7>&lt;DockPanel&gt;
+   &lt;TextBlock DockPanel.Dock="Top"&gt;My UI&lt;/TextBlock&gt;
+   &lt;ListBox DockPanel.Dock="Right"&gt;
+      &lt;ListBoxItem&gt;Item 1&lt;/ListBoxItem&gt;
+      &lt;ListBoxItem&gt;Item 2&lt;/ListBoxItem&gt;
+   &lt;/ListBox&gt;
+   &lt;RichTextBox/&gt;
+&lt;/DockPanel&gt;
+</TEXTAREA> 
+<H4>Figure 6: A DockPanel layout</H4>
+<P><IMG height=252 alt="A DockPanel layout." 
+src="WPF Tutorial.files/layout2.jpg"></P>
+<P>The <CODE>DockPanel</CODE> allows you to dock elements to the top, bottom, 
+left or right of the container. The last element will, by default, fill the 
+remaining space. This <CODE>XAML</CODE> sample presents a new markup construct 
+that I intentionally did not discuss in the previous section: attached 
+properties. Notice that both <CODE>TextBlock</CODE> and <CODE>ListBox</CODE> 
+have a <CODE>DockPanel.Dock</CODE> attribute on them. If you examine these 
+classes, you will find that neither has a property that looks like this. What 
+you will find is that <CODE>DockPanel</CODE> declares a 
+<CODE>DependencyProperty</CODE> called <CODE>DockProperty</CODE>. This special 
+type of <CODE>DependencyProperty</CODE>, called an <CODE>Attached</CODE> 
+Property, allows a parent control to store information with its children (We 
+don’t have time to get into details on <CODE>DependencyProperties</CODE>. For a 
+great discussion, see Charles Petzold’s book). In this case, the 
+<CODE>DockPanel</CODE> is storing information it needs for layout with its child 
+controls. In <CODE>XAML</CODE> this manifests itself as an attribute on the 
+child element in the form: <CODE>ParentName.AttachedPropertyName</CODE>. Let’s 
+look at another example of this syntax used by <CODE>Grid</CODE>: </P><TEXTAREA class=xml name=t8>&lt;Grid&gt;
+   &lt;Grid.RowDefinitions&gt;
+      &lt;RowDefinition Height="*"/&gt;
+      &lt;RowDefinition Height="3*"/&gt;
+   &lt;/Grid.RowDefinitions&gt;
+
+   &lt;Grid.ColumnDefinitions&gt;
+      &lt;ColumnDefinition/&gt;
+      &lt;ColumnDefinition/&gt;
+   &lt;/Grid.ColumnDefinitions&gt;
+
+   &lt;TextBlock Grid.ColumnSpan="2"&gt;My UI&lt;/TextBlock&gt;
+   &lt;ListBox Grid.Row="1" Grid.Column="0"&gt;
+      &lt;ListBoxItem&gt;Item 1&lt;/ListBoxItem&gt;
+      &lt;ListBoxItem&gt;Item 2&lt;/ListBoxItem&gt;
+   &lt;/ListBox&gt;
+   &lt;RichTextBox Grid.Row="1" Grid.Column="1"/&gt;
+&lt;/Grid&gt;
+</TEXTAREA> 
+<H4>Figure 7: A Grid layout</H4>
+<P><IMG height=254 alt="A Grid layout." src="WPF Tutorial.files/layout3.jpg"> 
+</P>
+<P>The <CODE>Grid</CODE> is perhaps the most common layout option and it is the 
+most complex that we have looked at. First, notice that inside the 
+<CODE>Grid</CODE>, we have to declare our rows and columns. In this grid we have 
+two of each. I have used a grid specific height notation for the rows. In this 
+case I have said <EM>“split the space such that the second row takes up three 
+times as much as the first row.”</EM> Because I have not declared a width on the 
+columns, the space will be split evenly between the two. Once I have declared 
+the grid’s structure, I use attached properties to place my controls in the 
+appropriate location. This is mostly self explanatory except for the first child 
+(<CODE>TextBlock</CODE>), which is missing column and row specifications. The 
+markup works because the grid will default its location to column and row zero. 
+</P>
+<P>In a real world application, your layouts are likely to be formed by using 
+various combinations of layout controls nested one in the other. Try to avoid 
+hard coding widths and heights on elements. Let the controls do the work for 
+you, adapting your UI to fit the available space. With a little practice, you 
+will begin to realize the flexibility of WPF’s layout system. There are quite a 
+lot of layout options. Below is a list of other common layout panels that we 
+don’t have time to look at markup for: </P>
+<OL>
+  <LI>WrapPanel: Similar to stack panel, but wraps elements to the next line 
+  when it cannot fit them. 
+  <LI>GroupBox: Groups elements in a titled bounding box. 
+  <LI>Viewport: Scales its child to fit the available space. 
+  <LI>Border: Wraps its child in a border. 
+  <LI>Canvas: Positions child elements exactly according to top and left 
+  coordinates (relative to the container). </LI></OL>
+<P>In addition to these out-of-box options, you can always inherit from 
+<CODE>Panel</CODE> and create your own. If you search the web, you will find 
+several examples of this. One great resource is <A 
+href="http://wpf.netfx3.com/files/folders/controls/entry7094.aspx" 
+rel=nofollow>Kevin’s Bag-O-Tricks</A>. He has a couple of custom panels to learn 
+from as well as some good examples of how to build other custom controls. You 
+should also know that there are <CODE>Margin</CODE> and/or <CODE>Padding</CODE> 
+properties available on most elements for fine grained control of layout. With a 
+little research you will find properties such as <CODE>VerticalAlignment</CODE> 
+and <CODE>HorizontalAlignment</CODE>, among others, that make WPF’s layout 
+mechanism quite flexible and able to handle real world application needs. </P><A 
+name=s4></A>
+<H3>Databinding</H3>
+<P><CODE>Databinding</CODE> and <CODE>DataTemplates</CODE> are perhaps the most 
+powerful features of <CODE>WPF</CODE>. Whatever your experiences with 
+databinding in previous technologies, MS or otherwise, I think you will be 
+impressed with the new goods. To begin with, support for datadinding is built 
+into <CODE>WPF</CODE> from its core. Almost every graphics/UI object that you 
+will work with in <CODE>WPF</CODE> inherits from <CODE>DependencyObject</CODE>. 
+The functionality supported by this base is what powers animation, styling and 
+databinding. Without going into too much detail, objects that inherit from 
+<CODE>DependencyObject</CODE> support a special type of property called a 
+<CODE>DependencyProperty</CODE>. Most of the properties you will work with, such 
+as <CODE>Text</CODE>, <CODE>Content</CODE>, <CODE>Width</CODE>, 
+<CODE>Height</CODE>, etc, are <CODE>DependencyProperties</CODE>. Any 
+<CODE>DependencyProperty</CODE> can be animated, styled and databound. 
+<CODE>WPF</CODE> support for databinding is so rich, that I will only be able to 
+demonstrate the most basic of examples here. The best resource for digging 
+deeper is <A href="http://www.beacosta.com/" rel=nofollow>Beatriz Costa’s 
+blog</A>. I recommend that you start from the very first post and read 
+everything up to the present. This may seem like quite a task, but the time you 
+will save by gaining a thorough understanding of databinding is worth it.</P>
+<P>The first example I would like to show is a very common scenario. You have 
+some object representing a <CODE>Person</CODE>, <CODE>Customer</CODE>, 
+<CODE>Employee</CODE>, etc. and you want to display their information in the UI 
+for editing purposes. Here’s some markup: </P><TEXTAREA class=xml name=t9>&lt;Grid&gt;
+   &lt;Grid.RowDefinitions&gt;
+      &lt;RowDefinition/&gt;
+      &lt;RowDefinition/&gt;
+      &lt;RowDefinition/&gt;
+      &lt;RowDefinition/&gt;
+      &lt;RowDefinition/&gt;
+   &lt;/Grid.RowDefinitions&gt;
+
+   &lt;Grid.ColumnDefinitions&gt;
+      &lt;ColumnDefinition Width="75"/&gt;
+      &lt;ColumnDefinition/&gt;
+   &lt;/Grid.ColumnDefinitions&gt;
+
+   &lt;Label&gt;First Name:&lt;/Label&gt;
+   &lt;TextBox Grid.Column="1" Text="{Binding Path=FirstName}"/&gt;
+
+   &lt;Label Grid.Row="1"&gt;Last Name:&lt;/Label&gt;
+   &lt;TextBox Grid.Row="1" Grid.Column="1" Text="{Binding LastName}"/&gt;
+
+   &lt;Label Grid.Row="2"&gt;Street:&lt;/Label&gt;
+   &lt;TextBox Grid.Row="2" Grid.Column="1" Text="{Binding Address.Street}"/&gt;
+
+   &lt;Label Grid.Row="3"&gt;City:&lt;/Label&gt;
+   &lt;TextBox Grid.Row="3" Grid.Column="1" Text="{Binding Address.City}"/&gt;
+
+   &lt;Label Grid.Row="4"&gt;State:&lt;/Label&gt;
+   &lt;TextBox Grid.Row="4" Grid.Column="1" Text="{Binding Address.State}"/&gt;
+&lt;/Grid&gt;
+</TEXTAREA> 
+<H4>Figure 8: A basic databinding example</H4>
+<P><IMG alt="A basic databinding example." 
+src="WPF Tutorial.files/binding1.jpg"> </P>
+<P>The screenshot is not very impressive, but you get the idea. I have created a 
+<CODE>Person</CODE> object with <CODE>FirstName</CODE> and <CODE>LastName</CODE> 
+public properties. There is also a public property called <CODE>Address</CODE> 
+of type <CODE>Address</CODE> which has <CODE>Street</CODE>, <CODE>City</CODE> 
+and <CODE>State</CODE> properties. I have assigned an instance of the 
+<CODE>Person</CODE> object to the <CODE>DataContext</CODE> property of the 
+window in the code beside. Every <CODE>FrameworkElement</CODE> has this 
+property. When binding <CODE>WPF</CODE> searches from the current element up the 
+UI tree until it finds a <CODE>DataContext</CODE> property it can bind to. 
+Notice that the markup syntax is enclosed in curly braces and begins with the 
+word <CODE>Binding</CODE>. You will see other Markup Extensions like this, but 
+<CODE>Binding</CODE> is the most common. Notice the <CODE>Path</CODE> expression 
+and the difference between how I have defined the binding to 
+<CODE>FirstName</CODE> and <CODE>LastName</CODE>. These statements are 
+equivalent; <CODE>LastName</CODE> demonstrates the abbreviated version. Also, 
+notice how I have accessed the <CODE>Address</CODE> object. If you were to run 
+this program, you would notice that all changes to the UI were propagated to the 
+<CODE>Person</CODE> object, but changes to the Person object are not propagated 
+back to the UI. For this to work you must implement the 
+<CODE>INotifyPropertyChanged</CODE> interface, a trivial task.</P>
+<P>Besides editing the <CODE>Person</CODE> object, let’s say that we want to 
+display the information elsewhere in our application, in a <EM>Contact Card</EM> 
+fashion. Let’s also say that we want to display this information in a consistent 
+way in several different places. Using previous technologies we would likely 
+create a custom control or user control to meet this need (or custom rendering 
+logic for an existing control). In <CODE>WPF</CODE> we have both of these 
+options, but additionally we can create a <CODE>DataTemplate</CODE>: </P><TEXTAREA class=xml name=t10>&lt;Grid&gt;
+  &lt;Grid.Resources&gt;
+    &lt;DataTemplate DataType="{x:Type local:Person}"&gt;
+      &lt;Grid Margin="3"&gt;
+        &lt;Grid.BitmapEffect&gt;
+          &lt;DropShadowBitmapEffect /&gt;
+        &lt;/Grid.BitmapEffect&gt;
+        &lt;Rectangle Opacity="1" RadiusX="9" RadiusY="9" Fill="Blue" StrokeThickness="0.35"&gt;
+          &lt;Rectangle.Stroke&gt;
+            &lt;LinearGradientBrush StartPoint="0,0" EndPoint="0,1"&gt;
+              &lt;GradientStop Color="White" Offset="0" /&gt;
+              &lt;GradientStop Color="#666666" Offset="1" /&gt;
+            &lt;/LinearGradientBrush&gt;
+          &lt;/Rectangle.Stroke&gt;
+        &lt;/Rectangle&gt;
+      &lt;Rectangle Margin="2,2,2,0" 
+        VerticalAlignment="Top" 
+        RadiusX="6" 
+        RadiusY="6" 
+        Stroke="Transparent" 
+        Height="15px"&gt;
+        &lt;Rectangle.Fill&gt;
+          &lt;LinearGradientBrush StartPoint="0,0" EndPoint="0,1"&gt;
+            &lt;GradientStop Color="#ccffffff" Offset="0" /&gt;
+            &lt;GradientStop Color="transparent" Offset="1" /&gt;
+          &lt;/LinearGradientBrush&gt;
+        &lt;/Rectangle.Fill&gt;
+      &lt;/Rectangle&gt;
+      &lt;Grid Margin="5"&gt;
+        &lt;Grid.RowDefinitions&gt;
+          &lt;RowDefinition Height="auto"/&gt;
+          &lt;RowDefinition Height="auto"/&gt;
+          &lt;RowDefinition Height="auto"/&gt;
+        &lt;/Grid.RowDefinitions&gt;
+        &lt;Grid.ColumnDefinitions&gt;
+          &lt;ColumnDefinition /&gt;
+        &lt;/Grid.ColumnDefinitions&gt;
+
+        &lt;StackPanel  Grid.Row="0" Orientation="Horizontal"&gt;
+          &lt;TextBlock FontSize="16" Foreground="White" Text="{Binding LastName}" /&gt;
+          &lt;TextBlock FontSize="16" Foreground="White" xml:space="preserve"&gt;, &lt;/TextBlock&gt;
+          &lt;TextBlock FontSize="16" Foreground="White" Text="{Binding FirstName}" /&gt;
+        &lt;/StackPanel&gt;
+
+        &lt;TextBlock Grid.Row="1" FontSize="16" Foreground="White" 
+          Text="{Binding Address.Street}" /&gt;
+        &lt;StackPanel Orientation="Horizontal" Grid.Row="2"&gt;
+          &lt;TextBlock FontSize="16" Foreground="White" Text="{Binding Address.City}" /&gt;
+          &lt;TextBlock FontSize="16" Foreground="White" xml:space="preserve"&gt;, &lt;/TextBlock&gt;
+          &lt;TextBlock FontSize="16" Foreground="White" Text="{Binding Address.State}" /&gt;
+        &lt;/StackPanel&gt;
+      &lt;/Grid&gt;
+    &lt;/Grid&gt;
+  &lt;/DataTemplate&gt;
+  &lt;/Grid.Resources&gt;
+
+  &lt;ListBox Name="personList" /&gt;
+
+&lt;/Grid&gt;
+</TEXTAREA> 
+<H4>Figure 9: A contact card DataTemplate sample</H4>
+<P><IMG alt="A contact card DataTemplate sample." 
+src="WPF Tutorial.files/binding2.jpg"> </P>
+<P>I got a little more advanced with this sample. I wanted to do something that 
+looked decent at least once during this article. To the explanation: </P>
+<P>A <CODE>DataTemplate</CODE> is a visualization of something nonvisual. In 
+this case we have a <CODE>Person</CODE> class, but what does that look like? 
+Here, I have created a <CODE>DataTemplate</CODE> and set its 
+<CODE>DataType</CODE> to <CODE>person</CODE>. Now <CODE>WPF</CODE> knows how to 
+render this type of class when databinding occurs. You can also assign a key to 
+a template and reference the template by this rather than having it 
+automatically applied. This is the same idea as using CSS to apply a style to 
+all DIV elements as apposed to applying the style based on class name. The 
+difference is that here we are defining how .NET classes should be rendered. 
+<CODE>DataTemplates</CODE> can also be scoped at any level of the application. 
+Notice that the template is defined inside of a <CODE>Grid.Resources</CODE> tag. 
+Every <CODE>FrameworkElement</CODE> has a resource collection. This means that 
+you can store <CODE>DataTemplate</CODE> at virtually any level of the UI 
+hierarchy. So I could define what <CODE>Person</CODE> looks like at the 
+<CODE>Application</CODE>, <CODE>Window</CODE>, <CODE>Panel</CODE> or 
+<CODE>Control</CODE> level. Here, I have defined the appearance of 
+<CODE>Person</CODE> and scoped it to all controls within the <CODE>Grid</CODE>. 
+The <CODE>ListBox</CODE> contained within the Grid picks up the template 
+automatically when I set its <CODE>ItemsSource</CODE> to a collection of 
+<CODE>Person</CODE> objects in the code beside. <CODE>DataTemplates</CODE> are 
+also aware of .NET inheritance. So if I have <CODE>Employee</CODE> and 
+<CODE>Manager</CODE> classes that both derive from <CODE>Person</CODE>, they 
+will be rendered with this template as well. But, if I define a 
+<CODE>DataTemplate</CODE> specifically for the <CODE>Manager</CODE> class, 
+<CODE>WPF</CODE> will use the more specific template. Consider the 
+possibilities.</P>
+<P>There is so much more to databinding and <CODE>DataTemplates</CODE> than I 
+have said here. I am quite embarrassed at the lack of coverage I have been able 
+to give. But I have to move on. As food for thought, here are some other things 
+supported out-of-box with <CODE>WPF</CODE> databinding: You can have conditional 
+binding based on business rule validation, conditional template selection based 
+on business rules, converters that shape data when binding to and from the UI, 
+<CODE>DataTriggers</CODE> that change the appearance of the template based on 
+values in the data, binding between different UI elements based on name or 
+relative position in the UI hierarchy, a choice of four different binding modes 
+and a choice of what type of event triggers the binding, and bindings to data 
+sources that pass in other bindings as parameters, etc. The list goes on and on. 
+Again, let me mention Beatriz Costa’s blog as a great source of info. Once you 
+have learned the basics, go there and read everything. </P><A name=s5></A>
+<H3>Styles and Control Templates</H3>
+<P>Frequently, when building a UI, one finds him or herself setting various 
+appearance related properties over and over again. For example, you may want all 
+the <CODE>Label</CODE> text in your app to be a <EM>Bold Trebuchet 12px</EM> 
+font. This is easy to do with CSS in a web app, but not as straight forward with 
+WinForms. <CODE>WPF</CODE> recognizes this need and satisfies it with the 
+introduction of the <CODE>Style</CODE> element. Let’s see how we would implement 
+the above example in <CODE>XAML</CODE>: </P><TEXTAREA class=xml name=t11>&lt;StackPanel&gt;
+   &lt;StackPanel.Resources&gt;
+      &lt;Style TargetType="{x:Type Label}"&gt;
+         &lt;Setter Property="FontFamily" Value="Trebuchet" /&gt;
+         &lt;Setter Property="FontSize" Value="12" /&gt;
+         &lt;Setter Property="FontWeight" Value="Bold" /&gt;
+      &lt;/Style&gt;
+   &lt;/StackPanel.Resources&gt;
+
+   &lt;Label&gt;Here is some text.&lt;/Label&gt;
+   &lt;Label&gt;More text.&lt;/Label&gt;
+   &lt;Label&gt;The last bit of text.&lt;/Label&gt;
+&lt;/StackPanel&gt;
+</TEXTAREA> 
+<P>The basic and most common part of a <CODE>Style</CODE> is its 
+<CODE>Setters</CODE>. Simply declare the property name and its value and it will 
+be applied. Easy, isn’t it? In the last section, I discussed how 
+<CODE>DataTemplates</CODE> could be applied by type or by key. The same applies 
+to styles. In this case, I have scoped the style to the <CODE>StackPanel</CODE>; 
+any <CODE>Label</CODE> in that panel will pick up the style. I can, of course, 
+override that style on the individual elements if I need. You can also inherit 
+styles one from another by setting the <CODE>BasedOn</CODE> attribute of the 
+style element: </P><TEXTAREA class=xml name=t12>&lt;StackPanel&gt;
+  &lt;StackPanel.Resources&gt;
+    &lt;Style x:Key="baseStyle" TargetType="{x:Type Control}"&gt;
+      &lt;Setter Property="FontFamily" Value="Trebuchet" /&gt;
+      &lt;Setter Property="FontSize" Value="12" /&gt;
+      &lt;Setter Property="FontWeight" Value="Bold" /&gt;
+    &lt;/Style&gt;
+    &lt;Style BasedOn="{StaticResource baseStyle}" TargetType="{x:Type Label}"&gt;
+      &lt;Style.Triggers&gt;
+        &lt;Trigger Property="IsMouseOver" Value="True"&gt;
+          &lt;Setter Property="Foreground" Value="Red" /&gt;
+        &lt;/Trigger&gt;
+      &lt;/Style.Triggers&gt;
+    &lt;/Style&gt;
+  &lt;/StackPanel.Resources&gt;
+
+  &lt;Label&gt;Here is some text.&lt;/Label&gt;
+  &lt;Label&gt;More text.&lt;/Label&gt;
+  &lt;Label&gt;The last bit of text.&lt;/Label&gt;
+&lt;/StackPanel&gt;
+</TEXTAREA> 
+<P>Notice that I now have two styles; one that applies to all elements inherited 
+from <CODE>Control</CODE>, and a second one based on that <CODE>Style</CODE> 
+that extends it – the second <CODE>Style</CODE> applies only to 
+<CODE>Labels</CODE>. I have taken this opportunity to show the second most 
+common element you will find in a <CODE>Style</CODE>: its Triggers collection. A 
+<CODE>Trigger</CODE> is a stateful aspect of the <CODE>Style</CODE>. In this 
+case, any of the Labels in the <CODE>StackPanel</CODE> will appear red only when 
+the mouse is hovering over them. </P>
+<P>By taking advantage of styles, you can create a consistent and easily 
+maintainable appearance for your UI. There is a lot of power in this concept. 
+However, sometimes you need to go further. Suppose you want all of the buttons 
+in your application to have a gel appearance. You cannot accomplish this with 
+only basic style setters. In this case you need to use a 
+<CODE>ControlTemplate</CODE>. In order to understand what a 
+<CODE>ControlTemplate</CODE> is, you need to think of controls more abstractly. 
+In <CODE>WPF</CODE>, a <CODE>Button</CODE> control is something akin to the 
+platonic idea of a <CODE>Button</CODE>. In your development experience you have 
+seen many buttons of different shapes and styles, but they were all buttons. 
+They typically all had some mouse over effect and triggered something when they 
+were clicked. With <CODE>WPF</CODE>, all of the buttons you have seen could be 
+implemented with the same <CODE>Button</CODE> control, but with different 
+<CODE>ControlTemplates</CODE>. <CODE>WPF</CODE>, by way of 
+<CODE>ControlTemplates</CODE>, allows you to switch out the appearance of any 
+control, without having to write any code related to its functionality. Some 
+controls have simple templates and some are complex. Here is a basic gel button 
+template straight out of the SDK: </P><TEXTAREA class=xml name=t13>&lt;StackPanel&gt;
+  &lt;StackPanel.Resources&gt;
+    &lt;Style TargetType="{x:Type Button}"&gt;
+      &lt;Setter Property="Foreground" Value="white" /&gt;
+      &lt;Setter Property="Margin" Value="1" /&gt;
+      &lt;Setter Property="Template"&gt;
+        &lt;Setter.Value&gt;
+          &lt;ControlTemplate TargetType="{x:Type Button}"&gt;
+            &lt;Grid&gt;
+              &lt;Rectangle x:Name="GelBackground" 
+                Opacity="1" RadiusX="9" 
+                RadiusY="9" 
+                Fill="{TemplateBinding Background}" 
+                StrokeThickness="0.35"&gt;
+                &lt;Rectangle.Stroke&gt;
+                  &lt;LinearGradientBrush StartPoint="0,0" EndPoint="0,1"&gt;
+                    &lt;GradientStop Color="White" Offset="0" /&gt;
+                    &lt;GradientStop Color="#666666" Offset="1" /&gt;
+                  &lt;/LinearGradientBrush&gt;
+                &lt;/Rectangle.Stroke&gt;
+              &lt;/Rectangle&gt;
+              &lt;Rectangle x:Name="GelShine" 
+                Margin="2,2,2,0" 
+                VerticalAlignment="Top" 
+                RadiusX="6" 
+                RadiusY="6" 
+                Opacity="1" 
+                Stroke="Transparent" 
+                Height="15px"&gt;
+                &lt;Rectangle.Fill&gt;
+                  &lt;LinearGradientBrush StartPoint="0,0" EndPoint="0,1"&gt;
+                    &lt;GradientStop Color="#ccffffff" Offset="0"/&gt;
+                    &lt;GradientStop Color="Transparent" Offset="1"/&gt;
+                  &lt;/LinearGradientBrush&gt;
+                &lt;/Rectangle.Fill&gt;
+              &lt;/Rectangle&gt;
+              &lt;ContentPresenter VerticalAlignment="Center" HorizontalAlignment="Center"/&gt;
+            &lt;/Grid&gt;
+            &lt;ControlTemplate.Triggers&gt;
+              &lt;Trigger Property="IsMouseOver" Value="True"&gt;
+                &lt;Setter Property="Fill" TargetName="GelBackground"&gt;
+                  &lt;Setter.Value&gt;
+                    &lt;RadialGradientBrush&gt;
+                      &lt;GradientStop Color="Lime" Offset="0" /&gt;
+                      &lt;GradientStop Color="DarkGreen" Offset="1" /&gt;
+                    &lt;/RadialGradientBrush&gt;
+                  &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
+              &lt;/Trigger&gt;
+              &lt;Trigger Property="IsPressed" Value="true"&gt;
+                &lt;Setter Property="Fill" TargetName="GelBackground"&gt;
+                  &lt;Setter.Value&gt;
+                    &lt;RadialGradientBrush&gt;
+                      &lt;GradientStop Color="#ffcc00" Offset="0"/&gt;
+                      &lt;GradientStop Color="#cc9900" Offset="1"/&gt;
+                    &lt;/RadialGradientBrush&gt;
+                  &lt;/Setter.Value&gt;
+                &lt;/Setter&gt;
+              &lt;/Trigger&gt;
+            &lt;/ControlTemplate.Triggers&gt;
+          &lt;/ControlTemplate&gt;
+        &lt;/Setter.Value&gt;
+      &lt;/Setter&gt;
+      &lt;Style.Triggers&gt;
+        &lt;Trigger Property="IsMouseOver" Value="True"&gt;
+          &lt;Setter Property="Foreground" Value="Black"/&gt;
+        &lt;/Trigger&gt;
+        &lt;Trigger Property="IsPressed" Value="True"&gt;
+          &lt;Setter Property="Foreground" Value="Black"/&gt;
+        &lt;/Trigger&gt;
+      &lt;/Style.Triggers&gt;
+    &lt;/Style&gt;
+  &lt;/StackPanel.Resources&gt;
+
+  &lt;Button Height="35" Width="125" Background="Black"&gt;Normal&lt;/Button&gt;
+  &lt;Button Height="35" Width="125" Background="Black"&gt;Mouse Over&lt;/Button&gt; 
+&lt;/StackPanel&gt;
+</TEXTAREA> 
+<H4>Figure 10: A templated button</H4>
+<P><IMG alt="A templated button." src="WPF Tutorial.files/templatedButton.jpg"> 
+</P>
+<P>This <CODE>ControlTemplate</CODE> is embedded within a <CODE>Style</CODE>, 
+but it does not have to be done this way. If you examine the 
+<CODE>ControlTemplate</CODE> element, you will see where the look of the 
+<CODE>Button</CODE> is being defined. In this case it is simply a layering of 
+rectangles with various gradients, but you have access to the full power of 
+<CODE>WPF</CODE> in defining these templates (yes that includes 3D and animation 
+if you so desire). Similar to Styles, <CODE>ControlTemplates</CODE> can be 
+assigned by type or key, but be careful that whatever template you are applying 
+matches the control type you are applying it to. Every <CODE>Control</CODE> 
+expects to find certain pieces in its <CODE>Template</CODE> in order to make the 
+control work right. You should study a working <CODE>Template</CODE> of a 
+<CODE>Control</CODE> before attempting to create your own. One of the best 
+resources for learning about control templates is <EM>Simple Styles</EM>. <A 
+href="http://notstatic.com/simplestyles" rel=nofollow>Here</A> you will find 
+basic <CODE>ControlTemplates</CODE> for all of the major controls in 
+<CODE>WPF</CODE>. They are accessible through the sidebar in <A 
+href="http://notstatic.com/archives/64" rel=nofollow>Kaxaml</A> (a tool you 
+should try out anyway) and can also now be found in <CODE>Blend</CODE>. You can 
+also take advantage of control templating support in your own custom controls. A 
+discussion of this is beyond the scope of this article. </P><A name=s6></A>
+<H3>Animation and 3D</H3>
+<P>Both animation and 3D are large areas when examined individually. In this 
+article I would like to cover them both generally. Mostly, I will point out a 
+number of great resources that you can use to develop skills in these areas.</P>
+<P>When working with animations in <CODE>WPF</CODE>, you should begin by making 
+sure to have a good understanding of <CODE>DependencyProperties</CODE>. It is 
+these properties that <CODE>WPF</CODE> supports animation for. As mentioned 
+before, a good resource for learning about <CODE>DependencyProperties</CODE> and 
+Animation is Charles Petzold’s book. He has thorough explanations of both of 
+these topics. </P>
+<P>To begin with, <CODE>WPF</CODE> uses a <CODE>Storyboard</CODE> to represent a 
+hierarchical organization of animations. This sort of structure obviously lends 
+itself well to <CODE>XAML</CODE> and makes it possible to compose increasingly 
+complex animations out of simpler pieces. A typical animation has a 
+<CODE>BeginStoryboard</CODE> element at its root and consists of one or more 
+children: </P><TEXTAREA class=xml name=t14>&lt;BeginStoryboard&gt;
+  &lt;Storyboard TargetProperty="Opacity"&gt;
+    &lt;DoubleAnimation From="1" To="0" Duration="0:0:1" /&gt;
+  &lt;/Storyboard&gt;
+&lt;/BeginStoryboard&gt;
+</TEXTAREA> 
+<P>In the above example we are animating the <CODE>Opacity</CODE> property of 
+some element from 1 to 0 over the course of one second. But what object is 
+having its <CODE>Opacity</CODE> animated and what triggers the animation to 
+begin? Observe the <CODE>XAML</CODE> in its proper context: </P><TEXTAREA class=xml name=15>&lt;Button Height="40" Width="125"&gt;
+  &lt;Button.Triggers&gt;
+    &lt;EventTrigger RoutedEvent="Button.Click"&gt;
+      &lt;BeginStoryboard&gt;
+        &lt;Storyboard TargetProperty="Opacity"&gt;
+          &lt;DoubleAnimation From="1" To="0" Duration="0:0:1" /&gt;
+        &lt;/Storyboard&gt;
+      &lt;/BeginStoryboard&gt;
+    &lt;/EventTrigger&gt;
+  &lt;/Button.Triggers&gt;
+&lt;/Button&gt;
+</TEXTAREA> 
+<P>Now it should be clear that we are causing a <CODE>Button</CODE> to fade out 
+whenever it is clicked. This sample demonstrates an animation being triggered by 
+a <CODE>RoutedEvent</CODE>. They can also be embedded in a Style and triggered 
+based on the value of any <CODE>DependencyProperty</CODE>. </P><TEXTAREA class=xml name=17>&lt;Window.Resources&gt;
+  &lt;Style TargetType="{x:Type RadioButton}"&gt;
+    &lt;Style.Triggers&gt;
+      &lt;Trigger Property="IsChecked" Value="True"&gt;
+        &lt;Trigger.EnterActions&gt;
+          &lt;BeginStoryboard&gt;
+            &lt;Storyboard TargetProperty="Opacity"&gt;
+              &lt;DoubleAnimation From="1" To="0" Duration="0:0:1" /&gt;
+            &lt;/Storyboard&gt;
+          &lt;/BeginStoryboard&gt;
+        &lt;/Trigger.EnterActions&gt;
+      &lt;/Trigger&gt;
+    &lt;/Style.Triggers&gt;
+  &lt;/Style&gt;
+&lt;/Window.Resources&gt;
+
+&lt;RadioButton Height="40" Width="125"/&gt;
+</TEXTAREA> 
+<P>This causes the animation to run whenever the <CODE>IsChecked</CODE> property 
+of any <CODE>RadioButton</CODE> <EM>enters</EM> the <CODE>True</CODE> state. You 
+can also use <CODE>Trigger.ExitActions</CODE> to specify an animation for a move 
+<EM>from</EM> the <CODE>True</CODE> state. Notice that the animation is called a 
+<CODE>DoubleAnimation</CODE>. <EM>Double</EM> refers to the type of the property 
+being animated. <CODE>WPF</CODE> defines animation classes for 22 different 
+types (<CODE>ColorAnimation</CODE>, <CODE>VectorAnimation</CODE>, 
+<CODE>PointAnimation</CODE>, etc). There are many properties on the basic 
+animation classes that allow the developer more fine grained control over how 
+animations occur. These properties include: <CODE>AccelerationRatio</CODE>, 
+<CODE>DecelerationRatio</CODE>, <CODE>SpeedRatio</CODE> and 
+<CODE>RepeatBehavior</CODE> among several others. In addition to these basic 
+animations, the types <CODE>Double</CODE>, <CODE>Matrix</CODE> and 
+<CODE>Point</CODE> have coresponding <CODE>AnimationUsingPath</CODE> classes 
+that allow the developer to use a Path to control the animated values. If either 
+of these scenarios does not provide enough control for you, all 22 types have 
+matching <CODE>AnimationUsingKeyFrames</CODE> classes which offer varying 
+support for discrete, linear and spline based interpolation. Together, this set 
+of classes provides quite a bit of animation power. If you are interested in 
+animation, then I would recommend checking out two blogs in particular: <A 
+href="http://www.charlespetzold.com/blog/blog.xml" rel=nofollow>Charles 
+Petzold</A> (search through the archives) and <A href="http://thewpfblog.com/" 
+rel=nofollow>theWPFblog</A>. You will also find several examples of 3D in these 
+blogs as well. Speaking of 3D, I would like to note that the animation classes 
+were designed to provide a consistent animation framework regardless of whether 
+the item being animated is 2D or 3D. </P>
+<P>If you are interested in working with WPF’s 3D features, there are a few 
+resources you should know about. Windows Presentation Foundation Unleashed has 
+an extensive chapter on 3D written by Daniel Lehenbauer. This is probably the 
+best resource on <CODE>WPF</CODE> 3D currently in print. If you can hold out for 
+a while, Petzold is planning on releasing an entire book devoted to 
+<CODE>WPF</CODE> 3D. Both of the blogs mentioned above have some good 3D 
+examples, but you’ll also want to check these sites: <A 
+href="http://blogs.msdn.com/wpf3d/default.aspx" rel=nofollow>The WPF3D Team 
+Blog</A>, <A href="http://blogs.msdn.com/tims/archive/2006/02/08/527850.aspx" 
+rel=nofollow>Five Great WPF 3D Nuggets</A> and <A 
+href="http://www.kindohm.com/technical/WPF3DTutorial.htm" rel=nofollow>3D 
+Tutorial</A>. The first thing you will want to know about 3D in <CODE>WPF</CODE> 
+is that all 3D content must exist within a <CODE>Viewport3D</CODE>. You’ll want 
+to put a camera in that scene. The <CODE>WPF</CODE> offers two main options: 
+<CODE>PerspectiveCamera</CODE> and <CODE>OrthographicCamera</CODE>. Go <A 
+href="http://www.interact-sw.co.uk/iangblog/2005/08/10/projections" 
+rel=nofollow>here</A> for a discussion of these two choices. Of course, if you 
+want to see anything, you will need a light: <CODE>AmbientLight</CODE> and/or 
+<CODE>DirectionalLight</CODE>. </P><TEXTAREA class=xml name=t18>&lt;Viewport3D&gt;
+   &lt;Viewport3D.Camera&gt;
+      &lt;PerspectiveCamera 
+         FarPlaneDistance="20"
+         LookDirection="5,-2,-3"
+         UpDirection="0,1,0"
+         NearPlaneDistance="1"
+         Position="-5,2,3"
+         FieldOfView="45" /&gt;
+   &lt;/Viewport3D.Camera&gt;
+   &lt;ModelVisual3D&gt;
+      &lt;ModelVisual3D.Content&gt;
+         &lt;Model3DGroup&gt;
+            &lt;DirectionalLight Color="White" Direction="-3,-4,-5" /&gt;
+            &lt;GeometryModel3D&gt;
+               &lt;GeometryModel3D.Geometry&gt;
+                  &lt;MeshGeometry3D 
+                     Positions="-1 -1 0  1 -1 0  -1 1 0  1 1 0"
+                     Normals="0 0 1  0 0 1  0 0 1  0 0 1"
+                     TextureCoordinates="0 1  1 1  0 0  1 0"
+                     TriangleIndices="0 1 2  1 3 2" /&gt;
+               &lt;/GeometryModel3D.Geometry&gt;
+               &lt;GeometryModel3D.Material&gt;
+                  &lt;DiffuseMaterial&gt;
+                     &lt;DiffuseMaterial.Brush&gt;
+                        &lt;SolidColorBrush Color="Blue"/&gt;
+                     &lt;/DiffuseMaterial.Brush&gt;
+                  &lt;/DiffuseMaterial&gt;
+               &lt;/GeometryModel3D.Material&gt;
+            &lt;/GeometryModel3D&gt;
+         &lt;/Model3DGroup&gt;
+      &lt;/ModelVisual3D.Content&gt;
+   &lt;/ModelVisual3D&gt;
+&lt;/Viewport3D&gt;
+</TEXTAREA> 
+<P>Of course, you have to add your own 3D content. The above demonstrates a very 
+simple mesh: a plane. There is a lot of information to be covered regarding what 
+is happening in this simple example, but I don’t have time to go into it all 
+here. The main thing I want to talk about is material. If you have worked with 
+3D before, you know that every 3D object must be covered with some sort of 
+material. The above example uses a <CODE>DiffuseMaterial</CODE>, but 
+<CODE>WPF</CODE> also offers <CODE>EmmisiveMaterial</CODE> and 
+<CODE>SpecularMaterial</CODE> for your use. Here’s the really powerful thing 
+about materials: As you can see above, the material architecture takes advantage 
+of the same <CODE>Brush</CODE> system that the rest of <CODE>WPF</CODE> uses. 
+This means that you can pretty much put anything on the surface of a 3D object, 
+including 2D UI components. With this <A 
+href="http://blogs.msdn.com/wpf3d/archive/2006/12/12/interacting-with-2d-on-3d-in-wpf.aspx" 
+rel=nofollow>recently released solution</A>, you can even make all of the 2D UI 
+completely interactive! Just don’t get carried way. </P><A name=s7></A>
+<H3>WPF: Present and Future</H3>
+<P><CODE>WPF</CODE> is a very powerful framework for building UI. My hat goes 
+off to the team that built it. I truly believe it is the best UI framework to 
+date, on any platform. Since it is only a version one, it still has room to grow 
+quite a bit. I wanted to conclude this article with a few thoughts on what I 
+would like to see in future versions: </P>
+<UL>
+  <LI>We need a set of Common Dialog Boxes that have a look and feel that is 
+  consistent with <CODE>WPF</CODE>. 
+  <LI><CODE>WPF Databinding</CODE> is awesome and is one of my favorite 
+  features. Upon using <CODE>Reflector</CODE>, I discovered that is makes 
+  extensive use of reflection (no big surprise there). I would recommend that 
+  the <CODE>WPF</CODE> team research using fast property setters/getters and 
+  <CODE>LCG</CODE> for future versions. I don’t know if this is feasible or 
+  would reasonably improve performance, but it is worth looking into. 
+  <LI>We need more common controls. The important ones that are missing are: 
+  <CODE>DatePicker</CODE>, <CODE>Calendar</CODE>, <CODE>Masked</CODE> 
+  <CODE>Textbox</CODE>, <CODE>DataGrid</CODE> and <CODE>PropertyGrid</CODE>. I 
+  would also like to see some more advanced components, such as a window docking 
+  system similar to the one in Blend. 
+  <LI>On the whole, I would like to see better 3D performance. We need more 
+  material types and support for pixel shaders to do next gen stuff. I like the 
+  add-ons for 2D and 3D, so just add those to the SDK. 
+  <LI>When it comes to XBAPs, we need support for <CODE>WCF</CODE> minimum and 
+  hopefully WF as well. I expect the <CODE>WPF</CODE> team to gradually move 
+  more and more <CODE>WPF</CODE> features into the <CODE>XBAP</CODE> realm as 
+  time passes. </LI></UL>With the release of <CODE>Orcas</CODE> coming closer and 
+closer, I expect several of these to find there way into the next release. 
+<P></P>
+<P>Looking into the future, Microsoft is extending the reach of <CODE>WPF</CODE> 
+and the .NET Framework to other platforms with the introduction of Silverlight. 
+At MIX07 it was announced that a cross-platform version of the <CODE>CLR</CODE> 
+and scaled down BCL would be shipped as part of <CODE>Silverlight</CODE> 1.1. 
+This is very exciting news because it means that developers will be able to use 
+the .NET language of their choice to program Rich Internet Applications that run 
+in the browser on both Mac and PC. <CODE>Silverlight</CODE> 1.0 will not contain 
+the <CODE>CLR</CODE> and is in Beta 1 at the time of this article. If you wish 
+to author <CODE>Silverlight</CODE> applications in a .NET language you will need 
+the <CODE>Silverlight</CODE> 1.1 Alpha bits. The presence of the 
+<CODE>BCL</CODE> in version 1.1 makes available many great features such as: 
+<CODE>Multithreading</CODE>, <CODE>Databinding</CODE>, <CODE>Web 
+Services</CODE>, etc. I'm looking forward to the future of this technology and 
+firmly believe that Microsoft is moving in the right direction. </P><A 
+name=s8></A>
+<H3>Summary</H3>
+<P>It is my hope that this article has aided you in learning what 
+<CODE>WPF</CODE> is all about. It is a new, rich UI Framework for Windows with a 
+reach that is extending to the web. Inspired by many existing UI technologies, 
+it evolves those ideas and binds them together in a consistent model that 
+empowers developers to build more visually stunning and usable applications with 
+great agility. </P><A name=s9></A>
+<H3>Resources</H3>
+<P>Prerequisites</P>
+<UL>
+  <LI><A 
+  href="http://www.microsoft.com/downloads/details.aspx?FamilyId=10CC340B-F857-4A14-83F5-25634C3BF043&amp;displaylang=e%0A%0An">.NET 
+  3.0 Runtime</A> 
+  <LI><A 
+  href="http://www.microsoft.com/downloads/details.aspx?FamilyId=C2B1E300-F358-4523-B479-F53D234CDCCF&amp;displaylang=e%0A%0An">Windows 
+  SDK</A> </LI></UL>
+<P>Tools</P>
+<UL>
+  <LI><A 
+  href="http://www.microsoft.com/downloads/details.aspx?FamilyId=F54F5537-CC86-4BF5-AE44-F5A1E805680D&amp;displaylang=e%0A%0An">VS2005 
+  Extensions for WPF</A> 
+  <LI><A 
+  href="http://www.microsoft.com/products/expression/en/expression-blend/try.mspx">Blend</A> 
+
+  <LI><A href="http://www.mobiform.com/">Mobiform’s Aurora</A> 
+  <LI><A 
+  href="http://wpf.netfx3.com/files/folders/controls/entry7094.aspx">Kevin’s 
+  Bag-O-Tricks</A> 
+  <LI><A href="http://notstatic.com/simplestyles">Simple Styles</A> 
+  <LI><A href="http://notstatic.com/archives/64">Kaxaml</A> </LI></UL>
+<P>Recommended Books</P>
+<UL>
+  <LI><A 
+  href="http://www.amazon.com/Applications-Code-Markup-Presentation-Foundation/dp/0735619573/ref=pd_bbs_sr_1/102-8593466-6167351?ie=UTF8&amp;s=books&amp;qid=1177886048&amp;sr=8-1">Applications 
+  = Code + Markup</A> 
+  <LI><A 
+  href="http://www.amazon.com/Windows-Presentation-Foundation-Unleashed-WPF/dp/0672328917/ref=pd_bbs_sr_1/102-8593466-6167351?ie=UTF8&amp;s=books&amp;qid=1177886109&amp;sr=1-1">Windows 
+  Presentation Foundation Unleashed</A> </LI></UL>
+<P>Articles</P>
+<UL>
+  <LI><A href="http://blogs.msdn.com/tims/archive/2006/02/08/527850.aspx">Five 
+  Great WPF 3D Nuggets</A> 
+  <LI><A href="http://www.kindohm.com/technical/WPF3DTutorial.htm">3D 
+  Tutorial</A> 
+  <LI><A href="http://www.interact-sw.co.uk/iangblog/2005/08/10/projections">WPF 
+  Camera Discussion</A> 
+  <LI><A 
+  href="http://blogs.msdn.com/wpf3d/archive/2006/12/12/interacting-with-2d-on-3d-in-wpf.aspx">2D 
+  on 3D Solution</A> </LI></UL>
+<P>Sites/Blogs</P>
+<UL>
+  <LI><A href="http://silverlight.net/">Silverlight</A> 
+  <LI><A href="http://www.netfx3.com/">The Official .NET 3.0 Home</A> 
+  <LI><A href="http://www.beacosta.com/">Beatriz Costa’s Blog</A> 
+  <LI><A href="http://www.charlespetzold.com/blog/blog.xml">Charles Petzold's 
+  Blog</A> 
+  <LI><A href="http://thewpfblog.com/">The WPF Blog</A> 
+  <LI><A href="http://blogs.msdn.com/wpf3d/default.aspx">The WPF3D Team Blog</A> 
+
+  <LI><A href="http://devlicio.us/blogs/rob_eisenberg/default.aspx">My Blog (Rob 
+  Eisenberg)</A> </LI></UL>
+<DIV class=box>
+<H3>About <SPAN id=ctl00_ai_author>Rob Eisenberg</SPAN></H3>
+<TABLE cellSpacing=3>
+  <TBODY>
+  <TR>
+    <TD vAlign=top><SPAN id=ctl00_ai_image><IMG 
+      src="WPF Tutorial.files/anonymous.gif"></SPAN></TD>
+    <TD vAlign=top><SPAN id=ctl00_ai_bio>Sorry, no bio is available</SPAN> 
+      <P><SPAN id=ctl00_ai_userProfile>This author has published <B>2</B> 
+      articles on DotNetSlackers. View other articles or the complete profile <A 
+      href="http://dotnetslackers.com/community/members/robeisenberg.aspx"><B>here</B>.</A></SPAN></P></TD></TR></TBODY></TABLE></DIV>
+<TABLE width="100%">
+  <TBODY>
+  <TR>
+    <TD vAlign=top width="50%">
+      <DIV id=ctl00_ra_p1>
+      <H3>Other articles in this category</H3><BR><A 
+      href="http://dotnetslackers.com/articles/silverlight/SilverlightFirstStepsAnalogClock.aspx">Silverlight 
+      "WPF/E" first steps: Getting started with simple analog clock</A><BR>This 
+      article is an introductory article on how to build a WPF/E simple web 
+      application that represen...<BR><A 
+      href="http://dotnetslackers.com/articles/silverlight/IntroductiontoXAMLPart1.aspx">Introduction 
+      to XAML Part 1</A><BR>You are coding in .NET and have basic knowledge of 
+      XML. You heard about that Windows Presentation F...<BR><A 
+      href="http://dotnetslackers.com/articles/silverlight/HelloSilverlightStartYourSilverlightJourneyToday.aspx">Hello 
+      Silverlight : Start your Silverlight journey today!</A><BR>Start your 
+      Silverlight development journey today with this step-by-step 
+      article.<BR><A 
+      href="http://dotnetslackers.com/articles/silverlight/RIA-Services-With-Silverlight-3-Part1.aspx">RIA 
+      Services With Silverlight 3 - Part 1</A><BR>What RIA services actually are 
+      and how to use them with Silverlight.<BR><A 
+      href="http://dotnetslackers.com/articles/silverlight/AnimationInDepthWithSilverlight20Beta1.aspx">Animation 
+      in-depth with Silverlight 2.0 Beta – Part One </A><BR>In-Depth analysis of 
+      animation with Silverlight 2.0 Beta.<BR></DIV>
+      <DIV id=ctl00_ra_p2>
+      <H3>You might also be interested in the following related blog 
+      posts</H3><BR>Issue 49 - DotNetNuke 5 Skin Packaging, Spam and SQL, OWS <A 
+      href="http://www.dotnetslackers.com/DotNetNuke/re-247775_Issue_49_DotNetNuke_5_Skin_Packaging_Spam_and_SQL_OWS.aspx">read 
+      more</A><BR>How to Package a Skin for DotNetNuke 5 - 8 Videos <A 
+      href="http://www.dotnetslackers.com/DotNetNuke/re-247776_How_to_Package_a_Skin_for_DotNetNuke_5_8_Videos.aspx">read 
+      more</A><BR>Win7 Multi-touch. Why wait until WPF4? <A 
+      href="http://www.dotnetslackers.com/WPF/re-248620_Win7_Multi_touch_Why_wait_until_WPF4.aspx">read 
+      more</A><BR>Mozilla and Microsoft work together on WPF\ClickOnce plugins 
+      <A 
+      href="http://www.dotnetslackers.com/WPF/re-259186_Mozilla_and_Microsoft_work_together_on_WPF_ClickOnce_plugins.aspx">read 
+      more</A><BR>WPF Wonders: Building Control Templates <A 
+      href="http://www.dotnetslackers.com/WPF/re-253680_WPF_Wonders_Building_Control_Templates.aspx">read 
+      more</A><BR>Telerik Releases New Controls for Silverlight 3 and WPF <A 
+      href="http://www.dotnetslackers.com/Silverlight/re-246728_Telerik_Releases_New_Controls_for_Silverlight_3_and_WPF.aspx">read 
+      more</A><BR>Issue 50 - DotNetNuke 5 Admin Modules Access, Reset Logins, 
+      iPhone OWS <A 
+      href="http://www.dotnetslackers.com/DotNetNuke/re-263659_Issue_50_DotNetNuke_5_Admin_Modules_Access_Reset_Logins_iPhone_OWS.aspx">read 
+      more</A><BR>The Telerik CAB Enabling Kit and SCSF - Tutorial 6: The 
+      RadTreeView UIExtensionSite <A 
+      href="http://www.dotnetslackers.com/XML/re-259615_The_Telerik_CAB_Enabling_Kit_and_SCSF_Tutorial_6_The_RadTreeView_UIExtensionSite.aspx">read 
+      more</A><BR>November's Toolbox Column Now Online <A 
+      href="http://www.dotnetslackers.com/_NET/re-264878_November_s_Toolbox_Column_Now_Online.aspx">read 
+      more</A><BR>Stimulsoft Reports. New versions of reporting tools for .NET, 
+      Web, and WPF <A 
+      href="http://www.dotnetslackers.com/_NET/re-246263_Stimulsoft_Reports_New_versions_of_reporting_tools_for_NET_Web_and_WPF.aspx">read 
+      more</A><BR></DIV></TD>
+    <TD vAlign=top align=right width="50%"><!-- Begin -  Site: DotNetSlackers Zone: Articles 336*280 -->
+      <SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=23&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X=' + browDateTime  + '" width=336 height=280 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<s'+'cript src="http://ads.dotnetslackers.com/a.aspx?ZoneID=23&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1&amp;X=' + browDateTime  + '">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<a href="http://ads.dotnetslackers.com/a.aspx?ZoneID=23&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=' + browDateTime + '&RandomNumber=' + browDateTime  + '" target="_blank"><img src="http://ads.dotnetslackers.com/a.aspx?ZoneID=23&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' + browDateTime + '&RandomNumber=' + browDateTime  + '" width="336" height="280" border="0" alt=""></a>'); } }
+else
+     { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=23&amp;Task=Get&amp;SiteID=1&amp;X=' + browDateTime  + '" width=336 height=280 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+      <NOSCRIPT><A 
+      href="http://ads.dotnetslackers.com/a.aspx?ZoneID=23&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=60949" 
+      target=_blank><IMG height=280 alt="" 
+      src="WPF Tutorial.files/336x280_pig_brnd_WH_SM.gif" width=336 
+      border=0></A> </NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: Articles 336*280 --></TD></TR></TBODY></TABLE><SPAN 
+id=ctl00_ArticleRater><A name=comments></A>
+<DIV id=ctl00_ArticleRater1_UpdatePanel1>
+<DIV class="small gray box">
+<DIV style="FLOAT: right"><A 
+href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#top">Top</A> 
+</DIV>
+<DIV style="FLOAT: left"></DIV>&nbsp; </DIV></DIV></SPAN>
+<DIV style="FLOAT: right"><!-- Begin -  Site: DotNetSlackers Zone: Article 468X60 -->
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=12&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<s'+'cript src="http://ads.dotnetslackers.com/a.aspx?ZoneID=12&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<a href="http://ads.dotnetslackers.com/a.aspx?ZoneID=12&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" target="_blank"><img src="http://ads.dotnetslackers.com/a.aspx?ZoneID=12&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" width="468" height="60" border="0" alt=""></a>'); } }
+else
+     { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=12&amp;Task=Get&amp;SiteID=1&amp;X=' + browDateTime + '" width=468 height=60 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=12&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=25763" 
+target=_blank><IMG height=60 alt="" 
+src="C:\Documents and Settings\Administrator\桌面\WPF Tutorial.files\blank(1).gif" 
+width=468 border=0></A> </NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: Article 468X60 --></DIV>
+<DIV style="FLOAT: left"><!-- Begin -  Site: DotNetSlackers Zone: Bottom 150x50 -->
+<SCRIPT language=javascript type=text/javascript>
+<!--
+var browName = navigator.appName;
+var browDateTime = (new Date()).getTime();
+var browVersion = parseInt(navigator.appVersion);
+var ua=navigator.userAgent.toLowerCase();
+var adcode='';
+if (browName=='Netscape'){
+     if (browVersion>=5) 
+          { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=16&amp;Task=Get&amp;Browser=NETSCAPE6&amp;SiteID=1&amp;X=' + browDateTime + '" width=150 height=50 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+     else if ((browVersion>=4)&&(ua.indexOf("mac")==-1))
+          { document.write('<s'+'cript src="http://ads.dotnetslackers.com/a.aspx?ZoneID=16&amp;Task=Get&amp;Browser=NETSCAPE4&amp;SiteID=1">');
+          document.write('</'+'scr'+'ipt>');
+          document.write(adcode); }
+     else if (browVersion>=3) 
+          { document.write('<a href="http://ads.dotnetslackers.com/a.aspx?ZoneID=16&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" target="_blank"><img src="http://ads.dotnetslackers.com/a.aspx?ZoneID=16&amp;Task=Get&amp;Mode=HTML&amp;SiteID=1&PageID=' + browDateTime + '&RandomNumber=' + browDateTime + '" width="150" height="50" border="0" alt=""></a>'); } }
+else
+     { document.write('<ifr'+'ame src="http://ads.dotnetslackers.com/a.aspx?ZoneID=16&amp;Task=Get&amp;SiteID=1&amp;X=' + browDateTime + '" width=150 height=50 Marginwidth=0 Marginheight=0 Hspace=0 Vspace=0 Frameborder=0 Scrolling=No></ifr'+'ame>'); }
+// --> 
+</SCRIPT>
+<NOSCRIPT><A 
+href="http://ads.dotnetslackers.com/a.aspx?ZoneID=16&amp;Task=Click&amp;Mode=HTML&amp;SiteID=1&amp;PageID=90307" 
+target=_blank><IMG height=50 alt="" src="WPF Tutorial.files/banner150x50.jpg" 
+width=150 border=0></A> </NOSCRIPT><!-- End -  Site: DotNetSlackers Zone: Bottom 150x50 --></DIV>
+<DIV class=clear>&nbsp;</DIV><INPUT id=ctl00_ViewAddArticleComments1_h 
+type=hidden value=False name=ctl00$ViewAddArticleComments1$h> 
+<DIV id=ctl00_ViewAddArticleComments1_UpdatePanel1>
+<DIV id=ctl00_ViewAddArticleComments1_pnlUserComments>
+<HR>
+
+<H3>Discussion</H3><BR>
+<TABLE cellSpacing=0 cellPadding=5 width="100%">
+  <TBODY>
+  <TR class=CommentOwner>
+    <TD style="WIDTH: 50%"><B>Subject</B> </TD>
+    <TD style="WIDTH: 20%"><B>Author</B> </TD>
+    <TD style="WIDTH: 20%"><B>Date</B> </TD></TR>
+  <TR class=item>
+    <TD class=lightGrayBorder style="PADDING-LEFT: 0px"><IMG class=commentImg1 
+      alt=placeholder src="WPF Tutorial.files/comment2_16x16.gif"> <A id=1075 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment1075'), 'item'" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#1075"><B>default 
+      content property ???</B> </A></TD>
+    <TD class=lightGrayBorder><IMG title=Contributor 
+      src="WPF Tutorial.files/user8_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/Fachbereich%20IT.aspx">Uve 
+      Müller</A> </TD>
+    <TD class=lightGrayBorder>7/3/2009 4:35 AM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment1075 style="PADDING-LEFT: 30px" 
+    colSpan=3>
+      <DIV class=leftLine>Hi<SPAN id=ctl00_ai_author> Rob</SPAN>.<BR><BR>I have 
+      a question regarding XAML elements hierarchy.<BR>I one of the tutorials I 
+      have read that if there is no ElementName.AttributeName pattern, child 
+      elements are assigned to the default content property. Is that true for 
+      the whole hierarchy starting with window element down to the most enclosed 
+      one? <BR>For example:<BR><BR>&lt;Window 
+      x:Class="WpfApplication1.Window1"<BR>&nbsp;&nbsp;&nbsp; 
+      xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"<BR>&nbsp;&nbsp;&nbsp; 
+      xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"<BR>&nbsp;&nbsp;&nbsp; 
+      Title="Window1" Height="300" Width="300"&gt;<BR>&nbsp;&nbsp;&nbsp; 
+      &lt;StackPanel&gt;<BR>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp; 
+      &lt;Button Height="23" Margin="110,103,94,0" Name="button1" 
+      VerticalAlignment="Top"&gt;Button&lt;/Button&gt;<BR>&nbsp;&nbsp;&nbsp; 
+      &lt;/StackPanel&gt;<BR>&lt;/Window&gt;<BR><BR>Is in the code above 
+      "Button" assigned to the Button element's default content property, Button 
+      element is assigned to the StackPanel's default content property and 
+      StackPanel element is assigned to the Window's default content property? 
+      If for example a Window element contains more child elements, that means 
+      that each of them is sequentially assigned to the Window's default content 
+      property and then WPF Framework is responsable for rendering them 
+      properly?<BR>Thanks and best regards. 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(1075, 'default content property ???');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#1075">Permanent 
+      link</A> </P></DIV></TD></TR>
+  <TR class="item alt">
+    <TD class=lightGrayBorder style="PADDING-LEFT: 30px"><IMG 
+      class=commentImg1 src="WPF Tutorial.files/comment2_16x16.gif"> <A id=1076 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment1076', 'item alt')" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#1076">RE: 
+      default content property ??? </A></TD>
+    <TD class=lightGrayBorder><IMG title="Article Author" 
+      src="WPF Tutorial.files/user8_(edit)_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/robeisenberg.aspx"><B><A 
+      href="http://dotnetslackers.com/community/members/robeisenberg.aspx">Rob 
+      Eisenberg</A></B></A> </TD>
+    <TD class=lightGrayBorder>7/3/2009 9:22 AM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment1076 style="PADDING-LEFT: 60px" 
+    colSpan=3>
+      <DIV class=leftLine><SPAN 
+      style="FONT-SIZE: 13px; COLOR: rgb(0,0,0); FONT-FAMILY: arial; BORDER-COLLAPSE: collapse">Generally 
+      speaking, you have three types of elements in WPF: &nbsp;ContentControls, 
+      ItemsControls and Panels. &nbsp;ContentControls can only have one child, 
+      while ItemsControls and Panels can have multiple children. &nbsp;A Panel 
+      specifies how its children are arranged on the screen and an ItemsControl 
+      uses an internal Panel to layout its children (this can also be customized 
+      using ItemsPanelTemplate). &nbsp;A Window is a ContentControl, so it can 
+      only have one child, typically this would be a Panel. &nbsp;In the example 
+      above, Window (ContentControl) has one child, StackPanel (Panel), which 
+      can have multiple children. &nbsp;In this case it has only one: Button. 
+      &nbsp;Button is a ContentControl, which as the text "Button," as its 
+      child, which gets translated to a TextBlock at runtime. &nbsp;All 
+      ContentControls are decorated with a ContentPropertyAttribute, which tells 
+      the Xaml parser what property of the element its Xaml child should be set 
+      to. &nbsp;For items controls and Panels, they implement a special 
+      interface, IAddChild, which the Xaml parser also looks for and uses to add 
+      multiple children. &nbsp;If a UIElement does not have the 
+      ContentPropertyAttribute or implement IAddChild, the Xaml parser will not 
+      allow child nodes, unless the element itself is a known collection 
+      type.</SPAN> 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(1076, 'RE: default content property ???');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#1076">Permanent 
+      link</A> </P></DIV></TD></TR>
+  <TR class=item>
+    <TD class=lightGrayBorder style="PADDING-LEFT: 0px"><IMG class=commentImg1 
+      alt=placeholder src="WPF Tutorial.files/comment2_16x16.gif"> <A id=157 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment157'), 'item'" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#157"><B>Great 
+      Job</B> </A></TD>
+    <TD class=lightGrayBorder><IMG title=Contributor 
+      src="WPF Tutorial.files/user8_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/Hasan.aspx">Hasan 
+      Mahmood</A> </TD>
+    <TD class=lightGrayBorder>6/15/2007 6:39 AM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment157 style="PADDING-LEFT: 30px" 
+    colSpan=3>
+      <DIV class=leftLine>Thank you for your article. We are introducing LINQ in 
+      our next project. Bye....hasan 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(157, 'Great Job');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#157">Permanent 
+      link</A> </P></DIV></TD></TR>
+  <TR class="item alt">
+    <TD class=lightGrayBorder style="PADDING-LEFT: 0px"><IMG class=commentImg1 
+      src="WPF Tutorial.files/comment2_16x16.gif"> <A id=573 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment573', 'item alt')" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#573"><B>Excellent!</B> 
+      </A></TD>
+    <TD class=lightGrayBorder><IMG title=Contributor 
+      src="WPF Tutorial.files/user8_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/alforno.aspx">Mark 
+      Harmon</A> </TD>
+    <TD class=lightGrayBorder>3/24/2008 2:13 PM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment573 style="PADDING-LEFT: 30px" 
+    colSpan=3>
+      <DIV class=leftLine>Thanks, this is a great resource. 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(573, 'Excellent!');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#573">Permanent 
+      link</A> </P></DIV></TD></TR>
+  <TR class=item>
+    <TD class=lightGrayBorder style="PADDING-LEFT: 0px"><IMG class=commentImg1 
+      alt=placeholder src="WPF Tutorial.files/comment2_16x16.gif"> <A id=653 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment653'), 'item'" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#653"><B>A 
+      Must Read for those new to WPF</B> </A></TD>
+    <TD class=lightGrayBorder><IMG title=Contributor 
+      src="WPF Tutorial.files/user8_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/ryanbost.aspx">Ryan 
+      Bost</A> </TD>
+    <TD class=lightGrayBorder>6/6/2008 10:59 AM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment653 style="PADDING-LEFT: 30px" 
+    colSpan=3>
+      <DIV class=leftLine>I am a long time ASP.NET and WinFoms developer.&nbsp; 
+      I have recently began learning WPF.&nbsp; This tutorial is by far the best 
+      I have found on the subject.&nbsp; Tremendous job and thank you for the 
+      enlightenment.&nbsp; 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(653, 'A Must Read for those new to WPF');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#653">Permanent 
+      link</A> </P></DIV></TD></TR>
+  <TR class="item alt">
+    <TD class=lightGrayBorder style="PADDING-LEFT: 0px"><IMG class=commentImg1 
+      src="WPF Tutorial.files/comment2_16x16.gif"> <A id=774 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment774', 'item alt')" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#774"><B>Awesome 
+      article! </B></A></TD>
+    <TD class=lightGrayBorder><IMG title=Contributor 
+      src="WPF Tutorial.files/user8_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/Dror.aspx">Dror Dror</A> 
+    </TD>
+    <TD class=lightGrayBorder>10/10/2008 12:49 PM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment774 style="PADDING-LEFT: 30px" 
+    colSpan=3>
+      <DIV class=leftLine>Enjoyed reading it as a WPF beginner. 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(774, 'Awesome article! ');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#774">Permanent 
+      link</A> </P></DIV></TD></TR>
+  <TR class=item>
+    <TD class=lightGrayBorder style="PADDING-LEFT: 0px"><IMG class=commentImg1 
+      alt=placeholder src="WPF Tutorial.files/comment2_16x16.gif"> <A id=84 
+      onclick="toggleVisibilityAndHighlight(this, 'Comment84'), 'item'" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#84"><B>Great 
+      work!</B> </A></TD>
+    <TD class=lightGrayBorder><IMG title=Contributor 
+      src="WPF Tutorial.files/user8_16x16.gif"> <A 
+      href="http://dotnetslackers.com/community/members/antrad.aspx">Antonio 
+      Radesca</A> </TD>
+    <TD class=lightGrayBorder>5/19/2007 8:49 AM </TD></TR>
+  <TR class=item>
+    <TD class="hidden commentRow" id=Comment84 style="PADDING-LEFT: 30px" 
+    colSpan=3>
+      <DIV class=leftLine>Great work! Thanks! Bye Antonio 
+      <P style="BORDER-TOP: rgb(204,204,204) 1px solid"></P>
+      <P class="small gray"><IMG class=commentImg2 
+      src="WPF Tutorial.files/comment3_(add)_16x16.gif"><A 
+      onclick="javascript:ReplyTo(84, 'Great work!');" 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#replySection">Reply</A> 
+      | <IMG class=commentImg2 src="WPF Tutorial.files/link_16x16.gif"><A 
+      href="http://dotnetslackers.com/articles/silverlight/WPFTutorial.aspx#84">Permanent 
+      link</A> </P></DIV></TD></TR></TBODY></TABLE>
+<HR>
+</DIV>
+<DIV id=ctl00_ViewAddArticleComments1_pnlNotLoggedIn>
+<P><B>Please <A onclick=javascript:showLogin(); href="javascript:;">login</A> to 
+rate or to leave a comment.</B></P></DIV></DIV>
+<SCRIPT language=javascript>
+//<![CDATA[
+function toggleVisibilityAndHighlight(sourceElement, commentCellId, OrgCss)
+{
+  if ($get(commentCellId).className!="hidden commentRow")
+    sourceElement.parentNode.parentNode.className=OrgCss;
+  else
+    sourceElement.parentNode.parentNode.className="commentHeaderHighlight";
+
+  // Get parentNode twice to get a reference to the row
+  //Sys.UI.DomElement.toggleCssClass(sourceElement.parentNode.parentNode, "commentHeaderHighlight");
+  Sys.UI.DomElement.toggleCssClass($get(commentCellId), "hidden");
+}
+
+function ReplyTo(ReplyToId, Subject)
+{
+  var h=document.getElementById('ctl00_ViewAddArticleComments1_h');
+  if(h.value=="False")
+  {
+    showLogin();
+    return;
+  }
+
+  document.getElementById('ctl00_ViewAddArticleComments1_txbSubject').value="RE: " + Subject;
+  document.getElementById('ctl00_ViewAddArticleComments1_replyTo').value = ReplyToId;
+}
+
+//]]>
+</SCRIPT>
+
+<STYLE>.commentHeaderHighlight {
+	BACKGROUND-COLOR: #dddddd
+}
+.hidden {
+	DISPLAY: none
+}
+</STYLE>
+</DIV>
+<DIV class="small gray box"><B>Product Spotlight</B><BR>
+<SCRIPT src="WPF Tutorial.files/displayad.aspx" type=text/javascript></SCRIPT>
+</DIV></DIV>
+<DIV class=clear>&nbsp;</DIV></DIV>
+<DIV id=footer>
+<P><A title="Your privacy information is save with us." 
+href="http://dotnetslackers.com/info/privacy.aspx">Privacy Policy</A> | <A 
+title="Link to us" href="http://dotnetslackers.com/info/linktous.aspx">Link to 
+us</A> <BR>All material is copyrighted by its respective authors. Site design 
+and layout is copyrighted by DotNetSlackers.<BR>©Copyright 2005-<SPAN 
+id=ctl00_footer1_lblYear>2010</SPAN> DotNetSlackers.com<BR><A 
+href="http://www.banmanpro.com/" target=_blank>Advertising Software by Ban Man 
+Pro</A> </P></DIV><IMG style="DISPLAY: none" 
+src="WPF Tutorial.files/SetLocation.htm">
+<SCRIPT type=text/javascript>
+//<![CDATA[
+
+WebForm_InitCallback();Sys.Application.initialize();
+//]]>
+</SCRIPT>
+ </FORM>
+<DIV id=ctl00_InlineTextAds><!-- Kontera ContentLink(TM);-->
+<SCRIPT type=text/javascript>
+var dc_AdLinkColor = '#0000c8';
+var dc_PublisherID = 20992 ;
+var dc_isBoldActive= 'no';
+</SCRIPT>
+
+<SCRIPT src="WPF Tutorial.files/KonaLibInline.js" type=text/javascript>
+</SCRIPT>
+<!-- Kontera ContentLink(TM) --></DIV>
+<SCRIPT language=javascript>
+window.onload = function () 
+{
+	SyntaxHighlighter.config.tagName = "textarea";
+	recursiveFormat();
+
+	function recursiveFormat()
+	{
+	  var allSelects = document.getElementsByTagName('textarea');
+	  if (allSelects.length > 0 && containsValidClass(allSelects[0]))
+	  {
+		if (allSelects[0].name != "")
+		{
+      			dp.SyntaxHighlighter.HighlightAll(allSelects[0].name);
+		}
+		recursiveFormat();
+	  }
+	}
+}
+
+function containsValidClass(element)
+{
+
+  var isValid = false;
+  if (element.className == "xml" || 
+      element.className == "c#"  || 
+      element.className == "vb"  || 
+      element.className == "sql" || 
+      element.className == "js")
+  {
+    isValid = true;
+  }
+  return isValid;
+}
+
+function toggleToc() {
+        var toc = document.getElementById("toc").getElementsByTagName("ul")[0];
+        var toggleLink = document.getElementById("togglelink");
+        if (toc && toggleLink && toc.style.display == "none") {
+            toggleLink.innerHTML = "hide";
+            toc.style.display = "block";
+        } else {
+            toggleLink.innerHTML = "show";
+            toc.style.display = "none";
+        }
+    }  
+</SCRIPT>
+
+<SCRIPT type=text/javascript>
+  var uservoiceJsHost = ("https:" == document.location.protocol) ? "https://uservoice.com" : "http://cdn.uservoice.com";
+  document.write(unescape("%3Cscript src='" + uservoiceJsHost + "/javascripts/widgets/tab.js' type='text/javascript'%3E%3C/script%3E"))
+</SCRIPT>
+
+<SCRIPT type=text/javascript>
+UserVoice.Tab.show({ 
+  /* required */
+  key: 'dotnetslackers',
+  host: 'dotnetslackers.uservoice.com', 
+  forum: '29507', 
+  /* optional */
+  alignment: 'left',
+  background_color:'#FF9000', 
+  text_color: 'white',
+  hover_color: '#06C',
+  lang: 'en'
+})
+</SCRIPT>
+</BODY></HTML>

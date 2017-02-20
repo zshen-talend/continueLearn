@@ -1,0 +1,35 @@
+建模中边的上下限用来表示边的连结数。每两 个结点件只允许有一出一进。
+
+1.Resource
+	Resource是用来保存emf中对象的类，emf中的所有对象都要直接或者间接的包含在其中如SubjectModel中的例子就是在编辑器的初始化时，将Diagram也就是画布本身存入了其中。
+
+2.EObject
+	EObject是继承自Notifier的，而每个对象都会继承EObjectImpl所以每个模型对象都是一个Notifier。而它们是通过维护一个Adapter的列表来管理监听的。这样最后的Adapter工厂就显得有作用了。
+
+3.EDataType
+	这个类是用来实现用户自定义类型的，而实现了这个类型必须在ModelFactoryImpl中得到实现。在其中EMF会自动生成createFromString和converToString两个方法，在其中又各自定义了每种自定义类型的实现和转换方法。但这些方法就需要我们去实现了！
+
+4.EReference
+	关联可以分为单向和双向关联两种，单向关联只是依赖于用户拖拽即可。而双向关联就要通过把另一条在两者之间的反向关联与之合并就可以了，合并要靠属性EOpposite。
+
+5..edit
+	emf工程下的代码中带item的provider分别实现了表结构支持、树结构支持、属性源等等。方便jface的使用。
+
+6.EMF的通知机制
+	首先,Notifier是EMF生成的所有对象模型的基类接口(无论接口或者类)，即使是EObject这样的接口也不例外。例:
+if (eNotificationRequired())
+			eNotify(new ENotificationImpl(this, Notification.SET, HtmleditorPackage.ABSTRACT_CELL__NAME, oldName, name));
+而在利用EMF的通知机制的时候，我们要维护这样一个列表，它所存储的项都是实现了Adapter接口的对象。而这个列表由EObject来实现创建和存储，我们可以通过相应模型的eAdapters()方法来得到这个列表，并向其中加入我们的adapter接口的实现对象。而在我们使用eNotify方法来通知消息的时候，EMF内部的BasicNotifierImpl类也会取得我们上面提到的那个adapter列表，遍历调用其中的所有adapter的notifyChanged方法。这样就会找到我们所写的notifyChanged方法了。而在模型中调用eNotify()方法前都要先调用eNotificationRequired()方法来验证我们的eAdapters()方法中是否存有这样的监听对象，如没有也就不用遍历通知了。另外在Elist如果是通过EObjectContainmentWithInverseEList<Cell>方法来赋值的，那它的添加和移除就已经被实现通知了，也就不用我们去另行通知了。
+
+7.EMF.edit的通知机制
+两种功能利用适配的方法将当前目标封装成适配器(Adapter)其实就是EMF在**.edit工程中为我们生成的***itemProvider模型对象。
+IItemLabelProvider itemLabelProvider = (IItemLabelProvider)adapterFactory.adapt(object, IItemLabelProviderClass);
+
+像上面一样通过调用adapt()方法最后调用associate()来添加adapter
+Object adapter = ((ComposeableAdapterFactory)adapterFactory).getRootAdapterFactory().adapt(anyObject, IItemLabelProvider.class);
+
+8.xxxitemProvider配合jface(viewer)使用
+	每个xxxitemProvider都实现了相应的labelProvider和contentProvider的接口使用方法是用AdapterFactoryContentProvider或AdapterFactoryLabelProvider来实现转换。。
+
+9.取得EObject的uuid的方法
+modelElement1.eResource().getURIFragment(modelElement1)

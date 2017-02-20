@@ -1,0 +1,350 @@
+<!DOCTYPE HTML PUBLIC "-//W3C//DTD HTML 4.0 Transitional//EN">
+<!-- saved from url=(0059)http://jung.sourceforge.net/doc/JUNGVisualizationGuide.html -->
+<HTML><HEAD>
+<META http-equiv=Content-Type content="text/html; charset=gb2312">
+<META content="MSHTML 6.00.2900.5880" name=GENERATOR></HEAD>
+<BODY><SPAN style="FONT-SIZE: 10pt; FONT-FAMILY: Verdana">
+<CENTER>
+<H2>Understanding the JUNG Visualization System</H2>Danyel Fisher (edited by 
+Joshua O'Madadhain) </CENTER><BR>
+<P>JUNG 1.7.0 features a largely-revamped visualization system, thanks to a lot 
+of work from Tom Nelson. While the JUNG visualization system is much more 
+flexible than it once was, it also has a couple of tricks and a more 
+sophisticated model.</P>
+<P>I'll go through the major features of the JUNG 1.7.0 visualization system; 
+when applicable, I'll refer to the demonstration code that shows how this 
+works.</P>
+<P>Let's walk though what's going on.</P>
+<H4>SHORT VERSION:</H4>The correct and simplest way to create a visualization of 
+a graph is <PRE> 
+Graph g ...
+Layout l = new FRLayout( g );
+Renderer r = new PluggableRenderer();
+VisualizationViewer vv = new VisualizationViewer( layout, renderer );
+JFrame jf = new JFrame();
+jf.getContentPane().add ( vv );
+</PRE><BR>
+<H3>BASIC CONCEPTS</H3>As with past JUNG systems, there is a distinction between 
+the graph, the layout, and the renderer. 
+<UL>
+  <LI>A <B><CODE>Graph</CODE></B> knows what Vertexes are linked to each other 
+  by what Edges, and is implemented by a <B><CODE>Graph</CODE></B> class. The 
+  basic <B><CODE>Graph</CODE></B> class is <B><CODE>SparseGraph</CODE></B>. 
+  <LI>A <B><CODE>Layout</CODE></B> specifies where vertices are to be drawn in a 
+  visualization; it may also embody some calculation. (At the present time, 
+  edges' positions are determined by the positions of their endpoint vertices.) 
+  <LI>A <B><CODE>Renderer</CODE></B> is responsible for drawing vertices and 
+  edges (and thus must know how they are supposed to look). Some 
+  <B><CODE>Renderer</CODE></B>s as well as any vertex/edge labels, if 
+  applicable. </LI></UL>
+<P>As of version 1.7, we now are moving more toward a model-view-controller 
+model. The model is responsible for knowing what to display--that is, the 
+<B><CODE>Graph</CODE></B> and the Layout; the view/controller is responsible for 
+knowing how to display it.</P>
+<OL>
+  <LI>A <B><CODE>VisualizationModel</CODE></B> takes control of the layout 
+  process. It controls a thread that allows animated layouts to move forward; it 
+  contacts the View when its state changes. It controls the current layout 
+  (which would, in turn, have a reference to a relevant 
+  <B><CODE>Graph</CODE></B>.). The generic (and so far only) implementation is 
+  the <B><CODE>DefaultVisualizationModel</CODE></B>. 
+  <LI>A <B><CODE>VisualizationViewer</CODE></B> extends a 
+  <B><CODE>JPanel</CODE></B>, and thus is the thing that does the painting. It 
+  forms the center of the Visualization complex, and thus has a number of 
+  different tasks: 
+  <OL>
+    <LI>It tracks the Model 
+    <LI>It tracks the <B><CODE>Renderer</CODE></B>, including the PreRenderers 
+    (which paint under the topology) and the PostRenderers (which paint over the 
+    topology) 
+    <LI>Handles <B><CODE>ToolTipFunction</CODE></B>s, 
+    <B><CODE>PickSupport</CODE></B>s, and <B><CODE>GraphMouse</CODE></B>, if 
+    any. 
+    <LI>If appropriate, it maintains an offscreen buffer. 
+    <LI>Applies <B><CODE>Transformer</CODE></B>s, if any, to either the View or 
+    the Layout: the ViewTransformer and the LayoutTransformer. </LI></OL>
+  <P>At initialization time: 
+  <OL>
+    <LI>A renderer and a layout must be created and supplied to the 
+    <B><CODE>VisualizationViewer</CODE></B> 
+    <LI>A size is chosen (default: 600x600) 
+    <LI>A model is built (default: <B><CODE>DefaultVisualizationModel</CODE></B> 
+    based on the layout and the size). See <B><CODE>MultiViewDemo</CODE></B>, 
+    among others, to see examples where the same Model might be shared by 
+    several <B><CODE>VisualizationViewer</CODE></B>s </LI></OL></LI></OL><BR>
+<H3>IMPORTANT CHANGES FROM 1.6</H3>
+<H4>ADDED:</H4>
+<UL>
+  <LI><B><CODE>VisualizationModel</CODE></B> (see above) 
+  <LI><B><CODE>VisualizationViewer</CODE></B> has a notion of both View Scale 
+  and Layout Scale (see below) 
+  <LI>Improvements to <B><CODE>GraphMouse</CODE></B>, 
+  <B><CODE>PickSupport</CODE></B>, and <B><CODE>ToolTip</CODE></B> (see below) 
+  </LI></UL>
+<H4>DEPRECATED:</H4>
+<UL>
+  <LI><B><CODE>GraphDraw</CODE></B>. <B><CODE>GraphDraw</CODE></B></B> was a 
+  convenience technique for creating a <B><CODE>JPanel</CODE></B> that contained 
+  a graph. As we've refactored and cleaned up, we've realized that it was 
+  causing more confusion than needed. Most of your old code should work just 
+  fine by manually creating a <B><CODE>VisualizationViewer</CODE></B>. 
+  <LI><B><CODE>Layout.filter()</CODE></B>. As we've improved the dynamic graph 
+  code, the idea that the layout should be responsible for maintaining "filters" 
+  has gotten increasingly difficult to sustain. In addition, support was uneven. 
+  It is deprecated now, and should be removed by version 1.8. 
+  <LI><B><CODE>NewGraphDraw</CODE></B> was an experimental system to learn more 
+  about visualization. Most of the features that were available through 
+  <B><CODE>NewGraphDraw</CODE></B> are now available in the new JUNG 
+  visualization system. </LI></UL>
+<H4>DELETED:</H4>
+<UL>
+  <LI><B><CODE>FadingVertexLayout</CODE></B> has been deprecated since version 
+  1.3, and has gotten no emails. Time to let it go. </LI></UL><BR>
+<H3>RENDERING: Painting images, writing unicode, and curving lines</H3>
+<P>The core rendering code is the <B><CODE>PluggableRenderer</CODE></B>. While 
+it's possible to write your own <B><CODE>Renderer</CODE></B>, the 
+PluggableRenderer alone has a tremendous amount of flexibility; it's also 
+possible that just inheriting from the <B><CODE>PluggableRenderer</CODE></B> 
+will cover you.</P>
+<P><B><CODE>PluggableRenderer</CODE></B>'s behavior can be changed by supplying 
+functions which supply <B><CODE>PluggableRenderer</CODE></B> with information on 
+the properties to use for each vertex and edge that 
+<B><CODE>PluggableRenderer</CODE></B> is asked to draw. These properties include 
+(but are not limited to):</P>
+<UL>
+  <LI>vertex/edge <B><CODE>Shape</CODE></B>: <B><CODE>{Edge, 
+  Vertex}ShapeFunction</CODE></B> <BR>shapes provided include various geometric 
+  shapes for vertices and various curves, lines, and shapes for edges 
+  <LI>vertex/edge <B><CODE>Stroke</CODE></B>: <B><CODE>{Edge, 
+  Vertex}StrokeFunction</CODE></B> 
+  <LI>vertex/edge <B><CODE>Paint</CODE></B> (includes 
+  <B><CODE>Color</CODE></B>): <B><CODE>{Edge, Vertex}PaintFunction</CODE></B> 
+  <BR>outline (draw) and interior (fill) <B><CODE>Paint</CODE></B> each 
+  specified separately; these can be solid colors, gradients, ... 
+  <LI>vertex/edge <B><CODE>String</CODE></B> label: <B><CODE>{Edge, 
+  Vertex}Stringer</CODE></B> 
+  <LI>vertex/edge label <B><CODE>Font</CODE></B>: <B><CODE>{Edge, 
+  Vertex}FontFunction</CODE></B> 
+  <LI>vertex/edge inclusion: <B><CODE>Predicate</CODE></B> <BR>only those 
+  vertices/edges which satisfy the specified <B><CODE>Predicate</CODE></B> will 
+  be drawn 
+  <LI>edge label positioning: <B><CODE>NumberEdgeValue</CODE></B> <BR>value in 
+  [0,1] that specifies where edge labels are to be drawn: 0 = at source, 1 = at 
+  destination 
+  <LI>edge arrow type: <B><CODE>EdgeArrowFunction</CODE></B> 
+  <LI>edge arrow inclusion: <B><CODE>Predicate</CODE></B> <BR>only those edges 
+  satisfying the predicate will have arrows 
+  <LI>vertex <B><CODE>Icon</CODE></B> (<B><CODE>VertexIconFunction</CODE></B>) 
+  <BR>allows the user to supply pictures for each vertex; see 
+  <B><CODE>UnicodeLabelDemo</CODE></B> and 
+  <B><CODE>VertexImageShaperDemo</CODE></B> for examples. 
+  <LI>Non-rectangular image shaping <BR>If your images have a non-rectangular 
+  opaque part on a transparent background, you can use the 
+  <B><CODE>FourPassImageShaper</CODE></B> to extract tne non-rectangular shape 
+  from each image. This effect is demonstrated in the 
+  <B><CODE>VertexImageShaperDemo</CODE></B> where you can see that the edge 
+  arrow placement and the shape pick range both conform to the non-rectangular 
+  opaque part of the images. </LI></UL>
+<P>Changing the functions that <B><CODE>PluggableRenderer</CODE></B> uses is 
+very simple: <PRE>PluggableRenderer pr = new PluggableRenderer();
+VertexStringer vs = ... 
+pr.setVertexStringer(vs); 
+pr.setEdgeShapeFunction(new EdgeShape.QuadraticCurve());
+</PRE>
+<UL></UL>
+<P>The <B><CODE>PluggableRendererDemo</CODE></B> shows how to use these various 
+functions to customize your visualization. Also see the 
+<B><CODE>PluggableRenderer</CODE></B> Javadoc for more information.</P><BR>
+<H3>MOUSE INTERACTION and PICKING</H3>
+<P>JUNG now allows a wide variety of behaviors with the mouse. In particular, a 
+mouse can be used to indicate or control any part of the graph, including 
+clicking on both edges and vertices. Various among the demos show how to use the 
+mouse to select (known in JUNG as "Pick") vertices and edges and choose which 
+mouse event occurs when a click occurs.</P>
+<UL>
+  <LI><B><CODE>PickSupport</CODE></B> 
+  <P>A <B><CODE>VisualizationViewer</CODE></B> may be associated with a 
+  <B><CODE>PickSupport</CODE></B> object (this association is created via the 
+  call <B><CODE>vv.setPickSupport( ... )</CODE></B>). A 
+  <B><CODE>PickSupport</CODE></B> returns a <B><CODE>Vertex</CODE></B>, or 
+  <B><CODE>Edge</CODE></B>, based on a specified (x,y) location in a 
+  <B><CODE>Layout</CODE></B>'s coordinate space. (Some of these methods are 
+  inherited from <B><CODE>GraphElementAccessor</CODE></B>.) Generally (but not 
+  necessarily), these locations are generated by mouse events. Implementations 
+  include those that return... 
+  <UL>
+    <LI>...the nearest <B><CODE>Vertex</CODE></B> 
+    (<B><CODE>ClassicPickSupport</CODE></B>, the default) 
+    <LI>...the nearest object closer than a certain distance 
+    (<B><CODE>RadiusPickSupport</CODE></B>) 
+    <LI>...the object (if any) whose defining <B><CODE>Shape</CODE></B> contains 
+    the specified point (<B><CODE>ShapePickSupport</CODE></B>) 
+    <LI>...there is even a mode that automatically centers the picked vertex 
+    with an animated transform when you CTRL-click it. </LI></UL>As usual, the 
+  interface can be extended for your own use.
+  <P></P>
+  <LI><B><CODE>GraphMouse</CODE></B> 
+  <P>The real truth of picking comes with a <B><CODE>GraphMouse</CODE></B>. This 
+  class catches mouse events, uses the <B><CODE>PickSupport</CODE></B> to change 
+  them into an event on the graph, and then sends them onward. The 
+  <B><CODE>GraphMouse</CODE></B> is responsible for adjusting the (x,y) location 
+  associated with the mouse event into the appropriate location in graph 
+  coordinates. A <B><CODE>GraphMouse</CODE></B> replaces a 
+  <B><CODE>MouseListener</CODE></B>, <B><CODE>MouseMotionListener</CODE></B>, 
+  and <B><CODE>MouseWheelListener</CODE></B>. The default 
+  <B><CODE>GraphMouse</CODE></B> calls pick on the current 
+  <B><CODE>PickedState</CODE></B> object for clicks. There are, however, 
+  <B><CODE>GraphMouse</CODE></B> implementations designed for a variety of 
+  tasks: 
+  <UL>
+    <LI><B><CODE>PluggableGraphMouse</CODE></B> allows a user to select the 
+    behavior of the mouse by linking sets of modifiers to plugins. See 
+    documentation associated with <B><CODE>PluggableGraphMouse</CODE></B>. 
+    <LI><B><CODE>DefaultModalGraphMouse</CODE></B> creates a menu that lets the 
+    user choose between modes: pick (click to select; shift-click to 
+    multi-select) and transform (drag, shift-drag, and control-drag to pan, 
+    rotate, and shear; scroll wheel to zoom). </LI></UL>Also check out the demo of 
+  <B><CODE>SatelliteViewDemo</CODE></B> and, in particular, its help section.
+  <P></P>
+  <P><B><CODE>vv.SetGraphMouse(gm)</CODE></B> replaces all 
+  <B><CODE>GraphMouse</CODE></B> instances currently in use with the specified 
+  <CODE>GraphMouse</CODE> instance <B><CODE>gm</CODE></B>.</P>
+  <LI><B><CODE>PickedState</CODE></B>, <B><CODE>PickEventListener</CODE></B> 
+  <P><B><CODE>PickedState</CODE></B> classes store the "picked" status of 
+  vertices and edges. The details of their implementation define policies such 
+  as the number of elements that may be simultaneously selected. 
+  <B><CODE>PickedState</CODE></B> instances also allow 
+  <B><CODE>PickEventListener</CODE></B> instances to be registered with them; 
+  when elements are picked or unpicked, the <B><CODE>PickedState</CODE></B> 
+  notifies any registered <B><CODE>PickEventListener</CODE></B> of the specific 
+  event (picked or unpicked) and the affected element (vertex or edge). 
+  <BR><B><CODE>MultiPickedState</CODE></B>, the default implementation of 
+  <B><CODE>PickedState</CODE></B>, allows the system to maintain a set of picked 
+  points. <BR>Historically, a <B><CODE>Layout</CODE></B> would maintain mouse 
+  information, which is why <B><CODE>Layout</CODE></B>s must implement 
+  <B><CODE>PickEventListener</CODE></B>; however, this requirement is likely to 
+  be removed in future versions.</P>
+  <LI><B><CODE>ToolTipFunction</CODE></B> 
+  <P>A ToolTipFunction specifies the text that is shown when mousing over a 
+  vertex or edge. Several of these functions are made simpler by extending 
+  <B><CODE>ToolTipFunctionAdapter</CODE></B> and overriding methods as they seem 
+  appropriate. <B><CODE>ZoomDemo</CODE></B> demonstrates the tooltip 
+  functionality. The tooltip function is set thus: <PRE>vv.setToolTipFunction( ... )
+</PRE></LI></UL><BR>
+<H3>TRANSFORMATIONS: TRANSLATION, SCALING, ROTATION, DISTORTION</H3>
+<P>In JUNG 1.6.0, we had begun to experiment with the idea that a view might be 
+panned or zoomed. Fortunately, Java 2 makes this fairly easy, and so we've 
+greatly expanded coverage. JUNG now supports several types of transformations, 
+including translation (panning), scaling (zooming), rotating, shearing, and even 
+nonlinear transformations such as hyperbolic projections.</P>
+<P>JUNG, as of version 1.7, now offers two different types of scaling: 
+<UL>
+  <LI><B>view scaling</B>: scaling the coordinate system in which the network is 
+  drawn. This is analogous to pointing a camera lens at the screen and zooming 
+  in or out: as you zoom in, vertex images get bigger, edges get thicker, and 
+  text gets larger; in addition, vertices get farther apart and edges become 
+  longer. See <B><CODE>ViewScalingGraphMousePlugin</CODE></B>. 
+  <LI><B>model scaling</B>: scaling the coordinate system used by the 
+  <B><CODE>Layout</CODE></B>. This is analogous to stretching or compressing the 
+  surface on which the network is drawn: as the scale factor is increased, 
+  vertices get farther apart and edges get longer, but they remain the same 
+  size. See <B><CODE>ScalingGraphMousePlugin</CODE></B>. </LI></UL>
+<P>These scaling methods are combined by the 
+<B><CODE>CrossoverScalingGraphMousePlugin</CODE></B>, which has a 
+<B><CODE>crossover</CODE></B> parameter that specifies a boundary (by default, 
+set to 1.0, that is, no scaling). It works as follows: 
+<UL>
+  <LI>If the scale factor is greater than <B><CODE>crossover</CODE></B>, then 
+  layout scaling is used: the vertices stay the same size (that is, if 
+  <B><CODE>crossover == 1.0</CODE></B>, they are not scaled) and become farther 
+  apart. 
+  <LI>If the scale factor is less than <B><CODE>crossover</CODE></B>, then view 
+  scaling is used: vertices become smaller and closer together. </LI></UL>
+<P>This "crossover scaling" is used in several demos, including 
+<B><CODE>GraphZoomScrollPaneDemo</CODE></B>. This and other types of 
+transformations can be seen in <B><CODE>SatelliteViewDemo</CODE></B> (scaling, 
+panning, shearing, rotating) and <B><CODE>HyperbolicLensDemo</CODE></B> 
+(hyperbolic projection).</P>
+<H4>Instead of using a JScrollPane...</H4>
+<P><B><CODE>JScrollPane</CODE></B> will not give expected behavior as a 
+container for the <B><CODE>VisualizationViewer</CODE></B>. Instead, use the 
+<B><CODE>GraphZoomScrollPane</CODE></B>, a custom container that both responds 
+to, and controls transformations of the <B><CODE>VisualizationViewer</CODE></B>; 
+it provides vertical and horizontal scrollbars when the entire graph does not 
+fit in the window. It listens for changes to the 
+<B><CODE>VisualizationViewer</CODE></B> (zooming, panning) and adjusts the 
+scrollbars' size and position accordingly.</P>
+<H4>Specifying Transformations</H4>
+<P>If you want to specify the transformers to use directly (as opposed to 
+through a <B><CODE>GraphMousePlugin</CODE></B>), call 
+<B><CODE>vv.setLayoutTransformer()</CODE></B> or 
+<B><CODE>vv.setViewTransformer()</CODE></B> with an appropriate implementation 
+of <B><CODE>Transformer</CODE></B>. In general, a 
+<B><CODE>Transformer</CODE></B> is responsible for mapping points in one 
+coordinate system to points in another. Because this interface is fairly 
+generic, it even supports non-linear transformations. Check out the hyperbolic 
+view defined in <B><CODE>HyperbolicTransformer</CODE></B>, which supports 
+hyperbolic transformations over an affine 'delegate'. </P>
+<H4>Multiple Views of a Graph</H4>
+<P>The <B><CODE>SatelliteVisualizationViewer</CODE></B> is intended to provide 
+an overview of the graph. It links to a <B><CODE>VisualizationViewer</CODE></B> 
+and can share that VV's layout and use a similar renderer. This allows the 
+system to display a small copy of the same graph for navigation; see 
+<B><CODE>SatelliteViewDemo</CODE></B> for an example of how that works.</P><BR>
+<H3>PRE-RENDER and POST-RENDER</H3>
+<P>Sometimes, you want to put text over top of a graph, or lay something out 
+underneath it. The <B><CODE>VisualizationViewer</CODE></B> interface 
+<B><CODE>Paintable</CODE></B> allows you to define a surface to be painted; 
+UseTransform says whether it should zoom with the graph or should stay constant. 
+Demonstrations for this include: 
+<UL>
+  <LI><B><CODE>GraphZoomScrollPaneDemo</CODE></B> uses it to paint the texture 
+  on the background and the banner label on the foreground 
+  <LI><B><CODE>SatelliteViewDemo</CODE></B> uses it to paint the rectangular 
+  lens and the optional grid. </LI></UL>
+<P></P><BR>
+<H3>SUBLAYOUTS</H3>
+<P>While <B><CODE>Layout</CODE></B>s cover an entire graph, a 
+<B><CODE>SubLayout</CODE></B> picks locations for a subset of vertices and lays 
+them out in a tight grouping that serves as a visual proxy for all the 
+vertices.</P>
+<P>While traditionally a <B><CODE>Layout</CODE></B> can store its data in a 
+variety of places, and uses a whole graph to decorate, the 
+<B><CODE>SubLayoutDecorator</CODE></B> decorates a <B><CODE>Layout</CODE></B> 
+with the knowledge that it may have to store a <B><CODE>SubLayout</CODE></B>. 
+The design for this mechanism is still in progress.</P>
+<P>Check out <B><CODE>SubLayoutDemo</CODE></B> to manually select vertices, or 
+<B><CODE>ClusteringDemo</CODE></B> to see how automatic sublayouts may be chosen 
+as appropriate.</P><BR>
+<H3>WHEN THE GRAPH CHANGES</H3>
+<P><B><CODE>ChangeEventSupport</CODE></B> and <B><CODE>ChangeListener</CODE></B> 
+are now standard mechanisms for recognizing when either the underlying graph or 
+the underlying model changes: that is, when a vertex gets moved or the graph 
+changes. Both of these should trigger <B><CODE>ChangeEvents</CODE></B> which 
+should in turn, trigger transformations and repaints as appropriate.</P><BR>
+<H3>CAPTURING THE MOMENT: DUMPING TO PNG, JPG, or EPS</H3>
+<P>For JUNG 1.5 and before, there was no problem simply rendering the screen to 
+a Buffer, and then saving that as a PNG or a JPG. As of JUNG 1.6, we added 
+offscreen buffers that partially accelerated drawing--but didn't support this 
+output modality. (And it wrecked the ability to swap in a new Graphics 
+object).</P>
+<P>JUNG 1.7 allows the best of both worlds. Double-buffering is off by default, 
+but can be turned on for to increase performance. When the graph looks like you 
+want, turn off double-buffering and then call a PNG, JPG, or EPS dumper. A GPL 
+EPS dumper can be found at <A 
+href="http://jibble.org/epsgraphics/">http://jibble.org/epsgraphics/</A>; sample 
+JPG and PNG dumping code is below.</P><PRE> 
+// use double buffering until now
+ 
+// turn it off to capture
+visualizationViewer.setDoubleBuffered( false )
+ 
+// capture: create a BufferedImage
+// create the Graphics2D object that paints to it
+visualizationViewer.paintComponent( replaced_graphics2D )
+// and save out the BufferedImage
+ImageIO.write(bi, "jpg", new file( ... ));
+ 
+// turn double buffering back on
+visualizationViewer.setDoubleBuffered( true )
+</PRE></SPAN></BODY></HTML>

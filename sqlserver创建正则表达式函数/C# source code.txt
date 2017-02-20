@@ -1,0 +1,57 @@
+//sql server 2008要用到viso 2008来生成dll文件
+//创建class library项目来生成dll文件
+//创建Console Application项目加载当前dll文件来测试代码
+
+//class library项目代码
+using System;
+using Microsoft.SqlServer.Server;
+using System.Text.RegularExpressions;
+
+namespace regexTest
+{
+    public class RegExBase
+    {
+        [SqlFunction(IsDeterministic = true, IsPrecise = true)]
+        public static Char RegExMatch(string matchString, string pattern)
+        {
+            if (pattern==null)
+            {
+                 return '0';
+            }
+            Regex r1 = new Regex(pattern.Trim());
+
+            if (matchString!=null&&r1.Match(matchString.Trim()).Success == true)
+            { return '1'; }
+
+            else
+            { return '0'; }
+
+        }
+
+    }
+}
+
+//Console Application代码
+using System;
+using System.Collections.Generic;
+using System.Text;
+//必须添加
+using System.Runtime.InteropServices;
+using regexTest;
+namespace DllExample
+{
+    class Program
+    {
+        //DllTest，我们的动态链接库
+        [DllImport("regexTest.dll")]
+        public static extern void RegExMatch();
+        static void Main(string[] args)
+        {
+
+            //调用动态链接库的方法
+            Console.WriteLine(regexTest.RegExBase.RegExMatch(null, null));
+            //regexTest.RegExBase.RegExMatch("Franklin", "^Franklin$");
+            Console.ReadLine();
+        }
+    }
+}

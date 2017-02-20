@@ -1,0 +1,83 @@
+精通struts书上
+
+<html:html>
+	lang在P288等于true时显示当前语言类型
+
+<html:base>P288
+
+<html:link>
+	forward	全局跳转通过配置文件
+	href	完整跳转
+	page	相对跳转P289
+加参数
+	paramId			P290
+	paramName
+	paramProperty
+	name指定hashMap对象	P291
+
+<html:rewrite>
+	page	P289
+
+<html:img>
+	page	P292
+	src
+	paramId
+	paramName
+	paramProperty
+	name
+
+在配置文件中创建全局转发链接
+		P289
+
+<html:form>
+	action	P296
+自动生成表单对象
+	
+<html:text>
+	property P297
+对应定义对象的属性
+
+<html:cancel>
+	也是一种submit方法可以通过isCancelled方法判断是否是取消
+		P298 <html:cancel>Reset</html:cancel>
+
+<html:reset>
+	重置按钮功能一样<html:reset>Reset</html:reset>P298
+
+<html:submit>
+	P298
+
+<html:hidden>
+	property对相属性名	P299
+	write	是否打开属性回显
+
+应用功能:要另外提交重要数据时，或显示用户不能修改的文本框
+
+<html:checkBox>
+	property属性名
+	value	当值为true时表示选中时把值设置为true否则选中时设为false
+
+	
+<logic:iterate></logic:iterate>		迭代的循环范围
+	id	该集合所产生的对象名
+	name	设置要迭代的集合
+	indexId	设置下标变量
+	offset	迭代开始的位置
+	length	迭代次数
+	property取出的javaBean中的属性
+
+注意:javaBean可以有三种方式
+	一:可以是前面的一个集合类所创建的对象，此时name是集合类对象名，property没用。
+	二:可以是由其它java代码由(setAttribute)方法转发过来的属性此时用name项来接收attribute的key
+	三:如果是与strutsForm有关，则name写有关的Form名，property写Form中要迭代的属性
+而且如果要嵌套使用<logic:iterate>则二层id可以随便起，二层的name为一层的id，二层的property为一层的循环对象的某个属性
+
+<bean:write/>	P346			输出相应属性值
+	name	对象名
+	property	对象属性名
+	
+	
+<bean:message/>		P339
+	key	与struts-config的<message-resources>的key相匹配
+		国际化的东西
+	bundel	与资源文件的key相对应

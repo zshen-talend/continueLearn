@@ -1,0 +1,80 @@
+
+GraphEd类:
+	包含的属性:
+	protected JGraph graph;//是图形组件，在其中画图形
+
+	
+	protected GraphUndoManager undoManager;//撤销管理器，管理各种撤销的方式、方法、监听包括undo堆栈与redo堆栈
+
+	
+	protected Action undo, redo, remove, group, ungroup, tofront, toback, cut,
+			copy, paste;//工具条上的属性
+
+	
+	protected int cellCount = 0;//记录总的图元数
+
+	
+	protected StatusBarGraphListener statusBar;//顾名思义状态条件听器
+
+
+
+	流程简述程序一开始，在main函数中初始化了一个JFrame也就是程序中最大的容器。然后通过Jframe.getContentPane().add(new GraphEd());取出内容窗格并加入我们类对象。Jframe.getContentPane()方法取出JFrame的内容窗格，内容窗格是java.awt.Container的实例，且此方法是JFrame所特有的，之后便是取得图标设置图标、大小、可显示等等，真正有用的还是要看GraphEd的构造方法。
+	在构造方法中，首先要做的便是通过createGraph()方法为我们的第一个属性(Graph JGraph类)赋值。
+
+GraphLayoutCache
+	可以取得模型(getModel())
+
+用以下的方法可以取出某个图元的孩子，并且可以通过该图元mapper取得图元的视图
+AbstractCellView类的146~148行
+其中model是这样的GraphEd$MyModel类型
+    mapper是这样的GraphLayoutCache类型
+	for (int i = 0; i < model.getChildCount(cell); i++) {
+			Object child = model.getChild(cell, i);
+			CellView view = mapper.getMapping(child, createDependentViews);
+在DefaultMutableTreeNo的类中add方法中将节点插入到父类中但是在这里调用了两次，且调用前后的分支走向不同，在这里父类的孩子节点被移除了.
+
+graph.getGraphLayoutCache().update(contextViews);可以用GraphLayoutCache()类来更新视图
+
+
+graph.getFirstCellForLocation(e.getX(), e.getY())这样的方法可以取得一个图元
+
+
+public abstract void translate(int x,                     图元的旋转
+                               int y)将 Graphics2D 上下文的原点平移到当前坐标系统中的点 (x, y)。
+
+angle = getLabelAngle(label);
+				g2.rotate(angle);
+
+  查看文章    
+java双缓冲技术2007-05-11 13:07在前面的repaint()文章中我门提到在调用该方法时会出现动画的闪烁，给我带来不流畅的视觉感，那么如何来处理掉这种闪烁的效果呢？就是利用java的双缓冲技术．
+
+双缓冲技术的工作原理：先在内存中分配一个和我门动画窗口一样大的空间（在内存中的空间我门是看不到的），然后利用getGraphics()方法去获得给空间并将它全部一次性的显示到我门的屏幕上．这样在我门的动画窗口上面是显示出来就非常的流畅了．避免了上面的闪烁效果．
+
+下面通过一段代码来说明双缓冲技术：
+
+
+双缓冲，去除闪烁的方法
+
+public void update(Graphics g){
+  
+     DbBuffer=createImage(getWidth(),getHeight());
+     Graphics GraImage=DbBuffer.getGraphics();
+     paint(GraImage);
+     GraImage.dispose();
+     g.drawImage(DbBuffer,0,0,null);
+}
+
+ 
+
+所有容器的子父类关系:
+	我们这个框架在GraphEd内部用getContentPane()方法取得的容器是:JPanel。在它的component这个组件数组中存有它的子组件，当下包括有一个JToolBar的工具条组件。一个JSplitPane的分隔面板组件以及一个GraphEd$EdStatusBar的状态条组件。
+	GraphEd$EdStatusBar的状态条组件中包含两个JLabel
+	JToolBar的工具条组件中包含所有的工具图标。
+	JSplitPane的分隔面板组件是主要的绘图组件，他的parent直指上面的JPanel。它的component组件数组中包含了三个组件。分别是两个JScrollPane和一个MetalSplitPaneDivider。
+	其中:
+		MetalSplitPaneDivider这个组件不包含任何其它的组件。
+		两个JPanel从上到下分别为我们定义的GraphEd$MyGraph组件，以及GraphEd$MyJTable组件。
+		但是上面两个组件都先被装入到JViewport类中的。
+		以上各级组件都可以通过parent这个属性找到自己的上级组件。并且在JSplitPane组件中还有两个保护级别的属性(leftComponent和rightCopmonent)分别指向GraphEd$MyGraph和GraphEd$MyJTable组件。
+
+SwingUtilities一个swing的工具包

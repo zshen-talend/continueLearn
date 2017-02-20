@@ -1,0 +1,351 @@
+---- 函 数 动 态 调 用 的 一 个 最 为 常 见 的 应 用 场 合 在 于 取 消 对 于switch 关 键 词 的 依 赖。switch 关 键 词 用 来 判 断 条 件， 并 分 别 给 出 处 理 过 程 即 处 理 函 数。 一 个 典 型 的 函 数 具 有 函 数 名、 输 入 值、 返 回 值。 而 实 现 动 态 调 用 的 关 键 之 处 在 于 调 用 时 得 到 正 确 的 类 名、 函 数（ 方 法） 名、 以 统 一 的 格 式 实 现 参 数 的 传 递。 下 面 是 实 现 该 功 能 的 类Invoker,ArgumentHolder 的 清 单： 
+
+//--------------------------------------
+//类Invoker
+//实现函数的动态调用
+//方法：
+// dynaCall
+// 参数 Object c希望调用函数（方法）所在对象
+// String m希望调用的方法名称
+// ArgumentHolder a传递给被调用方法的参数
+//-----------------------------------------
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+
+public class Invoker {
+static Object dynaCall(Object c,
+String m, ArgumentHolder a) 
+throws NoSuchMethodException,
+InvocationTargetException, 
+IllegalAccessException {
+
+//由于java支持方法名称的重载
+（同一类中出现多于一个的同名函数），
+//所以getMethod方法使用两个参数：
+字符串形式的方法名称和数组形式
+//的调用参数类列表。返回值为类Method的一个对象，
+该对象和将要被
+//调用的方法相关联
+Method meth = c.getClass().getMethod
+(m, a.getArgumentClasses()); 
+
+//通过类Method对象的invoke方法动态调用希望调用的方法
+return (meth.invoke(c, a.getArguments()));
+}
+} 
+
+//-------------------------------------
+//类ArgumentHolder
+//用于调用参数的封装，实现变长参数及
+不同类型参数的统一形式地传递
+//成员变量:
+// Class[] cl 参数类型数组
+// Object[] args 参数对象数组
+//方法: 
+// getArgumentClasses()返回参数类型数组
+// getArguments() 返回参数对象数组 
+// setArgument() 在参数列表中增加项目
+//
+//---------------------------------------
+public class ArgumentHolder { 
+protected Class[] cl;
+protected Object[] args;
+protected int argc;
+
+ArgumentHolder() {
+argc = 0;
+cl = new Class[0];
+args = new Object[0];
+}
+ArgumentHolder(int argc) {
+this.argc = argc;
+cl = new Class[argc];
+args = new Object[argc];
+}
+
+public Class[] getArgumentClasses() {
+return cl;
+}
+public Object[] getArguments() {
+return args;
+}
+
+//以下16个setArgument
+函数实现简单数据类型boolean,byte,
+// char,int,short,long,float,double的封装。
+为支持Invoker
+//类dynaCall方法中getClass的调用，
+此处将简单数据类型
+//转换为对应的对象，如boolean转换为Boolean
+public int setArgument(boolean b) {
+return this.setArgument(argc, new Boolean(b), 
+Boolean.TYPE);
+}
+public int setArgument(int argnum, boolean b) {
+return this.setArgument(argnum, new Boolean(b), 
+Boolean.TYPE);
+}
+public int setArgument(byte b) {
+return this.setArgument(argc, new Byte(b),
+Byte.TYPE);
+}
+
+public int setArgument(int argnum, byte b) {
+return this.setArgument(argnum, new Byte(b),
+Byte.TYPE);
+}
+public int setArgument(char c) {
+return this.setArgument(argc, new Character(c),
+Character.TYPE);
+}
+public int setArgument(int argnum, char c) {
+return this.setArgument(argnum, new Character(c),
+Character.TYPE);
+}
+public int setArgument(int i) {
+return this.setArgument(argc, new Integer(i),
+Integer.TYPE);
+}
+public int setArgument(int argnum, int i) {
+return this.setArgument(argnum, new Integer(i),
+Integer.TYPE);
+}
+public int setArgument(short s) {
+return this.setArgument(argc, new Short(s),
+Short.TYPE);
+}
+public int setArgument(int argnum, short s) {
+return this.setArgument(argnum, new Short(s),
+Short.TYPE);
+}
+public int setArgument(long l) {
+return this.setArgument(argc, new Long(l),
+Long.TYPE);
+}
+public int setArgument(int argnum, long l) {
+return this.setArgument(argnum, new Long(l),
+Long.TYPE);
+}
+public int setArgument(float f) {
+return this.setArgument(argc, new Float(f),
+Float.TYPE);
+}
+public int setArgument(int argnum, float f) {
+return this.setArgument(argnum, new Float(f),
+Float.TYPE);
+}
+public int setArgument(double d) {
+return this.setArgument(argc, new Double(d),
+Double.TYPE);
+}
+public int setArgument(int argnum, double d) {
+return this.setArgument(argnum, new Double(d),
+Double.TYPE);
+}
+
+//以下2个setArgument函数实现对象的封装，
+public int setArgument(Object obj) {
+return this.setArgument(argc, obj,
+obj.getClass());
+}
+public int setArgument(int argnum, Object obj) {
+return this.setArgument(argnum, obj,
+obj.getClass());
+}
+
+//以下setArgument函数具体实现以对象形式
+提供的参数封装。
+//具体操作为：增加计数器argc的值、
+在cl和args中增加相应内容
+public int setArgument(int argnum,
+Object obj, Class c) {
+if (argnum >= args.length) {
+argc = argnum + 1;
+Class[] clExpanded = new Class[argc];
+Object[] argsExpanded = new Object[argc];
+System.arraycopy(cl, 0, clExpanded,
+0, cl.length);
+System.arraycopy(args, 0, argsExpanded,
+0, args.length);
+cl = clExpanded;
+args = argsExpanded;
+}
+args[argnum] = obj;
+cl[argnum] = c;
+return argnum;
+}
+}
+
+---- 以 下 给 出 一 个 类Invoker 和ArgumentHolder 的 应 用 实 例。 类DynaCallTest 应 用 类Invoker 和ArgumentHolder 实 现 以 下 功 能： 根 据 用 户 在 命 令 行 中 输 入 的 内 容， 动 态 地 确 定 所 调 用 方 法。 程 序 可 以 接 受 的 合 法 输 入 为： 
+
+add 参数为两个整数，显示两个整数之和
+concat 参数为两个字符串，显示两个字符串连接之后的值
+help 无参数，显示可以接受的命令列表
+minmax 参数为三个整数，显示三个参数的最大之和最小值
+quit 无参数，结束运行
+rand 无参数，显示一个随机值
+
+程序清单如下：
+import java.io.BufferedReader;
+import java.io.InputStreamReader;
+import java.io.IOException;
+import java.lang.reflect.InvocationTargetException;
+import java.lang.reflect.Method;
+import java.lang.Math;
+import java.util.Random;
+import java.util.StringTokenizer;
+
+public class DynaCallTest {
+
+Random rand;
+BufferedReader consoleIn;
+
+//建构函数，初始化
+DynaCallTest() {
+consoleIn = new BufferedReader
+(new InputStreamReader(System.in));
+rand = new Random();
+}
+//读取用户输入行
+String getCommandLine() throws IOException {
+System.out.print(">");
+System.out.flush();
+String commandLine = consoleIn.readLine();
+if (commandLine == null)
+return "Quit";
+if (commandLine.length() == 0)
+return "Quit";
+else
+return commandLine;
+}
+
+//从用户输入行中提取命令，
+格式化为：首字符大写，其余字符小写
+//返回格式化后的命令
+String extractCommand(String commandLine) {
+StringTokenizer t = new StringTokenizer(commandLine);
+String cmd = t.nextToken().toLowerCase();
+return cmd.substring(0,1).toUpperCase()
++ cmd.substring(1);
+}
+
+//从用户输入行中提取参数，
+创建ArgumentHolder类型的对象a以封装所有参数
+//错误格式的整数被视为字符串
+//返回ArgumentHolder类型的对象，即封装后的参数
+ArgumentHolder extractArguments(String cmd) {
+StringTokenizer t = new StringTokenizer(cmd);
+int tokenCount = t.countTokens();
+ArgumentHolder a = new ArgumentHolder();
+String token = t.nextToken();
+while(t.hasMoreTokens()) {
+token = t.nextToken();
+try {
+int i = Integer.parseInt(token);
+a.setArgument(i);
+}
+catch (NumberFormatException e) {
+a.setArgument(token);
+}
+}
+return a;
+}
+
+//以下6个以meth开头的函数实现本测试程序
+接受的合法命令的具体处理过程。
+//函数的命名规则为：meth+格式化后的用户命令
+public String methAdd(int i1, int i2) {
+return Integer.toString(i1) + " + " + 
+Integer.toString(i2) + " = " + Integer.toString(i1 + i2);
+}
+public String methConcat(String s1, String s2) {
+return "the concatenated string is " + s1 + s2;
+}
+public String methHelp() {
+final String[] helpMessages = 
+{"DynaCallTest Version 1.0",
+"valid commands are:",
+"add int1 int2",
+"concat string1 string 2",
+"help",
+"minmax int1 int2 int3",
+"quit",
+"rand"
+};
+for (int i = 0; i < helpMessages.length; ++i)
+System.out.println(helpMessages);
+return "";
+}
+public String methMinmax(int i1, int i2, int i3) {
+return ("min = " + 
+Integer.toString(java.lang.Math.min
+(java.lang.Math.min(
+i1,i2),i3)) + ", max = " + Integer.toString(
+java.lang.Math.max(java.lang.Math.max(i1,i2),i3)));
+}
+public String methQuit() {
+return "quitting";
+}
+public String methRand() {
+return "the random number is "
++ Integer.toString(rand.nextInt());
+}
+
+//处理用户在命令行中的输入
+//调用extractCommand以生成对应于用户输入的方法名
+//调用extractArguments以封装用户输入参数
+//调用Invoker.dynaCall以实现命令处理
+String processCommand(String cmd) {
+try {
+String meth = "meth" + extractCommand(cmd);
+ArgumentHolder a = extractArguments(cmd);
+return (String)(Invoker.dynaCall(this, meth,a));
+}
+catch (NoSuchMethodException e) {
+return "no method to process command " + cmd;
+}
+catch (InvocationTargetException e) {
+System.out.println("trace:");
+e.printStackTrace();
+return "InvocationTargetException
+processing command" + cmd;
+}
+catch (IllegalAccessException e) {
+System.out.println("trace:");
+e.printStackTrace();
+return "IllegalAccessException processing
+command" + cmd;
+} 
+}
+
+//主函数，调用processCommand以实现程序功能
+public static void main(String args[]) {
+boolean allOK = true;
+String line;
+
+DynaCallTest myClient = new DynaCallTest();
+
+System.out.println("DynaCallTest Version 1.0");
+System.out.println("Enter command at the prompt");
+System.out.println("Type help for help");
+while(allOK) {
+try {
+line = myClient.getCommandLine();
+if (line == null)
+allOK = false;
+else {
+System.out.println(myClient.processCommand(line));
+if (line.substring(0,1).toUpperCase().equals("Q")) 
+allOK = false;
+}
+}
+catch (IOException e) {
+e.printStackTrace();
+allOK = false;
+}
+}
+System.exit(0);
+}
+}
+
+---- 以 上 程 序 在jdk 1.1.4，win95 环 境 下 编 译 通 过， 并 在Linux(Slackware96)，Windows Nt 4.0 ( 工 作 站) 下 经 过 验 证。 

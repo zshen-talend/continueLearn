@@ -1,0 +1,72 @@
+1.#-->注释信息,行注释。
+2.#!-->说明解释器的位置，如果位置不对去环境变量中查找
+3.\n-->回车符
+4.程序中的每一行，要以";"号结束
+5.print-->向屏幕输出语句以"引号"扩起来，以","分隔
+
+6.perl把整数和浮点数都当作是双精度的浮点数来处理。
+
+7.整数可以用'_'来分隔，且并不影响数值。
+
+8.数制
+	十六进制0xfff	八进制07777	二进制0b1101
+
+9.数制间的转换
+	oct()可以将看似八进制数数和以0b开头的二进制数转换成十进制。
+	hex()可以把看似十六进制的数转换成十进制。
+
+10.单引号括起来的字符串
+	单引号括起来的字符串不认\n为回车，却认得\\和\'
+
+11.串连字符串
+	“hello”. “world” # 同于“helloworld”
+	“hello”. ‘’. “world”#同于“hello world”
+	‘hello world’. “\n” #同于“hello world\n”
+
+12.字符串重复操作符
+	“fred”x 3 # “fredfredfred”
+	“barney”x (4+1) # “barney”x 5, “barneybarneybarneybarneybarney”
+	5 x 4 #实际上是“5”x 4, “5555”
+
+13.打开警告的两种方式
+	#! perl -w
+	use warnings;
+
+14.打开警告的详细信息
+	use diagnostics;
+
+15.标量变量的命名方式
+	有字母、数字、下划线组成，但不能以数字开头，前面加'$'
+	$num1=3;
+	$str1="a";
+	$connect=$str1 x 3 .$num1*3;
+
+16.标准输入符
+	$line = <STDIN>;
+	if($line eq "\n"){
+		print "That was just a blank line!\n";
+	}else{
+		print "That line of input was: $line";
+	}
+
+17.去除字符串的换行符
+	$text = “a line of text\n”; #也可以由<STDIN>输入
+	chomp($text); #去掉换行符(\n)。
+	返回值为去掉的"\n"的个数，但它只会去掉其中的一个"\n",结果会改变括号中的变量
+
+18.循环结构
+	$count = 0;
+	while ($count < 10) {
+		$count + = 2;
+		print “count is now $count\n”; #打印出2 4 6 8 10
+	}
+
+19.检查一个值是否是undef
+	$madonna = <STDIN>;
+	If ($defined ($madonna)){
+		print “The input was $madonna”;
+	}else{
+		print “No input available!\n”;
+	}
+
+p38

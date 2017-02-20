@@ -1,0 +1,14 @@
+1 - git checkout master
+2 - git fetch (if conflict,rebase)
+3 - git checkout <branch-name>
+4 - git pull --rebase origin <branch-name>
+5 - git rebase [-i] master( if conflict, edit, add to index, rebase->continue)
+6 - git checkout master
+
+7 - git fetch
+8 - git rebase origin/master
+(if you retrieved new commits on master here, 
+you need to loop back to the rebase operation, --> checkout master, fetch master, rebase origin/master, step 5)
+
+9 - git merge [--squash] <branch-name>
+10 - git push origin master

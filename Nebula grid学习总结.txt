@@ -1,0 +1,12 @@
+ColumnViewerEditorActivationStrategy
+	用来激活某一列的编辑视图本来在其中放入的应该是Column Viewer的对象，但是在Nebula Grid中放入得确是GridTableViewer。
+
+监听grid中列加入的复选框
+	它的监听就是整个grid的Selection监听，在这个监听中点击加入的复选框与点击普通的行时所返回的SelectionEvent中的值会有所不同。
+
+grid对选择的控制
+	有三个不同的选择，包括grid整体的Selection Enable和Cell Selection以及各个列也有自己的Cell Selection,对于三者之间差异设置会有不同的效果。
+
+关于ICellModifier的实现类中返回的element参数与LabelProvider实现类中返回的element参数的不同
+	前者的getValue()方法中element是用户定义的对象，modify()方法中element是表格的GridItem对象。
+	后者的getColumnImage()方法和getColumnText()方法中element参数都是用户定义对象。

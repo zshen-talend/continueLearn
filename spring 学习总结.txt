@@ -1,0 +1,59 @@
+MethodBeforeAdvice接口	
+			void before方法
+
+AfterReturningAdvice接口	
+			void afterReturning方法
+
+MethodInterceptor接口
+			Object invoke方法   其中参数MethodInvocation有一个proceed方法调用当前切入点
+						方法
+
+ThrowsAdvice接口
+			afterThrowing一个参数
+			afterThrowing三个参数
+
+NameMatchMethodPoincut接口
+			属性：
+				mappedName/mappedNames切入点映射的方法名
+				advice切入点要插入的通知对象
+				
+			其中包含三个接口
+					ClassFilter接口
+							matches方法
+					MethodMatcher接口
+							matches方法(两个参数)
+							isRuntime方法
+							matches方法(三个参数)
+					PointcutAdvisor接口
+							getPointcut方法
+							getAdvice方法
+			两个映射属性设置方法
+					setMappedName方法
+					setMappedNames方法(映射可用*通配符)
+			
+			
+RegexpMethodPointcut接口
+			属性：
+				pattern切入点映射的方法名(可用通配符)
+				advice此切入点要放入的通知对象
+
+动态切入点
+	ControlFlowPointcut接口
+				一个构造函数需要传入流传入协议类型
+	此接口需要匹配特殊的切入点顾问因为是在协议上做手脚，DefaultPointcutAdvisor类
+									属性:
+										advice通知对象		
+										pointcut切入点对象
+										放入以上接口所定义出的对象
+
+proxyFactoryBean类
+		属性:
+			proxyInterfaces要代理的pojo类的接口
+			interceptorNames要使用的拦截的方法
+			target被拦截的目标类
+
+切入点实施
+	包括交叉和合并
+		composablePointcut类的intersection方法和union方法用来交叉或合并cutpoint、ClassFilter和MethodMatcher
+		但只有Pointcuts类的union方法用来合并两个cutpoint
+

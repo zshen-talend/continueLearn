@@ -1,0 +1,265 @@
+1.安装Sword时输入的数据库连接路径指得是主机名
+	所以填入项为127.0.0.1或localhost就可以了。
+
+2初次配置tomcat
+	注意改变tomcat的jre
+
+3.BO 业务对象
+	数据库中的一张表结构
+
+4.VO 值对象
+	多张数据库表结构的联合视图，即可以包含所有表结构的所有属
+性，也可以包含部分表结构中的部分属性。VO 只是从视图上反应业务对象，并
+不进行实际的数据库操作，只有BO 业务对象参数实际数据库操作。
+
+5.配置Tomcat
+	appcomponent中对应着各个工程，而对应方法就是与工程中的domain前缀的后面相对应。
+	如:domain-project.xml对应:
+	<app-component>
+		<path></path>
+		<name>user_project</name>
+		<resource>
+			<lib></lib>
+		</resource>
+	</app-component>
+	如上在project前面加入了user_这样的形式。
+
+	persistence中涉及数据库的配置问题
+	包括数据库的连接地址等参数，如遇到JDBC问题就可以找到这里。
+
+6.工程中的配置文件
+	工程中包括三个配置文件
+	domain-*.xml
+		关联ctrl与Proxy
+	persistence-*.xml
+		关联hibernate的映射文件
+	map-*.xml
+		映射*.pfv与相应的ctrl类以及对应的方法名。
+
+7.通过资源同步解决模块更换的问题
+	点击包资源管理器，对相应工程点击右键可以选择资源同步，主要功能是使得Tomcat与Web项目之间的配置文件同步。可以看出来的同步文件为Tomcat文件中的domain-*.xml这里面会改变对于proxy类的对应关系。
+
+8.项目资源管理器中生成配置文件的使用
+	生成的配置文件涉及到包资源管理器中的三个xml文件，且在map-*中还有一部分代码不能被插入需要自己去粘贴，且这部分代码是固定代码。
+	<bean id="viewResolver" class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+
+		<property name="viewClass">
+
+			<value>org.springframework.web.servlet.view.JstlView</value>
+
+		</property>
+
+		<property name="prefix">
+
+			<value>/</value>
+
+		</property>
+
+		<property name="suffix">
+
+			<value>.jsp</value>
+
+		</property>
+     </bean>
+
+9.controller和proxyer之间的参数传递
+	c->p:request
+	p->c:response
+	c->jsp是通过swordViewer对xml的操作。
+
+10.jsp页面script引用问题
+	每张jsp页面都引用了两个script，但是这两张jsp引用路径有问题，要改成tomcat中的路径。
+
+11.生成的控制类中问题
+	生成的控制类中没有参数设置和页面跳转的代码，要自己去写。
+
+12.页面流
+	页面流的名字，直接关系到ctrl和proxy的名称最好加上方法名，这样也后用起来也方便。
+
+13.页面不能自动填写
+	1.考查相应项是否为，对应的列名。
+	2.当用的是分页查询时，注意jsp中表名(table)和ctrl中请求所设置的表名以及js中的tableid一致。
+	3.如果不是分页查询，且在table中包含对应项的行<tr>或列<td>不能包含名字和id.而tr中的name="item"是作为分页填表时所用到的，两者转换时注意这一点。
+	4.分页查询需要js中fenyemanager的支持，要求保持ctrl中req.setTableName(),js的fenYeManager中的setTableId以及相应的Table空间name\id保持名称一致。
+	5.不是分页自动管理的话，要注意在js中调用sysCtrl.initViewPage()方法。
+
+14.sql的模糊查询
+	因为采用的是参数注入的形式，所以要把模式匹配符与参数结合成相应的字符串，然后再进行sql语句的参数注入。
+
+15.SwordReq
+	对应表名，分页信息，对应的proxy方法，找到proxy类的TransactionID编号。	
+
+16.SwordRes
+	
+17.SwordDao
+	1)取得dabo的方法
+		1.SwordDao dabo2 = new SwordDao ();
+        	dabo2.setDao(this.getSession().getPersistenceDAO());
+		这个方法取得的dabo与proxy类的每个方法的参数中的dabo，通过getDao的方法取得的是同一个地址的对象。
+	
+	2)新增操作
+		1.public void saveBO(IDaoBusinessObject bo);
+		该方法会覆盖数据库中原有值，所以当数据库中有初值时要使用insertSingleBOBySql方法。而且这些方法与hiberate机制有关，所以使用时要注意hbm映射文件的使用。
+		2.public void saveBOs(List bos);
+		该方法可以通过ArrayList来批量插入一些bo对象。
+	3)查询操作
+		1.public List query (Class boClass, String sqlStr, List params)；
+		boClass对应BO和VO类，sqlStr完整的sql语句，params sql语句中的参数变量。这个方法会返回一个List型的查询结果。
+		2.public List queryByKey (Class boClass, String sqlKey, List params)；
+		像上面的方法一个，只是这里的完整sql语句被存储在了一个配置文件(sql-*.xml)中，而且调用的是其中关键字。
+		例:<sql name="strSqlKey"> select * from Student where name = ? and id = ?</sql>
+		3.public CachedRowSet query (String sqlStr, List params);
+		参数与前面的方法差不多，只是返回值是sun.jdbc.rowset.CachedRowSet类型的，这个类型属于非连接数据源，它会把数据存储到缓存中，支持将更改返回到数据源，并且只有在读取和修改数据源时才启动连接的。
+		4.public CachedRowSet queryByKey (String sqlKey, List params);
+		另一种不同功能的排列组合。
+		5.public IFenYeEvent query(IFenYeReqEvent req,IFenYeResEvent res,Class boClass,String sql,List params)
+		一种分页查询，返回值中游分页的结果，并且不用自己来操作结果集。
+		6.public IFenYeEvent queryByKey(IFenYeReqEvent req,IFenYeResEvent res,Class boClass,String sqlKey,List params)
+		像上面的方法一样，只不过又使用了配置文件来存放sql。
+	4)更新操作
+		1.public void updateBO(IDaoBusinessObject);
+		更新指定的BO,且注意BO的属性方法要完全，否则更新不成功。
+		2.public void updateBOs(List bos);
+		批量更新。
+	5)删除操作
+		1.public void deleteBO(IDaoBusinessObject bo);
+		根据主键删除指定条目。
+		2.public void deleteBOs(List bos);
+		批量删除
+	6)执行指定的sql语句
+		1.public int execute (String strSql, List sqlParams)；
+		可以是增、删、改中任意一种。
+	7)关于blob和clob
+		1.public void fillBlob(Object boInstance, String blobFieldName, String Filename)
+		把指定文件的内容填充到指定bo的指定属性名列中。
+		2.public void fillBlob(Object boInstance, String blobFieldName, InputStream is)
+		将指定输入流中的内容填充到指定bo的指定字段中。
+		3.public void fetchBlob(Object boInstance, String blobFieldName, String fileName)
+		提取指定bo对象的指定域到指定的文件中。
+		4.public void fetchBlob(Object boInstance, String blobFieldName, OutputStream os)
+		提取指定bo对象的指定域到指定的输出流。
+18.proxy类
+	
+	该类扩展了SwordBaseProxy类，除了我们自己定义的操作方法以及默认调用的deal()方法外，还有doAction()和getSession()两个方法。
+	其中doAction()方法返回的就是Session和getSession一样，包括对象地址。而运行doAction()方法会去调用deal()方法，而实际上正常的proxy调用的过程也是经过父类(AbsDomainProxy)中的这个方法。
+	其中getSession()方法取得的也是父类(AbsDomainProxy)中的一个保护类型的变量。而在这个session中包含了我们要使用的dao,request和response。在这里也可以设置session的参数，通过addParam(Object key, Object value)方法。
+
+19.ctrl类
+
+20.SwordView类
+	这个类中用来操作页面中隐藏的域，其值为一个xml。它有两个方法来设置值，addViewObject用来写入一个bo,而addField用来单独添加一个域。
+	getDeleteViewObjects(String tableName)对应xml标记status=update
+	getInsertViewObjects(String tableName)对应xml标记status=new
+	getSelectViewObjects(String tableName)无对应xml标记所有的都是
+	getUpdateViewObjects(String tableName)对应xml标记status=delete
+
+21.页面的初始化
+	当页面不是使用默认分页系统使用时，会调用SysCtrl中的initViewPage而在这个方法中又使用了docassistant.js中的initViewPage方法。
+
+22.CacheUserInterface缓存操作
+	主要看框架高级部分的缓存编码规则。
+	步骤1.首先建表，有一个固定的控制缓存的表，以及与下拉列表框一一对应的几张表。要求表名与在缓存表中有注册。且结构与ctrl中一致。
+	    2.ctrl中涉及使用缓存的类catchUserInterface在上面的文章中有说明。
+	    3.jsp页面要配合写入input控件，并且这些控件要在同一个<tr>下。有连接不同<tr>的参数但是只能是input间的连接。
+	   4.web.xml和sword.xml配置文件中缓存相关内容。
+
+23.分页查询
+	分页的缓存可以在页面跳转时进行定制，document.getElementById("frameLdpy").src = "/deleFenYeCtrl_fenYe.pfv?fenYeId="+fenYeId+"&rowsInWebCache=20&rowsInBrowserCache=10"+"&cs="+Math.random();且服务器缓存必须是浏览器缓存的整数倍，如果相同则每次换页都从数据库重新查询。
+
+24.新加配置文件的路径问题
+	新加的配置文件默认路径是在web文件夹下，如正好在web下引用时就可以直接用文件名如tree1.xml。以此类推在jsp下就是"jsp/tree1.xml"但是不可以放在WEB-INF下。
+
+25.下拉树的使用 clsDynamicTree.js tree.js gns.css
+	因为使用的是动态的树，所以在开始时有一个初始化的情况。clsDynamicTree$init(null,"spjgTree.xml");如果在一张页面上有多个下拉框需要在input框中设置treeName属性。
+	
+
+26.拖拽树的使用 gns.css tree.js treeDrag.js
+	像普通树一样使用，指定table作为容器，并且指定相应的<div> id。只是在js中定义了相应的修改方法。并且在初始化时可以指定拖拽的方式dragTree.setDragType("newDefine");(新建树)。像其它树一样，要有一个table作为这棵树的容器，主要使得table的id与script中对应的读取xml方法中的容器名一致，且展开情况与xml中的属性一致。而且目标树和源树分工明确且不能有重复项，否则指认第一个找到的位置。
+	
+
+27.关于缓存的使用
+	缓存主要涉及到级联下拉，前台排序这样的功能点。主要参与的配置文件包括map-public的对应映射类。sword.xml这里开缓存的启动config，这算是服务器端。还有web.xml对应的缓存加载的selvlet。
+
+28.tabPane tab.js tab.css
+	有一个用户接口(beforeTabPaneClick(item))，可以在我们点击某个tab标签之前被执行，这样就可以在当前页面改变某个tab指定的链接位置了。
+	在tabpane.js中还提供了getPageDocIniFrame(itemName)方法，可以取到指定item的document对象，方便我们修改内容。
+	
+
+29.tab tab.js  tab.css
+	这个控件的使用目的是要显示用div括起来的代码，可以是table等也可以显示引用页<jsp:include page="当前页面所在目录/想要跳转的页面路径" flush="true"/>。
+
+30.不同跳转方式和函数对应的默认路径
+	通过jsp跳转:默认路径为当前页面所在位置。
+	通过pfv跳转:默认路径为/swordapp/。
+	
+	函数总结:
+		1)clsDynamicTree$init(null,The url)
+			这个路径是相对的默认为/swordapp/
+		2)ctrl类的跳转
+			通过配置文件前加"/"后加".jsp"
+		3)tab
+			具体页面:默认为当前页面所在父目录。<jsp:include page="">
+		4)树的跳转
+			默认路径为/swordapp/
+			也可以用pfv后缀
+		5)oPublicFunction.getDom(The Url)
+			/swordapp/	且即使用../也不能超出这个范围。
+		6)TabPane跳转
+			具体页面:/swordapp/
+			也可以用pfv跳转
+
+31.效验功能Validator.js  validator_field.js
+	效验功能需要预先初始化效验的范围如Validator.attachInfo('form1');就限定在表单id为"form1"的范围之内。需要验证的表单外还要以一个div括起来，并以特殊的id来命名。这个id需要与下面提交时再次验证的语句中的名称一致Validator.Validate(document.all('xxxxx'),1)。
+
+32.日期控件popcal.js
+	注意input中不要填写其它的文字，否则会造成展示的日期控件找不到对应的年月而无法显示。
+
+33.数字格式化 cssUtil.js
+	主要运用FormatFloat函数来转换格式，且要求原始格式不能带数字以外的格式。
+
+34.按钮组态变化 cssUtil.js
+	机制为通过id数组初始化页面中的一组按钮，再通过0,1数组为这个按钮组注册状态组，最后通过注册的状态组的关键字来改变按钮组的状态。
+
+35.表格外的焦点转移
+	初始化后用order属性来排序
+
+36.表格的焦点转移
+	需要通过数组来注册需要排序的table名称，相应的数据项行<tr>要用item作为名称。顺序就是从左到右的顺序。
+
+37.统一对话框显示规则 showModalDialog.js
+	引用静态的htm 路径:public\core\html dlg_message.htm、dlg_alert.htm、dlg_confirm.htm、dlg_prompt.htm
+	通过读取xml中navi节点下的message属性来填充对话框中显示的消息。
+
+38.select控件的使用
+	第一种方法:使用struct的<c:forEach var="循环中的变量名" items="${字符串数组名}"><option><c:out value="${循环中的变量名}"/></option></c:forEach>
+	第二种方法:
+
+39.新建一个ctrl方法的步骤
+1.map-*中注册
+2.写方法
+3.注意proxy中的方法是从deal()方法开始的。
+
+40.树的一些默认操作是在treeEx.js中(clsTreeProcess)
+如
+	树结点的单击事件，setTreeOnclick
+	树结点的双击事件，setTreeDblOnclick
+	树结点的右键事件，setTreeOnContextMenu
+通过上面的函数为相应操作赋函数值
+
+41.取得dom
+/*第一个参数是路径，可以是jsp/com.css.yulin.yagl/page/xzqhTree.xml,也可以是PgCtrl-*initTree.pfv区别在于2.5要多加'/'
+*第二个参数是一个字符串，可以直接为相应的xml字符串如:document.getElementById("treeXML").value
+*/
+oPublicFunction.getDom('','')
+
+42.table下是否带BO名称的区别
+带BO名称就只能通过BO这样的对象来赋值，首先要知道的应该是<table>中BO的名字。
+如果后台用addField来传值则，<table>中不能包含BO名字，否则不能自动填写。
+
+43.事务的操作
+	sword3.5中对于事物的操作默认为一个proxy的一个方法，如果异常被本地捕获则框架默认认为这个方法中的事物已被成功提交，框架会commit这个方法中的操作。
+解决方法:可以通过connection的rollBack方法来撤销当前方法中的所有操作，平台的commit也就没有了意义。
+
+44.建立数据库表和bo类
+建表时的字段名称如果用'_'隔开则对应的bo类的字段名会省去'_'而把'_'后的第一个字母大写，只有这样的格式，才能使框架的自动填表和自动填装bo顺利运行。
+在不带有'_'的字段中，主要是bo类中的方法名与hbm.xml中的property中的name对应，如果property中的name为全小写，则相应的bo方法要把首字母大写，与bo中的字段名无关。

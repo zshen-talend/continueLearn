@@ -1,0 +1,25 @@
+1.Unable to open editor, unknown editor ID
+	当打开的编辑器的图标为空时，编辑器不能注册成功，所以在打开该编辑器的时候会报告找不到该编辑器的ID
+
+2.索引中丢失  IN 或 OUT 参数:: 1
+	可能是数据库操作语句中，给的参数不够。或者配置文件的类型不符(在sword中如果用dabo.execute()方法的话，其与配置文件的关系似乎不大);
+
+
+3. org.eclipse.core.internal.resources.ResourceException: A resource exists with a different case: '/test/aaa/bbb.txt'. 
+ 
+这个是由于Windows平台文件名不区分大小写，而Eclipse平台的资源系统则是区分大小写的，那么如果在IResource里调用exists()方法的时候，如果有同名但大小写不同的文件存在的话，同样会返回false；于是程序试图去创建文件的时候就抛出了这个异常。
+
+4.日志文件中出现:
+!ENTRY org.eclipse.core.resources 2 10035 2009-06-30 22:19:06.772
+!MESSAGE The workspace exited with unsaved changes in the previous
+session; refreshing workspace to recover changes
+问题在于上一次退出workspace时的保存有问题。
+相应修改
+	取消保存操作ResourcesPlugin.getWorkspace().save(true, new NullProgressMonitor());
+	删除快照文件workspace\.metadata\.plugins\org.eclipse.core.resources and removing the file .snap
+
+5.ConcurrentModificationException
+由于集合在迭代过程中，但其中对象被改变而引起。
+
+6.ConcurrentModificationException
+列表在读取时被修改

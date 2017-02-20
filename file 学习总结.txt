@@ -1,0 +1,34 @@
+	
+文件选择器的初始化（包括一个文件过滤器）
+protected void initFileChooser() {
+		if (fileChooser == null) {
+			fileChooser = new JFileChooser();
+			FileFilter fileFilter = new FileFilter() {
+				/**
+				 * @see javax.swing.filechooser.FileFilter#accept(File)
+				 */
+				public boolean accept(File f) {
+					if (f == null)
+						return false;
+					if (f.getName() == null)
+						return false;
+					if (f.getName().endsWith(".xml"))
+						return true;
+					if (f.getName().endsWith(".ser"))
+						return true;
+					if (f.isDirectory())
+						return true;
+
+					return false;
+				}
+
+				/**
+				 * @see javax.swing.filechooser.FileFilter#getDescription()
+				 */
+				public String getDescription() {
+					return "GraphEd file (.xml, .ser)";
+				}
+			};
+			fileChooser.setFileFilter(fileFilter);
+		}
+	}

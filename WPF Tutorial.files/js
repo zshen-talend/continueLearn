@@ -1,0 +1,27 @@
+var MembershipService=function() {
+MembershipService.initializeBase(this);
+this._timeout = 0;
+this._userContext = null;
+this._succeeded = null;
+this._failed = null;
+}
+MembershipService.prototype={
+ForgotPassword:function(email,succeededCallback, failedCallback, userContext) {
+return this._invoke(MembershipService.get_path(), 'ForgotPassword',false,{email:email},succeededCallback,failedCallback,userContext); },
+CreateCSCookie:function(username,succeededCallback, failedCallback, userContext) {
+return this._invoke(MembershipService.get_path(), 'CreateCSCookie',false,{username:username},succeededCallback,failedCallback,userContext); }}
+MembershipService.registerClass('MembershipService',Sys.Net.WebServiceProxy);
+MembershipService._staticInstance = new MembershipService();
+MembershipService.set_path = function(value) { MembershipService._staticInstance._path = value; }
+MembershipService.get_path = function() { return MembershipService._staticInstance._path; }
+MembershipService.set_timeout = function(value) { MembershipService._staticInstance._timeout = value; }
+MembershipService.get_timeout = function() { return MembershipService._staticInstance._timeout; }
+MembershipService.set_defaultUserContext = function(value) { MembershipService._staticInstance._userContext = value; }
+MembershipService.get_defaultUserContext = function() { return MembershipService._staticInstance._userContext; }
+MembershipService.set_defaultSucceededCallback = function(value) { MembershipService._staticInstance._succeeded = value; }
+MembershipService.get_defaultSucceededCallback = function() { return MembershipService._staticInstance._succeeded; }
+MembershipService.set_defaultFailedCallback = function(value) { MembershipService._staticInstance._failed = value; }
+MembershipService.get_defaultFailedCallback = function() { return MembershipService._staticInstance._failed; }
+MembershipService.set_path("/webservices/membership/membershipservice.asmx");
+MembershipService.ForgotPassword= function(email,onSuccess,onFailed,userContext) {MembershipService._staticInstance.ForgotPassword(email,onSuccess,onFailed,userContext); }
+MembershipService.CreateCSCookie= function(username,onSuccess,onFailed,userContext) {MembershipService._staticInstance.CreateCSCookie(username,onSuccess,onFailed,userContext); }

@@ -1,0 +1,11 @@
+1.可能会遇到的异常:
+Exception in thread "main" java.lang.UnsatisfiedLinkError: no gl-0500 in java.library.path 
+遇到这样的异常，是说明当前程序的运行需要操作系统的支持，所以涉及到一些*.dll文件。而在我们指定的路径中没有这个文件，需要在异常前面找到这些路径，然后把提示的文件放入其中的某一个路径就可以了。要知道路径可以通过System.out.println( System.getProperty("java.library.path"));方法来输出所有。
+
+2.正常在swt中运行opengl需要的lwjgl的jar包
+	我下载的lwjgl和网上的一些资料有所不同，我这个2.0.1版本中，GLU类在org.lwjgl.util.glu.GLU中，而不是在org.lwjgl.opengl.glu.GLU所以要自己改一下包路径。
+
+3.世界坐标、视图坐标和用户坐标的辨析
+	世界坐标又称java坐标，是指和屏幕分辨率相关的坐标系统，其左上角为(0,0)坐标原点，向下和向右分别为,y轴正方向和x轴正方向。
+	视图坐标在MyCanvas中默认取值为(0,1)*(0,1),其左下角为坐标原点，向上和向右分别为y轴正方向和x轴正方向。可以定义多个，每个对应一个用户坐标系。setViewport();
+	用户坐标是我们绘图时真正使用的坐标系，在MyCanvas中默认取值范围为(-1,1)*(-1,1)且坐标原点在屏幕中心。setWindow();

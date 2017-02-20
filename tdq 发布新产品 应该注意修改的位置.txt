@@ -1,0 +1,5 @@
+1.report持久化时记录的数据库版本
+位置：
+	org.talend.dataprofiler.datamart\ddl\talend_dq_all.sql(TDQ_PRODUCT.PR_VERSION)
+
+

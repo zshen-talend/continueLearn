@@ -1,0 +1,128 @@
+要想从外部引用图片以及绘制自己的图形
+第一步:在图库(Figure Gallery nodes或links或default)中建立自己的图形描述符(Figure Descriptor 相应的图形名称)，在描述符下再建立相应的图元，如:
+	1.Custom Figure 名称 类型:图元(可以加入对图片的引用，但这个引用的只能是相应的图形类这个类的定义规则如下:)
+要重载Shape这个类实现里面的outlineShape和fillShape即画图形的方法。
+	2.基本图形类型:包括矩形、圆角矩形、椭圆等它们只需要定义名字就可以了。
+	3.标签label，主要是文字存放的位置如果不是专门定义，就不会有相应的图形。
+	4.线形包括Custom Connection和简单的连线Polyline Connection其中可以调节线形、线宽这样的属性。
+(注意:自定义的连线也要实现一个类,这个类要继承PolylineConnectionEx类并在它的构造方法中实现线宽、开始结束的样式、大小等等如:在护卫顺序的连接中定义了如下属性
+public ThickDirectedConnection() {
+		setLineWidth(3);
+		PolylineDecoration arrow = new PolylineDecoration();
+		arrow.setLineWidth(3);
+		setTargetDecoration(arrow);
+	})
+
+第二步:把在图库中定义的图形引用到相应的结点Node、连接Connection、表格标签Diagram Label中去。当结点需要内部嵌套在别的结点中时就要使用Compartment来设计内部嵌入者的边框。
+
+修改背景图，在*.gmf.editor中修改背景图片
+
+在代码中的图片设置，位置*.diagram工程中的*.diagram.edit.parts包中，相应类的(名称Figure)内部类中的构造函数中。
+
+修改链接线的颜色和大小
+	文字标签：在gmfmap里的Connection Mappping下增加Label Mapping元素；
+	箭头：在gmfgraph里为Polyline Connection指定一个Polyline Decorator作为source/target decoration，要为这个Decorator创建一些Template Point来决定箭头的形状，例如指定(-1,-1), (0,0), (-1,1)。在现在的版本中箭头不用加入Template Point
+	!!!!但是需要注意的是:修改线的时候在cell的例子中必须修改整个连接线对于箭头的修改才会生效。
+
+在*.gmfgraph文件中改了图元属性后必须重新定义映射关系，产生*.edit以及*.diagram文件，这时才能正确反映变化。
+
+1.在GMF 2.0里，可以通过设置xxx.gmfgen文件里Figure Viewmap的"Layout Type"属性为"TOOLBAR_LAYOUT"达到改变布局的目的。
+
+2、让一个图形可以在另一个图形里随意改变位置
+
+	在gmfgen里把作为容器的那个图形的Gen Compartment里把Listlayout属性改为false。
+
+3、隐藏图形标签文字前的小图标
+
+	在gmfgen里把相应的Gen Node Label元素的Element Icon属性改为false（但重新生成gmfgen时这个属性会被覆盖
+
+4、把结点定义成一个结点的子结点
+	首先，要求两个子结点定义成对于一个抽象类的继承关系。并且这个抽象类与包含的主体是组合关系。然后在*.gmfgraph文件中定义被包含对象的框架，映射的时候要定义包含结点的框架映射和孩子结点索引以及孩子结点的映射。
+
+6、让Label出现在图元外面
+
+	在gmfgraph里定义这个Figure时把Label定义在外面，而非定义为Figure的子元素。
+
+7、设置渐变背景色
+
+	在图2中，要实现图形背景的渐变色，需要对TaskEditPart对应的TaskFigure进行修改，在图形进行重新绘制时设置其背景色。这里Draw2D提供了fillGradient()方法来绘	制渐变色。如下： 
+
+
+	清单 3. 设置渐变的背景色
+                
+  	public void paintFigure(Graphics g) {
+    	super.paintFigure(g);
+    	Color oldForeground = g.getForegroundColor();
+    	Color oldBackground = g.getBackgroundColor();
+    	g.setForegroundColor(FlowUtil.FORE_COLOR);
+   	g.setBackgroundColor(FlowUtil.TASK_BG_COLOR);
+    	g.fillGradient(bounds, true);
+    	g.setForegroundColor(oldForeground);
+    	g.setBackgroundColor(oldBackground);
+  	}
+ 
+
+
+8、改变Figure的缺省大小
+
+	在gmfgraph里为Figure增加Preferred Size子元素；若想让图形尺寸小于40x40象素，要覆盖XXXEditPart里的createNodePlate()方法。在GMF2.0里，使用DefaultSizeFacet(Preferred Size管用，说明我用的版本也不是2.0)
+
+
+9.禁止用户修改图元的尺寸
+
+	在gmfgraph里将此Node的Resize Constraint属性值改为“NONE”(但size-on-drop功能仍存在，也就是用户仍然可以在创建时指定尺寸)。
+
+
+
+13、规定连接线的约束，例如规定source和target不能是同一对象
+
+	在gmfmap里定义，在Link Mapping元素下定义Link Constraint元素，缺省使用OCL，见教程http://wiki.eclipse.org/index.php/GMF_Tutorial_Part_2#Link_Constraints;不论使用OCL或是Java，在XXXBaseItemSemanticEditPolicy里会生成LinkConstraint类，在生成command前检查是否满足这些constraint。
+
+
+23、如何禁用PopupBar和ConnectionHandler功能（鼠标停止在图形上时出现的连线符号）
+
+	在需要禁用该功能的EditPart的createDefaultEditPolicies()方法的最后加下面的语句：
+
+
+	//禁用PopupBar
+	removeEditPolicy(EditPolicyRoles.POPUPBAR_ROLE);
+	//禁用ConnectionHandler
+	removeEditPolicy(EditPolicyRoles.CONNECTION_HANDLES_ROLE);
+
+在*.diagram工程中的diagram.edit.parts包下的 相应图元EditPart类中存有对该图元的交互操作响应，可以从这里取消它的活动列表等等关于他的交互操作。
+
+26、使用Label作为一个editpart的figure
+
+	在.gmfgraph里不用创建Node，只用Diagram Label即可；在.gmfmap里，Node Mapping的Diagram Node属性指定为这个Diagram Label，下面的Feature Label Mapping的Diagram Label属性也是这个Diagram Label。在parent使用ListLayout的时候这个方法比较有用。GMF的mindmap例子里的ThreadItem就是这样一个例子。
+
+为图元添加渐变色
+	import org.eclipse.swt.graphics.Path;
+
+	protected void fillShape(Graphics graphics) {
+    		Path path = new Path(null); //
+    		path.addArc(left, top + height + Y_OFFSET / 2, width + X_OFFSET * 2,
+		height / 5 + Y_OFFSET, 270, 180);
+    		try {
+        		graphics.setClip(path); // setClip with Path as an argument wont
+			work with ScalledGraphics, maybe in next releases
+    		}catch (Exception ex) {
+    		}
+    		graphics.setForegroundColor(ColorConstants.blue);
+    		graphics.setBackgroundColor(ColorConstants.red);
+    		graphics.fillGradient(left, top, width, height, true);
+		...
+	}
+
+31、让Label换行
+
+	.gmfgraph里无法指定Label是否换行，要修改生成的代码：位置(在.diagram工程中的.edit.parts包中NodeEditPart类的NodeFigure子类createContents()方法中)
+
+
+	fFigureXXXFigure = new WrapLabel();
+	fFigureXXXFigure.setTextWrap(true);//add this line
+	fFigureXXXFigure.setText("<>");
+
+	另外可以在.gmfgraph里指定需要的布局以便让换行Label更好的显示。给Label设置Margin Border会有问题（Label被推向右侧），可以给Parent图形设置Margin Border	，或建一个RectangleFigure来实现设置文字边距的需求。
+
+
+

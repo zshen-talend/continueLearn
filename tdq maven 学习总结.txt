@@ -1,0 +1,65 @@
+1.pom.xml下属性详解
+
+1)modules 指定子项目
+2)properties 定义属性 使用时用${变量名}的方式调用
+3)dependenyes 定义依赖关系（需要声明flix插件否则依赖关系是typo通过manifest来确定）
+4)package 指定大包的类型（bundle意味着打包成插件的形式.jar以为的不带manifest里的依赖）
+
+2.build的顺序
+mvn clean install 默认找当前目录所在的pom.xml文件进行build
+所以要进行当前某个plugin的build可以到这个插件的根目录下
+
+3.mvn clean install所暗含的命令
+clean 清理所有的编译文件
+compile 重新生成编译文件
+test  编译test类并运行test
+package 打包编译文件
+install 把打包好的文件部署到.m2目录下
+deploy 发布jar包到网站
+
+4.build产品的所对应的pom文件
+studio-se-master 对应TOS SE
+studio-ee-master 对应TOS ee
+
+5.build jar包
+mvn clean install
+ -DskipTests 可以跳过test
+ -Dformat 自动格式化代码
+ -DTest 指定测试类
+ -DskipITs 跳过集成测试
+
+5.剔除不需要的testCase
+<plugin>
+	<groupId>org.apache.maven.plugins</groupId>
+	<artifactId>maven-surefire-plugin</artifactId>
+	<version>2.18.1</version>
+	<configuration>
+		<excludes>
+           		<exclude>**/*SynonymIndexBuilderTest.java</exclude>
+           		<exclude>**/*SynonymIndexSearcherTest.java</exclude>
+           		<exclude>**/*SynonymRecordSearcherTest.java</exclude>
+         	</excludes>
+		<systemPropertyVariables>
+			<java.io.tmpdir>${project.build.directory}</java.io.tmpdir>
+		</systemPropertyVariables>
+	</configuration>
+</plugin>
+
+6.指定文件的build路径
+<build>
+    <directory>target</directory>
+    <outputDirectory>target/classes</outputDirectory>
+    <testOutputDirectory>target/test-classes</testOutputDirectory>
+    <sourceDirectory>src/main/java</sourceDirectory>
+    <testSourceDirectory>src/test/java</testSourceDirectory>
+    <resources>
+      <resource>
+        <directory>src/main/resources</directory>
+      </resource>
+    </resources>
+    <testResources>
+      <testResource>
+        <directory>src/test/resources</directory>
+      </testResource>
+    </testResources>
+  </build>

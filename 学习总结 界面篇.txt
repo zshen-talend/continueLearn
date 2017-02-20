@@ -1,0 +1,4 @@
+JOptionPane调出的对话框可用getValue()捕获用户的选择，但不能是
+showInputDialog对话框且需定义相应对象。对于showInputDialog对话框可以
+用输入来判断用户的操作。撤销或关闭时str==null点击确定时输入字符串为""但
+需要用.equals来判断，感觉与栈内存有关。""这样字符串的存储不同。

@@ -1,0 +1,43 @@
+如何使用:	
+	Draw2D是基于SWT的图形处理包，它适合用作GEF的View层。如果一个应用仅需要显示图形，只用Draw2D就够了；若该应用的模型要求以图形化的方式被编辑，那么最好使用GEF框架
+
+1.颜色
+Draw2D使用的颜色为SWT的颜色。
+
+2.Shape类
+该类是个抽象类，要实现该类必须实现它的两个抽象方法。
+fillShape方法:
+	负责填充图形。
+
+outlineShape方法:
+	负责绘制图形轮廓。
+注意:两者之间不可混淆，如果fillShape中添加了绘制边框的代码，那么用其中的setLineStyle和setLineWidth方法改变边框样式以后，fillShape中的边框样式不会随之改变。
+
+3.坐标系
+分类:
+	1)绝对坐标系:所有Figure使用同一个坐标定位，一改皆改。
+	2)相对坐标系:子Figure相对于父容器的位置，父容器更改了，子Figure不需要修改。
+默认情况下Draw2D采用绝对坐标系统，通过重写useLocalCoordinate()方法可以改变子Figure的坐标系统。
+
+4.LightWeightSystem
+LightweightSystem好比SWT中的Display，没有具体的形状，但是提供事件处理机制以及负责与外部环境通信。
+
+5.Draw2D与SWT的对应关系
+LightWeightSystem--Display&&shell(因为在LightweightSystem上有一个rootFigure实现着shell的功能所以也可以说shell与Figure相对应)
+Figure-->Control&&Composite
+Graphic-->GC
+Lables-->Label
+Clickables-->Button
+
+
+6.Figure
+	与SWT不同，Draw2D的父子关系不是靠构造函数来实现的，而是像SWING中的方法，使用add()方法来完成父子关系构造。该方法中可以指定孩子的排列顺序、以及边框大小。
+
+7.嵌套Figure的方法
+	通过add方法将子Figure添加到父Figure中去。
+
+8.使用clickables的Figure
+	通过setModel方法来实现监听的使用，把相应的模型设置进去，而监听要加在这个模型上。
+
+9.给边上加标签ConnectionEndpointLocator 
+	通过构造函数绑定某个Connection以及是与目标锚点关联还是与原锚点关联。并且通过setUDistance方法定制水平距离，通过setVDistance方法来定制与连接线的垂直距离。

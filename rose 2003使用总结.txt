@@ -1,0 +1,7 @@
+一.Rose 2003并不提供“组合关系”这种图形（实心菱形）
+
+1.可以先画一个aggregation（空心）的关系，
+
+2.然后右键单击这个关系，open specification ->Role B Detail,
+
+3.你会发现有三项选（By Value, By Reference, Unspecified），在你选上By Value的时候，菱形就变成实心的了。

@@ -1,0 +1,34 @@
+1.org.eclipse.ui.commands
+	可以相应的命令来绑定快捷键
+	
+2.org.eclipse.ui.handlers
+	作用:配合上面的扩展点使用，绑定执行类与相应命令。
+
+
+
+提示： MenuUtil 类包含菜单 URI 的一些公共常量值。
+
+3.org.eclipse.ui.menus
+在这里定义菜单贡献-〉菜单-〉命令
+其中命令要邦定上面的commands中的id，这里只是为它定义外观
+http://wiki.eclipse.org/index.php/Menu_Contributions具体的菜单项在这里查
+
+
+4.org.eclipse.core.expressions.definitions
+在这里可以通过系统内部定义的变量来指定各种命令运行时的条件(Variables)在这里可以找到对应项http://wiki.eclipse.org/Command_Core_Expressions
+而这个条件通过ui.menus扩展中添加visibleWhen方法来关联相应的命令
+
+5.绑定快捷键
+	在org.eclipse.ui.commands中定义command，然后在org.eclipse.ui.bindings中定义key来绑定键序列与相应的command，最后在Action中设置DefinitionId的值为相应的commandID，以完成command和action的关联。
+
+
+6.popupmenu活动菜单的使用org.eclipse.ui.popupMenus
+
+	editor: viewerContribution
+		id: 这个Contribution的id
+		targetID: 相应editor的id加上.context
+		且要在editor中注册如AbstractTextEditor的menu
+
+	viewer: viewerContribution
+		id:这个Contribution的id
+		targetID: 相应viewer的id不加.context

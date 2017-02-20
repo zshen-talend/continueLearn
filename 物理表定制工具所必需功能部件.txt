@@ -1,0 +1,14 @@
+org.eclipse.datatools.sdk.feature//它包含了所有的datatools的所有内容，所以加了它就不用加其它的东西了！
+作为上面的替代找到当前能用最简的datatools的功能部件包括
+org.eclipse.datatools.enablement.mysql.feature
+org.eclipse.datatools.enablement.oracle.feature
+org.eclipse.datatools.enablement.msft.feature
+org.eclipse.datatools.connectivity.feature
+org.eclipse.datatools.modelbase.feature
+org.eclipse.datatools.sqldevtools.ddl.feature
+org.eclipse.datatools.sqldevtools.results.feature
+org.eclipse.datatools.sqldevtools.results.feature
+org.eclipse.emf
+org.eclipse.gef
+
+引用平台控件所必须加的org.eclipse.platform功能部件其实是由一系列插件和org.rclipse.rcp的功能部件组合而成的所以拆开org.eclipse.platform就必须要加上org.rclipse.rcp功能部件了！

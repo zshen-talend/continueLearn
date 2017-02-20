@@ -1,0 +1,19 @@
+Microsoft Visual Studio Solution File, Format Version 10.00
+# Visual Studio 2008
+Project("{8BC9CEB8-8B4A-11D0-8D11-00A0C91BC942}") = "xp_pcre", "xp_pcre.vcproj", "{EEC6F30D-F3AC-4857-9D40-074B6C4DD42A}"
+EndProject
+Global
+	GlobalSection(SolutionConfigurationPlatforms) = preSolution
+		Debug|Default = Debug|Default
+		Release|Default = Release|Default
+	EndGlobalSection
+	GlobalSection(ProjectConfigurationPlatforms) = postSolution
+		{EEC6F30D-F3AC-4857-9D40-074B6C4DD42A}.Debug|Default.ActiveCfg = Debug|Win32
+		{EEC6F30D-F3AC-4857-9D40-074B6C4DD42A}.Debug|Default.Build.0 = Debug|Win32
+		{EEC6F30D-F3AC-4857-9D40-074B6C4DD42A}.Release|Default.ActiveCfg = Release|Win32
+		{EEC6F30D-F3AC-4857-9D40-074B6C4DD42A}.Release|Default.Build.0 = Release|Win32
+	EndGlobalSection
+	GlobalSection(SolutionProperties) = preSolution
+		HideSolutionNode = FALSE
+	EndGlobalSection
+EndGlobal

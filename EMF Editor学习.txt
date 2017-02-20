@@ -1,0 +1,11 @@
+继承结构:
+	MultiPageEditorPart
+	它是直接继承EditorPart的。它的createPartControl()方法调用了还没有实现的createPages()方法。而我们继承这个类就要实现这个方法添加各种页面。
+	IEditingDomainProvider接口
+	拥有一个取得EditingDomain的接口，AdapterFactoryEditingDomain用的就是这个接口。
+	IGotoMarker
+	根据marker编辑器的显示位置来设置鼠标和选择状态。
+	IMenuListener
+	通知当前显示的菜单通过参数。
+	ISelectionProvider
+	包括四个方法分别是取得和设置选择、添加和移除选择监听。

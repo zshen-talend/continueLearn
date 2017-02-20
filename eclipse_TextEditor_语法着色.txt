@@ -1,0 +1,22 @@
+执行流程:
+	1.首先要在Editor中把自己定义的SourceViewerConfiguration类设置进去。而且这个配置只能设置一次，再次设置就回报IllegalStateException异常。另外要设置一个文档的转换类型，把input的file转换成IDocument.
+
+	2.重载FileDocumentProvider来产生自己的文档类型，并且连接文档到分段，设置分段到文档。
+	
+	3.重载SourceViewerConfiguration类自己实现它的getPresentationReconciler()方法。在该方法中返回的PresentationReconciler类型的Reconciler变量其实就是对应一个字符串和对应的毁坏者和修理者存入hashMap。包括前面的方法都是为SourceViewer中的属性做的取得方法，就类似于设置sourceViewer。定义在其中的DamagetRepairer对象需要实现IPresentationDamager和IPresentationRepairer两个接口。
+
+	4.第二步中要用到自己的规则，所以还要重载RuleBasedScanner类，设置自己的规则。运行时会按照设置的顺序挨个的匹配其中的规则，匹配成功就回返回一个相应的token。
+
+	5.设置颜色有两种方法
+		1)可以为整个Scanner设置一个默认的返回Token在其中设置颜色，且这个颜色只是对应分段中的对象。
+		2)也可以为单个规则设置带TextAttribute(颜色)属性的Token来订制颜色.
+
+6.扫描器的结构和运行规则
+	首先继承RuleBasedPartitionScanner类，这里是为文档分段，此时还不涉及到着色的事。如果分出的段还要再细分那么就扩展RuleBasedScanner类，定义规则进行再次划分。此时的规则就要有颜色属性了。而分出的段在SourceViewer调用下进行再次划分，需要利用各自的扫描器，此时给该扫描器设置默认的返回Token就可以把剩下的在该段中未被细分的部分进行着色了，感觉上也就是为了该分段着色了。
+
+7.内容提示ContentAssistantProposal
+	内容提示添加在xxxconfig类的getContentAssistant(ISourceViewer)方法中，建立ContentAssistant的对象，并为其配置帮助内容，与帮助内容对应的应用范围，以及提示显示的延时是否自动激活等等。最后返回这个ContentAssistant。
+
+8.内容提示类实现接口IContentAssistProcessor
+	其中方法computeCompletionProposals()方法返回我们的内容提示对象数组实现类CompletionProposal。
+	方法getCompletionProposalAutoActivationCharacters()返回引发内容帮助的自己数组。

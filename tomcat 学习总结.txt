@@ -1,0 +1,48 @@
+1.load-on-startup 含义
+在servlet的配置当中，<load-on-startup>5</load-on-startup>的含义是：
+
+标记服务器是否在启动的时候就加载这个servlet。
+
+当值为0或者大于0时，表示服务器在启动时就加载这个servlet；
+
+当是一个负数时或者没有指定时，则表示服务器在该servlet被调用时才加载。
+
+正数的值越小，启动该servlet的优先级越高。
+
+2.配置虚拟目录
+<Context path="/CygnetSystem" reloadable="true" docBase="G:\WorkSpace\CygnetSystem\WebRoot" workDir="G:\WorkSpace\CygnetSystem\work" /> 
+
+你说的这句话吧 path 就是你http://localhost:8080/ 
+后面的访问名(工程名) docBase 就是你工程下的WebRoot页面文件夹 
+workDir 工作文件夹 你工程下创建一个就行。 
+
+3.配置过滤器
+不但要在web.xml中写入过滤器的过滤范围、位置等信息。还要在server.xml中配置
+	<Connector acceptCount="100" connectionTimeout="20000" debug="0" disableUploadTimeout="true" enableLookups="false" maxSpareThreads="75" maxThreads="150" minSpareThreads="25" port="8080" redirectPort="8443" URIEncoding="utf-8"/>
+<Connector debug="0" enableLookups="false" port="8009" protocol="AJP/1.3" redirectPort="8443" URIEncoding="utf-8"/>的uriEncoding属性
+
+配置了上述URI编码的作用就在于，当调用request.getParameter()函数时，会自动进行一次URI的解码过程，调用时内置的解码过程会导致乱码出现。
+
+4.目录文件介绍
+	1)/bin -- 启动，关闭和其它脚本文件。以*.sh 结束 的文件(Unix系统)是与*.bat文件(Window 系统)功能相同的复本。因为 Win32 命令行缺少一些功能,这里附上一些额外的文件。 
+	2)/conf --配置文件(configuration file) 和相关的 DTDs（文档类型定义）。 最重要的文件是server.xml。 这是tomcat里面最重要的配置文件。 
+	3)/ logs --Log文件默认存放目录。 
+	4)/webapps--这里存放你的网络应用程序。
+	5)WEB-INF/classes/目录里的classes,以及其所有的WEB-INF/lib/目录里JAR文件里的classes,对于你的程序里的其他类来说都是可视的
+
+5.版本与JDK
+Tomcat 5.5被设计适合在J2SE 5.0上运行，但是它也可以在JDK 1.4上运行 
+
+6.tomcat共享库
+$CATALINA_HOME/common/lib - 放在这里的JAR文件既可被网络应用程序看见，又可被Tomcat内部编码看见(visible). 最好是把JDBC驱动程式放在这里，JDBC驱动程式是你的程序和Tomcat内部使用所必需的东西(如JDBCRealm)。
+
+$CATALINA_BASE/shared/lib - JAR files placed here are visible to all web applications, but not to internal Tomcat code. This is the right place for shared libraries that are specific to your application.
+
+7.web.xml
+其中的信息要求各类标签集中填写。
+
+8.jsp文件中插入java代码
+由于jsp中的jre版本可能与eclipse中不同，所以尽量使用简单的java代码结构，如List<>=request.getAttribute();Iterator<>=list.iter();就有可能报错。
+
+9.端口号修改
+	tomcat/conf/server.xml

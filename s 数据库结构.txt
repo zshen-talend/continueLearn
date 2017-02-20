@@ -1,0 +1,25 @@
+名称		Catalog支持		schema支持
+
+1.Oracle	不支持			Oracle User ID
+
+2.MySql		数据库名		不支持	
+
+3.SQLServer	数据库名		对象属主名
+
+4.DB2		指定数据库对象时省略	Catalog属主名
+
+5.Sybase	数据库名		数据库属主名
+
+6.Informix	类似oracle的数据源      有但是不明
+
+7.PointBase	不支持			数据库名
+
+8.postgrelSQL   支持			支持
+
+9.AS400 	默认			支持
+
+10.teradata	不支持			支持
+
+11.Netezza	支持			支持
+
+12.SQLite	不支持			默认

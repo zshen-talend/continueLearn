@@ -1,0 +1,36 @@
+1.通过连接信息ConnectionInfo取得DatabaseDefinition
+
+DatabaseDefinition databaseDefinition=RDBCorePlugin.getDefault().getDatabaseDefinitionRegistry().getDefinition(editorinput.getConnectionInfo().getDatabase());
+
+2.取得database
+SQMConnectionFactory sqmFactory=new SQMConnectionFactory();
+			IConnection ic=sqmFactory.createConnection(db);
+			Database database=((ConnectionInfo)ic.getRawConnection()).getSharedDatabase();
+
+
+3.取得dtp中各个结点的孩子，最上层结点是database
+ServerExplorerContentProviderNav Contenttools=new ServerExplorerContentProviderNav();
+			Object[] testchildren=Contenttools.load(database);
+另外，连接符的内容支持由另外的类来负责:
+org.eclipse.datatools.connectivity.ui插件包下的
+ConnectionProfileContentProvider负责
+
+4.取得dtp中各个结点的对应标签(image和text)
+ServerExplorerContentProviderNav Contenttools=new ServerExplorerContentProviderNav();
+labeltools.getImage(Contenttools.load(testchildren[0])[0]);
+
+另外，连接符的标签支持由另外的类来负责:
+ConnectionProfileLabelProvider conProvider=new ConnectionProfileLabelProvider();
+			item.setImage(conProvider.getImage(connectionProfile[i]));
+
+5.通过Database取得databaseDefinition
+		DatabaseDefinitionRegistry DDRI=DatabaseDefinitionRegistryImpl.INSTANCE;
+		databaseDefinition=DDRI.getDefinition(schema.getDatabase()==null?schema.getCatalog().getDatabase():schema.getDatabase());
+或者通过以下的方法:
+RDBCorePlugin.getDefault().getDatabaseDefinitionRegistry().getDefinition(database)
+
+6.通过database取得connectionInfo
+DatabaseConnectionRegistry.getConnectionForDatabase(database);
+
+二、结构
+	连接符(ConnectionProfile)是单独在org.eclipse.datatools.connectivity包中的。通过这个连接符可以连接到相应的数据库，而数据库的整体父类是DatabaseImpl(其在org.eclipse.datatools.modelbase.sql包里)，在这里sql server和oracle用的都是JDBCDatabase而mysql是MySqlCatalogDatabase类(其在org.eclipse.datatools.enablement.mysql包中)。而在数据库下的所有结点类型都是VirtualNode的子类，包括TableNode、CatalogNode、UserNode、AuthorizationIDNode、SchemaNode(它们都是在org.eclipse.datatools.connectivity.sqm.core.ui包中)

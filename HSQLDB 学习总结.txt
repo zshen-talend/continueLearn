@@ -1,0 +1,13 @@
+1.Hsqldb.jar所包含的组件
+	HSQLDB RDBMS
+	HSQLDB JDBC Driver
+	Database Manager(Swing and AWT versions)
+	Query Tool(AWT)
+	Sql Tool(command line)
+
+2.运行AWT version of the Database Manager
+	java -cp D:\TDDOWNLOAD\hsqldb\lib\hsqldb.jar org.hsqldb.util.DatabaseManager
+
+3.In-Process (Standalone) Mode 
+	在这种模式下，数据库信息会被存成几个文件的形式(databaseName.script,databaseName.properties and databaseName.lck)其中script文件用来还原数据库的表结构，properties信息用来存储权限等信息。用JDBC连接这种模式的数据库需要url为jdbc:hsqldb:file:D:/TDDOWNLOAD/hsqldb/lib/test/test
+

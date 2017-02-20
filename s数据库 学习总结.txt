@@ -1,0 +1,79 @@
+1.数据库的连接方式
+	oracle
+		driver——orcale.jdbc.driver.OracleDriver
+		URL——jdbc:orcale:thin:@hostname:1521:dbname
+	SQLServer
+		driver——jdbc:microsoft.jdbc.sqlserver.SQLServerDriver
+		URL——jdbc:microsoft:sqlserver://hostname:1433;DatabaseName=dbname
+	MySQL
+		driver——org.gjt.mm.mysql.Driver
+		URL——jdbc:mysql://hostname:3306/dbname
+	DB2
+		driver——com.ibm.db2.jdbc.app.DB2Driver
+		URL——jdbc:db2://hostname:50002/database
+
+2.mysql数据库的编码问题
+	G:\Program Files\MySQL\MySQL Server 5.0下的my.ini里有默认的编码格式是itan1
+
+3.oracle登录错误ora-12545
+现象:用以前的数据库名和用户名登录提示找不到目标主机，新建的可以。
+原因:数据库名和主机名有相应的配置文件一一对应，当你在使用过程中对其中一个作了修改，就会造成这样的问题。
+解决:D:\oracle\ora90\network\ADMIN目录下有tnsnames.ora和listener.ora两个配置文件，分别是主机和数据库名的对应和监听和数据库名的对应。做同步修改就可以解决问题。
+
+
+4.存放数据库中数据
+	用记事本存放数据库数据时，要注意不能使用自动换行，否则会影响数据的有效性。
+
+5.如何打开sql server 2005 的1433端口
+
+
+配置工具->Sql Server Configuration Manager->MSSQLSERVER的协议
+
+看看TCP/IP协议是否启动,如果启动,右键菜单点"属性" ,在分页菜单中选"IP地址",把"IP1"、"IPALL"和"IP2"中"TCP端口"为1433,
+
+"已启用"改为"是"
+
+配置工具->Sql Server Configuration Manager->SQL Native Client 配置->客户端协议->TCP/IP
+
+选择TCP/IP右键菜单中"属性",确认"默认端口"是1433,"已启用"为"是"
+
+
+6.SQL Server 2005 远程连接
+
+配置TCP/IP属性. 
+Surface Area Configuration --> Database Engine --> Remote Connections --->Using TCP/IT 
+
+SQL Server 外围应用配置器—服务和连接外围配置—database englie—远程连接—启用(远程连接的TCP/IP和named pipes)  
+SQL Server Configuration Manager—SQL2005网络配置—启用TCP/IP和named pipes
+
+7.postgre SQL 配置远程访问
+
+配置远程连接PostgreSQL数据库的步骤很简单，只需要修改data目录下的pg_hba.conf和postgresql.conf,其中 pg_hba.conf是用来配置对数据库的访问权限，postgresql.conf文件用来配置PostgreSQL数据库服务器的相应的参数。下面介绍配置的步骤：
+
+7.1.修改pg_hba.conf文件，配置用户的访问权限：
+
+# TYPE DATABASE USER CIDR-ADDRESS METHOD 
+
+# "local" is for Unix domain socket connections only 
+local all all trust 
+# IPv4 local connections: 
+host all all 127.0.0.1/32 trust 
+<strong>host all all 192.168.1.0/24 md5</strong> 
+# IPv6 local connections: 
+host all all ::1/128 trust 
+其中加粗标识的内容为新添加的内容，表示允许网段192.168.1.0上的所有主机使用所有合法的数据库用户名访问数据库，并提供加密的密码验证。在我们的环境中，我们需要在主机192.168.1.5上使用postgres用户访问192.168.1.9上的PostgreSQL数据库。
+
+7.2.修改postgresql.conf文件，将数据库服务器的监听模式修改为监听所有主机发出的连接请求。
+
+定位到#listen_addresses=’localhost’。PostgreSQL安装完成后，默认是只接受来在本机localhost的连接请求，通过将改行内容修改为listen_addresses=’*'来允许数据库服务器监听来自任何主机的连接请求：
+
+listen_addresses = '*' # what IP address(es) to listen on; 
+# comma-separated list of addresses; 
+# defaults to 'localhost', '*' = all 
+# (change requires restart) 
+修改之后，保存并退出，然后重起数据库，就可以在在远程机器上访问PostgreSQL数据库了。
+
+8.DatabaseMetaData
+
+	column
+		COLUMN_DEF列的默认值

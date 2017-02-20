@@ -1,0 +1,107 @@
+swordv3.5
+-------------------------------------------------------------------------------------------
+1.frame.js
+	1)Hash
+	在这里自定义了一个Hash对象，里面向java HashMap一样有add()和remove方法。并且定义update就是add方法。并且它是通过new Object来为数组分配内存，也是通过delete 名称[index]来回收数组的内存。
+
+2.树的一些默认操作是在treeEx.js中(clsTreeProcess)
+如
+	树结点的单击事件，setTreeOnclick
+	树结点的双击事件，setTreeDblOnclick
+	树结点的右键事件，setTreeOnContextMenu
+	
+	其中，当执行treeOnload的时候，调用parseTreeNode方法会给树形控件的图片增加单击事件isShowTreeNode1，当parseTreeNode方法又调用createRow方法时，会给每个树结点上的链接添加单击事件isShowTreeNode。这两个方法都是当点击的树结点为叶子结点时给clsDynamicTree$inputField控件赋值。前面的控件是input框作为下拉树使用时的情况。
+
+3. oPublicFunction的使用
+1).取得dom
+/*第一个参数是路径，可以是jsp/com.css.yulin.yagl/page/xzqhTree.xml,也可以是PgCtrl-*initTree.pfv区别在于2.5要多加'/'
+*第二个参数是一个字符串，可以直接为相应的xml字符串如:document.getElementById("treeXML").value
+*/
+oPublicFunction.getDom('','')
+
+2).对点击的支持，包括单击、双击和右键
+var oSrcRow = oPublicFunction.getRow();//取得被点击的行
+	    alert("2");
+	    var  sjmc = oSrcRow.domNode.getAttribute("title");//取得当前行的属性
+
+
+4.fenYeMananger.js
+专门对应一个js，其中包括一系列的分页信息。
+1)隐藏只有一行无值bo的情况
+FenYeMananger$parseNOInsertData()
+2)在分页时提供的外部操作接口
+doAfterTrCreate(fenyeTrCtrl){fenyeTrCtrl.getTdHtmlByName(td内控件的名字)}//创建一行后触发
+doAfterAddTrCreate(fenyeTrCtrl){alert("doAfterAddTrCreate")}
+doAfterTrUnChecked(checkObj){alert("doAfterTrUnChecked");}//取消选择后触发
+doAfterTrChecked(checkObj){alert("doAfterTrChecked");}//选择后触发
+doAfterPageParse(fenyeManager){alert("doAfterPageParse");}//最后的分页操作列出后触发
+
+5.clsTreeProcess
+树的构建定义在tree.js以及treeEx.js中
+
+6.public.js
+	$isWs，判断一个Node是不是WhiteSpace。
+	oPublicFunction 用来初始化xml文档的公共对象，它的对应类为clsPublicFunction。
+	Browser,全局变量在其它js中被用来区分浏览器类型。
+
+7.sysCtrl.js
+1)initViewPage(oDom)这个方法实际上是初始化xml文件的。可以通过参数中的dom来初始化指定的文档。如果参数中没有值，默认会去初始化id为ViewXML的页面控件内容。而这个方法的调用是通过调用docassistant.js文件中的initViewPage方法实现的。且在初始化的过程中自动给name属性相对应的控件赋值。另外，通过这样的方法会遗留一个包含了viewXML控件中xml数据的变量oDocAssistant.oDocCtrlRoot.dataNode.domNode.xml，而这个变量也同样是通过oPublicFunction.getDom方法来获取的xml。也可以用getCtrl方法找取得dom。
+
+2)关于提交方式getRequestXml,通过sysCtrl调用的提交方法其实到最后都是调用的getRequestXml方法，而只有在这个方法中才真正采用ajax的方式向后台进行了页面的提交。在这里可以看到前、后台之间交换的数据。在3.5的帮助文档中谢了这样的提交方法，可是实际的代码中并不支持，可以通过修改几个注释亮出这些接口。
+
+3)activitePageRequest和activitePageXmlRequest两种提交方法，其中activitePageRequest在sysCtrl中并没有被实现。而另一种方法实际上是创建了一个form再提交。
+
+8.docassistant.js
+initViewPage(oDom)初始化文档，也是通过oPublicFunction.getDom(path,str)实现的。
+
+9.validator.js和validator_field的使用
+1).基本流程:
+	页面要想使用框架的效验，必须在事件发生前初始化效验框架。初始化方法为Validator.attachInfo('form1'); 所以attachInfo就是效验框架的入口，在这里程序通过传入的父容器的名字来找到父容器，进而分别对该容器下的所有input和textarea进行效验前的准备工作(取出效验类别、参数和出错信息等等)attachInfo方法的参数就是容器的id名称。
+	紧接着程序通过Validator.js中的className2Function方法来匹配每个控件的效验方法。然后自然会去调用该方法，在这些方法中操作了出错信息，以及参数信息，最后通过onblur方法注册该控件进行效验的触发事件。再通过judgeValidate方法拆分所有要进行效验的项，分别执行。真正的效验方法还是是通过Validator.Validate()方法进行的，所以在页面的保存按钮前再调用这个方法会确保页面先被效验。
+	框架中不能支持多项效验的原因就是在judgeValidate方法中执行完第一个效验后立即return致使后续效验不能继续进行。
+
+2).页面中的第一个验证信息无法显示(显示后消失)
+	在Validate方法中如果验证模式为1,也就是最后一次总体验证的时候。会有关于验证信息条数的限制if (this.ErrorMessage.length > 1),当符合这个条件的时候，程序中会把input或textArea控件数组中的第一个对象的验证信息this.ClearState(obj.getElementsByTagName('INPUT')[0]);掉，所以不会在页面上显示红色字体了。
+	解决方法:在第一个控件之前加入一个隐藏的input控件，让清除信息的操作执行在这个控件上。
+
+10.clsDynamicSelect.js
+	主要支持下拉菜单的功能，实现这个功能要分前台和后台两个部分。
+		后台:要求用缓存表来取得相关列表信息cui.getCacheData("t_pg_dm_color"),这个列表的信息主要是包含了多个hashMap对象，对象中存放要显示下拉列表的key值和value值。不是用缓存的时候可以自行组装这个列表。然后使用系列方法生成xml。
+		前台:使用clsDynamicSelect的init方法来通知脚本哪个控件存放了后台传来的xml,把这个xml组装成下拉列表。其中通过方法clsDynamicSelect$codeToName(['pfbzBh'])可以为这个下拉列表赋初始值。pfbzBh为下拉列表所在input的name属性值，它会把这个input框中属性realvalue的值转换成相应的名字。
+		getParentCtrlValuesInTR(ctrl,tr)方法:通过这个方法可以迭代的取出ctrl控件的父指标项代码，然后通过sortParentValue(string)来给出去的代码排序。其中tr指的是存放当前下拉菜单的行。
+
+		
+		
+11.tabPane
+	页面上页签的使用，通过new TabPane(name, width, height,paneDiv)来创建对象引用，其中参数分别对应table的名称\宽度\高度\包含iframe的DIV名称。通过引用对象的._table和._divIframe分别可以引用包含页签内容的table和包含内容显示的iframe的div。因为iframe被div包含，所以取得iframe的方法可以是._divIframe.firstChild。
+	另外，样式的引用关系到tab.css中的tabFocus和tabNormal两个样式，当页签被选中时td的class为tabFocus否则为tabNormal，这样实现了选中与否的动态效果。
+
+12.showModalDialog
+	在这里面通过showAlert(dom)方法可以得到统一的警告框。对于其中dom参数的要求如下:
+			Document m_oDoc = XmlUtil.newDocument();
+			Element root = m_oDoc.createElement("navi");
+			root.setAttribute("state", "error");//警告框的种类
+			root.setAttribute("message", errorMessage);//警告框要显示的信息
+			m_oDoc.appendChild(root);
+			String xml = XmlHelper.toXML(m_oDoc);
+			System.out.print(xml);
+			swordView.addField("errorMessage", xml);
+
+13.frameTab
+	提供框架中的标签功能，其中包含内部类Item。
+	向其中添加tab可以用
+		parent.frameTab.add("图表展示","info",url);
+	关闭tab可以用
+		var tabid=parent.frameTab.curTab.id;
+		parent.frameTab.close(tabid);
+	注意上面的两项操作都要检查是否引入了frameTab
+	
+14.popcal	
+	其中定义了下拉日历，日历对应的Iframe的ID为"L_calendar",	其中需要staticPath或dynamicPath两个js文件来定义"popcal_ImageFolder"和"popcal_stylesFolder"的路径。
+	并且还要引入public.js来添加Browser对象。
+	<INPUT id=i1 onclick=setday(this,this,false) value=2009-09> 	年月
+	<INPUT id=i2onclick=setday(this)> 			     	年月日
+	<INPUT id=i3 onclick=setday(this,this,true)>			年月日时分秒
+
+15.staticPath或dynamicPath
+	定义了很多图片和样式的访问路径。

@@ -1,0 +1,29 @@
+1."Microsoft.XMLHTTP"和XMLHttpRequest
+	if (window.XMLHttpRequest) { 
+
+                     req = new XMLHttpRequest(); 
+
+                }else if (window.ActiveXObject) { 
+
+                      req = new ActiveXObject("Microsoft.XMLHTTP"); 
+
+               } 
+为了用JavaScript向服务器发送一个HTTP请求, 需要一个具备这种功能的类实例. 这样的类首先由Internet Explorer以ActiveX对象引入, 被称为XMLHTTP. 后来Mozilla, Safari 和其他浏览器纷纷仿效, 提供了XMLHttpRequest类,它支持微软的ActiveX对象所提供的方法和属性. 
+　　因此, 为了创建一个跨浏览器的这样的类实例(对象), 可以应用第05—09行的代码. 
+
+其中， 
+http_request = new XMLHttpRequest(); 
+为 Mozilla, Safari, ...浏览器所设， 
+而， 
+  http_request = new ActiveXObject("Microsoft.XMLHTTP"); 
+  为 IE所设 
+ActiveXObject其实就是以一个字符串为参数的函数。我写了一个对象由于没有加引号调用，结果就是报没有这个对象。搞了好久。现在想想，作为参数就是字符串，数字，内存地址和集合（包括数组，对象等等）几类。作为脚本语言的一个顶层函数可以识别的也就字符串和数字了。对象需要知道是什么对象，它哪里知道。 
+
+
+new ActiveXObject("Microsoft.XMLHTTP"); 
+默认版本的XMLHTTP，XMLHTTP主要用来传输数据。 
+
+new ActiveXObject("MSXML2.ServerXMLHTTP"); 
+SERVER XMLHTTP，是从XMLHTTP派生的，详细区别，查找MSXML SDK里ServerXMLHTTP，上面有说明。 
+
+2

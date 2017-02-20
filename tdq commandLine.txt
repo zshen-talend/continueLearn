@@ -1,0 +1,26 @@
+命令 ？查询
+
+部署:
+	1.选择CommandLine的application
+	2.除了自动加载的插件外要包括dataprofiler.core dataclean.core支持导入
+		dataprofiler.rcp支持logon还有一些必要的designer插件
+
+1.CommandAbstractSwitch CommandLine 命令行的转换类
+(ExtensionCommandSwitch)
+
+2.ItemsHelper
+	控制条目的导入导出类
+	导入分TOS和TDQ两种方式，
+原理:
+	首先区分TDQITem还是TOSITem除了类型的区分还包括一个关键的TDQItemService
+	这个类在org.talend.datacleansing.core插件下
+
+3.console界面不能响应输入
+	CommandLineApplication line:99
+	 if (!input.contains(DISABLE_SHELL_INPUT)) {
+                // ConsoleUtil.set();
+
+注释掉上面的代码，ConsoleUtil.set();会改变输出的控制台的。
+
+4.判断当前是CommandLine
+CWMPlugin.isCommandLine() 判断的是application的启动参数

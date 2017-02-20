@@ -1,0 +1,33 @@
+1.applet类的实现
+	首先要扩展Applet类。通过其中的paint(Graphic g)方法来绘制内容。
+
+2.init()方法
+	当一个applet被系统调用时，系统首先调用的就是该方法。通常可以在该方法中完成从网页向Applet传递参数，添加用户界面的基本组件等操作。但是从调用顺序上还是会先去调用构造函数，后调用init()方法。
+
+3.start()方法
+	系统在调用完init()方法之后，将自动调用start()方法。而且，每当用户离开包含该Applet的主页后又再返回时，系统又会再执行一遍start()方法。这就意味着start()方法可以被多次执行，而不像init()方法。因此，可把只希望执行一遍的代码放在init()方法中。可以在start()方法中开始一个线程，如继续一个动画、声音等。
+
+4.stop()方法
+	这个方法在用户离开Applet所在页面时执行，因此，它也是可以被多次执行的。它使你可以在用户并不注意Applet的时候，停止一些耗用系统资源的工作以免影响系统的运行速度，且并不需要人为地去调用该方法。如果Applet中不包含动画、声音等程序，通常也不必实现该方法。
+
+
+5.destroy()方法
+	与对象的finalize()方法不同，Java在浏览器关闭的时候才调用该方法。Applet是嵌在HTML文件中的，所以destroty()方法不关心何时Applet被关闭，它在浏览器关闭的时候自动执行。在destroy()方法中一般可以要求收回占用的非内存独立资源。(如果在Applet仍在运行时浏览器被关闭，系统将先执行stop()方法，再执行destroy()方法。
+
+6.MemoryImageSource
+	用一个代表象素的int数组来绘制图像， source = new MemoryImageSource(width, height, pixels, 0, width);然后调用 source.newPixels(x, y, w, h);方法来规定刷新的区域。这样只要修改int数组的值就可以完成图像绘制了。
+不过。。。。
+createImage   在   eclipse   里面直接用会提示错误   
+    
+  Toolkit   tk=Toolkit.getDefaultToolkit();   
+  myImage   =   tk.createImage((ImageProducer)memorysource);   
+    
+  这样才会显示正常
+
+7.把applet在html文件中运行
+	首先要有html文件，并在其中写下<applet code="编译文件名.class" [archive="Fire2.jar"] width="" height="" [codebase=""]>
+	要注意如果把程序打成jar包采用archive属性，否则会按照编译文件的包结构去查找相应的class文件。样例可以参照	G:\eclipse3.3.2\eclipse\studyWorkspace\com.css.graphic.test\bin下的html文件的使用。当把使用的jar文件和jsp页面分开放置的时候需要使用codebase属性，且为/应用名称/文件名称/且不能放到web-inf下，weblogic和tomcat都适用。
+
+8.awt的运行和调用流程
+	首先虚拟机将Applet加载到Web浏览器或AppletViewer中。调用init() start() paint() 关闭当前页面时stop()想要永久停止Applet用destroy()。
+	paint()是Component类中的方法，它会被同类中的update()调用，update()又会被Component类中的repaint()方法调用。但是repaint()非同步执行update()，所以在不需要刷新AWT控件时可以通过直接调用update()方法来实现同步调用。

@@ -1,0 +1,37 @@
+glColor*(RGB)前景色
+glClearColor(RGBA)背景色
+glClear(GL的常量)清除或者重置各种缓存
+glBegin(GL的常量)设置要画的图型是一种什么形式
+	常量包括:GL_POINTS是用来画点的。
+		 GL_LINES是用来画线段的，每两个顶点单独确定一条线段。
+		 GL_LINE_STRIP是用来画首尾相接的线段，前后两个顶点确定一条线段。
+		 GL_LINE_LOOP画闭合的首尾相接线段。
+		 填充
+		 GL_POLYGON定义一个多边形
+		 GL_TRIANGLE定义一个三角形，每三个顶点定义一个多变形，余下的顶点被忽略。
+		 GL_TRIANGLE_STRIP 前三个顶点定义一个三角形，之后每个顶点与前两个顶点组成另一个三角形
+		 GL_TRIANGLE_FAN 前三个顶点定义一个三角形，之后每个顶点和第一个顶点与前一个顶点组成一个三角形。
+		 GL_QUADS 每四个连续的顶点定义一个四边形。
+		 GL_QUAD_STRIP前四个顶点定义一个四边形，之后每个顶点对与前一组顶点对构成另一个四边形。
+glVertex*(顶点坐标)画一个顶点
+glEnd()图型绘制结束
+glFlush()强制缓存输出
+glMatrixModel(GL常量)设置后续操作对哪个矩阵进行操作
+glLoadIdentity()把当前矩阵设成单位矩阵
+glPointSize(像素数)设置点的大小，前提必须glBegin中参数是GL_Points
+glLineWidth(GLfloat)设置显示线宽，单位为像素，默认为1.0。
+glLineStipple(GLint,GLushort)绘制虚线称作点划模式，第一个参数决定每一位重复几次，第二个参数中是16位的数字其中0代表不画，1代表画。
+glEnable(GL常量)开启某项特性如光照或者点划模式。
+glDisable(GL常量)相应的关闭某项特性。
+glRect<sifd>(x1,y1,x2,y2)按左上角和右下角来绘制矩形
+glRect<sifd>(*v1,*v2)把每个坐标点的两个值放在数组中表示
+glPolygonStipple(32*32的点阵)设置多变形的点划模式
+glPolygonMode(face,mode)对于多变形面的绘制方式   需要使用GL_POLYGON绘制，且在绘制前设置。
+	face:GL_FRONT,GL_BACK,GL_FRONT_AND_BACK
+	mode:GL_POINT,GL_LINE,GL_FILL
+glCullFace(mode)在绘制时忽略由mode指定的表面 要求启动裁减模式GL_CULL_FACE
+	mode:GL_FRONT,GL_BACK,GL_FRONT_AND_BACK
+glFontFace(mode)将逆时针(GL_CCW)方向或者顺时针(GL_CW)方向定义为正面。
+glPolygonOffset(factor,units)设置多变形的偏移量，需要为多变形模式启动glEnable				(GL_POLYGON_OFFSET_LINE)
+glShadeModel(mode)将明暗模式设定为平滑模式(GL_SMOOTH)或平面模式(GL_FLAT)。默认平滑
+glEdgeFlag(flag)当多边形模式为GL_LINE时，设定后续顶点是否为应显示的边的起点。

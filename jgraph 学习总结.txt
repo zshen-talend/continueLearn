@@ -1,0 +1,157 @@
+建立的基本流程:建立模型--〉通过模型建立图层--〉建立自己的图元--〉设置图元属性--〉连接图元--〉为图层
+加布局管理器--〉将所有图元插入布局管理器
+
+在每个图元中都存在UserObject这么个对象，但是JGraph给我们提供的例子中没有涉及对它的
+
+setInvokesStopCellEditing(true)
+	当正在编辑的cell失去焦点时是否自动保存
+
+setDoubleBuffered(true);
+	是否启用缓冲区
+
+DefaultGraphModel()
+	创建图形模式
+	
+		isVertex(GraphModel model, Object vertex) 判断模型中的图元是否是顶点
+          		Returns true if vertex is a valid vertex
+
+
+		order(GraphModel model, Object[] cells) 
+          		Orders cells so that they reflect the model order.
+
+		edges(Object port)返回一个包含有所有连接到指定port的Iterator
+
+		
+		model.insert(cells, attributes, cs, null, null);
+			将所有对象插入模型，按顺序插入的分别为（顶点、边对象集合，顶点和边的样式集合，边的连接情况集合，父对象的集合，撤销编辑器的集合）
+			如果要插入的图元已经存在执行的其实就是覆盖修改的操作。
+
+		model.edit(attributes, cs, null, null);
+			因为是编辑所以不需要图元的集合
+
+		静getEdgesBetween(GraphModel, Object, Object, boolean)
+			返回两个Object之间的边的Object数组，当boolean为true代表返回的边应该是直连的，即前一个Object是返回边的source。且这个函数不会返回null如果边不存在就返回一个长度为零的数组。
+		
+		静public static Object[] getIncomingEdges(GraphModel model,Object cell)
+			返回引入指定图元的边的数组。
+	
+		静public static Object[] getOutgoingEdges(GraphModel model,Object cell)	
+			返回引出制定图元的边的数组。
+
+ConnectionSet
+	边的连接集合
+		connect(Object edge, Object port, boolean source)连接指定的边和顶点，source==true指定连接的是源点，否则指定连接的是终点。
+		connect(Object edge, Object source, Object target)连接指定的边和两个节点。
+		connections()以迭代的形式返回所有的连接。
+		disconnect(Object edge)取消指定边从源点到终点的连接。
+		disconnect(Object edge, boolean source)取消指定边与源点true或终点false的连接。
+
+AttributeMap 属性集合
+	translate(double dx, double dy)用来改变当前属性集中bounds的位置。被AbstractCellView中的该方法调用。
+
+GraphConstants
+	用来为图形设置各种属性的工具类
+		GraphConstants.setBeginSize(implementStyle, 10);
+			设置变的样式的开始大小
+
+		GraphConstants.setDashPattern(implementStyle, new float[] { 3, 3 });
+			字面理解设置少量图案？？？？？
+
+		GraphConstants.setFont(implementStyle, GraphConstants.DEFAULTFONT
+					.deriveFont(10));
+			设置该样式的字体
+
+		setLineBegin(implementStyle,GraphConstants.ARROW_TECHNICAL);
+			设置implementStyle类型的线的开始样式这里应该是Map类型。
+			其中可用样式包括:
+			ARROW_NONE, ARROW_CLASSIC, ARROW_TECHNICAL, ARROW_SIMPLE, ARROW_CIRCLE, ARROW_LINE, ARROW_DOUBLELINE, ARROW_DIAMOND
+
+
+
+attributes.put(gm,createBounds(new AttributeMap(), 20, 100, Color.blue));
+	定义顶点“gm”的位置和颜色20，100是左下角点的位置
+
+gm.addPort(null, "GraphModel/Center");
+	为gm添加节点
+
+DefaultEdge
+	构建一个边
+
+cs.connect(dgmImplementsGm, gm.getChildAt(0), dgm.getChildAt(0));
+	连接一条边，在两个顶点的某两个字节点之间，getChildAt(0)返回相应位置上的子节点
+
+attributes.put(dgmImplementsGm, implementStyle);
+	将一个边样式赋给一条边
+
+DefaultGraphCell modelGroup = new DefaultGraphCell("ModelGroup");
+		modelGroup.add(gm);
+		modelGroup.add(dgm);
+		modelGroup.add(dgmImplementsGm);
+	在一个大顶点中加入以上的小顶点，使它们组成一个组，即一个顶点
+
+Object[] cells = new Object[] { jgAggregatesGm, jcAggregatesCu,
+				modelGroup, jc, jg, jgExtendsJc, uiGroup };
+	将所有的顶点和边生成一个对象数组
+
+
+setGraphLayoutCache(layoutCache);
+	设置特定的布局
+
+updateUI();
+	通知更新用户界面
+
+frame.pack();
+	调整显示窗口以适应组件和布局
+
+invalidate();	
+	使容器失效
+
+类:BasicMarqueeHandler
+	
+	isForceMarqueeEvent方法，判断事件是否是当前事件
+
+
+类:JGraph
+	getPortViewAt方法，寻找一个PortView在一个Point的指定范围"tolerance"内且这个范围是一个以x - tolerance和y - tolerance为左上角的点，以tolerance的2倍为边长的正方形。
+	scale属性，可能是图形放大缩小的倍数
+	setBackgroundImage(backgroundImage);设置整个graph的背景为backgroundImage。
+	isDisconnectOnMove()在移动中是否要取消与图元的连接。
+	getScale()取回放大倍数。
+
+
+类:GraphLayoutCache
+	getPorts方法，可以取得所有的PortView。
+		在这里存有所有的ports和vertex但没有edge的points
+	static void translateViews(CellView[] views, double dx, double dy)将指定图元视图集合移动指定距离。在其中调用AbstractCellView的translate方法。
+	
+	protected List getEdges(Object cell,Set exclude,boolean visibleCells,boolean selfLoops,boolean incoming)
+		返回指定cell的输入边或输出边。exclude包含的是查询过程中要忽略的边，visibleCells是否只有可见的图元被处理，selfLoops自回路算不算，incoming是引入还是引出
+
+	public List getNeighbours(Object cell,Set exclude,boolean directed,boolean visibleCells)
+		返回所有通过边与该图元连接的所有图元，参数同上directed是说要求两个图元中必须有一个是source
+
+	
+
+类:AbstractCellView
+	intersects方法，判断图元视图是否与指定图层中的指定矩形有交点。
+	isLeaf方法，判断当前图元视图是否是叶子点。通过判断该图元视图的孩子视图集合是否为空。
+	getAllAttributes()方法，取得当前图元的属性集合。
+	getBounds(views)静态方法，得到所有视图集合的总rectangle.
+	translate(double dx, double dy)可以把指定图元视图移动指定距离。
+		方法:getAllAttributes().translate(dx, dy);
+
+类:BasicGraphUI
+	MouseHandler子类的方法捕获鼠标拖拽事件，通过handle.mouseDragged(e);调用RootHandle类的鼠标拖拽方法，进而完成图元的移动，修改属性位置drawImage绘制缓存中的图像到画布上。其中一只存在一个dirty的rectangle变量一直存着修改了的最大区域。
+
+类:GraphConstants 主要是在属性集合中提取和设定指定的值。
+	isGroupOpaque(Map map)方法，返回指定属性集合中的群组不透明属性是否为true
+
+
+
+看到AbstractCellView.intersects()方法。
+
+EdgeView边的视图类
+	update(GraphLayoutCache cache)主要更新边的控制点、标签的位置、设置源点和目标点。其中参数中的cache是被父类更新的。还有涉及到边的类型的初始化且初始化的值是从属性集中取出的。在这里只是一个协从更新，要找到真正改变属性集合的地方。
+	通过视图可以取到相应的绘制器，edge.getRenderer()
+
+	关于边的视图中的points数组中，当还没有第三个点的时候，points属性不会出现在视图中的图元属性当中。

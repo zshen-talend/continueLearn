@@ -1,0 +1,57 @@
+.modalBox {
+	BORDER-RIGHT: #d2ee9f 1px solid; BORDER-TOP: #d2ee9f 1px solid; FONT-SIZE: 11px; Z-INDEX: 9999; BACKGROUND: #ffffff 0% 50%; BORDER-LEFT: #d2ee9f 1px solid; BORDER-BOTTOM: #d2ee9f 1px solid; POSITION: absolute
+}
+.modalBox .titleContainer {
+	PADDING-LEFT: 15px; FONT-WEIGHT: bolder; FONT-SIZE: 18px; BACKGROUND: #8bc71e 0% 50%; COLOR: #fff; BORDER-BOTTOM: #d2ee9f 3px solid; FONT-FAMILY: "Trebuchet MS",Sans-Serif,Verdana; HEIGHT: 36px
+}
+.modalBox .title {
+	FLOAT: left; PADDING-TOP: 5px
+}
+.modalBox .closeButton {
+	FLOAT: right; BACKGROUND-IMAGE: url(/dnsImages/btnClose.gif); MARGIN: 7px; WIDTH: 14px; CURSOR: pointer; HEIGHT: 14px
+}
+.modalBox .contentContainer {
+	PADDING-RIGHT: 10px; PADDING-LEFT: 10px; PADDING-BOTTOM: 10px; PADDING-TOP: 10px; BACKGROUND-COLOR: #f3f3f3
+}
+.divider {
+	HEIGHT: 10px
+}
+.form {
+	BORDER-RIGHT: #dddddd 1px solid; PADDING-RIGHT: 8px; BORDER-TOP: #dddddd 1px solid; PADDING-LEFT: 8px; BACKGROUND: #f3f3f3 no-repeat 0% 50%; PADDING-BOTTOM: 8px; BORDER-LEFT: #dddddd 1px solid; PADDING-TOP: 0px; BORDER-BOTTOM: #dddddd 1px solid
+}
+.form H2 {
+	FONT-WEIGHT: bold; FONT-SIZE: 12px; PADDING-BOTTOM: 5px; BORDER-BOTTOM: #e2c822 1px solid
+}
+.form P {
+	MARGIN-TOP: 5px; MARGIN-BOTTOM: 5px
+}
+.form .label {
+	CLEAR: left; PADDING-RIGHT: 2px; FLOAT: left; WIDTH: 70px; PADDING-TOP: 2px
+}
+.form .textbox {
+	BORDER-RIGHT: #dddddd 2px solid; PADDING-RIGHT: 3px; BORDER-TOP: #dddddd 2px solid; PADDING-LEFT: 3px; FONT-SIZE: 11px; PADDING-BOTTOM: 3px; BORDER-LEFT: #dddddd 2px solid; WIDTH: 280px; PADDING-TOP: 3px; BORDER-BOTTOM: #dddddd 2px solid
+}
+.form .textarea {
+	BORDER-RIGHT: #e2c822 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #e2c822 1px solid; PADDING-LEFT: 3px; FONT-SIZE: 11px; PADDING-BOTTOM: 3px; BORDER-LEFT: #e2c822 1px solid; WIDTH: 280px; PADDING-TOP: 3px; BORDER-BOTTOM: #e2c822 1px solid; HEIGHT: 128px
+}
+.form .largeTextbox {
+	BORDER-RIGHT: #e2c822 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #e2c822 1px solid; PADDING-LEFT: 3px; FONT-SIZE: 11px; PADDING-BOTTOM: 3px; BORDER-LEFT: #e2c822 1px solid; WIDTH: 480px; PADDING-TOP: 3px; BORDER-BOTTOM: #e2c822 1px solid
+}
+.form .largeTextarea {
+	BORDER-RIGHT: #e2c822 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #e2c822 1px solid; PADDING-LEFT: 3px; FONT-SIZE: 11px; PADDING-BOTTOM: 3px; BORDER-LEFT: #e2c822 1px solid; WIDTH: 480px; PADDING-TOP: 3px; BORDER-BOTTOM: #e2c822 1px solid; HEIGHT: 192px
+}
+.form .button {
+	BORDER-RIGHT: #999999 1px solid; PADDING-RIGHT: 4px; BORDER-TOP: #999999 1px solid; PADDING-LEFT: 4px; BACKGROUND: url(../Images/buttonBG.gif) #f2f2f2 repeat-x 0% 50%; PADDING-BOTTOM: 2px; BORDER-LEFT: #999999 1px solid; PADDING-TOP: 2px; BORDER-BOTTOM: #999999 1px solid
+}
+.form .validator {
+	PADDING-LEFT: 72px; COLOR: #ff0000
+}
+.form .smallTextbox {
+	BORDER-RIGHT: #e2c822 1px solid; PADDING-RIGHT: 3px; BORDER-TOP: #e2c822 1px solid; PADDING-LEFT: 3px; FONT-SIZE: 11px; PADDING-BOTTOM: 3px; BORDER-LEFT: #e2c822 1px solid; WIDTH: 200px; PADDING-TOP: 3px; BORDER-BOTTOM: #e2c822 1px solid
+}
+.form .message {
+	PADDING-LEFT: 72px
+}
+.pageTitle {
+	FONT-SIZE: 2em; MARGIN-BOTTOM: 4px; PADDING-BOTTOM: 5px; WIDTH: 100%; COLOR: #333333; BORDER-BOTTOM: #333333 1px solid
+}

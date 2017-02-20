@@ -1,0 +1,36 @@
+进入weblogic控制台http://localhost:7001/console
+1.配置domain
+	D:\bea\weblogic92\common\bin\config.cmd配置domain的命令.
+	端口信息:
+	<listen-port>7011</listen-port>
+	
+
+2.配置过程中遇到的问题
+	在同一个domain下多个应用中的weblogic.xml不可以使用同一个context-root目录。
+	每个应用下除了web.xml还要有一个weblogic.xml。
+	你的jdk版本与web.xml文件对应的头部分不对应引出来的问题,比如下面两种定义,你用的是 weblogic9.1,应该用第一种的应该就可以解决问题了 
+------------------------------------------------------------------- 
+
+第一: 
+<web-app version="2.4" xmlns="http://java.sun.com/xml/ns/j2ee" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/j2ee 
+http://java.sun.com/xml/ns/j2ee/web-app_2_4.xsd"> 
+
+------------------------------------------------------------------- 
+第二: 
+<?xml version="1.0" encoding="UTF-8"?> 
+<web-app version="2.5" 
+xmlns="http://java.sun.com/xml/ns/javaee" 
+xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" 
+xsi:schemaLocation="http://java.sun.com/xml/ns/javaee 
+http://java.sun.com/xml/ns/javaee/web-app_2_5.xsd">
+
+
+3.Domain中配置的信息
+配置的信息保存在config文件下的config.xml文件中。
+
+4.从myeclipse中启动weblogic时报错:Parsing Failure in config.xml: javax.xml.namespace.QName
+把weblogic的jdk换成weblogic自带的jdk。
+
+5.weblogic的端口需要定义在7000以上，以免影响系统中其它服务的运行。

@@ -1,0 +1,176 @@
+1.Global
+	在函数中的局部变量，要想引用全局变量的值，必须用Global在函数中声明。
+
+2.字符串的连接符
+	在PHP中，字符串的连接符使用的是"."而不是"+"。
+
+3.字符串内的变量
+	双引号内的字符串变量可以被自动替换为值。
+
+4."/"
+	总是返回浮点数，即使两个运算数都是整数。
+
+5.if语句后嵌入HTML语句
+	<? php if ($a==15) ：?>
+	<H1> A = 15 now. </H1>
+	<? php Endif ; ?>
+
+
+6.表达式对逻辑判断的影响
+	对PHP条件控制语句和循环控制语句中的逻辑表达式而言，具体的值无关紧要，只要确定其值为True或False，所以，PHP对于这些表达式的结果只要非零的数值都是True，零是False，0/"0"/空串为False，其他(包括负数)为True；对数组和对象，无任何元素的为False，否则为True。
+
+
+
+
+7.apache HTTP Server 2.2配置
+	文件httpd.conf下面有些必须的配置信息
+		DirectoryIndex 	目录下默认页的执行顺序
+		DocumentRoot 	网站文件存放位置
+		Directory    	同上面的配置
+		Listen   	监听的端口号
+		DefaultLanguage	强制编码格式转换，但已被注释。
+		
+8.PHP5配置文件
+	php.ini
+		register_globals 	设置全局变量是否被启用
+		extension		配置要用哪些扩展功能
+					
+9.PHP5文件结构
+	ext文件夹下	所有的模块文件
+
+10.变量与字符串之间要求以空格来分隔。
+
+11.unlink
+	删除一个指定的文件，默认位置为该页面所在的磁盘位置。
+
+12.Global
+	声明局部变量为全局变量
+
+13.形参的默认值
+	形参可以有默认值，像c语言中一样
+
+14.函数的动态调用
+	只要把函数名称作为字符串赋给变量，就可以把这个变量当做函数的引用使用了。
+
+15.数组的定义
+	数组定义可以通过name[0]="?"的方式，无需先声明分配指定的内存空间。
+
+16.数据的起始下标
+	通过array(1=>"第一个元素"，"第二个元素");可以定义数组的起始下标为1。
+
+17.页面间的参数传递
+	用form的提交的话，input的name可以作为变量名，传到下一个页面。
+
+18.控件属性的调用方法
+	取得控件对象后调用对象属性的方法是,对象名称_属性名称。
+
+19.环境变量的查看方法
+	_FILE_:php文件所在绝对路径
+	PHP_OS:操作系统名称
+	PHP_VERSION:PHP的版本
+
+20.文件包含的使用
+	include("文件名称")
+	这个名称是相对路径可以使用../来找寻上一级目录，当前目录前不用加'/'
+	或者可以使用绝对路径名称
+
+21.编码格式的转换iconv(string $in_charset , string $out_charset , string $str )
+	print(iconv("GB2312", "UTF-8", $myLine)."</br> \n");
+
+22.文件的读取方式fgetc fgets fgetss
+	fgetc以字符进行读取
+	fgets以行进行读取
+	fgetss读取文件的行，并且去掉其中的HTML语言标记。
+23.fileowner filesize filetype
+	分别是文件的拥有者，文件的大小和文件的类型，参数为文件的路径。
+
+24.file
+	通过file函数打开的文件返回的是一个数组，可以通过count()函数来计算这个数组的内容数，然后循环输出这个数组，就可以得到文件中的内容了。
+	fgets	在制定文件内读取指定长度的字符。
+	
+25.fileatime filectime filemtime
+	分别是文件的存取时间
+	文件的创建时间
+	以及文件的最后修改时间
+	可以通过date格式化输出格式。
+
+26.mkdir
+	创建指定访问权限的目录。
+
+27.opendir
+	打开一个指定目录，"."代表当前目录，"/"代表根目录，".."代表上一级目录。并且可以通过readdir()来迭代这个目录下的所有文件和目录。
+
+28.closedir
+	关闭前一个命令打开的目录。
+
+29.phpinfo
+	以表格的形式输出php的相关信息。
+
+30.常用数值判断函数
+	is_array
+	is_double
+	is_integer
+	is_object
+	is_string
+
+31.对数组的相关操作
+	reset 	使数组中的指针指向第一个。
+	key	取得数组中当前的关键字。
+	next	将数组中的指针后移。
+	asort	让数组排序。
+	count	得到数组中元素的个数。
+	current	得到数组中当前的元素值。
+	end	使数组中的指针指向最后一个元素的位置。
+	each	取出数组中当前元素的键值对儿。
+
+32.字符串操作函数
+	strcmp	字符串比较
+	strlen	字符串长度
+	strpos	字符串位置
+	substr	子串截取
+	strtok	字符串拆分
+	strstr	指定字符处截取
+	strrev	字符串翻转
+	strtolower 字符串小写
+	strtoupper 字符串大写
+	trim	去除空格
+	ereg	在制定字符串内匹配指定正则表达式，并将结果存于指定数组
+	implode	以指定的分割符合并一个数组为一个字符串
+	explode	以指定的分隔符拆分一个字符串为字符串数组
+	
+
+33.字符串的编码和解码
+	base64_decode
+	base64_encode
+
+34.常用的数学函数
+	abs	绝对值
+	acos	反余弦
+	asin	反正弦
+	pi	π的值
+	rand	随机数
+	round	将浮点数四舍五入
+	dechex	将十进制整数转换为十六进制字符串
+
+35.日期函数
+	checkdate 	检查日期函数
+	date		日期的格式化，如不指定时间，默认为当前时间
+	time		返回当前时间的秒数
+	getdate		把某个当前时间的秒数转换成数组的形式
+	microtime	返回纪元到现在的微秒数和秒数
+	mktime		把某个时间返回到秒数的形式
+
+36.程序或进程的暂停
+	sleep		程序暂停秒数
+	usleep		程序暂停微秒数
+	
+
+37.检查存在性
+	isset		变量未定义和null都会返回false
+	unset		销毁一个变量
+	defined		常量是否存在
+	function_exists	函数是否存在
+	
+38.session相关
+	session_name	带参数是set不带参数是get,且至少有一个数字
+	

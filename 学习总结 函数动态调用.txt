@@ -1,0 +1,100 @@
+如果有以下类Processor.cs
+
+  public class Processor
+{
+      public int Process(int value)
+      {
+          return value + 1;
+        }
+}
+
+动态调用Processor类里面的Process函数有如下几种
+
+方法一：直接调用
+        Processor test = new Processor();
+        int i = 100;
+        int value =test.Process(i);
+        Response.Write(value.ToString());
+
+　　 输出：101
+
+方法二：用反射机制，Type.InvokeMember()调用
+
+            Processor test = new Processor();
+            Type t = typeof(Processor);
+            int i=100;
+            int value = (int)t.InvokeMember("Process", BindingFlags.Instance | BindingFlags.Public | BindingFlags.InvokeMethod, null, test, new object[] { i });
+            Response.Write(value.ToString());
+
+　　  输出：101
+
+方法三：通过一个委托Delegate调用
+　　public delegate int ProcessCaller(int value);
+            Processor test = new Processor();
+            ProcessCaller processCaller = new ProcessCaller(test.Process);
+            int i=100;            
+            int value = processCaller(i);
+            Response.Write(value.ToString());
+
+            输出：101
+
+方法四：也通过反射机制建立委托再动态调用
+            Processor test = new Processor();
+            Type type = test.GetType();//获取类型
+            MethodInfo methodInfo = type.GetMethod("Process");//获取里面的方法
+            object[] args = {1};//表明为一个整型参数
+            methodInfo.Invoke(test, args);//应用Processor 里面的Process方法
+
+          Type delegateType = CreateCustomDelegate(methodInfo);//CreateCustomDelegate方法为创建自定义委托      
+          Delegate p = Delegate.CreateDelegate(delegateType,test, "Process");
+            int i=100;
+            int value = (int)p.DynamicInvoke(new object[] { i });
+            Response.Write(value.ToString());
+
+
+            输出：101
+
+方法四当中的CreateCustomDelegate通用方法代码如下：
+首先引用using System.Reflection.Emit;
+
+private Type CreateCustomDelegate(MethodInfo targetMethod)
+    {
+        AssemblyName assembly;
+        AssemblyBuilder assemblyBuilder;
+        ModuleBuilder modbuilder;
+        TypeBuilder typeBuilder;
+        MethodBuilder methodBuilder;
+        assembly = new AssemblyName();
+        assembly.Version = new Version(1, 0, 0, 0);
+        assembly.Name = "CallbackGen";
+        assemblyBuilder = AppDomain.CurrentDomain.DefineDynamicAssembly(assembly, AssemblyBuilderAccess.RunAndSave);
+        modbuilder = assemblyBuilder.DefineDynamicModule("CallbackGenModule", "CallbackGen.dll", true);
+        // Create a delegate that has the same signature as the method we would like to hook up to
+        typeBuilder = modbuilder.DefineType(targetMethod.Name + "Callback", TypeAttributes.Class | TypeAttributes.Public | TypeAttributes.Sealed |
+TypeAttributes.AnsiClass | TypeAttributes.AutoClass, typeof(System.MulticastDelegate));
+        ConstructorBuilder constructorBuilder = typeBuilder.DefineConstructor(MethodAttributes.RTSpecialName | MethodAttributes.HideBySig |
+MethodAttributes.Public, CallingConventions.Standard, new Type[] { typeof(object), typeof(int) });
+        constructorBuilder.SetImplementationFlags(MethodImplAttributes.Runtime | MethodImplAttributes.Managed);
+        // Grab the parameters of the method
+        ParameterInfo[] parameters = targetMethod.GetParameters();
+        Type[] paramTypes = new Type[parameters.Length];
+        for (int i = 0; i < parameters.Length; i++)
+        {
+            paramTypes[i] = parameters[i].ParameterType;
+        }
+        // Define the Invoke method for the delegate
+        methodBuilder = typeBuilder.DefineMethod(
+            "Invoke",
+            MethodAttributes.Public | MethodAttributes.HideBySig | MethodAttributes.NewSlot | MethodAttributes.Virtual,
+            CallingConventions.Standard,
+            targetMethod.ReturnType,
+            null,
+            new Type[] { typeof(System.Runtime.CompilerServices.CallConvCdecl) },
+            paramTypes,
+            null,
+            null);
+        methodBuilder.SetImplementationFlags(MethodImplAttributes.Runtime | MethodImplAttributes.Managed);
+        // bake it!
+        Type t = typeBuilder.CreateType();
+        return t;
+    }

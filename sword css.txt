@@ -1,0 +1,28 @@
+1.public/biz/pg/styles/second/jb/styles.css
+	1)table样式:
+		data_form_search:杏红色。表单中查找的table样式
+		data_grid:杏红色。表单中table(List)样式。
+		data_form:杏红色。表单中table(form)样式。
+
+	2)按钮样式:
+		ctrls_bar:对齐方式(并且在public/core/styles/main.css中重复定义)
+		button:字体颜色、背景图等等。(与public/biz/styles/default/input/css/input.css中有重叠)但是图片路径其实不存在，所以不能发挥作用。
+
+
+2.public/biz/styles/org/pagestyle.css(暂时未加载)
+	1)表格中字体样式:
+		trbg0:字体的颜色、大小和背景。
+
+
+3.public/biz/styles/default/input/css/input.css
+	1)按钮样式
+		input.button,与public/biz/pg/styles/jb/styles.css有重叠
+	2)文本样式
+		input.text,与public/biz/pg/styles/jb/styles.css有重叠(但目前还是input.css起作用)
+		
+4.public/core/style/gns.css(pg/include/header.jsp中引入)
+	1)树的样式
+		tree_td、cell1...
+
+5.public/biz/pg/styles/second/tab.css
+	1)事件回放时的页签样式。

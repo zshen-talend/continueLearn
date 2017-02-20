@@ -1,0 +1,409 @@
+ctrl+shift+f 格式
+ctrl+shift+O 组织导入文件
+ctrl+I	     解决缩紧问题
+ctrl+J       增量查找(窗口下方的位置可输入key)
+ctrl+H	     打开搜索按钮
+ctrl+T       打开快捷的类继承窗口
+ctrl+space   内容帮助
+ctrl+shift+space 帮助
+ctrl+shift+Y 转小写
+ctrl+shift+X 转大写
+ctrl+shift+T 类的查询
+ctrl+shift+R 资源查询
+ctrl+O	     列出所有方法和属性
+ctrl+shift+? 相关信息提示
+ctrl+↑或↓  移动editor的滚动条
+alt+↑或↓   选择当前列
+shift+↑或↓ 移动选择的列
+
+1.  系统自定义的Action
+	private IWorkbenchAction exitAction;
+
+	exitAction = ActionFactory.QUIT.create(window);//系统自定义的Action
+
+
+//定制初始化大小
+	IWorkbenchWindowConfigurer configurer = getWindowConfigurer();
+
+        configurer.setInitialSize(new Point(700, 550));    //定义窗口初始化大小
+
+        configurer.setShowCoolBar(false);
+
+
+2．不保存窗口状态
+
+	将ApplicationWorkbenchAdvisor.java的initialize()方法中的语句：configurer.setSaveAndRestore(true);
+
+	修改为：configurer.setSaveAndRestore(false);
+
+	前文说过，设置为true，应用程序每次退出时将保存窗口状态，此处并不需要且对性能有轻微影响，所以设置为false。
+
+                  //不显示工具栏
+
+        configurer.setShowStatusLine(false);          //不显示状态栏
+
+        configurer.setTitle("jfcs");                       //窗口标题为jfcs
+
+3.添加到系统工具栏的方法
+	修改eclipse上默认的工具栏菜单，必须用下面两个接口的实现中的run才能运行，否则会报The chosen action is not avaliable
+	IWorkbenchWindowActionDelegate, or IWorkbenchWindowPulldownDelegate
+
+4.插件的透视图
+	实现透视图的类要实现IPerspectiveFactory接口。且视图的层次覆盖顺序与加入的顺序有关。
+	且有两个属性控制效果:
+				layout.setEditorAreaVisible(true);设置透视图中是否编辑器区的空间可见
+				layout.setFixed(true);设置视图是否可以被关闭和拖动。
+	视图中所占用的比例关系:
+			相对于编辑器区域时，左边和上边分配的是占用的百分比(1f代表全部区域(还会剩余一部分)，因为第一次分配时整个区域就是editorArea)。
+			右边和下边再相对于editorArea分配视图区域的时候，分配的是编辑器剩余的空间(0f代表剩余的全部区域(也会剩余一部分))。
+
+	对单个视图布局的操作:
+			通过layout.getViewLayout(NavigationView.ID).setCloseable(false);方法可以让导航视图不可关闭
+
+5.取得窗口中插件的方法:
+		Activator.getDefault().getWorkbench().getActiveWorkbenchWindow(). getActivePage();取得当前的活动页
+	使用条件:在一个视图中
+		IWorkbenchPage wbp = getViewSite().getPage();
+		IViewPart view2 = wbp.findView("cn.com.chengang.myplugin.View2");
+
+6.在编辑器中
+	this.getEditorSite()和this.getSite()方法是一样的，并且相关的在视图初始化(init)的时候会设入一个site也就是我们取出的site.
+	且通过这样的site可以取得我们想要的工作台、页等等。
+	具体:
+		this.getEditorSite().getPage()取得当前的页
+		
+7.在定制向导页的时候
+	需要用setControl(container)方法来把当前的控件注入到基类中，在基类中有一个断言如不设置就无法通过。并且注意要把每个page中的控件内容放到相应的Composite		中这样，所设置的布局才不会影响前一页。也就是说在向导对话框中每个向导页的createControl(Composite parent)函数中的parent参数都是向导对话框这一个页面。
+
+8.扩展和扩展点之间的关系:
+	扩展点提供服务功能。(就像插座)
+	扩展使用这些服务。(就像插头)
+
+9.eclipse中的多线程
+	eclipse中用Job封装了Thread类，而又用JobManager来管理所有的Job。在JobManager中维护着一个线程池，线程池中存放着多个Job。而且JonManager通过API可以通知我		们某个Job处于某种状态。	为了我们更方便的了解Job所处的状态，JobManager设置Job的一个状态标志位,我们可以通过Job的getState方法获得Job当前的状态值以了解其   状态： 
+	NONE：当一个Job刚构造的时候，Job就会处于这种状态。当一个Job执行完毕（包括被取消）后，Job的状态也会变回这种状态。 
+	WAITING:当我们调用了Job的shedule方法，JobManager会将Job放入等待运行的Job队列，这时Job的状态为WAITING. 
+	RUNNING:当一个Job开始执行，Job的状态会变为RUNNING。 
+	SLEEPING:当我们调用Job的sleep方法后，Job会变成这一状态。当我们调用schudule方法的时候带上延时的参数，Job的状态也会转入这一状态，在这一段延时等待的时间中，Job都处于这一状态。这是一种睡眠状态，Job在这种状态中时不能马上转入运行。我们可以调用Job的wakeup方法来将Job唤醒。这样，Job又会转入WAITING状态等待运行。 
+
+	另外，当使用Display.getCurrent()方法来取得线程时如果返回结果为空，则说明当前线程不是UI线程。只有UI线程才能执行界面元素的操作(如更改Button的text等等)否则会抛出异常。
+	
+
+10.eclispe中线程的同步:
+	JobManager运行的时候，会负责让相同Rule的线程分开执行。
+	private ISchedulingRule Schedule_RULE = new ISchedulingRule() {
+		public boolean contains(ISchedulingRule rule) {
+			return this.equals(rule);
+		}
+		public boolean isConflicting(ISchedulingRule rule) {
+			return this.equals(rule);
+		}
+	};
+ 
+
+
+11.对于需要避免同时运行的Job，我们可以将它们的rule设成上面定义的rule。如：
+
+	myjob1.setRule(Schedule_RULE);
+	myjob2.setRule(Schedule_RULE);
+ 
+12.为TreeViewer和TableViewer加入图片时
+	如果用的是AbstractUIPlugin.imageDescriptorFromPlugin(PLUGIN_ID, "icons/checked.gif").createImage()
+	注意这里的ID指的是视图或编辑器中的Activator类中的PLUGIN_ID而不是视图或编辑器的ID否则会发生空指针异常。且imageDescriptorFromPlugin方法也是定义在Activator中的。
+
+13.编辑器使用eclipse自带保存按钮
+	该保存按钮主要涉及到编辑器类中的doSave方法和isDirty方法，isDirty方法很显然会返回一个boolean型的值。false表示当前编辑器没有更新不应该保存，否则保存按钮可用并且编辑器标签上会有*标记。这时如果点击保存按钮就会调用doSave方法，但要是想祛除*标记和使保存按钮不可用还必须要调用firePropertyChange(IEditorPart.PROP_DIRTY)方法来声明刚才的更改。
+
+14.eclipse的默认路径和相对路径
+	eclipse中java工程中的默认路径就是在当前包下，“/”代表src文件夹下
+
+15.属性改变监听的使用
+	属性监听者要实现PropertyChangeListener接口，并且在所实现的方法中定义修改的方法。被监听者要实现 PropertyChangeSupport通过它就可以发送属性改变事件了PropertyChangeSupport.firePropertyChange(new PropertyChangeEvent());并且addPropertyChangeListener和removePropertyChangeListener都是通过它来实现的。当找到合适的位置添加属性改变事件之后，就完成了属性改变监听的实现。
+
+16.IAdaptable的适配方法
+	如果一个类实现了IAdaptable接口及方法getAdapter()，那就可以通过这个方法得到类型转换，但转换过程还是自己在Adapter中写的没什么好惊奇的。
+
+17.eclipse框架中redo、undo的使用
+	redo、undo操作要求初始化操作历史initializeOperationHistory()在这里初始化操作历史的内容、判定情况、操作步数。也是在这里关联框架中redo、undo的
+IActionBars actionBars = getViewSite().getActionBars();
+		undoRedoGroup.fillActionBars(actionBars);
+然后呢就是把每个操作都放入到操作历史中去，这些操作需要继承AbstractOperation这个类。定制了这个对象后还要把undoContext加入到这个操作中去，operation.addContext(undoContext);最后通过getOperationHistory().execute(operation,nul,null);来完成这个操作的执行。这样就算顺利地把一个操作加入到历史中去了。
+
+
+18.取得eclipse的当前执行目录方法
+	Activator.getDefault().getStateLocation().toOSString()//是当前项目工程的文件夹
+	
+	ResourcesPlugin.getWorkspace().getRoot().getLocation()//上面的根目录
+
+19.察看某个方法或类的引用情况(在父类中的使用)
+	选择某个字段-->右键-->references->hierarchy可以找到父类调用某个方法的位置。
+	
+
+20.ISelectionProvider和ISelectionChangeListener
+前者提供添加和移除监听，设置和取得选择的方法。后者提供的是监听器的执行方法selectionChanged()。也就是说，选择发生的对象要实现ISelectionProvider接口来注册监听。而选择发生时要发生改变的对象要实现ISelectionChangedListener接口来接收选择并进行处理。
+
+21.实现属性视图和大纲视图的联动选择
+	除了按照上面的方法分别设置选择提供者和选择监听者以外，注意要有一个选择监听的列表来存储注册进来的监听。然后在提供者的setSelection方法中遍历注册过的所有监听，也就是调用所有监听的selectChanged()方法。
+
+注:我最近在看EMF的通知机制的时候也发现了这一点，就是无论监听或者通知它们都是用了接口这样一个概念，在想要发出通知或者消息的时候通过遍历集合来调用所有的接口方法。这就是“通过已知的方法来调用位置的实现”。
+
+22.选择服务的使用
+	这里用到的也是上面的选择监听者和选择提供者的关系。只是中间要加上一层选择服务层。
+	1.注册选择提供者:
+		首先该viewer类(treeviewer)必须实现ISelectionProvider，通过getsite().setSelectionProvider(上面的视图对象)实现。而且通过这个方法把支持添加到选择服务器中，这样选择服务器才会在该视图(JFace)产生Selection时，试图检查被选中对象是否有实现IAdaptable接口，并在其中用大纲视图类IPropertySource.class作参数，来检查该对象是否支持属性视图。
+	2.注册监听者:
+		把相应的ISelectionChangeListener的实现对象注册进监听服务，getsite().getPage().addSelectionListener(上面实现的对象)。监听服务的作用其实就相当于遍历监听者集合然后调用SelectionChanged()方法一样。
+
+23.取得EditorRegistry的方法
+	IEditorRegistry editorReg = PlatformUI.getWorkbench().getEditorRegistry();
+	通过IEditorRegistry 对象我们可以设定一个编辑器默认打开哪种文件
+
+24.IPath到IFile的转换
+	IFile tempFile=ResourcesPlugin.getWorkspace().getRoot().getFileForLocation(temppath);但这种转换前提必须是IPath是属于IFile的。
+	IFile tempFile=ResourcesPlugin.getWorkspace().getRoot().getFile(temppath)
+	ResourceManager.getRoot().getFile(IPath)
+25.Path和File的转换关系
+
+	我们可以通过FileDialog(window.getShell(),SWT.OPEN)返回的字符串变量来完成Path变量的构造如下:
+	String path=openFileDialog();
+	new Path(path)
+	这里openFileDialog()方法调用的就是上面的文件对话框，它会返回一个完整的路径，利用这个路径我们就可以构造一个Path变量，而这个变量可以通过下面的方法来转换成一个File变量，从而验证这个变量所对应的文件是否存在:
+	path.toFile().exists()
+
+
+26.debug异常的方法
+	在debug透视图中breakpoint选项卡的工具条上，有一个工具按钮可以添加对于异常的断点，这样找到异常发生的位置就方便多了。
+
+27.给IResource加标记IMarker
+	给IResource的子类有很多，但是主要把这个标记加在IFile或IContainer中。而且我们的IMarker需要由IResource来创建，创建之后只要通过设置IMarker的LINE_NUMBER和MESSAGE等属性就可以完成标记了，至于这些属性如何得到就要另行想办法了。
+
+28.常用的对话框
+	FileDialog用于打开文件。
+	DirectoryDialog用于打开文件夹。
+	MessageDialog用于提示各种消息。
+
+29.快捷键定义冲突的三种解决方案
+由于Eclipse的易扩展性,理论上可以有无数个Action运行在一个RCP 程序中,但是快捷键是有限的,尤其是一些常用的,像Ctrl+C,Ctrl+S之类的普通用户能记得住的就那么几个,万一你自定义的Action的快捷键和Eclipse默认的发生了冲突怎么办?比如Eclipse默认Ctrl+S是Save的快捷键,但是你又自定义了一个SaveAction,希望用户按下Ctrl+S之后执行的是自己的SaveAction的run方法.
+     一般给Action绑定快捷键的方法是自定义binding和command,然后在action中指定definition id为command的id.如下:
+<extension
+           point="org.eclipse.ui.bindings">
+        <key
+              commandId="myplugin.actions.save"
+              contextId="org.eclipse.ui.contexts.window"
+              schemeId="org.eclipse.ui.defaultAcceleratorConfiguration"
+              sequence="CTRL+S">
+        </key>
+     </extension>
+     <extension
+           point="org.eclipse.ui.commands">
+        <command
+              id="myplugin.actions.save"
+              name="Save">
+        </command>
+     </extension>
+这样的方法一般是不会有冲突的,但是像我们上面提到的情况,如果你自定义一个binding,它的key sequence是Ctrl+S,那就会有问题.由于org.eclipse.ui插件已经提供了一个Ctrl+S的快捷键,所以系统中会有两个Ctrl+S,这样Eclipse会在右下角pop up一个assist dialog,让你从两个Action中选择一个,这样可能会造成一些用户使用上的不习惯.
+解决办法:
+    1.直接改快捷键.
+      这个最简单了,比如把你自己的save定义成Alt+S.但是这个方法也是最不好的方法,因为很多用户并不知道Alt+S在你的程序里面就是save.
+    2.修改自定义action的definition id
+      我们刚才说过,action的definition id绑定着一个command,而command又对应着一个binding,Eclipse通过这样的方式实现action和快捷键的绑定.我们再来看看Eclipse定义的command和key binding(摘自org.eclipse.ui的plugin.xml):
+      <command
+            name="%command.save.name"
+            description="%command.save.description"
+            categoryId="org.eclipse.ui.category.file"
+            id="org.eclipse.ui.file.save" />
+      <key
+            commandId="org.eclipse.ui.file.save"
+            sequence="M1+S"
+            schemeId="org.eclipse.ui.defaultAcceleratorConfiguration" />
+      <key
+     Eclipse的Save Action把definition id指定为org.eclipse.ui.file.save,然后它就和上面的command进行了绑定,而这个command对应的key就是"M1+S"(Ctrl + S),这样就实现了快捷键绑定.如果我们也把自定义的Save Action的definition id指定为org.eclipse.ui.file.save,是不是就可以达到目的呢?答案是肯定的.
+     Eclipse中的Action存在着一个类似"优先级"的概念(具体实现是通过action handler).越"具体"的action,优先级越高.Eclipse的Save Action明显是一个global的action,(同样的global action还有copy, cut,undo,redo等等).而我们自定义的action一般是实现了IWorkbenchWindowActionDelegate接口的,就是说,它是contribute to workbench window的,它是一个workbench action,它的优先级就高于任何global action.同理,如果你定义一个editor action或者view action,由于它比workbench还"具体"(workbench可以包含多个editor或view,workbench action对这些editor或view都是有效的;而editor action只对某个具体的editor有效),所以editor action的优先级就高于workbench action.这样,如果自定义的action和eclipse缺省的action都绑定到同一个command,那么eclipse runtim最后会选择自定义的action来执行.
+    3.终极解决大法:自定义schema
+     Eclipse 有一个default的快捷键schema文件:org.eclipse.ui.defaultAcceleratorConfiguration.它存储着Eclipse所有的快捷键.如果你自定义一个自己的schema文件,并把它设成当前使用的schema文件,那么Eclipse就会调用自定义的schema文件.(新的schema文件可以在org.eclipse.ui.bindings扩展点中定义,请注意,在定义新schema的时候由一个parentID属性,如果你定义了它,新的schema会像类继承一样把parent schema里面的key binding全继承下来.如果不定义,则是一个全新的schema)
+    假定我们已经有了一个新的schema文件,id是myplugin.schema.然后我们在org.eclipse.ui.bindings下定义一个key:
+<key
+              commandId="myplugin.actions.save"
+              contextId="org.eclipse.ui.contexts.window"
+              schemaId="myplugin.schema"
+              sequence="CTRL+S">
+        </key>
+我们已经把schemaId换成了myplugin.schema,表示我们把CTRL+S加到了myplugin.schema中,然后把新建的schema文件在product配置文件plugin_customization.ini中设置成当前的key schema文件:
+org.eclipse.ui/KEY_CONFIGURATION_ID=myplugin.schema
+
+这种方法虽然麻烦了一点,但却可以治标又治本.而且由于可以指定parent schema,我们完全可以把org.eclipse.ui.defaultAcceleratorConfiguration作为parent schema,继承它全部的快捷键配置,只定制几个会产生冲突的快捷键即可
+
+30.properties属性文件的使用
+InputStream is = this.getClass().getClassLoader().getResourceAsStream("treeConfig.properties");||ResourceManager.class.getResourceAsStream("a.properties")
+Properties pps=new Properties();
+		pps.load(is);
+ Enumeration enum1=pps.propertyNames();	//枚举类
+        int num=0;
+		for(int j=0;j<jgmc.length;j++){
+        	if(jgmc[j]!=null){
+        		num++;
+        	}
+        }
+String[] strKey=new String[20]; 
+		int h=0; 
+    	while(enum1.hasMoreElements()){ 
+    		strKey[h]=(String)enum1.nextElement(); 
+			h++; 
+    	} 
+
+31.让eclipse重新生成所有的输出文件
+	点击项目的cleanup菜单即可，注意自动构建是否已打勾。
+
+
+32.编辑器的初始化
+	编辑器要继承EditorPart类。并且实现init方法注册site和input,createPartControl方法创建编辑器内容。
+
+33.eclipse中工作空间的定义和转换
+	1)启动时选择工作空间:
+		window->Perferences->General->Startup and Shutdown然后勾选prompt for workspace on startup,就可以在启动时选择工作空间了。
+	2)工作空间的配置文件位置:
+		eclipse安装目录下configuration->.settings的org.eclipse.ui.ide.prefs文件下,RECENT_WORKSPACES属性后已/n分隔两个工作空间路径。
+
+34.Eclipse中自动建立路径
+	project->build automatically
+
+35.Eclipse中清除错误标记
+	project->clean
+
+36.eclipse内存参数
+	堆(heap)内存:给程序开发人员使用的。
+	非堆内存:留给自己用的。
+   堆内存分配:
+	-Xms:JVM初始化分配的内存
+	-Xmx:最大分配内存
+	当默认空余堆内存小于40%时Xms向Xmx调整到最大，大于70%时Xms向Xmx调整到最小，所以为了避免GC(垃圾回收时)调整内存分配，一般把Xms和Xmx设置得一样。
+
+   非堆内存分配:
+	-XX:permSize设置非堆内存初始值。
+	-XX:MaxPermSize设置最大非堆内存大小
+
+参数形如“项 值”这种形式，中间有空格的需要换行书写，如果值中有空格的需要用双引号包括起来。比如我们使用-vm C:\Java\jre1.6.0\bin\javaw.exe参数设置虚拟机，在eclipse.ini文件中要写成这样： 
+-vm 
+
+C:\Java\jre1.6.0\bin\javaw.exe 
+按照上面所说的，最后参数在eclipse.ini中可以写成这个样子： 
+-vmargs 
+-Xms128M 
+-Xmx512M 
+-XX:PermSize=64M 
+-XX:MaxPermSize=128M 
+实际运行的结果可以通过Eclipse中“Help”-“About Eclipse SDK”窗口里面的“Configuration Details”按钮进行查看。 
+另外需要说明的是，Eclipse压缩包中自带的eclipse.ini文件内容是这样的： 
+-showsplash 
+org.eclipse.platform 
+--launcher.XXMaxPermSize 
+256m 
+-vmargs 
+-Xms40m 
+-Xmx256m 
+其中?Clauncher.XXMaxPermSize（注意最前面是两个连接线）跟-XX:MaxPermSize参数的含义基本是一样的，我觉得唯一的区别就是前者是eclipse.exe启动的时候设置的参数，而后者是eclipse所使用的JVM中的参数。其实二者设置一个就可以了，所以这里可以把?Clauncher.XXMaxPermSize和下一行使用#注释掉。 3. 其他的启动参数。如果你有一个双核的CPU，也许可以尝试这个参数: 
+
+-XX:+UseParallelGC
+	
+37.添加内存的显示和手动GC的垃圾桶
+	一.在根目录下建立名为options的无扩展名文件，内容为:
+		org.eclipse.ui/perf/showHeapStatus=true
+
+	二.在eclipse.ini文件下加入如下内容
+		-debug options -vm javaw.exe
+
+38.IFile、file和Ipath的转换
+	new File(FileBuffers.getFileStoreAtLocation(IPath).toURI());
+	IPath.toFile();
+	file.getLocation().toFile()
+
+39.IFolder和workspace的关系
+1)取得workspace的方法:
+	IWorkspace ws = ResourcesPlugin.getWorkspace();
+
+2)取得一个project的方法:
+	IProject project = ws.getRoot().getProject("projects");
+注意:这里面的方法即使取不到指定的资源，我们也可以再通过随后的project.create(null);来创建，而相对的没有直接创建资源的方法。
+
+38.关联编辑器和package explore视图
+在package explore视图有一个link with XXX的方向按钮，点中即可。
+
+39.label上的下划线
+可以通过在指定字符前加&来完成。
+
+40.判断[Shift]＋[Ctrl]＋[S]同时按下的简单方法 
+e.isShiftDown()&&e.isControlDown()&&e.getKeyCode()==KeyEvent.VK_S 
+
+还可以用e.getModifiersEx();判断时间发生后一刹那Shift，Alt，Ctrl等键的状态，例如 
+    int keycode = e.getKeyCode(); 
+    String presskey = e.getKeyText(keycode); 
+    int mod = e.getModifiersEx(); 
+    if ((mod & InputEvent.SHIFT_DOWN_MASK) != 0){ 
+      presskey += " +SHIFT"; 
+    } 
+    if ((mod & InputEvent.ALT_DOWN_MASK) != 0){ 
+      presskey += " +ALT"; 
+    } 
+    if ((mod & InputEvent.CTRL_DOWN_MASK) != 0){ 
+      presskey += " +CTRL"; 
+    } 
+如果此时[Shift]＋[Ctrl]＋[G]一起按了 presskey 的值就是G+SHIFT+CTRL 
+
+41.tree和contentProvider的关系
+当展开node的时候
+AbstractTreeViewer.createChildren()方法这里面会先去找这棵树的item节点下
+是否已经存在节点，如果已经存在利用tree本身的缓存机制展开，否则才去调用
+contentprovider
+
+42.默认的首选项
+PlatformUI.getPreferenceStore()
+这个首选项的位置在org.eclipse.ui上,但是要在close stdio的时候才会保存
+
+
+43.打开项目内文件的方法:
+取得激活页:
+	IWorkbenchPage page = PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage();
+取得project:
+	IProject project = ResourcesPlugin.getWorkspace().getRoot().getProject("TestProject");
+定位文件位置:
+	IFile java_file = project.getFile(new Path("/java_file.txt"));
+打开editor:
+	IDE.openEditor(page, java_file);
+//指定打开的editorID:
+	IDE.openEditor(page, java_file, "org.eclipse.jdt.ui.CompilationUnitEditor");
+
+44.取得插件定义的方法
+IExtensionRegistry registry = Platform.getExtensionRegistry();
+configurationElements = registry.getConfigurationElementsFor("org.talend.dataprofiler.core.service"); //$NON-NLS-1$
+其中参数中的字符串就是扩展点的ID
+然后通过这个对象就可以取到扩展点定义的属性了
+如:element.getAttribute("serviceId")
+
+45.利用类加载器取得相关文件
+someClassInstance.class.getResourceAsStream(path)
+方法中的参数path 实际上是一个以/开始的完全路径，这个路径以class作为起始位置
+
+
+46.执行actiong的时候改变鼠标状态
+public class DoubleClickTreeNodeAction extends Action {   
+  
+    /*  
+     * (non-Javadoc)  
+     *   
+     * @see org.eclipse.jface.action.Action#run()  
+     */  
+    public void run() {   
+        // get Display from your own plug-in   
+        BusyIndicator.showWhile(Activator.getDefault().getWorkbench()   
+                .getDisplay(), new Runnable() {   
+            public void run() {   
+                performAction();   
+            }   
+        });   
+    }   
+  
+    private void performAction() {   
+        // connecting to database...   
+    }   
+  
+}  

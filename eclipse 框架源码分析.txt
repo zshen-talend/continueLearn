@@ -1,0 +1,133 @@
+(1)   下面是常见的菜单的菜单路径。
+
+l   file/fileStart：【文件】的开始区。
+
+l   file/new/additions：【文件】的【新建】菜单内部的【附加】组。
+
+l   file/new.ext：【文件】的【新建】区。
+
+l   file/close.ext：【文件】的【关闭】区。
+
+l   file/save.ext：【文件】的【保存】区。
+
+l   file/print.ext：【文件】的【打印】区。
+
+l   file/open.ext：【文件】的【打开】区。
+
+l   file/import.ext：【文件】的【导入】区。
+
+l   file/additions：【文件】的【附加】区。
+
+l   file/mru：【文件】的【最近的文档】区。
+
+l   file/fileEnd：【文件】的【结束】区。
+
+l   edit/editStart：【编辑】的【开始】区。
+
+l   edit/undo.ext：【编辑】的【撤销】区。
+
+l   edit/cut.ext：【编辑】的【剪切】区。
+
+l   edit/find.ext：【编辑】的【查找】区。
+
+l   edit/add.ext：【编辑】的【添加】区。
+
+l   edit/fileEnd：【编辑】的【结束】区。
+
+l   edit/additions：【编辑】的【附加】区。
+
+l   org.eclipse.jdt.ui.refactoring.menu：【重构】区。
+
+l   project/projStart：【项目】的【开始】区。
+
+l   project/open.ext：【项目】的【打开】区。
+
+l   project/build.ext：【项目】的【建立】区。
+
+l   project/additions：【项目】的【附加】区。
+
+l   project/projEnd：【项目】的【结束】区。
+
+l   org.eclipse.ui.run：【运行】区。
+
+l   window/additions：【窗口】的【附加】区。
+
+l   window/additionsend：【窗口】的【结束】区。
+
+l   help/helpStart：【帮助】的【开始】区。
+
+l   help/group.main.ext：【帮助】的【主要组】区。
+
+l   help/group.tutorials：【帮助】的【教程组】区。
+
+l   help/group.tools：【帮助】的【工具组】区。
+
+l   help/group.updates：【帮助】的【更新组】区。
+
+l   help/helpEnd：【帮助】的【结束】区。
+
+l   help/additions：【帮助】的【附加】区。
+
+l   help/group.about.ext：【帮助】的【关于】区。
+
+l   org.eclipse.ui.run/runGroup 【运行】的【运行】区
+
+(2)   下面是常见的工具条的工具条路径。
+
+l   org.eclipse.ui.workbench.file/new.ext：【文件】的【新建】区。
+
+l   org.eclipse.ui.workbench.file/save.ext：【文件】的【保存】区。
+
+l   org.eclipse.ui.workbench.file/print.ext：【文件】的【打印】区。
+
+l   org.eclipse.ui.workbench.file/build.ext：【文件】的【建立】区。
+
+l   org.eclipse.ui.workbench.navigate：【导航】区。
+
+l   org.eclipse.debug.ui.launchActionSet：【启动】区。
+
+l   org.eclipse.search.searchActionSet：【搜索】区。 
+
+l   org.eclipse.debug.ui.launchActionSet/addations 【运行】区
+
+2.对应插件的位置
+org.eclipse.jdk.ui插件中
+java editor
+
+3.在org.eclipse.ui.ide插件中
+file菜单的open file项
+
+4.在org.eclipse.jdt.ui插件中
+package Explorer视图
+Hierarchy视图
+
+5.org.eclipse.ui.actions.ActionFactory
+	预先在Workbench中注册的标准操作
+
+6.org.eclipse.pde.ui
+	plugin.xml的编辑器:
+	ManifestEditor------->MultiSourceEditor------->PDEFormEditor------->FormEditor
+
+7.IPageLayout
+	接口中有很多关于视图ID信息
+
+8.java的大纲视图和package explorer
+	在这里大纲视图和package explorer使用了同一个labelProvider。这是在具体判断上，拆分比较细罢了！
+
+9.eclipse中的扩展页
+ExtensionFactory一些PreferencePage是从这个工厂中出现的。
+
+10.org.eclipse.jface.util.Util(Util.isWindows())
+用这个可以判断当前操作系统是否是windows
+	
+11.launch文件
+	org.eclipse.debug.ui
+	org.eclipse.debug.core
+
+12.界面和svn等信息
+	org.eclipse.core.runtime
+
+13.project信息
+	org.eclipse.core.resource
+
+14.

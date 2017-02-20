@@ -1,0 +1,33 @@
+1.nslookup 查找mx server
+nslookup -type=mx sina.com
+
+2.telnet 发送邮件
+>telnet smtp.sina.com 25
+220 smtp682-31.sinamail.sina.com.cn
+>ehlo
+250-smtp682-31.sinamail.sina.com.cn
+250-AUTH LOGIN PLAIN
+250-AUTH=LOGIN PLAIN
+250-STARTTLS
+250 8BITMIME
+>auth login
+334 VXNlcm5hbWU6
+>dGFsZW5kX3Rlc3Q=(talend_test)
+334 UGFzc3dvcmQ6
+>dGFsZW5k(talend 需要用base64进行转码)
+235 OK Authenticated
+>mail from:<talend_test@sina.com>
+250 ok
+>rcpt to:<shenze406@sina.com>
+250 ok
+>rcpt to:<403184414@qq.com>
+250 ok
+>data
+354 End data with <CR><LF>.<CR><LF>
+>email test
+>.
+250 ok queue id 81289321365139
+quit
+221 smtp682-31.sinamail.sina.com.cn
+
+Connection to host lost.

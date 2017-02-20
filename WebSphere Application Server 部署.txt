@@ -1,0 +1,5 @@
+1.WebSphere Application Server 要求引入的js和css必须是唯一，如有重复，就会跳转到未知页面。
+
+2.严格检查xml,当使用xpath寻找结点时，weblogic中element.selectNodes("//Field[@Name='evalprojectid'][contains(text(),'"+evalprojectid+"')]/preceding-sibling::Field[@Name='evalprojectsttime']");
+	同样可以取到结点后的值。在was中想取结点后的结点需用following-sibling::替换preceding-sibling::
+

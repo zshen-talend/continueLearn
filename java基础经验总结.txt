@@ -1,0 +1,246 @@
+1.重要的ascll码：A65 a97 回车13 换行10 空格20 30 0
+2.重要的转义字符: \n--换行 \t--制表符 \r--回车
+
+
+2.访问级别  访问控制修饰符  同类  同包  子类 不同的包
+ 
+ 公开  public 可以 可以 可以 可以
+ 
+ 受保护  protected 可以 可以 可以 
+ 
+ 默认（包） 无  可以 可以   
+ 
+ 私有  private 可以     
+
+
+3.平常用记事本打开java文件的时候，会出现很多的黑色方块，这个方块是因为换行符位数不同的结果，linux下的换行只有一个ASCLL码10而在WINDOWS中换行由两个ASCLL码组成分别是，回车13和换行10
+
+4.一个java文件中只能有一个public类，因为这个类文件要保持与public类同名。
+
+5.javap 命令可以反编译一个java文件
+
+6.反射机制
+	反射机制可以很好的解决各个模块或者类之间的依赖关系，特别是在插件开发的时候，解开插件间的依赖就可以避免很多要在配置文件中配置的项，而这些项很容易把你搞得混乱。
+	例:
+		DatabaseDefinition databaseDefinition=null;
+				Class cls = input.getClass();
+				Method med;
+				try {
+					med = cls.getMethod("getDatabaseDefinition");
+					databaseDefinition=(DatabaseDefinition)med.invoke(input);
+				} catch (Exception e) {
+					System.out.println(e);
+				}
+
+6.java中参数传递都是值传递，但对于对象来说传的这个值是内存地址。
+且在方法中不能改变原对象的引用如下例：
+例如:
+public class test2 {
+
+	/**
+	 * @param args
+	 */
+	String test;
+	
+	public static void main(String[] args) {
+		String test =new String("Hello");
+		test2 t=new test2();
+		
+		t.methodA(t);
+		System.out.println("22222222 "+t.test);
+
+	}
+	public void methodA(test2 test){
+		test.test+="world";
+		System.out.println("22222222 "+test.test);
+	}
+
+}
+结果为:
+22222222 nullworld
+22222222 nullworld
+
+但
+public class test2 {
+
+	/**
+	 * @param args
+	 */
+	String test;
+	
+	public static void main(String[] args) {
+		String test =new String("Hello");
+		test2 t=new test2();
+		
+		t.methodA(test);
+		System.out.println("22222222 "+test);
+
+	}
+	public void methodA(String test){
+		test+="world";
+		System.out.println("22222222 "+test);
+	}
+
+}
+结果为:
+22222222 Helloworld
+22222222 Hello
+
+7.注意String 的replace算法是汉回一个替换后的字符串，而不是修改当前字符串。
+
+8.如果一个类中没有main函数则该类可以正常编译，执行时却报告找不到main函数。
+
+9.public 等限制修饰符只能用在类中的变量（属性）上，不能用在方法的变量中，否则报错。
+
+'\t'……9
+'\n'……10
+'\r'……13
+
+10.类的动态对象生成
+Class c = Class.forName(className);//className是一个类名。
+　　　　factory = (ForumFactory)c.newInstance();
+
+
+11.当需要对字符串进行多次的修改时
+	最好使用StringBuffer.applend方法来代替String+String,这样执行起来会更快。
+
+12.java接口
+	java接口中声明的方法默认都是public abstract.而声明的属性默认都是public static.
+
+13.System.getProperty
+例:key=value
+
+user.dir=G:\eclipse3.3.2\eclipse\workspace\com.css.jface.application
+
+os.name=Windows XP
+
+user.home=C:\Documents and Settings\OWNER
+
+user.name=OWNER
+
+file.separator=\
+
+14.生成正负的随机数
+	 Random random = new Random();                   //生成随机类
+
+    //获取随机数
+    double getRandomNum() {
+        //生成随机boolean值决定随机数的正负值
+        if (random.nextBoolean()) {
+            return random.nextDouble();
+        } else {
+            return 0 - random.nextDouble();
+        }
+    }
+
+15.数字和日期的格式化
+	NumberFormat nf = new DecimalFormat("#.##");    //数字输出格式
+	SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss");
+        return formatter.format(new Date());
+
+16.CachedRowSet使用注意
+	当取得为字符串时，getString则可以得知数据库中是否有空值。
+	当取得为浮点型或整形时，getFloat则数据库中的空值将自动转化为0，从而不能区分空值。
+
+17.java.util.logging包的日志系统的使用
+	1)基本类的介绍:	
+		Logger: 应用程序进行日志记录调用的主要实体。 Logger对象用于记录特定系统或应用程序的消息。  
+		LogRecord: 用于在日志框架和单个记录处理程序之间传递记录请求。  
+		Handler: 日志数据的最终输出处理器。它将LogRecord对象导出到各种目标，包括内存、输出流、控制台、文件和套接字。多种 Handler子类可供用于这种用途。  
+
+		Level: 定义一组标准的记录级别，可用于控制记录的输出。可以把程序配置为只输出某些级别的记录，而忽略其他级别的输出。  
+		Filter: 精细过滤、控制记录的内容，比记录级别所提供的控制准确得多。 记录API支持通用的过滤器机制，这种机制允许应用程序代码添加任意过滤器以便控制记录的输出。  
+		Formatter: 为LogRecord对象的格式化提供支持。  
+
+		LogManager: Java Logging框架中唯一的、全局的对象，用于维护与Logger记录器及日志服务的一系列共享的数据结构及状态。它负责整个日志框架的初始化、维护一组全局性的Handle对象、 维护一个树形结构的Logger的名字空间、诊测日志框架配置文件的改变从而重新读入并应用相关的参数以及负责程序停止运行时整个日志框架的清理工作。  
+
+	2)创建实例
+		Logger对象可以通过调用工厂方法getLogger或getAnonymousLogger获取。  
+		//获取一个名为“A”的Logger对象  
+		Logger loggerA= Logger.getLogger(“A”);  
+		// 获取一个名为“A.B”的Logger对象，其上级记录器为loggerA。  
+		Logger loggerAB= Logger.getLogger(“A.B”);  
+		//获取一个匿名Logger对象  
+		Logger loggerTmp = Logger.getAnonymousLogger();  
+
+	3)关于配置文件
+		配置文件在jdk_home/jre/lib/logging.properties
+		在这里面有一些默认值，包括所有的logger对象在启动时便加载的ConsoleHandler(控制台句柄)。
+		且设置该句柄的level为INFO如不作修改在INFO以下的config等级别的日志将不能输出
+
+18.将数组转换成List
+	Arrays.asList(filterExtensions)
+
+19.List内元素类型转换
+  public static <T> List<T> castList(Class<? extends T> clazz, Collection<?> c) {
+        List<T> r = new ArrayList<T>(c.size());
+        for (Object o : c) {
+            r.add(clazz.cast(o));
+        }
+        return r;
+    }
+
+20.listUtils其中包含一些List合并的方法
+
+
+21 判断两个类是否相同
+Java 虚拟机不仅要看类的全名是否相同，还要看加载此类的类加载器是否一样。只有两者都相同的情况，才认为两个类是相同的。
+
+22 Class.forName 和 fscl1.loadClass
+前者如果不写入其它参数，默认是会初始化这个class的实例也就是执行类前面的静态代码块。
+
+23 类加载器的重写
+重写一个类加载器一般只需要重写findClass方法。
+一个类被加载的时候，首先回去调用findLoadedClass查找缓存中是否有该类，
+然后按照顺序调用父类加载器，最后才会找到当前定义的加载器
+
+24 打印当前线程的堆栈信息
+public class Test {
+ public static void main(String args[]) {
+    new Test().doit();
+ }
+ public void doit() {
+    System.out.println(
+       Thread.currentThread().getStackTrace()[2].getMethodName()); // output : main
+ }
+}
+
+25 java.lang.System.in也是可以被设置的。
+	System.setIn();
+
+26. 内存溢出前 生成dump文件
+（1）-XX:+HeapDumpOnOutOfMemoryError参数表示当JVM发生OOM时，自动生成DUMP文件。
+
+（2）-XX:HeapDumpPath=${目录}参数表示生成DUMP文件的路径，也可以指定文件名称，例如：-XX:HeapDumpPath=${目录}/java_heapdump.hprof。如果不指定文件名，默认为：java_<pid>_<date>_<time>_heapDump.hprof。
+
+27. OutOfMemoryError 种类
+1）java.lang.OutOfMemoryError: Java heap space  
+原因：Heap内存溢出，意味着Young和Old generation的内存不够。 
+解决：调整java启动参数 -Xms -Xmx 来增加Heap内存。
+
+2）java.lang.OutOfMemoryError: unable to create new native thread  
+原因：Stack空间不足以创建额外的线程，要么是创建的线程过多，要么是Stack空间确实小了
+解 决：由于JVM没有提供参数设置总的stack空间大小，但可以设置单个线程栈的大小；而系统的用户空间一共是3G，除了Text/Data/BSS /MemoryMapping几个段之外，Heap和Stack空间的总量有限，是此消彼长的。因此遇到这个错误，可以通过两个途径解决：
+1.通过 -Xss启动参数减少单个线程栈大小，这样便能开更多线程（当然不能太小，太小会出现StackOverflowError）；
+2.通过-Xms -Xmx 两参数减少Heap大小，将内存让给Stack（前提是保证Heap空间够用）。
+
+3）java.lang.OutOfMemoryError: PermGen space  
+原因：Permanent Generation空间不足，不能加载额外的类。
+解决：调整-XX:PermSize= -XX:MaxPermSize= 两个参数来增大PermGen内存。一般情况下，这两个参数不要手动设置，只要设置-Xmx足够大即可，JVM会自行选择合适的PermGen大小。
+
+4）java.lang.OutOfMemoryError: Requested array size exceeds VM limit  
+原因：这个错误比较少见（试着new一个长度1亿的数组看看），同样是由于Heap空间不足。如果需要new一个如此之大的数组，程序逻辑多半是不合理的。 
+解决：修改程序逻辑吧。或者也可以通过-Xmx来增大堆内存。
+
+5） java.lang.OutOfMemoryError: gc overhead limit exceeded
+原因：在GC花费了大量时间，却仅回收了少量内存时，也会报出OutOfMemoryError，我只遇到过一两次。当使用-XX:+UseParallelGC或-XX:+UseConcMarkSweepGC收集器时，在上述情况下会报错，
+
+6）java.lang.StackOverflowError  
+原因：这也内存溢出错误的一种，即线程栈的溢出，要么是方法调用层次过多（比如存在无限递归调用），要么是线程栈太小。 
+解决：优化程序设计，减少方法调用层次；调整-Xss参数增加线程栈大小。 
+
+7) java.lang.LinkageError
+某个类被重复加载，解决方案去掉不需要的
+
+8)java.util.Date日期类型的标准格式
+EEE MMM dd HH:mm:ss zzz yyyy

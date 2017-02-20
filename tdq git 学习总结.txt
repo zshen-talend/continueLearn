@@ -1,0 +1,17 @@
+1.更新某个repository
+git pull
+
+2.克隆某个repository
+git clone
+
+3.提交一个commite到另一个分支
+git cherry pick hash number
+
+4.显示所有的源
+git remote -v
+
+5.指定pull哪个源的代码
+git 源名称 pull
+
+6.指定添加某个源
+git remote add 源名称 地址

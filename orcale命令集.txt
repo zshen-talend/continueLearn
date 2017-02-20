@@ -1,0 +1,584 @@
+1.用户与逻辑结构的关系
+	方案是一组数据库对象的集合，创建用户时，会自动生成一个与用户同名的方案，且贵同名用户所有。
+
+2.簇
+	把多个共享列的表在物理上存在一起。且不影响sql查询语句。
+
+3.索引
+	表内数据项与其存储位置的对应关系。
+
+4.数据库的组成
+	数据库->表空间->表->段->区间->数据块
+
+5.数据块
+	数据块既是物理单位也是逻辑单位，大小由DB_BLOCK_SIZE指定。
+
+6.区间
+	区间是一个逻辑单元，且是Orcale分配磁盘空间的最小单位。MINEXTENTS，创建段时包含的最小区间数。
+
+7.段
+	分类:数据段、索引段、临时段、回滚段。
+	每个不在簇中的表都有一个数据段。数据存储在数据段的区间中。
+	每个簇都有一个数据段，簇中每个表的数据都存储在簇的数据段中。
+
+8.表空间
+	表空间为逻辑存储单元。数据库至少有一个SYSTEM的表空间，创建表时需定义保存表的表空间。
+	分类:	大文件表空间（Bigfile Tablespaces）
+		系统表空间（SYSTEM Tablespace）始终在线的表空间，存储数据字典。
+		辅助表空间（SYSAUX Tablespace）默认存储位置。
+		撤消表空间（Undo Tablespace）
+		临时表空间（Temporary Tablespace）
+		用户表空间（Users Tablespace）
+
+9.例程
+	例程是Orcale启动时分配的一块系统全局区(SGA)以及一个到多个Orcale进程。用户使用数据库实际使用的是例程。而数据库指的是物理的存储。
+
+
+10.内存结构
+	系统全局区(System Global Area)SGA
+	程序全局区(Program Global Area)PGA
+	一个例程对应一个SGA,用来连接多个用户的访问。
+
+11.数据缓冲区
+	DB_BLOCK_SIZE  缓冲区数据块大小 
+	DB_BLOCK_BUFFERS  缓冲区数据块个数
+
+12.表空间相关信息
+V$TABLESPACE	控制文件中保存的所有表空间的名称和数量
+DBA_TABLESPACES	所有表空间的描述信息
+USER_TABLESPACES	所有用户可访问表空间的描述信息
+DBA_TABLESPACE_GROUPS	所有表空间组及其所属的表空间信息
+DBA_SEGMENTS	所有表空间中的区间信息
+USER_SEGMENTS	所有用户表空间中的区间信息
+DBA_FREE_SPACE	所有表空间中的空闲区间信息
+USER_FREE_SPACE	所有用户表空间中的空闲区间信息
+V$DATAFILE	所有数据文件信息
+V$TEMPFILE	所有临时文件信息
+DBA_DATA_FILES	显示所有属于表空间的数据文件信息
+DBA_TEMP_FILES	显示所有属于临时表空间的临时文件信息
+V$PWFILE_USERS	SYS用户信息视图
+
+13.oracle登录错误ora-12545
+现象:用以前的数据库名和用户名登录提示找不到目标主机，新建的可以。
+原因:数据库名和主机名有相应的配置文件一一对应，当你在使用过程中对其中一个作了修改，就会造成这样的问题。
+解决:D:\oracle\ora90\network\ADMIN目录下有tnsnames.ora和listener.ora两个配置文件，分别是主机和数据库名的对应和监听和数据库名的对应。做同步修改就可以解决问题。
+
+
+修改表结构
+1，增加新字段：add (name varchar(20) default 'unkown');如：SQL> run;
+1 alter table test3
+2* add(address varchar(100))表已更改。2，修改表字段：modify (name varchar2(30) default 'hebei');如：SQL> alter table test3
+2 modify (address varchar(20) default 'unkown');表已更改。SQL> select * from test3;        
+	ID NAME                 ADDRESS
+---------- -------------------- --------------------
+         1 unknow
+但是在修改default值时，只有在新增加数据时，才会体现出来；如：SQL> insert into test3
+2 (id,name)
+3 values(2,'hh');已创建 1 行。SQL> select * from test3;        ID NAME                 ADDRESS
+---------- -------------------- --------------------
+         1 unknow
+         2 hh                   unkown3，删除表字段：drop column column_name;通常在系统不忙的时候删除不使用的字段，可以先设置字段为unused;如：SQL> run
+1 alter table test3
+2* set unused column address表已更改。SQL> desc test3;
+名称                                      是否为空? 类型
+----------------------------------------- -------- ----------------------------
+ID                                                 NUMBER(38)
+NAME                                               VARCHAR2(20)
+再执行删除：SQL> alter table test3
+2 drop unused column;表已更改。SQL> desc test3;
+名称                                      是否为空? 类型
+----------------------------------------- -------- ----------------------------
+ID                                                 NUMBER(38)
+NAME                                               VARCHAR2(20)4，表重命名：rename table_name1 to table_name2;
+
+如：SQL> rename test3 to test2;
+表已重命名。SQL> desc test2;
+名称                                      是否为空? 类型
+----------------------------------------- -------- -------------------------
+ID                                                 NUMBER(38)
+NAME                                               VARCHAR2(20)5，清空表中的数据：TRUNCATE TABLE table_name;
+如：SQL> truncate table test2;表被截断。SQL> select * from test2;未选定行6，给表增加注释：COMMENT ON TABLE table_name;如：SQL> comment on table test2 
+2 is 'This is a test table';注释已创建。7，删除表结构：DROP TABLE table_name;此操作属DDL，会自动提交且不可回滚；
+
+
+
+SELECT p.Spid "OS Thread", b.NAME "Name-User", s.Program, s.Sid, s.Serial#, 
+
+s.Osuser, s.Machine 
+
+FROM V$process p, V$session s, V$bgprocess b 
+
+WHERE p.Addr = s.Paddr 
+
+AND p.Addr = b.Paddr 
+
+And (s.sid=&1 or p.spid=&1) 
+
+UNION ALL 
+
+SELECT p.Spid "OS Thread", s.Username "Name-User", s.Program, s.Sid, 
+
+s.Serial#, s.Osuser, s.Machine 
+
+FROM V$process p, V$session s 
+
+WHERE p.Addr = s.Paddr 
+
+And (s.sid=&1 or p.spid=&1) 
+
+AND s.Username IS NOT NULL; 
+
+3、根据sid查看对应连接正在运行的sql 
+
+
+SELECT /*+ PUSH_SUBQ */ 
+
+Command_Type, Sql_Text, Sharable_Mem, Persistent_Mem, Runtime_Mem, Sorts, 
+
+Version_Count, Loaded_Versions, Open_Versions, Users_Opening, Executions, 
+
+Users_Executing, Loads, First_Load_Time, Invalidations, Parse_Calls, 
+
+Disk_Reads, Buffer_Gets, Rows_Processed, SYSDATE Start_Time, 
+
+SYSDATE Finish_Time, '>' || Address Sql_Address, 'N' Status 
+
+FROM V$sqlarea 
+
+WHERE Address = (SELECT Sql_Address 
+
+FROM V$session 
+
+WHERE Sid = &sid ); 
+
+4、查找object为哪些进程所用 
+
+
+SELECT p.Spid, s.Sid, s.Serial# Serial_Num, s.Username User_Name, 
+
+a.TYPE Object_Type, s.Osuser Os_User_Name, a.Owner, 
+
+a.OBJECT Object_Name, 
+
+Decode(Sign(48 - Command), 1, To_Char(Command), 'Action Code #' || To_Char(Command)) Action, 
+
+p.Program Oracle_Process, s.Terminal Terminal, s.Program Program, 
+
+s.Status Session_Status 
+
+FROM V$session s, V$access a, V$process p 
+
+WHERE s.Paddr = p.Addr 
+
+AND s.TYPE = 'USER' 
+
+AND a.Sid = s.Sid 
+
+AND a.OBJECT = '&obj' 
+
+ORDER BY s.Username, s.Osuser 
+
+
+5、查看有哪些用户连接 
+
+
+SELECT s.Osuser Os_User_Name, 
+
+Decode(Sign(48 - Command),1,To_Char(Command), 
+
+'Action Code #' || To_Char(Command)) Action, 
+
+p.Program Oracle_Process, Status Session_Status, s.Terminal Terminal, 
+
+s.Program Program, s.Username User_Name, 
+
+s.Fixed_Table_Sequence Activity_Meter, '' Query, 0 Memory, 
+
+0 Max_Memory, 0 Cpu_Usage, s.Sid, s.Serial# Serial_Num 
+
+FROM V$session s, V$process p 
+
+WHERE s.Paddr = p.Addr 
+
+AND s.TYPE = 'USER' 
+
+ORDER BY s.Username, s.Osuser 
+
+
+6、根据v.sid查看对应连接的资源占用等情况 
+
+
+SELECT n.NAME, v.VALUE, n.CLASS, n.Statistic# 
+
+FROM V$statname n, V$sesstat v 
+
+WHERE v.Sid = &sid 
+
+AND v.Statistic# = n.Statistic# 
+
+ORDER BY n.CLASS, n.Statistic# 
+
+
+7、查询耗资源的进程（top session） 
+
+
+SELECT s.Schemaname Schema_Name, 
+
+Decode(Sign(48 - Command), 
+
+1, To_Char(Command), 'Action Code #' || To_Char(Command)) Action, 
+
+Status Session_Status, s.Osuser Os_User_Name, s.Sid, p.Spid, 
+
+s.Serial# Serial_Num, Nvl(s.Username, '[Oracle process]') User_Name, 
+
+s.Terminal Terminal, s.Program Program, St.VALUE Criteria_Value 
+
+FROM V$sesstat St, V$session s, V$process p 
+
+WHERE St.Sid = s.Sid 
+
+AND St.Statistic# = To_Number('38') 
+
+AND ('ALL' = 'ALL' OR s.Status = 'ALL') 
+
+AND p.Addr = s.Paddr 
+
+ORDER BY St.VALUE DESC, p.Spid ASC, s.Username ASC, s.Osuser ASC 
+
+8、查看锁（lock）情况 
+
+
+SELECT /*+ RULE */ 
+
+Ls.Osuser Os_User_Name, Ls.Username User_Name, 
+
+Decode(Ls.TYPE, 
+
+'RW', 'Row wait enqueue lock', 'TM', 'DML enqueue lock', 
+
+'TX', 'Transaction enqueue lock', 'UL', 'User supplied lock') Lock_Type, 
+
+o.Object_Name OBJECT, 
+
+Decode(Ls.Lmode, 
+
+1, NULL, 2, 'Row Share', 3, 'Row Exclusive', 
+
+4, 'Share', 5, 'Share Row Exclusive', 6, 'Exclusive', 
+
+NULL) Lock_Mode, 
+
+o.Owner, Ls.Sid, Ls.Serial# Serial_Num, Ls.Id1, Ls.Id2 
+
+FROM Sys.Dba_Objects o, 
+
+(SELECT s.Osuser, s.Username, l.TYPE, l.Lmode, s.Sid, s.Serial#, l.Id1, 
+
+l.Id2 
+
+FROM V$session s, V$lock l 
+
+WHERE s.Sid = l.Sid) Ls 
+
+WHERE o.Object_Id = Ls.Id1 
+
+AND o.Owner <> 'SYS' 
+
+ORDER BY o.Owner, o.Object_Name 
+
+9、查看等待（wait）情况 
+
+
+SELECT Ws.CLASS, Ws.COUNT COUNT, SUM(Ss.VALUE) Sum_Value 
+
+FROM V$waitstat Ws, V$sysstat Ss 
+
+WHERE Ss.NAME IN ('db block gets', 'consistent gets') 
+
+GROUP BY Ws.CLASS, Ws.COUNT 
+
+10、求process/session的状态 
+
+
+SELECT p.Pid, p.Spid, s.Program, s.Sid, s.Serial# 
+
+FROM V$process p, V$session s 
+
+WHERE s.Paddr = p.Addr; 
+
+
+11、求谁阻塞了某个session(10g) 
+
+
+SELECT Sid, Username, Event, Blocking_Session, Seconds_In_Wait, Wait_Time 
+
+FROM V$session 
+
+WHERE State IN ('WAITING') 
+
+AND Wait_Class != 'Idle'; 
+
+
+12、查会话的阻塞 
+
+col user_name format a32 
+
+
+SELECT /*+ rule */ 
+
+Lpad(' ', Decode(l.Xidusn, 0, 3, 0)) || l.Oracle_Username User_Name, 
+
+o.Owner, o.Object_Name, s.Sid, s.Serial# 
+
+FROM V$locked_Object l, Dba_Objects o, V$session s 
+
+WHERE l.Object_Id = o.Object_Id 
+
+AND l.Session_Id = s.Sid 
+
+ORDER BY o.Object_Id, Xidusn DESC; 
+
+
+col username format a15 
+
+col lock_level format a8 
+
+col owner format a18 
+
+col object_name format a32 
+
+
+SELECT /*+ rule */ 
+
+s.Username, 
+
+Decode(l.TYPE, 'tm', 'table lock', 'tx', 'row lock', NULL) Lock_Level, 
+
+o.Owner, o.Object_Name, s.Sid, s.Serial# 
+
+FROM V$session s, V$lock l, Dba_Objects o 
+
+WHERE l.Sid = s.Sid 
+
+AND l.Id1 = o.Object_Id(+) 
+
+AND s.Username IS NOT NULL; 
+
+
+13、求等待的事件及会话信息/求会话的等待及会话信息 
+
+
+SELECT Se.Sid, s.Username, Se.Event, Se.Total_Waits, Se.Time_Waited, 
+
+Se.Average_Wait 
+
+FROM V$session s, V$session_Event Se 
+
+WHERE s.Username IS NOT NULL 
+
+AND Se.Sid = s.Sid 
+
+AND s.Status = 'ACTIVE' 
+
+AND Se.Event NOT LIKE '%SQL*Net%' 
+
+ORDER BY s.Username; 
+
+
+SELECT s.Sid, s.Username, Sw.Event, Sw.Wait_Time, Sw.State, 
+
+Sw.Seconds_In_Wait 
+
+FROM V$session s, V$session_Wait Sw 
+
+WHERE s.Username IS NOT NULL 
+
+AND Sw.Sid = s.Sid 
+
+AND Sw.Event NOT LIKE '%SQL*Net%' 
+
+ORDER BY s.Username; 
+
+14、求会话等待的file_id/block_id 
+
+col event format a24 
+
+col p1text format a12 
+
+col p2text format a12 
+
+col p3text format a12 
+
+
+SELECT Sid, Event, P1text, P1, P2text, P2, P3text, P3 
+
+FROM V$session_Wait 
+
+WHERE Event NOT LIKE '%SQL%' 
+
+AND Event NOT LIKE '%rdbms%' 
+
+AND Event NOT LIKE '%mon%' 
+
+ORDER BY Event; 
+
+
+SELECT NAME, Wait_Time 
+
+FROM V$latch l 
+
+WHERE EXISTS (SELECT 1 
+
+FROM (SELECT Sid, Event, P1text, P1, P2text, P2, P3text, P3 
+
+FROM V$session_Wait 
+
+WHERE Event NOT LIKE '%SQL%' 
+
+AND Event NOT LIKE '%rdbms%' 
+
+AND Event NOT LIKE '%mon%') x 
+
+WHERE x.P1 = l.Latch#); 
+
+15、求会话等待的对象 
+
+col owner format a18 
+
+col segment_name format a32 
+
+col segment_type format a32 
+
+
+SELECT Owner, Segment_Name, Segment_Type 
+
+FROM Dba_Extents 
+
+WHERE File_Id = &File_Id 
+
+AND &Block_Id BETWEEN Block_Id AND Block_Id + Blocks - 1; 
+
+16、求出某个进程，并对它进行跟踪 
+
+
+SELECT s.Sid, s.Serial# 
+
+FROM V$session s, V$process p 
+
+WHERE s.Paddr = p.Addr 
+
+AND p.Spid = &1; 
+
+
+Exec Dbms_System.Set_Sql_Trace_In_Session(&1, &2, TRUE); 
+
+Exec Dbms_System.Set_Sql_Trace_In_Session(&1, &2, FALSE); 
+
+17、求当前session的跟踪文件 
+
+
+SELECT P1.VALUE || '/' || P2.VALUE || '_ora_' || p.Spid || '.ora' Filename 
+
+FROM V$process p, V$session s, V$parameter P1, V$parameter P2 
+
+WHERE P1.NAME = 'user_dump_dest' 
+
+AND P2.NAME = 'instance_name' 
+
+AND p.Addr = s.Paddr 
+
+AND s.Audsid = Userenv('SESSIONID') 
+
+AND p.Background IS NULL 
+
+AND Instr(p.Program, 'CJQ') = 0; 
+
+18、求出锁定的对象 
+
+SELECT Do.Object_Name, Session_Id, Process, Locked_Mode 
+
+FROM V$locked_Object Lo, Dba_Objects Do 
+
+WHERE Lo.Object_Id = Do.Object_Id; 
+
+资料引用:http://www.knowsky.com/399497.html
+
+
+
+
+Oracle支持删除列的SQL，不过我不知道是否可用于其他数据库。
+
+SQL的语法格式如下：
+
+ALTER TABLE [schema_name.]table_name DROP COLUMN column_name1[|column_name2] [CASCADE CONSTRAINT]
+
+1  粗体部分为关键字
+
+2 斜体部分为表名和列名，必填
+
+3 方括号里为可选项，在实际书写SQL的时候，是不加方括号的。
+
+千里之行，始于足下。
+org.eclipse.datatools.sqltools.sqleditor.category
+org.eclipse.datatools.sqltools.SQLEditorScope
+
+
+创建和删除约束
+ALTER TABLE dept ADD CONSTRAINT ss PRIMARY KEY (storeid);
+ALTER TABLE dept ADD CONSTRAINT vv UNIQUE (fullname,code);
+ALTER TABLE dept drop CONSTRAINT zz
+ALTER TABLE dept drop CONSTRAINT ss
+
+添加和删除列
+alter table dept drop column code CASCADE CONSTRAINT//是否同时删除约束
+alter table name7 add code int
+alter table name7 add code2 varchar2(10) default 1 not null//当有数据在表中的时候需要给出默认值方可添加非空约束
+
+修改字段名(9i)
+ alter   table   table_name   rename   column   old_colname   to   new_colname;
+
+创建用户
+create user [username] identified by [password]
+
+删除用户
+drop user username cascade;
+
+给用户授权
+
+oracle的缺省角色有connect、resource、dba。它是一组可以分配给其它role 
+　　
+　　或用户的权限总和，connect 有8个权限，resource 有5个权限，dba有77 
+　　
+　　个权限。给一般连接用户赋connect，给一般编程人员赋connect加resource, 
+　　
+　　只有数据库管理员才有dba的权限。 
+【转自www.bitsCN.com】
+一、允许连接
+
+grant connect to username;
+
+二、允许用户使用数据库的表空间
+
+grant resource to username;
+
+三、允许用户创建序列
+
+grant create sequence to username;
+
+四、允许用户查看记录(emp表为例)
+
+grant select on emp to username;
+
+五、允许用户修改表记录(emp表为例)
+
+grant update on emp to username;
+
+导入导出数据库
+imp 导入
+导入数据时要求被导入的用户为DBA且登录的是导入到的用户，被导入用户要在后面填写。
+exp 导出
+导出数据时要求被导出用户是DBA。且权限可以一同导入导出。
+
+要想导入远程数据库中数据的书写格式
+imp username/password@远程库的别名

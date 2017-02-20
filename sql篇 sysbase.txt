@@ -1,0 +1,23 @@
+JZ0SJ:没有在此数据库中发现元数据存取器信息。请按jConnect 文档中所述安装所需的表。 收藏 
+此方法针对的数据库是sybase，如果有其他数据库出现此类问题可以作为参考： 
+数据库是SYBASE11.92 
+驱动是JCONN2.JAR 
+服务器是TOMCAT5.0 
+连接数据库方式：jndi方式 
+出现这种问题的原因是由于Sybase的版本太低，SYBASE11.92是九几年的产品，解决问题的方法很简单 
+找一个Sybase的高版本找到jConnect-5_5（或者是jConnect-6_0）目录里面的sp目录，这个目录下面 
+有sql_server12.5.sql（版本不同文件名称也不一样根据具体情况而定） 
+如果是windows下面在命令提示符里面执行此命令： 
+isql -U sa -P -S -i E:\sybase\sybase\jConnect-6_0\sp\sql_server12.5.sq l（根据自己具体的目录而定） 
+如果是在Unix和Linux下面把sql_server12.5.sql添加到指定目录下面 然后执行 
+isql -U sa -P -S -i $sybase/$jConnect/sp/$sql_server12.5.sql（根据自己具体的目录而定） 
+注意：一定要在sa 这个超级用户下面执行 
+执行sql_server12.5.sql后master数据库就会新建一些表的，至此应该就会和数据库连接上的。
+
+1.sysbase替换字符串
+SELECT STR_REPLACE("abc99922defg121212hicde","a","")
+
+2.转换字段类型
+convert(char(2),字段1)
+
+

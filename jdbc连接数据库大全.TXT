@@ -1,0 +1,404 @@
+ 
+
+
+jsp连接数据库大全 阅读次数10977 
+
+出处 (注明出处)catking     
+
+
+ 
+
+
+    [中文JAVA技术网 2002-11-28] 
+
+
+
+一、jsp连接Oracle8/8i/9i数据库（用thin模式） 
+testoracle.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("oracle.jdbc.driver.OracleDriver").newInstance(); 
+String url="jdbc:oracle:thin:@localhost:1521:orcl"; 
+//orcl为你的数据库的SID 
+String user="scott"; 
+String password="tiger"; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html> 
+
+
+二、jsp连接Sql Server7.0/2000数据库 
+testsqlserver.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance(); 
+String url="jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=pubs"; 
+//pubs为你的数据库的 
+String user="sa"; 
+String password=""; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html> 
+
+
+三、jsp连接DB2数据库 
+testdb2.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("com.ibm.db2.jdbc.app.DB2Driver ").newInstance(); 
+String url="jdbc:db2://localhost:5000/sample"; 
+//sample为你的数据库名 
+String user="admin"; 
+String password=""; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html> 
+
+
+四、jsp连接Informix数据库 
+testinformix.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("com.informix.jdbc.IfxDriver").newInstance(); 
+String url = 
+"jdbc:informix-sqli://123.45.67.89:1533/testDB:INFORMIXSERVER=myserver; 
+user=testuser;password=testpassword"; 
+//testDB为你的数据库名 
+Connection conn= DriverManager.getConnection(url); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html> 
+
+
+五、jsp连接Sybase数据库 
+testmysql.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("com.sybase.jdbc.SybDriver").newInstance(); 
+String url =" jdbc:sybase:Tds:localhost:5007/tsdata"; 
+//tsdata为你的数据库名 
+Properties sysProps = System.getProperties(); 
+SysProps.put("user","userid"); 
+SysProps.put("password","user_password"); 
+Connection conn= DriverManager.getConnection(url, SysProps); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html>
+
+ 
+六、jsp连接MySQL数据库 
+testmysql.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("org.gjt.mm.mysql.Driver").newInstance(); 
+String url ="jdbc:mysql://localhost/softforum?user=soft&password=soft1234&useUnicode=true&characterEncoding=8859_1" 
+//testDB为你的数据库名 
+Connection conn= DriverManager.getConnection(url); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html> 
+
+
+七、jsp连接PostgreSQL数据库 
+testmysql.jsp如下： 
+<%@ page contentType="text/html;charset=gb2312"%> 
+<%@ page import="java.sql.*"%> 
+<html> 
+<body> 
+<%Class.forName("org.postgresql.Driver").newInstance(); 
+String url ="jdbc:postgresql://localhost/soft" 
+//soft为你的数据库名 
+String user="myuser"; 
+String password="mypassword"; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+Statement stmt=conn.createStatement(ResultSet.TYPE_SCROLL_SENSITIVE,ResultSet.CONCUR_UPDATABLE); 
+String sql="select * from test"; 
+ResultSet rs=stmt.executeQuery(sql); 
+while(rs.next()) {%> 
+您的第一个字段内容为：<%=rs.getString(1)%> 
+您的第二个字段内容为：<%=rs.getString(2)%> 
+<%}%> 
+<%out.print("数据库操作成功，恭喜你");%> 
+<%rs.close(); 
+stmt.close(); 
+conn.close(); 
+%> 
+</body> 
+</html> 
+
+ 一、连接各种数据库方式速查表
+
+  下面罗列了各种数据库使用JDBC连接的方式，可以作为一个手册使用。 
+
+  1、Oracle8/8i/9i数据库（thin模式） 
+
+Class.forName("oracle.jdbc.driver.OracleDriver").newInstance(); 
+String url="jdbc:oracle:thin:@localhost:1521:orcl"; //orcl为数据库的SID 
+String user="test"; 
+String password="test"; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+
+  2、DB2数据库 
+
+Class.forName("com.ibm.db2.jdbc.app.DB2Driver ").newInstance(); 
+String url="jdbc:db2://localhost:5000/sample"; //sample为你的数据库名 
+String user="admin"; 
+String password=""; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+
+  3、Sql Server7.0/2000数据库 
+
+Class.forName("com.microsoft.jdbc.sqlserver.SQLServerDriver").newInstance(); 
+String url="jdbc:microsoft:sqlserver://localhost:1433;DatabaseName=mydb"; 
+//mydb为数据库 
+String user="sa"; 
+String password=""; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+
+  4、Sybase数据库 
+
+Class.forName("com.sybase.jdbc.SybDriver").newInstance(); 
+String url =" jdbc:sybase:Tds:localhost:5007/myDB";//myDB为你的数据库名 
+Properties sysProps = System.getProperties(); 
+SysProps.put("user","userid"); 
+SysProps.put("password","user_password"); 
+Connection conn= DriverManager.getConnection(url, SysProps); 
+
+  5、Informix数据库 
+
+Class.forName("com.informix.jdbc.IfxDriver").newInstance(); 
+String url = "jdbc:informix-sqli://123.45.67.89:1533/myDB:INFORMIXSERVER=myserver; 
+user=testuser;password=testpassword"; //myDB为数据库名 
+Connection conn= DriverManager.getConnection(url); 
+
+  6、MySQL数据库 
+
+Class.forName("org.gjt.mm.mysql.Driver").newInstance(); 
+String url ="jdbc:mysql://localhost/myDB?user=soft&password=soft1234&useUnicode=true&characterEncoding=8859_1" 
+//myDB为数据库名 
+Connection conn= DriverManager.getConnection(url); 
+
+  7、PostgreSQL数据库 
+
+Class.forName("org.postgresql.Driver").newInstance(); 
+String url ="jdbc:postgresql://localhost/myDB" //myDB为数据库名 
+String user="myuser"; 
+String password="mypassword"; 
+Connection conn= DriverManager.getConnection(url,user,password); 
+
+  8、access数据库直连用ODBC的
+
+Class.forName("sun.jdbc.odbc.JdbcOdbcDriver") ;
+String url="jdbc:odbc:Driver={MicroSoft Access Driver (*.mdb)};DBQ="+application.getRealPath("/Data/ReportDemo.mdb");
+Connection conn = DriverManager.getConnection(url,"","");
+Statement stmtNew=conn.createStatement() ;
+
+二、JDBC连接MySql方式
+
+  下面是使用JDBC连接MySql的一个小的教程 
+
+  1、查找驱动程序
+
+  MySQL目前提供的java驱动程序为Connection/J，可以从MySQL官方网站下载，并找到mysql-connector-java-3.0.15-ga-bin.jar文件，此驱动程序为纯java驱动程序，不需做其他配置。
+
+  2、动态指定classpath
+
+  如果需要执行时动态指定classpath，就在执行时采用－cp方式。否则将上面的.jar文件加入到classpath环境变量中。
+
+  3、加载驱动程序
+
+try{
+ Class.forName(com.mysql.jdbc.Driver);
+ System.out.println(Success loading Mysql Driver!);
+}catch(Exception e)
+{
+ System.out.println(Error loading Mysql Driver!);
+ e.printStackTrace();
+}
+
+  4、设置连接的url
+
+jdbc：mysql：//localhost/databasename[?pa=va][＆pa=va]  
+
+
+
+
+三、以下列出了在使用JDBC来连接Oracle数据库时可以使用的一些技巧
+
+  1、在客户端软件开发中使用Thin驱动程序
+
+  在开发Java软件方面，Oracle的数据库提供了四种类型的驱动程序，二种用于应用软件、applets、servlets等客户端软件，另外二种用于数据库中的Java存储过程等服务器端软件。在客户机端软件的开发中，我们可以选择OCI驱动程序或Thin驱动程序。OCI驱动程序利用Java本地化接口（JNI），通过Oracle客户端软件与数据库进行通讯。Thin驱动程序是纯Java驱动程序，它直接与数据库进行通讯。为了获得最高的性能，Oracle建议在客户端软件的开发中使用OCI驱动程序，这似乎是正确的。但我建议使用Thin驱动程序，因为通过多次测试发现，在通常情况下，Thin驱动程序的性能都超过了OCI驱动程序。
+
+  2、关闭自动提交功能，提高系统性能
+
+  在第一次建立与数据库的连接时，在缺省情况下，连接是在自动提交模式下的。为了获得更好的性能，可以通过调用带布尔值false参数的Connection类的setAutoCommit()方法关闭自动提交功能，如下所示：
+
+  conn.setAutoCommit(false);
+
+  值得注意的是，一旦关闭了自动提交功能，我们就需要通过调用Connection类的commit()和rollback()方法来人工的方式对事务进行管理。
+
+  3、在动态SQL或有时间限制的命令中使用Statement对象
+
+  在执行SQL命令时，我们有二种选择：可以使用PreparedStatement对象，也可以使用Statement对象。无论多少次地使用同一个SQL命令，PreparedStatement都只对它解析和编译一次。当使用Statement对象时，每次执行一个SQL命令时，都会对它进行解析和编译。这可能会使你认为，使用PreparedStatement对象比使用Statement对象的速度更快。然而，我进行的测试表明，在客户端软件中，情况并非如此。因此，在有时间限制的SQL操作中，除非成批地处理SQL命令，我们应当考虑使用Statement对象。
+
+  此外，使用Statement对象也使得编写动态SQL命令更加简单，因为我们可以将字符串连接在一起，建立一个有效的SQL命令。因此，我认为，Statement对象可以使动态SQL命令的创建和执行变得更加简单。
+
+  4、利用helper函数对动态SQL命令进行格式化
+
+  在创建使用Statement对象执行的动态SQL命令时，我们需要处理一些格式化方面的问题。例如，如果我们想创建一个将名字O'Reilly插入表中的SQL命令，则必须使用二个相连的“''”号替换O'Reilly中的“'”号。完成这些工作的最好的方法是创建一个完成替换操作的helper方法，然后在连接字符串心服用公式表达一个SQL命令时，使用创建的helper方法。与此类似的是，我们可以让helper方法接受一个Date型的值，然后让它输出基于Oracle的to_date()函数的字符串表达式。
+
+  5、利用PreparedStatement对象提高数据库的总体效率
+
+  在使用PreparedStatement对象执行SQL命令时，命令被数据库进行解析和编译，然后被放到命令缓冲区。然后，每当执行同一个PreparedStatement对象时，它就会被再解析一次，但不会被再次编译。在缓冲区中可以发现预编译的命令，并且可以重新使用。在有大量用户的企业级应用软件中，经常会重复执行相同的SQL命令，使用PreparedStatement对象带来的编译次数的减少能够提高数据库的总体性能。如果不是在客户端创建、预备、执行PreparedStatement任务需要的时间长于Statement任务，我会建议在除动态SQL命令之外的所有情况下使用PreparedStatement对象。
+
+  6、在成批处理重复的插入或更新操作中使用PreparedStatement对象
+
+  如果成批地处理插入和更新操作，就能够显著地减少它们所需要的时间。Oracle提供的Statement和 CallableStatement并不真正地支持批处理，只有PreparedStatement对象才真正地支持批处理。我们可以使用addBatch()和executeBatch()方法选择标准的JDBC批处理，或者通过利用PreparedStatement对象的setExecuteBatch()方法和标准的executeUpdate()方法选择速度更快的Oracle专有的方法。要使用Oracle专有的批处理机制，可以以如下所示的方式调用setExecuteBatch()：
+
+PreparedStatement pstmt3D null;
+try {
+ ((OraclePreparedStatement)pstmt).setExecuteBatch(30);
+ ...
+ pstmt.executeUpdate();
+} 
+  调用setExecuteBatch()时指定的值是一个上限，当达到该值时，就会自动地引发SQL命令执行，标准的executeUpdate()方法就会被作为批处理送到数据库中。我们可以通过调用PreparedStatement类的sendBatch()方法随时传输批处理任务。
+
+  7、使用Oracle locator方法插入、更新大对象（LOB）
+
+  Oracle的PreparedStatement类不完全支持BLOB和CLOB等大对象的处理，尤其是Thin驱动程序不支持利用PreparedStatement对象的setObject()和setBinaryStream()方法设置BLOB的值，也不支持利用setCharacterStream()方法设置CLOB的值。只有locator本身中的方法才能够从数据库中获取LOB类型的值。可以使用PreparedStatement对象插入或更新LOB，但需要使用locator才能获取LOB的值。由于存在这二个问题，因此，我建议使用locator的方法来插入、更新或获取LOB的值。
+
+  8、使用SQL92语法调用存储过程
+
+  在调用存储过程时，我们可以使用SQL92或Oracle PL/SQL，由于使用Oracle PL/SQL并没有什么实际的好处，而且会给以后维护你的应用程序的开发人员带来麻烦，因此，我建议在调用存储过程时使用SQL92。
+
+  9、使用Object SQL将对象模式转移到数据库中
+
+  既然可以将Oracle的数据库作为一种面向对象的数据库来使用，就可以考虑将应用程序中的面向对象模式转到数据库中。目前的方法是创建Java bean作为伪装的数据库对象，将它们的属性映射到关系表中，然后在这些bean中添加方法。尽管这样作在Java中没有什么问题，但由于操作都是在数据库之外进行的，因此其他访问数据库的应用软件无法利用对象模式。如果利用Oracle的面向对象的技术，可以通过创建一个新的数据库对象类型在数据库中模仿其数据和操作，然后使用JPublisher等工具生成自己的Java bean类。如果使用这种方式，不但Java应用程序可以使用应用软件的对象模式，其他需要共享你的应用中的数据和操作的应用软件也可以使用应用软件中的对象模式。
+
+  10、利用SQL完成数据库内的操作
+
+  我要向大家介绍的最重要的经验是充分利用SQL的面向集合的方法来解决数据库处理需求，而不是使用Java等过程化的编程语言。
+
+  如果编程人员要在一个表中查找许多行，结果中的每个行都会查找其他表中的数据，最后，编程人员创建了独立的UPDATE命令来成批地更新第一个表中的数据。与此类似的任务可以通过在set子句中使用多列子查询而在一个UPDATE命令中完成。当能够在单一的SQL命令中完成任务，何必要让数据在网上流来流去的？我建议用户认真学习如何最大限度地发挥SQL的功能。 
+  
+JDBC基础教程之驱动设置 
+1、概述
+  DriverManager 类是 JDBC 的管理层，作用于用户和驱动程序之间。它跟踪可用的驱动程序，并在数据库和相应驱动程序之间建立连接。另外，DriverManager 类也处理诸如驱动程序登录时间限制及登录和跟踪消息的显示等事务。
+  
+
+  
+
+  
+
+对于简单的应用程序，一般程序员需要在此类中直接使用的唯一方法是 DriverManager.getConnection。正如名称所示，该方法将建立与数据库的连接。JDBC 允许用户调用 DriverManager 的方法 getDriver、getDrivers 和 registerDriver 及 Driver 的方法 connect。但多数情况下，让 DriverManager 类管理建立连接的细节为上策。
+  1、跟踪可用驱动程序
+  DriverManager 类包含一列 Driver 类，它们已通过调用方法 DriverManager.registerDriver 对自己进行了注册。所有 Driver 类都必须包含有一个静态部分。它创建该类的实例，然后在加载该实例时 DriverManager 类进行注册。这样，用户正常情况下将不会直接调用 DriverManager.registerDriver；而是在加载驱动程序时由驱动程序自动调用。加载 Driver 类，然后自动在 DriverManager 中注册的方式有两种：
+  通过调用方法 Class.forName。这将显式地加载驱动程序类。由于这与外部设置无关，因此推荐使用这种加载驱动程序的方法。以下代码加载类 acme.db.Driver：
+class.forname("acme.db.driver"); 
+
+  如果将 acme.db.Driver 编写为加载时创建实例，并调用以该实例为参数的 DriverManager.registerDriver（本该如此），则它在 DriverManager 的驱动程序列表中，并可用于创建连接。
+  通过将驱动程序添加到 java.lang.System 的属性 jdbc.drivers 中。这是一个由 DriverManager 类加载的驱动程序类名的列表，由冒号分隔：初始化 DriverManager 类时，它搜索系统属性 jdbc.drivers，如果用户已输入了一个或多个驱动程序，则 DriverManager 类将试图加载它们。以下代码说明程序员如何在 ~/.hotjava/properties 中输入三个驱动程序类（启动时，HotJava 将把它加载到系统属性列表中）：
+  
+
+  
+
+jdbc.drivers=foo.bah.driver:wombat.sql.driver:bad.test.ourdriver; 
+
+  对 DriverManager 方法的第一次调用将自动加载这些驱动程序类。
+  注意：加载驱动程序的第二种方法需要持久的预设环境。如果对这一点不能保证，则调用方法 Class.forName 显式地加载每个驱动程序就显得更为安全。这也是引入特定驱动程序的方法，因为一旦 DriverManager 类被初始化，它将不再检查 jdbc.drivers 属性列表。
+  在以上两种情况中，新加载的 Driver 类都要通过调用 DriverManager.registerDriver 类进行自我注册。如上所述，加载类时将自动执行这一过程。
+  由于安全方面的原因，JDBC 管理层将跟踪哪个类加载器提供哪个驱动程序。这样，当 DriverManager 类打开连接时，它仅使用本地文件系统或与发出连接请求的代码相同的类加载器提供的驱动程序。
+  2、建立连接
+  加载 Driver 类并在 DriverManager 类中注册后，它们即可用来与数据库建立连接。当调用 DriverManager.getConnection 方法发出连接请求时，DriverManager 将检查每个驱动程序，查看它是否可以建立连接。
+  有时可能有多个 JDBC 驱动程序可以与给定的 URL 连接。例如，与给定远程数据库连接时，可以使用 JDBC-ODBC 桥驱动程序、JDBC 到通用网络协议驱动程序或数据库厂商提供的驱动程序。在这种情况下，测试驱动程序的顺序至关重要，因为 DriverManager 将使用它所找到的第一个可以成功连接到给定 URL 的驱动程序。
+  首先 DriverManager 试图按注册的顺序使用每个驱动程序（jdbc.drivers 中列出的驱动程序总是先注册）。它将跳过代码不可信任的驱动程序，除非加载它们的源与试图打开连接的代码的源相同。
+  它通过轮流在每个驱动程序上调用方法 Driver.connect，并向它们传递用户开始传递给方法 DriverManager.getConnection 的 URL 来对驱动程序进行测试，然后连接第一个认出该 URL 的驱动程序。
+  这种方法初看起来效率不高，但由于不可能同时加载数十个驱动程序，因此每次连接实际只需几个过程调用和字符串比较。
+  以下代码是通常情况下用驱动程序（例如 JDBC-ODBC 桥驱动程序）建立连接所需所有步骤的示例：
+  
+
+  Class.forName("sun.jdbc.odbc.JdbcOdbcDriver"); //加载驱动程序 
+
+  String url = "jdbc:dbc:fred";
+  DriverManager.getConnection(url, "userID", "passwd");

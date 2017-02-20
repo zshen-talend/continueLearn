@@ -1,0 +1,64 @@
+<c> 标签的引用方法
+	<%@ taglib uri="http://java.sun.com/jstl/core_rt" prefix="c"%>
+	
+<c:set>
+	var 属性指定了限制了作用域的变量的名称。
+	scope 属性表明了该变量驻留在哪个作用域中。
+	value 属性指定了分配给该变量的值。
+	cst</c:set>这样可以代替value赋值，给变量赋一个String值
+	可由${}符号取出
+
+<c:remove>
+	var 属性指定待删除变量的名称。
+	scope 属性是可选的，它表示待删除变量来自哪个作用域，缺省为 page。
+
+<c:out> 
+	default，那么，在对 value 属性的表达式求值所得结果为 null 
+	或空 String 的情况下，<c:out> 将打印其值。 
+	escapeXml 属性也是可选的。它控制当用 <c:out> 标记输出诸如
+	“<”、“>”和“&”之类的字符（在 HTML 和 XML 中具有特殊意义）
+	时是否应该进行转义。如果将 escapeXml 设置为 true，则会自动将
+	这些字符转换成相应的 XML 实体（此处提到的字符分别转换成 
+	&lt;、&gt; 和 &amp;）。escapeXml 属性的缺省值是 true  
+<c:choose>	
+		逻辑判断
+		<c:choose>
+			<c:when test="${myUtil.id=='001'}">
+				是001
+			</c:when>
+			<c:otherwise>
+				不是001
+			</c:otherwise>
+		</c:choose>
+
+<c:url>
+	value	输入相对路径,得到完全路径
+	var 存储返回路径的变量名
+注意:只要在<>两个尖括号之外，就可以写入html语言和标记
+
+<c:forEach>
+		var循环中被赋值的变量名
+		items循环中要迭代的集合
+		varStatus属性
+
+			current当前这次迭代的（集合中的）项 
+			index当前这次迭代从 0 开始的迭代索引 
+			count当前这次迭代从 1 开始的迭代计数 
+			first用来表明当前这轮迭代是否为第一次迭代的标志 
+			last用来表明当前这轮迭代是否为最后一次迭代的标志 
+			begin属性值 
+			end属性值 
+			step属性值  
+
+
+实例：
+	<sql:query var="vc" sql="${v1}" dataSource="${vote}"></sql:query>
+	<c:forEach var="row" items="${vc.rows}">
+	<c:set value="${row.cc}" scope="page" var="vcc"></c:set>
+	</c:forEach>
+&{}叫er表达式	
+
+
+<c:redirect>
+	uri 要跳转的地址
+	context 外部站点

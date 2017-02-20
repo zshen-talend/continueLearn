@@ -1,0 +1,285 @@
+<!--基本格式-->
+<!--     文件范例    HTML    -->注释!!!
+<html>
+	<head>...<head>
+	<body>
+<h1>;asdasd</html>
+</body>
+</html>
+
+特殊字符&copy;--〉圈c &quot;--〉" &amp;--〉& &lt;HTML&gt;--><HTML>&reg-->圈R 
+
+<a>标记:标明超链接的起始或目标的位置
+href="r.jpg"设置超链接的url
+NAME="anchor"定义锚
+target标明超链接文档要打开的位置
+	可以是框架名称或_blank空白无名网页 _top整个框架集所在窗口 _parent上一级窗口 _self自身(默认)
+例:
+<!-- 链接到服务器。 -->
+<A HREF="http://www.microsoft.com">Microsoft 主页。</A><!--地址结构主要包括：协议名://Ip地址:段口号/路径/文件名-->
+<!-- 链接到同目录的文件。 -->
+<A HREF="home.htm">home.htm</A>
+<!-- 在由 TARGET 指定的窗口中打开文件。 -->
+<A TARGET="viewer" HREF="sample.htm">在窗口中打开</A>
+<!-- 将 IMG 元素作为链接的一部分。 -->
+<A HREF="http://www.microsoft.com"><IMG SRC="images/bullet.gif">链接</A>
+<!-- 链接到锚。 -->
+<A HREF="#anchor">锚</A>
+<!-- 定义一个锚。 -->
+<A NAME="anchor">
+<!-- 调用 JScript 函数 -->
+<A HREF="javascript:window.open()">链接</A>
+
+<b></b>粗体
+
+<base>标签：
+	href 本页面上的超链接地址的前缀（又称基准地址）
+	target 定义所有具有此属性的标签的默认值
+
+<big>HTML书籍</big>标记:指定内含文本要以比当前字体较大的字体显示
+
+<marquee>
+
+<body>标签：
+background=2.gif 设置背景颜色默认模式为平铺
+text=#336699     设置文档的前景色
+bgcolor=#99CCFF  设置背景色
+topmargin=30     设置或获取页面的上边距
+link=blue        连接前的颜色
+alink=red        点下时的颜色
+vlink=purple	 连接后的颜色
+
+<center>标签：把内容居中显示
+
+<cite></cite>标签：用于引用（斜体）
+
+<div></div>标签：可以跨段定义内容格式
+
+<em></em>标签：强调文本（斜体）
+
+<embed>标签:插入视频音频（必须在body中）
+src源文件
+width宽度
+height高度
+align对齐方式
+autostart="true"是否自动播放
+
+<font></font>标记:
+size=7改变字体大小,最大为7
+color=hotpink 颜色
+face="隶书"字体类型
+
+<form></form>无name的input项不被提交
+action 准备提交到的位置(默认为提交到本地址)
+method 提交的方法post get(默认为get)
+name 表单的名称
+target 提交地址的打开方式
+title 鼠标停留时显示的内容
+enctype 编码方式 (默认application/x-www-form-urlencoded)或multipart/form-data传文件时使用
+<input>
+type 输入框的类型（radio checkbox text submit reset password file hidden button）
+name
+value初始值
+type=text
+	size 文本框显示的长度 
+	maxlength 能输入的最大长度
+	readonly 内容不能改变但会被提交
+	disable	 内容变灰且不能被提交
+type=checkbox
+	checked复选框是否被选中
+
+type=file 取得一个文件的路径名
+	name
+
+<frameset></frameset>
+rows=30%，*横向划分
+cols=30%，*纵向划分
+<frame>
+src	框架要导入的文件
+name 框架的名称
+noresize 设定框架大小是否为不能调整
+scrolling 是否要滚动条
+framborder设定框架边界粗细
+marginwidth 设定横向边距
+marginheigth 设定列边距
+
+
+<hr>标记:输出一个分隔线
+
+<img>标签:插入图片
+src="s.jpg" 图片来源
+width=400设置图片的宽
+height=200设置图片的高
+border=0边界线条粗细
+align=[top bottom middle]
+Alt="用来替代图片在图片未被加载之前，且可以作为图片的tooltip当鼠标进入时"
+
+
+
+<iframe>标签：建立一个浮动的Frame
+	src
+	name
+在iframe两个标签之间的代码只有在浏览器不支持iframe时才会起作用等同于<noframe>
+
+
+<li>标签：列表项标记列表中的一项
+type=[a小写字母A大写字母i小写阿拉伯字母I大写阿拉伯字母square方形项目编号disc实心圆circle空心圆]
+<ul></ul>无序列表项
+<ol></ol>有序列表项
+start=n 开始序号
+
+<link>标签:(只能在Head标签中使用)
+	<link href="/styles/myNewStyle.css" rel="stylesheet" type="text/css"> 
+	href
+	rel/rev链接指向的文档类型Stylesheet样式 Shortcut Icon地址栏的图标 href=*.ico
+	title
+	type text/css或text/javascript
+	media 
+		screen(缺省)屏幕
+		pring打印机
+		prijection投影仪
+		aural扬声器
+		braille触觉感受器
+		tty电传打字机
+		tv 电视机
+		all所有以上
+
+<lable>标签：加入快捷键
+	for	指定加入快捷键的元素的id
+	accesskey="a"指定快捷键为alt+a
+
+<meta>标记:向服务器和客户端传达关于文档的隐藏信息(只能用于head元素内使用)
+http-equiv="refresh"设置http头的自动更新
+content="3"每个三秒
+[;url=l.jpg]跳转到
+http-equiv="page-exit"退出方式的修改标记 content="revealtrans(duration=5退出的时延似乎有上限,transition=8退出的动画效果不写为随机)退出效果
+http-equiv="page-enter" 进入方式的修改标记 content="revealtrans(duration=3进入的时延,transition=21进入方式的种类)"
+
+
+<nobr></nobr>标记:使得标识符内的语句不会自动换行
+
+
+<p>标签:段落标识
+align=[left center right]对齐方式
+
+<pre></pre>标记:保持原有的输出式样以固定宽度字体渲染文本
+
+<s>这是一本专业</s>标记:以删除线字体渲染文本
+
+<script></script>标签: 引入脚本语言
+	引入js文件的方法
+	<script language="JavaScript" src="<c:url value="/include/tree.js" />"></script>
+
+
+<select></select>
+	size(默认为1)显示的条数
+	multiple是否可以多选
+<option></option>
+	value要传出的值(如无值则直接传在列表框中显示的内容)
+	selected默认选择值
+用空值表示不作选择。
+例：
+	<select size显示条数大于1加滚动条>
+	<option value="实际返回值">显示内容
+	</select>
+
+<small>一本专业</small>标记:指定内含文本要以比当前字体稍小的字体显示
+
+<span></span>标签：定义段落内的内容块
+
+<style></style>标签: (只能在Head标签中使用)
+	在两个标识符之间可以编写css样式，且在javaScript中可以被引用来改变相应的css样式配置。
+	
+例:	<HEAD>
+	<STYLE>
+	BODY {  background-color: white; color: black;  }
+	H1 {  font: 8pt Arial bold;  }
+	P  {  font: 10pt Arial; text-indent: 0.5in;  }
+	A  {  text-decoration: none; color: blue;  }
+	</STYLE>
+	</HEAD>
+	<BODY>
+	<P id=oParagraph>示例段落文本</P>
+	<SCRIPT>
+	oParagraph.style.fontSize = 14;
+	</SCRIPT>
+	</BODY>
+
+
+
+<sub>2</sub>标记:字体变成下标
+
+<sup>2</sup>标记:字体变成上标
+
+有关表的操作：{
+<table></table>标签：指定所含内容要组织成行列的表格。
+
+<caption></caption>标签:对标题的更改<!--只在table中有用-->
+align=right 设置对齐方式
+
+ BORDER=1边框粗细
+ width=500表宽
+ height=100表高
+ bordercolor=red边界颜色
+
+<tr></tr>标签：控制行
+<td></td>标签：控制表格项
+colspan=3该单元格跨三列
+rowspan=3该单元格跨三行
+<th></th>标签：列标记一般用来控制列数和列头
+}
+
+<textarea><textarea>
+	cols列数
+	rows行数
+<tt></tt>以固定宽度字体渲染文本
+
+<u>这是一本专业的HTML书籍</u>标记:下滑线
+
+<var>和<address>标记:就是斜体的作用
+
+
+
+键盘的绑定操作:
+	
+	在IE中，想要绑定键盘按钮可以直接通过声明function document.onkeydown()方法来实现，由于
+IE支持event对象所以该方法可以写成
+	function document.onkeydown()
+            {
+                //使用document.getElementById获取到按钮对象
+                var button = document.getElementById("test");
+                if(event.keyCode == 13)
+                    {
+                        button.click();
+                        event.returnValue = false;
+                    }
+            }
+	
+	但是在firefox中，由于火狐不支持event对象所示要通过参数来传递event对象。
+		javascript:
+		function BindEnter(obj){
+			//alert(obj.keyCode);
+				var thesavebutton=document.getElementById("insert");
+				if(event.keyCode==13){
+					thesavebutton.click();
+					obj.returnValue=false;
+				}
+			}
+
+	html:
+	<body onload="initView();" onkeydown="BindEnter(event)"> 
+	具体实例见C:\Documents and Settings\OWNER\桌面\html控件演示\按键绑定.html
+
+
+
+
+
+
+
+
+
+
+
+
+
+

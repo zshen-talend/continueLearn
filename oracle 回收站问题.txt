@@ -1,0 +1,287 @@
+
+1.什么是Recycle Bin
+
+实际上，Recycle Bin只是一个保存被drop的对象的一个数据字典表。所以，可以通过如下语句查询回收站中的信息： 
+select * from recyclebin
+
+除非拥有sysdba权限，每个用户只能看到属于自己的对象。所以，对于用户来说，好像每个人都拥有自己的回收站。即使用户有删除其他schema对象的权限，也只能在recyclebin中看到属于自己的对象。
+
+做个小试验： 
+SQL> conn ning/ning 
+已连接。 
+SQL> drop table test;
+
+表已删除。
+
+SQL> drop table test.test;
+
+表已删除。
+
+SQL> select object_name,original_name from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME 
+------------------------------ -------------------------------- 
+BIN$xJlIkIFVR/yau1Qb8ocxxQ==$0 TEST
+
+SQL> conn test/test 
+已连接。
+
+SQL> select object_name,original_name from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME 
+------------------------------ -------------------------------- 
+BIN$1PKEiRExRN2g3tqEEWLfyw==$0 TEST
+
+以下几种drop不会将相关对象放进RecycleBin：
+
+drop tablespace：会将RecycleBin中所有属于该tablespace的对象清除 
+drop user：会将RecycleBin中所有属于该用户的对象清除 
+drop cluster：会将RecycleBin中所有属于该cluster的成员对象清除 
+drop type：会将RecycleBin中所有依赖该type的对象清除 
+RecycleBin中的对象会被系统自动按照规则重命名，这是为了防止命名冲突。命名格式为：BIN$unique_id$version
+
+其中unique_id是26个字符的对象唯一标识符，version则是对象在数据库中的版本号。
+
+SQL> create table t(id int);
+
+表已创建。
+
+SQL> drop table t;
+
+表已删除。
+
+SQL> select object_name,original_name from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME 
+------------------------------ -------------------------------- 
+BIN$+7J5MgT2RbCX+tka+zjpgA==$0 T
+
+SQL> create table t(id int);
+
+表已创建。
+
+SQL> drop table t;
+
+表已删除。
+
+SQL> select object_name,original_name from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME 
+------------------------------ -------------------------------- 
+BIN$+7J5MgT2RbCX+tka+zjpgA==$0 T 
+BIN$pc+kkUM7QjuQeCDGtwlzgQ==$0 T
+
+可以看到，删除table t后，重建一个名为t的table，再次删除，其unique_id是不一样的。
+
+这时，做一个还原看看：
+
+SQL> select object_name,original_name from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME 
+------------------------------ -------------------------------- 
+BIN$+7J5MgT2RbCX+tka+zjpgA==$0 T
+
+这里，Oracle选择了最后一次删除的T表还原。
+
+再次删除： 
+SQL> drop table t;
+
+表已删除。
+
+SQL> select object_name,original_name from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME 
+------------------------------ -------------------------------- 
+BIN$4bNgZiMGTA63iwA5xflh5A==$0 T 
+BIN$+7J5MgT2RbCX+tka+zjpgA==$0 T
+
+可以看到unique_id又变了。所以，通过这种命名方式，避免了对于删除table后又重建了同名table的情况可能造成的命名冲突。
+
+2.如何启用/禁用RecycleBin
+
+通过设置初始化参数recyclebin，可以控制是否启用回收站功能，默认是开启的。 
+SQL> alter system set recyclebin=off;
+
+系统已更改。
+
+SQL> alter system set recyclebin=on;
+
+系统已更改。
+
+SQL> alter session set recyclebin=off;
+
+会话已更改。
+
+SQL> alter session set recyclebin=on;
+
+会话已更改。
+
+3.如何查看RecycleBin中的信息
+
+前面已经提到，用户可以通过查询recyclebin来查看属于自己的被drop的对象。 
+SQL> select object_name,object_type from dba_objects where object_name='RECYCLEB 
+IN';
+
+OBJECT_NAME OBJECT_TYPE 
+------------------------------ ------------------- 
+RECYCLEBIN SYNONYM
+
+SQL> select owner,synonym_name,table_owner,table_name from dba_synonyms where sy 
+nonym_name='RECYCLEBIN';
+
+OWNER SYNONYM_NAME TAB TABLE_NAME 
+---------- -------------------- --- -------------------- 
+PUBLIC RECYCLEBIN SYS USER_RECYCLEBIN
+
+可以发现，实际上recyclebin是user_recyclebin的一个公共同义词。还可以通过dba_recyclebin查看系统中所有被drop的对象，但这里没有all_recyclebin视图。
+
+另外，Sqlplus也提供了一个专门的命令： 
+SQL> show recyclebin 
+ORIGINAL NAME RECYCLEBIN NAME OBJECT TYPE DROP TIME 
+---------------- ------------------------------ ------------ -------------------
+
+TEST BIN$xJlIkIFVR/yau1Qb8ocxxQ==$0 TABLE 2006-12-13:22:00:33
+
+但该命令只能看到被drop的table，该table对应的index等只能通过查询获取。 
+SQL> create table t(id int);
+
+表已创建。
+
+SQL> create index ix_t on t(id);
+
+索引已创建。
+
+SQL> alter table t add constraint con_t_pk primary key(id) using index ix_t;
+
+表已更改。
+
+SQL> drop table t;
+
+表已删除。
+
+SQL> show recyclebin 
+ORIGINAL NAME RECYCLEBIN NAME OBJECT TYPE DROP TIME 
+---------------- ------------------------------ ------------ -------------------
+
+T BIN$w0Os4BFTSE+N81RO1pUHaw==$0 TABLE 2006-12-13:22:45:58
+
+SQL> select object_name,original_name,type from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME TYPE 
+------------------------------ -------------------------------- ---------- 
+BIN$dw0vOefrQPC5AAaFn7rkPg==$0 IX_T INDEX 
+BIN$w0Os4BFTSE+N81RO1pUHaw==$0 T TABLE
+
+4.如何清除RecycleBin中的对象
+
+回收站中的东西多了，自然要清除。Oracle10g增加了一个新的关键字purge来执行清除recyclebin的功能。
+
+purge table table_name可以清除指定的table，这里的table_name既可以是table原来的名字，也可以是回收站中按规则自动命名的名字。 
+SQL> show recyclebin 
+ORIGINAL NAME RECYCLEBIN NAME OBJECT TYPE DROP TIME 
+---------------- ------------------------------ ------------ -------------------
+
+T BIN$+7J5MgT2RbCX+tka+zjpgA==$0 TABLE 2006-12-13:22:11:49
+
+TEST BIN$RwhOW+KvTSmOznDipO+BOw==$0 TABLE 2006-12-13:22:30:38
+
+SQL> purge table test;
+
+表已清除。
+
+SQL> purge table BIN$+7J5MgT2RbCX+tka+zjpgA==$0; 
+purge table BIN$+7J5MgT2RbCX+tka+zjpgA==$0 
+* 
+第 1 行出现错误: 
+ORA-00933: SQL 命令未正确结束
+
+SQL> purge table "BIN$+7J5MgT2RbCX+tka+zjpgA==$0";
+
+表已清除。
+
+Purge tablespace tablespace_name可以清除RecycleBin属于指定tablespace的所有对象。 
+SQL> purge tablespace users;
+
+表空间已清除。
+
+Purge tablespace tablespace_name user user_name则可以清除Recycle中属于指定tablespace和指定user的所有对象。 
+SQL> purge tablespace users user ning;
+
+表空间已清除。
+
+Purge recyclebin可以清除执行该命令的用户所能看到的所有recyclebin对象。也就是普通用户能清除属于自己的对象，而sysdba用户则能清除所有recyclebin中的对象。 
+SQL> purge recyclebin;
+
+回收站已清空。
+
+另外，purge index可以清除index对象。 
+SQL> select object_name,original_name,type from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME TYPE 
+------------------------------ -------------------------------- ---------- 
+BIN$dw0vOefrQPC5AAaFn7rkPg==$0 IX_T INDEX 
+BIN$w0Os4BFTSE+N81RO1pUHaw==$0 T TABLE
+
+SQL> purge index ix_t; 
+purge index ix_t 
+* 
+第 1 行出现错误: 
+ORA-00604: 递归 SQL 级别 1 出现错误 
+ORA-02429: 无法删除用于强制唯一/主键的索引
+
+这里由于ix_t是table主键的索引，所以无法单独清除。
+
+SQL> purge recyclebin;
+
+回收站已清空。
+
+SQL> create table t1(id int);
+
+表已创建。
+
+SQL> create index ix_t1 on t1(id);
+
+索引已创建。
+
+SQL> drop table t1;
+
+表已删除。
+
+SQL> select object_name,original_name,type from recyclebin;
+
+OBJECT_NAME ORIGINAL_NAME TYPE 
+------------------------------ -------------------------------- ---------- 
+BIN$s6zn2IT+Ree2+slP2dpa0A==$0 IX_T1 INDEX 
+BIN$j2O8O52CT3aoakF4LlAGfg==$0 T1 TABLE
+
+SQL> purge index ix_t1;
+
+索引已清除。
+
+5.如何还原RecycleBin中的对象
+
+前面的试验中已经使用Flashback table来还原过被删除的table。
+
+SQL> show recyclebin 
+ORIGINAL NAME RECYCLEBIN NAME OBJECT TYPE DROP TIME 
+---------------- ------------------------------ ------------ -------------------
+
+TEST BIN$xJlIkIFVR/yau1Qb8ocxxQ==$0 TABLE 2006-12-13:22:00:33
+
+SQL> flashback table test to before drop rename to test;
+
+闪回完成。
+
+SQL> desc test 
+名称 是否为空? 类型 
+----------------------------------------- -------- ----------------------------
+
+ID NUMBER(38)
+
+如果多次删除同名的table，则使用上面的语句还原的是最后一个被删除的test表，这里也可以使用RecycleBin给table的名字来做还原。 
+SQL> flashback table "BIN$GoZUqZ6GS222JZdcCtFlHQ==$0" to before drop rename to t 
+est;
+
+闪回完成。
+
+

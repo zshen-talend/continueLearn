@@ -1,0 +1,173 @@
+1.Display
+	将不同的操作系统中对事件循环的实现封装成为SWT的统一事件循环机制，它还提供了丰富的方法用来访问操作系统的资源，因此可以将其视为SWT与底层操作系统交流的	桥梁。p25
+	
+	关于Display的getDefault() 
+		由于在一个线程中只能有一个活动的Display存在。所以如果没有手动设置Display的默认值，那么在同一个线程中第一次调用Display.getdefault()方法会取得			一个新的Display对象，而第二次以后的调用只会取到上一次的Display的对象。而由于getDefault是一个静态方法，当想在其他线程中取得当前线程的Display时		应该用getCurrent方法。p41
+
+2.JFaceResources类
+	为一系列的资源注册表提供了Singleton模式的实现。用注册表可以有效地避免资源泄漏问题。p29
+
+3.Shell
+	shell实例就代表了一个窗口。p42
+	注意shell建立时的父子关系，shell的总父亲肯定是相应的display,而shell也可以由另一个shell所作父亲，shell中可以有control，control也可以为另一个control的		父亲。见图 p42
+
+4.Display的事件队列和事件循环
+	创建一个窗口并打开它以后，示例就进入了事件循环部分。事件循环实际上是在系统消息队列与应用程序的事件队列之间交替执行。其中在系统队列中执行操作系统的消	息使用的是OS.PeekMessage方法，而应用程序的事件执行队列则由runDeferredEvents()和runAsyncMessages方法来负责执行调用。P44
+
+5.监视器、边界和客户区域
+	取得监视器的相关信息:Display.getMonitors()取得连接的所有监视器。
+			     Display.getPrimaryMonitors()取得连接的主监视器。P47
+
+	取得监视器中的客户区:monitor.getClientArea()是一个Rectangle的对象。P48
+
+6.将线程注册到UI线程队列
+	Display.syncExec(Runnable runnable)同步调用，阻止其它线程。
+	Display.asyncExec(Runnable runnable)异步调用，不阻塞其它线程。p50
+
+7.SWT的继承关系图
+	看外面的SWT的继承关系图的文件夹。p52
+
+8.Button的应用样式
+	p53注意有一个LEFT_TO_RIGHT、RIGHT_TO_LEFT两个选项用来控制复选框或单选框是字在前面还是图像在前面。常量名的意思是书写方式是从左到右还是从右到左。默认是从左到右。当button作为单选按钮和复选按钮时它也可以让单选框或复选框改变位置。
+
+9.控件的继承检查
+	Display的isValidClass方法会调用Shell的checkSubclass()方法，只要重载这个方法就可以实现Shell的重载。在API中都声明了该类是否被期望子类化，不被期望的类在以后的版本中很有可能会被变动。
+
+10.控件的用户数据
+	Control.setData()....
+	
+11.控件的释放
+	当一个控件的Dispose方法被调用后，他所占有的系统资源被释放了，但这个空间所对应的java对象仍然存在，如果UI线程试图对这个已经被释放的控件进行操作，就会得到控件已被释放的异常，因此手动释放控件会导致一系列问题，如果不是万不得已，最好不要手动释放一个控件，而应该交由SWT系统自动释放它们。p56
+
+12.系统资源的使用
+	Display.getSystemColor(SWT.COLOR_CYAN);
+	Display.getSystemImage(SWT.ICON_ERROR);
+	Display.getSystemFont();//只有一种默认字体和大小。想用其它的字体可以new Font(device,"Arial",size,SWT.BOLD);p59
+
+13.系统托盘 p60
+	Tray systemTray = Display.getDefault().getSystemTray();
+		TrayItem newItem = new TrayItem(systemTray, SWT.NONE);
+		newItem.setImage(Display.getDefault().getSystemImage(
+				SWT.ICON_INFORMATION));
+		newItem.setToolTipText("Tabletree");
+		
+		newItem.addSelectionListener(new SelectionListener() {
+
+			public void widgetDefaultSelected(SelectionEvent e) {
+				// TODO Auto-generated method stub
+
+			}
+
+			public void widgetSelected(SelectionEvent e) {
+				Shell[] shells = Display.getDefault().getShells();
+				for (int i = 0; i < shells.length; i++) {
+					if (shells[i].getText().startsWith("规则树表")) {
+
+						// shells[i].setMinimized(true);
+						shells[i].setMaximized(true);
+					}
+				}
+			}
+		});
+	}
+
+14.SWT中用Swing
+	可以通过SWT_AWT.new_Frame(composite)方法，从SWT的容器中建立一个AWT容器。p63
+
+15.selectionListener在不同空间中的不同默认选择总结
+	text-->回车
+	combo-->回车
+	list-->双击
+	tree--〉双击
+	
+16.text文本框的修改监听过程 p69
+	用户在文本框中的编辑会触发verify事件，为文本框添加这个监听可以对其输入的每一个字符进行限制。通过e.doit(boolean)来控制本次编辑是否成功，如果成功文本框会再发出一个Modify事件改变显示内容。
+
+17.在toolbar上添加其它的控件 p77
+	首先创建一个SWT.SEPARATOR样式的ToolItem，然后通过ToolItem的setControl方法
+
+18.Menu和MenuItem p78
+	首先，建立一个SWT.BAR样式的Menu并把它设置在shell中，通过shell.setMenuBar(bar)方法。然后设置bar上的MenuItem通过MenuItem(bar,style)方法。这样第一层次就建立完成了这样的菜单好像是横向的菜单一样摆放。想继续做下拉菜单可以以其中一个MenuItem为容器再建一个menu，并把这个Menu用setMenu方法设置，在menu中建立menuItem组件它的内容项。
+
+其中，MenuItem的style如果是SWT.CASCADE说明该项是一个层叠项，可以拉出menu。SWT.PUSH说明该项是一个叶子结点，可以单击使用。
+
+menuItem就是下拉菜单的内容了。
+
+Shell的窗口样式、字体的大小、模态p97
+
+19.容器背景色的继承关系
+	INHERITE_NONE子控件不继承父控件的颜色。
+	INHERITE_DEFAULT同样定义了该样式的控件才会继承父类的颜色。
+	INHERITE_FORCE迫使所有的子控件都继承父容器的背景色。p102
+
+20.容器的布局管理器
+	调用布局管理器的layout方法，可以通知容器开始按照布局管理器的要求排布。并且它还可以自动调用所有它所包含的子控件的layout方法。p104
+
+21.常用的简单布局
+	默认布局:AbsoluteLayout
+		必须用control的setBounds方法来设置控件的边界。
+	
+	填充布局:FillLayout
+		自左向右或自上向下排列所有的子控件。使用这种布局容器一定会被填满。这也是布局样式名字的由来。p106
+
+	行布局:RowLayout
+		这种布局样式可以配合RowData来使用，指定子控件的宽度和高度。如果没有指定，会使用控件的偏好尺寸。属性介绍:
+	fill是否填充剩余空间。
+	justify间距是否相等。
+	wrap是否会自动换行。
+	pack自动变换空间大小。
+
+	网格布局:GridLayout
+		属性:numColumns指定布局的列数，行数由子控件数量决定。
+
+		GridData
+		属性:水平排列和垂直排列都限定在自己所占用(跨越)的网格中。
+		     是否占用剩余空间，则规定所在行或列剩余空间是否被占用。
+		     行跨越和列跨越则说明本控件将要占用的网格数。
+如果给布局信息类的exclude属性设为true则该控件使用AbsoluteLayout布局(setBounds)。p112
+	
+	形式布局:FormLayout
+		这种布局方式规定必须要有相应的布局信息类，FormData。
+		FormData
+		属性:left\right\top\bottom都对应着类FormAttachment，并且当没有参照物时代表该控件以容器宽、高的百分比作参照。否则就要给出相应的参照空间，相差的像素，以参照物的哪个边界作起点开始计算。
+注意该布局方式不允许循环作为参照物p113
+
+	堆栈布局:StackLayout
+
+22.向导页
+	扩展Wizard类，并且通过WizardDialog.open()打开。
+	其中dialog要设置宽高selPageSize(WIDTH,HEIGHT),wizard要设容器setContainer(dialog)。
+	
+
+23.取得插件中的指定扩展点
+	IExtensionRegistry registry = Platform.getExtensionRegistry();
+        configurationElements = registry.getConfigurationElementsFor("org.talend.core.runtime.service"); //$NON-NLS-1$
+
+24.取得指定的插件中的lib文件
+	Bundle bundle = Platform.getBundle(plugins);
+	String requires = (String) bundle.getHeaders().get(Constants.BUNDLE_CLASSPATH);
+                ManifestElement[] elements = ManifestElement.parseHeader(Constants.BUNDLE_CLASSPATH, requires);
+                URL hsqldbJar = null;
+                if (jars != null) {
+                    for (String jar : jars) {
+                        String value = elements[0].getValue();
+                        for (ManifestElement element : elements) {
+                            if (jar.equals(element.getValue())) {
+                                value = element.getValue();
+                                hsqldbJar = FileLocator.toFileURL(bundle.getEntry(value));
+                                linkedList.add(hsqldbJar.getPath());
+                            }
+                        }
+                    }
+                }
+
+25.让eclipse中选中的变量以指定颜色高亮显示
+	1-在工具栏上有一个黄色的笔选中即可，
+	2-若想改变颜色，要到perference->general->editor->Text Editor->Annotations中设置occurences对应的颜色
+
+
+26.eclipse启动时工作空间的选择
+	general->startup and shutdown->workspaces中进行配置
+
+27.eclipse编译顺序
+	general->workspace->build Order

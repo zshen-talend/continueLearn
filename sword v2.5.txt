@@ -1,0 +1,168 @@
+1.userdefinefunc函数用来显示扩展函数，它被封装在了clsDynamicSelect.js中
+
+2.用属性文件配置树
+	1)首先把配置文件封装成输入流InputStream is = this.getClass().getClassLoader().getResourceAsStream("treeConfig.properties");
+	2)然后用自己的类去把文件中的内容解读
+		Properties pps=new Properties();
+		pps.load(is);
+	3)最后封装成树就可以了，参照D:\sx_space\emergencyjbproject\biz\jbxt\src\gov\emergency\jbxt\emerweb\comm\treectrl\JgComCtrl.java类的initPage方法
+
+3.WebManageHelper
+可以存放登录时的用户信息不过先要进行初始化WebManageHelper.setPrincipalToSession(request, principal1);HttpServletRequest request,WebPrincipal principal1 = null;
+
+4.跳转方式总结
+	1).jsp中的跳转
+		1.window.open(url, "", "top=0,left=0,scrollbars=no,location=no,height=600,width=800,toolbar=no")//机构树用的就是这种跳转方式
+		
+		2.form表单的action方式
+		
+		3.form表单的action方式且定义target,在提交form时先通过window.open("about:blank","xxnr");打开一个新窗口，然后提交表单信息。
+
+		4.document.getElementById("querybsxxlist").src=url;用这种方式改变iFrame的列表，这样传的参数不为空，否则iframe自动跳转船的参数为空查出的就是全部的值了。
+
+		5.parent.location=url;由于当前的按钮是一个iframe所以要用parent.location的形式来使得整个页面跳转。
+
+	2).控制器中的跳转
+		1.modelAndView.setViewName("jbxt/report/jb01_bsxx_form");//位置:gov/emergency/jbxt/emerweb/report/emerctrl/JBBsxxZbCtrl.java
+
+5.信息传递方式总结
+	1)bolist用request.setAttribute(),可以在jsp页面上用<%request.getattribute()%>来取得，然后用<c:forEach items="${reqGyFjBOList}" var="item" varStatus="s">来递归。
+
+	2)modelAndView.addObject("crhFlag", "fromFurReport");出入的数据一样可以用<c:out value='${crhFlag}'/>的方式来取出。
+
+6.遍历Table中check的方法
+	var objArrayCheckBox = sjframe.document.all;  //获取frame中checkbox对象个数
+	var sbxxbh="";
+	alert(objArrayCheckBox.length);
+	for(i=0;i<objArrayCheckBox.length;i++){
+		if(objArrayCheckBox(i).type=="checkbox"){
+			if(objArrayCheckBox[i].checked){  //检索出选中的checkbox sbxxbh
+				var objChkParent = objArrayCheckBox[i].parentNode.parentNode;
+				var objsbxxbh = objChkParent.childNodes[0].childNodes[0];
+				var sbxxbhChk = objsbxxbh.innerText;
+				alert(sbxxbhChk);
+				sbxxbh=sbxxbh+","+sbxxbhChk
+			}
+		}
+	}
+
+
+7.级联下拉前查询数据库用ajax的方式
+var evenType=document.getElementById("sjlx").value;
+	var rtnStrTodayTask = $.ajax({
+				type:"POST",
+				dataType:"html",
+				url: "/SjglXxlrCtrl-fetchEvenType.pfv",
+				data:"sjlx="+evenType,
+				async: false
+			}).responseText;
+
+8.从pfv中返回树的xml内容
+	其中OrgXmlUtils为自定义的一个类
+public ModelAndView initTree(HttpServletRequest request, HttpServletResponse response) throws Exception{
+    	logger.debug("开始方法initTree");
+    	//获得Sword视图
+        SwordView swordView = this.getSwordView(request);
+        pg.proxy.PgProxyReqEvent pgProxyReq = new pg.proxy.PgProxyReqEvent("pgProxyTransaction", this.getEJBSessionid(request));
+        pg.proxy.PgProxyResEvent pgProxyRes = null;
+        
+      //设置调用Proxy端对应的方法名称
+        pgProxyReq.setMethod("initTree");
+      //启动业务层对应的事务
+        pgProxyRes = (pg.proxy.PgProxyResEvent) this.delegate(pgProxyReq);
+     
+        
+        List pgEaes=new ArrayList();
+        pgEaes=pgProxyRes.getDataList();
+        Node node = this.generateCheckBoxRelationTree(pgEaes,new ArrayList(),false);//不带checkbox
+        OrgXmlUtils.printXMLStream(response,node);
+        //设置跳转的页面
+        //swordView.setViewName("jsp/pg/page/pg_fenyeform");
+    	logger.debug("结束方法initTree");
+    	return null;//swordView.getModelAndView();
+    }
+    private Node generateCheckBoxRelationTree(List allIndexs, List userIndexs, boolean ischeckbox) {
+        Document m_oDoc = XmlUtil.newDocument();
+        Element root = m_oDoc.createElement("navi");
+        root.setAttribute("title","指标树");
+
+        if (allIndexs.size()>0) {
+            PgEaeBO org  = this.getRootIndex(allIndexs);
+            //对每个根节点遍历生成树 区分是否是checkbox
+            root.appendChild(getRootsCheckBoxIndexNode(org, m_oDoc, allIndexs,userIndexs,ischeckbox));
+        }
+        m_oDoc.appendChild(root);
+        //xmlHelper.Save2File(m_oDoc,"d:\\lisi.xml");
+        return root;
+    }
+    
+    private  PgEaeBO getRootIndex(List allIndexs) {
+    	 PgEaeBO org = ( PgEaeBO) allIndexs.get(0);
+    	 allIndexs.remove(org);//减少list的容量
+        return org;
+    }
+    
+    private Node getRootsCheckBoxIndexNode(PgEaeBO taxOrg, Document document, List allRelations, List userRelations, boolean ischeckbox) {
+        String jgdm = taxOrg.getEaeid().toString();
+        //每个Element都是Document创造
+        //logger.debug("Current Node is -------------->"+taxOrg.getName()+"@"+taxOrg.getId());
+        Element orgNode = document.createElement("navi");
+        orgNode.setAttribute("title", taxOrg.getTitle());
+        orgNode.setAttribute("orgid", jgdm);
+        orgNode.setAttribute("prikey", jgdm);
+        //currentOrgE.setAttribute("isperson", "0");
+        orgNode.setAttribute("pid", taxOrg.getSessionID());
+        //区分是否checkbox 对于角色资源关系 用checkbox 否则直接显示节点
+        if (ischeckbox) {
+            orgNode.setAttribute("isCheckbox","1");
+            if (isOrgContained(taxOrg,userRelations)) {
+                orgNode.setAttribute("isSelect","1");
+            }
+        }
+        //logger.debug("is checked is "+isContained(resource,selectedResources));
+        orgNode.setAttribute("type","node");
+        //可能对节点还有其他属性
+        List subRelations = this.getSubRelations(taxOrg,allRelations);
+        if (subRelations.size()>0) {
+            for (int i = 0; i < subRelations.size(); i++) {
+            	PgEaeBO org = (PgEaeBO) subRelations.get(i);
+                orgNode.appendChild(getRootsCheckBoxIndexNode(org,document,allRelations,userRelations, ischeckbox));
+            }
+        }
+        return orgNode;
+    }
+    
+    private List getSubRelations(PgEaeBO taxOrg, List allRelations) {
+        //System.out.println("------------------>allRelations size is "+allRelations.size());
+        List ls = new ArrayList();
+        for (int i = 0; i < allRelations.size(); i++) {
+        	PgEaeBO org = (PgEaeBO) allRelations.get(i);
+            //根节点的上级节点是空
+            if (org.getSupereaeid()!=null&&org.getSupereaeid().equals(taxOrg.getEaeid())) {
+                allRelations.remove(org);//减少list的容量
+                i--;
+                ls.add(org);
+            }
+        }
+        return ls;
+    }
+    
+    private boolean isOrgContained(PgEaeBO taxOrg, List userRelations) {
+        boolean flag = false;
+        for (int i = 0; i < userRelations.size(); i++) {
+        	PgEaeBO orgNode = (PgEaeBO) userRelations.get(i);
+            if (orgNode.getEaeid().equals(taxOrg.getEaeid())) {//根据机构代码判断是否相同
+                flag = true;
+                userRelations.remove(orgNode);//该用户节点不在需要使用
+                break;
+            }
+        }
+        return flag;
+    }
+
+9.树节点的默认操作(zntree.js)
+	树结点的单击事件，onTreeNodeClick
+	树结点的双击事件，onTreeDblClick
+	树结点的右键事件，showDivBar
+重载上面的function
+	

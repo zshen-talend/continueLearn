@@ -1,0 +1,51 @@
+1.RCP中添加视图显示的菜单
+MenuManager showWindowsMenu=new MenuManager("&Windows",IWorkbenchActionConstants.M_WINDOW);
+    	MenuManager showViewMenu=new MenuManager("&Show view",IWorkbenchActionConstants.SHOW_EXT);
+    	showWindowsMenu.add(showViewMenu);
+    	showViewMenu.add(showList);//添加顺序还需要了解一下
+    	
+    	menuBar.add(showViewMenu);
+
+2.设计编辑器输入
+	编辑器的输入必须实现IEditorInput接口，而且在该类中getToolTipText和getName方法都必须要返回非空值，否则会报异常。
+
+3.编辑器的site和editorinput
+	编辑器在打开的时候，这两项不能为空所以必须在初始化的时候设置这两项内容。
+
+4.编辑器添的action
+	为编辑器添加Action时不只是利用SWT的机制把工具条加在编辑器中，还可以利用书中p46页的两种方法，把Action直接添加到workbench的工具条或菜单栏上。
+	1)扩展EditorActions扩展点
+	2)在原来编辑器扩展中实现contributorClass所指向的类，该类继承EditorActionBarContributor类。
+
+
+5.对话框的使用
+	MessageDialog类可以生成多种对话框。通过openInformation,openError,openConfirm,openQuestion,openWarning.
+
+定制对话框要覆盖createDialogArea方法。
+
+ILabelDecorator来修改原有标签
+	就像java的大纲视图一样，当某个方法出现警告和错误就改变它的图标。实现这个接口的两个方法，通过ImageData来改变图标。
+
+
+6.把插件程序封装进RCP中
+	1)如果该RCP是依赖于plugin的，则必须在configuration中使用add required plug-ins后手动加入这个RCP本身所对应的插件ID才能正常使用，否则提示		java.lang.NoClassDefFoundError:错误。
+
+	2)如果该RCP是依赖于feature的，则在configuration页中就要手动加入org.eclipse.rcp这个功能部件，以及封装了自身RCP的一个功能部件。否则就会提示No application id has been found这个错误也是在配制初期最常见的错误。并且对rcp本身的封装似乎可以取代org.eclipse.rcp功能部件的功能。而且在单封装了某个插件的Feature中，添加对该插件的依赖似乎也显得毫无意义。另外，如果在RCP的插件中涉及到了平台的相关内容，还需要加入一个org.eclipse.platform的功能部件，来支持其中的依赖。但这样会使得其中多了很多不需要的贡献contributation，要想解决这个问题就需要把相应功能分别包装成Feature了。
+
+
+7.RCP中Synchronize的作用
+	当您更改产品名称、窗口图像、about 图像和 about 文本、减少包含功能部件等时，单击 Synchronize 链接向 plugin.xml 反映您的变更以确保插件 manifest 保持最新
+
+
+8.PropertySheetPage的现实原理
+	它一样用了SelectionServices，这样当我们选中某一个对象的时候就可以传来相应的参数了。而PropertySheetPage通过接口IPropertySource来过滤传过来的参数。而我们要想提供这样的参数，需要实现IPropertySourceProvider的接口中的getPropertySource方法。
+
+
+9.制作基于feature的RCP之教训
+	在应用dtp插件的时候版本eclipse 3.3.2与dtp1.6.0冲突使得平台不能更新，而且dtp1.5还不能支持对于数据库子节点的单独使用。用1.6.2可以解决以上问题，但是它又额外需要平台的其它功能部件支持，之前没想到这一点，只以为是冲突问题竟然还跟了启动代码浪费了不少时间。
+
+10.设置首选项默认值
+	像视图标签的波浪线，启动时的进度条都可以通过配置文件来指定。具体方法是:
+	  在扩展点org.eclipse.core.runtime.products上指定这个配置文件。填的值为name:preferenceCustomization  value:plugin_customization.ini。之后只要在插件的根目录上定制相应的键值对儿就可以了。具体的键和值可以在org.eclipse.platform.doc.isv/reference/api/constant-values.html文件查找。配置方式为“包名/常量名=值”。
+      
+p183

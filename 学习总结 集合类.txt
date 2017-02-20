@@ -1,0 +1,46 @@
+Properties//主要操作是关于字符串的，不管是关键字还是存储内容都只能是字符串操作(接口Map)
+
+	Properties pro=new Properties();
+	pro.load(new FileInputStream("count.txt"));//载入文件信息//默认路径就是工程的根目录
+	c=Integer.parseInt(pro.getProperty("count"))+1;//取信息通过关键字
+	pro.setProperty("count", new Integer(c).toString());//调用hashTable的put方法要同时输入关键字和输入内容
+	pro.store(new FileOutputStream("count.txt"), "title");//输出到流
+例子:在eclipse3.2.2中的com.css.java.test中
+
+Hashtable//可以对对象进行操作(Map接口)
+	Hashtable ht = new Hashtable();
+	ht.put(new Integer(1), new MyKey("张三", 20));
+	ht.put(new Integer(2), new MyKey("李四", 21));
+	ht.put(new Integer(3), new MyKey("王五", 25));
+
+	MyKey o1=(MyKey)ht.get(new Integer(3));
+
+collection类
+	Collection c = new ArrayList();
+	c.add(num);
+	Iterator i = c.iterator();
+	while (i.hasNext()) {
+	Integer in = (Integer) i.next();
+	sum += in.intValue();
+	}
+
+Vector类
+	Vector v=new Vector();
+	v.addElement(num);
+	Enumeration e=v.elements();
+	while(e.hasMoreElements()){
+	Integer i=(Integer)e.nextElement();
+	sum+=i.intValue();
+	}
+
+
+Collection允许重复元素和多个null值,没有指定顺序;不能作排序。 (实现的类:ArrayList、AttributeList,Vector)
+Set不允许有重复元素，只能放一个null值，没有指定的顺序，不能排序。 (实现类:HashSet)
+List允许重复元素和多个null值，有指定顺序，可作排序. (实现的类:ArrayList,Vector)
+
+集合类中toArray的使用方法:
+	可以让集合类的toArray方法返回其声明时指定的数据类型的数组，方法如下: 
+  例:
+	这是一个指定类型为String的数组:
+	其声明为:ArrayList<String> dataTypes=new ArrayList<String>();
+	dataTypes.toArray(new String[dataTypes.size()]);

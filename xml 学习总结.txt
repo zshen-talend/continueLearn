@@ -1,0 +1,135 @@
+上面我们已经简要的讲述了一些XML的基本原理，我们来看看它们之间的关联以及它们是如何工作的，先看这里一张图： 
+
+1.XML描述数据类型。例如:"King lear"是一个标题元素； 
+
+2.CSS储存并控制元素的显示样式。例如：标题将被以18pt字体显示 
+
+3.script脚本控制元素如何动作。例如：当一个title元素"out of stock"，将被用红色显示。 
+
+4.DOM则为脚本和对象的交流提供一个公共平台，并将结果显示在浏览器窗口。 
+
+有关术语
+1.Element(元素)：
+元素在HTML我们已经有所了解，它是组成HTML文档的最小单位，在XML中也一样。一个元素由一个标识来定义，包括开始和结束标识以及其中的内容，就象这样：<author>ajie</author> 
+唯一不同的就是：在HTML中，标识是固定的，而在XML中，标识需要你自己创建。
+
+2.Tag(标识) 
+标识是用来定义元素的。在XML中，标识必须成对出现，将数据包围在中间。标识的名称和元素的名称是一样的。例如这样一个元素：
+<author>ajie</author> 
+其中<author>就是标识。
+
+3.Attribute(属性): 
+什么是属性？看这段HTML代码:<font color="red">word</font>。其中color就是font的属性之一。
+属性是对标识进一步的描述和说明，一个标识可以有多个属性，例如font的属性还有size。XML中的属性与HTML中的属性是一样的，每个属性都有它自己的名字和数值，属性是标识的一部分。举例：
+<author sex="female">ajie</author>
+XML中属性也是自己定义的，我们建议你尽量不使用属性，而将属性改成子元素，例如上面的代码可以改成这样：
+<author>ajie
+<sex>female</sex>
+</author>
+原因是属性不易扩充和被程序操作。
+
+4.Declaration(声明) 
+在所有XML文档的第一行都有一个XML声明。这个声明表示这个文档是一个XML文档，它遵循的是哪个XML版本的规范。一个XML的声明语句就象这样：
+<?xml version="1.0"?> 
+
+5.DTD(文件类型定义) 
+DTD是用来定义XML文档中元素，属性以及元素之间关系的。
+通过DTD文件可以检测XML文档的结构是否正确。但建立XML文档并不一定需要DTD文件。关于DTD文件的详细说明我们将在下面单独列项。
+
+6.Well-formed XML(良好格式的XML)
+一个遵守XML语法规则，并遵守XML规范的文档称之为"良好格式"。如果你所有的标识都严格遵守XML规范，那么你的XML文档就不一定需要DTD文件来定义它。
+良好格式的文档必须以一个XML声明开始，例如：
+<?xml version="1.0" standalone="yes" encoding="UTF-8"?>
+其中你必须说明文档遵守的XML版本，目前是1.0；其次说明文档是"独立的"，它不需要DTD文件来验证其中的标识是否有效；第三，要说明文档所使用的语言编码。默认的是UTF-8，如果使用中文，你需要设置为GB2312。
+良好格式的XML文档必须有一个根元素，就是紧接着声明后面建立的第一个元素，其它元素都是这个根元素的子元素，属于根元素一组。
+良好格式的XML文档的内容书写时必须遵守XML语法。(有关XML语法我们将在下一章仔细讲解)
+
+7.Valid XML(有效的XML)
+一个遵守XML语法规则，并遵守相应DTD文件规范的XML文档称为有效的XML文档。注意我们比较"Well-formed XML"和"Valid XML"，它们最大的差别在于一个完全遵守XML规范，一个则有自己的"文件类型定义(DTD)"。
+将XML文档和它的DTD文件进行比较分析，看是否符合DTD规则的过程叫validation(确认)。这样的过程通常我们是通过一个名为parser的软件来处理的。
+有效的XML文档也必须以一个XML声明开始，例如：
+<?xml version="1.0" standalone="no" encode="UTF-8"?>
+和上面例子不同的，在standalone(独立)属性中，这里设置的是"no"，因为它必须和相应的DTD一起使用，DTD文件的定义方法如下：
+<!DOCTYPE type-of-doc SYSTEM/PUBLIC "dtd-name"> 
+其中：
+"!DOCTYPE"是指你要定义一个DOCTYPE;
+"type-of-doc"是文档类型的名称，由你自己定义，通常于DTD文件名相同；
+"SYSTEM/PUBLIC"这两个参数只用其一。SYSTEM是指文档使用的私有DTD文件的网址，而PUBLIC则指文档调用一个公用的DTD文件的网址。
+"dtd-name" 就是DTD文件的网址和名称。所有DTD文件的后缀名为".dtd"。
+我们还是用上面的例子，应该写成这样：
+<?xml version="1.0" standalone="no" encode="UTF-8"?>
+<!DOCTYPE filelist SYSTEM "filelist.dtd"> 
+
+8.document(文档元素)
+document和Element一样,也是Node的子类，由document创建的Element也需要使用同样的方法把Element串接起来，才连成真正的文档。
+
+9.Node(节点元素)
+Elemet和Document的父类。
+
+
+下面我们来了解DTD有关的术语：
+
+8.Schema(规划) 
+schema是数据规则的描述。schema做两件事：
+a.它定义元素数据类型和元素之间的关系；
+b.它定义元素所能包含的内容类型。
+DTD就是关于XML文档的一个schema。
+
+9.Document Tree(文档树) 
+"文档树"在前面第二章我们已经提到过，它是文档元素分级结构的形象表示。一个文档结构树包含根元素，根元素是最顶级的元素，(就是紧接着XML声明语句后的第一个元素)。看例子：
+<?xml version="1.0"?>
+<filelist> 
+<myfile>
+<title>...</title>
+<author>...</author>
+</myfile>
+</filelist>
+上面的例子分三级结构排列成"树"状，其中的<filelist>就是根元素。在XML和DTD文件中，第一个定义的都是根元素。
+
+10.Parent Element(父元素)/Child Element(子元素)
+父元素是指包含有其它元素的元素，被包含的元素称为它的子元素。看上面的"结构树"，其中<myfile>是父元素，<title>,<author>是它的子元素，而<myfile>又是<filelist>的子元素。象<title>这样没有包含任何子元素的最后一级元素我们也称之为"页元素"。
+
+11.Parser(解析软件) 
+Parser是一种检查XML文档是否遵循DTD规范的工具软件。
+XML的parser发展为两类：一种是"非确认类paeser"，只检测文档是否遵守XML语法规则，是否用元素标识建立了文档树。另一种是"确认类paeser"，它不但检测文档语法，结构树，而且比较解析你使用的元素标识是否遵守了相应DTD文件的规范。
+Parser能独立使用，也可以成为编辑软件或浏览器的一部分。在后面的相关资源列表里，我列出了当前比较流行的一些parsers。
+
+
+声明的解释
+<?xml version="1.0" standalone="yes/no" encoding="UTF-8"?> 
+声明的作用是告诉浏览器或者其它处理程序：这个文档是XML文档。声明语句中的version表示文档遵守的XML规范的版本；standalone表示文档是否附带DTD文件，如果有，参数为no；encoding表示文档所用的语言编码，默认是UTF-8。
+
+DTD声明解析
+<!DOCTYPE type-of-doc SYSTEM/PUBLIC "dtd-name"> 
+其中：
+"!DOCTYPE"是指你要定义一个DOCTYPE;
+"type-of-doc"是文档类型的名称，由你自己定义，通常于DTD文件名相同；
+"SYSTEM/PUBLIC"这两个参数只用其一。SYSTEM是指文档使用的私有DTD文件的网址，而PUBLIC则指文档调用一个公用的DTD文件的网址。
+"dtd-name" 就是DTD文件的网址和名称。所有DTD文件的后缀名为".dtd"。
+我们还是用上面的例子，应该写成这样：
+<?xml version="1.0" standalone="no" encode="UTF-8"?>
+<!DOCTYPE filelist SYSTEM "filelist.dtd">
+
+
+元素语法
+1.名称中可以包含字母、数字以及其它字母； 
+
+2.名称不能以数字或"_" (下划线)开头； 
+
+3.名称不能以字母 xml(或 XML 或 Xml ..)开头 
+
+4.名称中不能包含空格 
+
+5.名称中间不能包含":"(冒号)
+
+注释方法
+<!-- 这里是注释信息 -->
+
+名字空间的定义
+<document xmlns:zhuozi='http://www.zhuozi.com'>
+
+xml文件的要求格式
+	1:所有的元素都要正确地关闭
+	2:标签之间不得交叉
+	3:所有属性都得包上引号
+	

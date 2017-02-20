@@ -1,0 +1,8 @@
+<?xml version="1.0" encoding="UTF-8"?><?xml-stylesheet type='text/xsl' href='_UpgradeReport_Files/UpgradeReport.xslt'?><UpgradeLog>
+<Properties><Property Name="Solution" Value="xp_pcre">
+</Property><Property Name="解决方案文件" Value="E:\学习总结\xp_pcre\xp_pcre.sln">
+</Property><Property Name="Date" Value="2016年2月4日">
+</Property><Property Name="Time" Value="18:45">
+</Property></Properties><Event ErrorLevel="0" Project="" Source="xp_pcre.sln" Description="成功转换解决方案">
+</Event><Event ErrorLevel="3" Project="" Source="xp_pcre.sln" Description="Converted">
+</Event></UpgradeLog>

@@ -1,0 +1,418 @@
+Asp与Jsp区别
+	Asp: 源文件，s,com->注册，只适应NT 2000
+	Jsp:bytecode,Jvm;javaBean,完全oop
+
+TOMCAT-->雄猫
+
+JSP项目结构
+	浏览器(HTML,JAVASCRIPT,STATIC)--HTTP-->服务器(JSP,SERVLET,JAVABEAN)--JDBC-->数据库
+
+tomcat结构
+启动tomcat
+	tomcat start;startup
+终止
+	tomcat stop
+	shutdown
+tomcat/
+	bin/一些批处理文件
+	conf/两个重要的xml文件
+		web.xml定义网站的启动页
+		server.xml定义了端口等的配置信息
+	doc一些帮助文档
+	lib存放了库文件其中包括servlet.jar包
+	logs日志文件
+	src示例的源文件代码(java)
+	webapp/自己的工程就建在这里且要把WEB-INF加入到自己的文件夹下
+		自己的文件夹下/CLASS/类文件和编译好的文件
+				以及.html和.jsp文件
+		等
+	work/由jvm翻译出的bytecode且万不得已不可改动由虚拟机自己维护
+
+<!-- -->	注释标记
+		发送到客户端但不显示，有";"
+
+<% %>		脚本段标记，有";"
+
+<%-- --%>	隐藏注释(程序注释)
+		不会发送到客户端但在其原文件中会留空行	
+
+<%! %>		声明
+		内容其实为java的声明语句，且需要有";"
+		函数必须写在声明中，不能写在其它的符号内部。
+
+<%= %>		表达式
+		输出一段字符串或运算结果，且因为是表达式所以没有";"
+		存在一个类型自动转换，其它类型-->String类型
+
+jsp中的两种编码格式
+<%@ page language="java" contentType="text/html; charset=utf-8"   pageEncoding="utf-8"%>
+		pageEncoding表示的是该JSP页面的编码，也就是你要保存一个JSP页面，系统会以这个编码来保存 charset指得是当前页面显示用的编码。 Eclipse中如果你设置了Window\preferences\jsp files面版上的Encoding为某一个值如GB2312，则以后新建一个JSP文件的时候系统会自动加上pageEncoding＝"GB2312"这一属性。记得在<head></head>中加入<meta http-equiv="Content-Type" content="text/html; charset=GB2312">注意这句话应是在<head>之后的首句话，因为有可能<title></title>中使用了中文。
+
+
+<%@ include %>		包含指令.其中"@"表示动作指令，等同于静态的预编译
+	file="url"	url可以是.html或者.jsp
+	
+<%@ page %>		page指令定义全局属性
+	language	语言类型"java"默认为"java"
+	extends		继承某个类，整个页面
+	import		需要导入的包，默认导入(java.lang.*,javax.servlet.*,javax.servlet.jsp.*
+			javax.servlet.http.*)
+	session		"true|false"同一用户的每次连接是否看成是一个会话
+	buffer		设置缓冲区大小"none|8Kb|sizeKb"默认是8Kb
+	autoFlush	自动刷新默认为true
+	isThreadSafe	是否多线程默认为true
+	info		描述信息
+	errorPage	设置异常处理事件的jsp文件
+	isErrorPage	设置本页是否为出错页
+	contentType	设置MIME类型默认为ISO-8859-1
+	
+<%@ taglib uri= prefix= %>				taglib指令
+	uri		标签库的位置
+	prefix		前缀
+
+<jsp:forward>		重定向到一个jsp文件、html文件、或者是一个程序
+	page		定向到的文件位置或文件位置表达式
+注意：被重定向以后的代码将不能执行
+
+<jsp:include>		包含一个静态、动态文件
+	page		文件位置或文件位置表达式
+	flush		自动刷新缺省为false，需要改为true
+
+<jsp:plugin>		插入一个applet或bean
+	type		插入的插件类型"bean|applet"
+	code		将被插件执行的类
+	codebase	将被插件执行的类的文件目录
+	name		这个applet或bean的名字
+	archive		相关类的位置做预处理
+	align		页面位置"bottom|top|left|right|middle"
+	height		高度
+	width		宽度
+	hspace		水平边距
+	vspace		垂直边距
+	jreverion	版本号默认为1.1
+
+<jsp:params>		多个参数传递
+	[<jsp:param name= value=>]
+</jsp:params>
+
+<jsp:fallback>text</jsp:fallback>
+			插件不能启动时显示
+
+<jsp:useBean>		创建一个Bean示例并只定它的名字和作用范围
+	id		Bean实例名称，创建或声明需要使用该对象
+	scope		有效范围"page|request|session|application"默认为page
+	class		package.class创建该Bean的类
+	type		package.class重新赋给已存在Bean一个新类型
+	beanname	用java.bean.Beans.instantiate方法创建实例	
+
+<jsp:setProperty />	设置Bean的属性值，只对Bean有效
+	name		Bean实例的名称
+	property="*"	从请求中自动匹配所有Bean中的方法
+	property="propertyName"	指定匹配
+	property="propertyName" value=""	手动匹配
+
+<jsp:getProperty />	获取Bean属性值
+	name		bean的名字
+	property	要获取的属性名
+
+内置对象
+request 	javax.servletRequest的子类 	request 
+	来自客户端的请求（form提交的）
+	方法：
+	public java.lang.String	getParameter(java.lang.String name)
+		获得参数通过变量名
+	public java.util.Enumeration getParameterNames()
+		获取参数名
+	public java.lang.String[] getParameterValues(java.lang.String name)
+		获取参数值
+	public java.lang.Object getAttribute(java.lang.String name)
+		获取参属性
+	public java.util.Enumeration getAttributeNames()
+		获取属性名
+	public java.lang.String getCharacterEncoding()
+		获得字符编码方式
+	public int getContentLength()
+		获取内容长度
+	public java.lang.String getContentType()
+		内容类型
+	public ServletInputStream getInputStream()throws java.io.IOException
+		获得输入流
+	java.lang.String getProtocol()
+		获得协议
+
+
+response 	javax.servletResponse的子类	page
+	对客户端的响应 以流的方式组织发送到客户端的数据（字符可用out代替）
+	方法:
+		public java.lang.String getCharacterEncoding()
+
+		public java.io.printWriter getWriter()throws java.io.IOException
+
+		public void setContentLength(int len)
+
+		public void setContentType(java.lang.String type)
+
+		public ServletOutputStream getOutputStream()throws java.io.IOException
+
+		public void addCookie(Cookie cookie)
+pageContext 	javax.servlet.jsp.PageContext 	page
+	当前页面运行的属性
+	方法:
+		public abstract void release()
+
+		public abstract void setAttribute(java.lang.String name,java.lang.Object attribute)		
+	
+		public abstract void setAttribute(java.lang.String name,java.lang.Object attribute,int scope)
+
+		public abstract java.lang.Object getAttribute(java.lang.String name)
+
+		public abstract java.lang.Object getAttribute(java.lang.String name,int scope)
+
+		public abstract java.lang.Object findAttribute(java.lang.String name)
+
+		public abstract void removeAttribute(java.lang.String name)
+
+		public abstract void removeAttribute(java.lang.String name,int scope)
+
+		public abstract int getAttributeScope(java.lang.String name) 
+
+		public abstract java.util.Enumeration getAttributeNamesInScope(int scope)
+
+		public abstract JspWriter getOut()
+
+		public abstract HttpSession getSession()
+
+		public abstract java.lang.Object getPage()
+
+		public abstract ServletRequest getRequest()
+
+		public abstract ServletResponse getResponse()
+
+		public abstract java.lang.Exception getException()
+
+		public abstract servletConfig getServletConfig()
+
+		public abstract servletContext getServletContext()
+		
+		public abstract void forward(java.lang.String relativeUrlPath)throws ServletException,java.io.IOException
+
+		public abstract void include(java.lang.String relativeUrlPath)throws ServletException,java.io.IOException
+
+		public abstract void handlePageException(java.lang.Exception e)throws ServletExcep
+
+session		javax.servlet.http.HttpSession 	session 
+	服务器与客户建立的会话（客户要先打开cookie）
+	方法:
+		public long getCreationTime()毫秒
+			会话创建时间
+		public java.lang.String getId()
+
+		public long getLastAccessedTime()毫秒
+			最后一次连接时间
+		public int getMaxInactiveInerval()
+			会话最大时间间隔
+		public void setMaxInactiveInterval(int interval)秒
+			设置会话最大时间间隔
+		public java.lang.Object getValue(java.lang.String name)
+
+		public java.lang.String[] getValueNames()
+
+		public void invalidate()
+			断开用户与session的连接
+		public booleanisNew()
+			判断对象是否为新创建的，当不能与用户建立连接时可判断cookie被关闭了
+		public void putValue(java.lang.String name,java.lang.Object value)
+			向对象放入一个值
+		public void removeValue(java.lang.String name)
+			从对象中移除一个值
+
+		
+application	javax.servlet.ServletContext 	application
+	应用程序在服务器中运行的一些全局信息
+	方法:
+		pblic ServletContext getContext(java.lang.String uripath)
+			
+		public int getMajorVersion()
+			servlet api的版本
+		public java.lang.String getMimeType(java.lang.String file)
+			html的类型
+		public int getMinorVersion()
+			次级版本号
+		public java.net.URL getRsource(java.lang.String path)throws java.net.MalformedURLException
+			path可以使网络路径
+
+		public java.io.InputStream getResourseAsStream(java.lang.String path)
+
+		public ResquestDispatcher getRequestDispatcher(java.lang.String urlpath)
+
+		public void log(java.lang.String msg)
+
+		public void log(java.lang.String message,java.lang.Throwable throwable)
+
+		public java.lang.String getRealPath(java.lang.String path)
+			虚拟-->实际
+		public java.lang.String getServerInfo()
+
+		public java.lang.Object getAttributeScope(java.lang.String name) 
+
+		public java.util.Enumeration getAttributeNames()
+
+		public void setAttribute(java.lang.String name,java.lang.Object attribute)
+
+		public void removeAttribute(java.lang.String name)
+
+
+out		javax.servlet.jsp.JspWriter 	page
+	向客户端发送数据的对象(文本)
+	方法
+		public abstract void newLine()throws java.io.Excepton
+			输出一个换行符
+		public abstract void print(oneParameter)throws java.io.Excepton
+			输出参数所代表的值
+		public abstract void println(oneParameter)throws java.io.Excepton
+			比print多一个换行
+		public abstract void clear()throws java.io.Excepton
+			清空输出
+		public abstract void clearBuffer()throws java.io.Excepton
+			清空缓冲
+		public abstract void flush()throws java.io.Excepton
+			刷新
+		public abstract void close()throws java.io.Excepton
+			关闭
+		public int getBufferSize()
+			返回缓冲区大小
+		public abstract int getRemaining()
+			返回缓冲生于大小
+		public boolean isAutoFlush()
+			判断是否自动刷新
+config		javax.servlet.ServletConfig	page
+	提供一些初始化的配置信息
+	方法:
+		public java.lang.String getInitParameter(java.lang.String name)
+			
+		public java.util.Enumeration getInitParameterNames()
+
+		public ServletContext getServletContext()
+
+		
+page		javax.lang.Object		page
+	运行时的JSP文件产生的对象
+	方法:
+		public final class getClass()
+			获得对象所述的类
+		public int hashCode()
+			获得代码
+		public boolean equals(Object obj)
+			比较
+		protected Object clone()throws CloneNotSupportedException
+			复制
+		public String toString()
+			字符串表达
+		public final void notify()
+			线程相关
+		public final void notifyAll()
+			线程相关
+		public final void wait()throws InterruptedException
+			线程相关
+		protected void finalize()throws Throwable
+			线程相关
+		
+exception	javax.lang.Throwable		page
+	运行时的例外对象(自动)只有在错误处理页中才能被使用的对象errorPage所指向的页
+	方法:
+		public String getMessage()
+
+		public String getLocalizedMessage()
+	
+		public String toString
+			类名+:+getMessage()
+		public void printStackTrace()
+			列出作用范围大-->小
+		public Throwable fillInStackTrace()
+			重抛例外对象
+		
+开发中遇到的问题
+	中文乱码问题：
+			浏览器中使用的是8bit的UTF编码，而传到JSP中后要转为中文的16位unicode格式
+			而每8位都会默认转化为16位，这样就拆分了原有的中文字符。
+
+
+	解决方法：
+			1把转化后的16位编码，强制转成byte类型，再转成字符串。即手工类型转换
+			2用输出流跳过自动类型转换。
+post和get乱码
+	post发送请求的时候，使用的编码是iso-8859-1，意味着只有英文是有效字符，这个限制是因为当初定http标准的成员都来自英语国家，所以如果使用默认的方式从请求获取数据，中文一定会全部变成乱码。
+
+为什么英文就没有问题呢？因为在iso-8859-1，gb2312, utf-8以及任意一种编码格式下，英文编码格式都是一样的，每个字符占8位，而中文就麻烦了，在gb2312下一个中文占16位，两字节，而在utf-8下一个中文要占24位，三字节。浏览器在不知道确定编码方式的情况下，就会把这些字符从中间截断，再显示的时候就乱掉了。所以，想要解决乱码问题，就是要告诉浏览器我们到底使用了什么样的编码方式。
+
+页面乱码
+I、对本地文件index.jsp的pageEncoding属性检查，因为服务器接到请求后首先是找这个文件。pageEncoding可设为GB18030,GB2312,UTF-8
+  II、JSP使用<%@ page  contentType="text/html; charset=GB2312" %>为响应添加编码信息，这里如果charset="ISO-8859-1",显示出来的中文肯定是乱码。
+  III、记得在<head></head>中加入<meta http-equiv="Content-Type" content="text/html; charset=GB2312">注意这句话应是在<head>之后的首句话，因为有可能<title></title>中使用了中文，
+  如果加在</title>后，则title内容显示会出现乱码。这里的charset值最好与contentType中的charset值一致。
+  经过上面三步即可解决响应乱码即显示出来的页面中有乱码的情况。
+
+response.sendredircter("url");
+只能在servlet全部运行完了最后执行
+
+form表提交的对象只能被取出一次
+
+request patameter和attribute的区别
+1.Request.Params["id"] 
+　　Request.Form["id"] 
+　　Request.QueryString["id"] 
+　　Request.Params是所有post和get传过来的值的集合,Request.Form是取post传值, Request.QueryString是get传过来的值 
+
+2.attribute设置或者操作的是对象而在
+	page request session application这四种范围中作用是一样的，只是范围不同。
+3.paramter取得的是一个String,attribute取得的是一个object
+
+
+
+
+在IE中打开word excel pdf文件
+public class TestOpenExcel extends HttpServlet {    
+   
+private static final String url = "D:/test.xls";    
+   
+protected void doGet(HttpServletRequest request,    
+    HttpServletResponse response) throws ServletException, IOException {    
+   
+  /** 
+    * setContentType设置MIME类型，Acrobat 
+    * PDF文件为"application/pdf"，WORD文件为："application/msword"， jsp的图片也可以用它打开
+    * EXCEL文件为："application/vnd.ms-excel"。 
+    */   
+   response.setContentType("application/vnd.ms-excel");    //同时在这里还可以设置charset
+  /** 
+    * setHeader设置打开方式，具体为：inline为在浏览器中打开，attachment单独打开。 
+    */   
+response.setHeader("Content-disposition", "inline;filename=\"" + "test.xls"+ "\";");    
+   
+   ServletOutputStream sos = response.getOutputStream();    
+   FileInputStream fis = new FileInputStream(url);    
+      
+   BufferedOutputStream bos = new BufferedOutputStream(sos);    
+  byte[] bytes = new byte[8192];      
+   bos.write(bytes, 0, fis.read(bytes));    
+   fis.close();    
+   sos.close();    
+   bos.close();    
+   
+   
+}    
+   
+   
+protected void doPost(HttpServletRequest request,    
+    HttpServletResponse response) throws ServletException, IOException {    
+   doGet(request, response);    
+}    
+   
+}    
+
+
+路径问题
+	绝对路径:路径前面加"/"。
+	相对路径:路径前面什么也不加，系统会默认加上<%=request.getContentPath%>.
+	css文件中的相对路径，默认为当前文件所在路径。
+	jsp中的相对路径，在sword中只加/swordapp,也就是根目录。

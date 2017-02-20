@@ -1,0 +1,36 @@
+<property name="src.dir" value="src"/>
+变量的定义变量名为src.dir后缀可以任意起。
+
+<path id="master-classpath">定义编译文件所引用的库。
+	<fileset>项表示一个文件集，旗下的<include>就对应到每个文件。而这些文件的路径就相对于<fileset>的属性。
+
+<delete dir="${bin.dir}">删除路径为bin.dir变量的目录。
+
+<mkdir dir="${bin.dir}">建立路径为bin.dir变量的目录。
+
+<javac srcdir="${src.dir}" destdir="${bin.dir}" target="1.4">编译srcdir到destdir路径，且使用JDK1.4。
+	<classpath refid="master-classpath">指编译时的类路径引用前面设定的master-classpath。
+
+<copy todir="${bin.dir}/icons">
+	<fileset dir="icons"/>
+</copy>
+拷贝fileset路径的内容到todir路径中。
+
+
+<jar basedir="${bin.dir}" destfile="${dist.dir}/myswt.jar" manifest="ant_manifes.txt">
+	<exclude name="">
+	<exclude name="">
+</jar>
+规定了打包的源路径和目标路径，以及打包清单文件。并通过exclude name=通配符排除掉一些文件不打包。
+
+<target name="" dependes="">规定本任务的名称以及本任务所依赖的任务。
+
+1.目录的使用
+	1)../ 	到build.xml文件所在的上一级
+	2)    	紧跟build.xml所在目录
+	3)/   	到当前的根目录
+  	4)C:\ 	绝对路径
+
+2.关于javac时,其它包的路径问题
+	要求destdir的目录与jar包的目录一致
+	

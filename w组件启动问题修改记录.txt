@@ -1,0 +1,5 @@
+1.因为路径问题"/"与"\"的区别导致component不能正确加载
+修改位置:ComponentsFactory line:661
+pathName = pathName.replace(applicationPath, "");
+-->
+pathName = pathName.replace(new Path(applicationPath).toOSString(), "");

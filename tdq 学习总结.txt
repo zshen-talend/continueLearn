@@ -1,0 +1,1391 @@
+//$NON-NLS-1$文字的注释
+folderObjFilter 83
+fileTreeLabelProvider 88
+
+IndicatorOptionsWizard 指示器操作向导
+
+在org.talend.dataprofiler.core.ui中有很多相关的视图和向导页。
+
+Zqljar包
+
+1.配置JDBC驱动
+	在window->Preference在Data Explorer的JDBC Drivers中可以配置数据库的驱动程序。
+
+2.关于数据库的连接向导
+	数据库连接的向导页DatabaseConnectionWizard，在org.talend.dataprofiler.core插件中的，并通过WizardDialog.open()打开。org.talend.dataprofiler.core.ui.wizard目录下。
+	创建数据库连接的Action==>CreateConnectionAction在上面的ui下的action下的actions中。
+
+3.向导工厂
+	在上面同样路径下的WizardFactory,包含了创建这些向导页的方法。
+	通过给定的AnalysisType和packaFilterParameter可以创建相应类型的向导。从而生成新的对应解析。
+
+4.用于返回值的类
+	ReturnCode，在org.talend.utils下，可以存放boolean和String用于返回一次执行的结果信息。
+
+5.DataProviderHelper
+	帮助从TdProviderConnection类实例中取得用户信息等数据。
+
+6.数据库的驱动默认的存储列表
+	net.sourceforge.sqlexplorer工程下的default_drivers.xml文件，里面存储着驱动的名称和对应列表。如果是第一次加载或者运行时的文件被初始化，就需要用工具URLUtil.getResourceURL("default_drivers.xml")的方法重新加载。
+	
+7.DriverManager类
+	管理所有驱动的加载等，并通过解析xml得到这些数据。
+	DataQuality_runtime\.metadata\.plugins\net.sourceforge.sqlexplorer
+中的SQLDrivers.xml、SQLAliases.xml、SQLHistory.xml都是在这里创建和维护的。
+
+8.ManagedDriver类
+	封装了驱动的信息。	
+
+9.ResourceBundle
+	通过ResourceBundle.getBundle(BUNDLE_NAME)取得要绑定的文件信息对象，最后通过RESOURCE_BUNDLE(前面产生的绑定对象).getString(key);的方法取出key关键字所对应的字符串信息。
+
+10.net.sourceforge.sqlexplorer项目中
+	包括视图
+		Data Explorer(category)
+		Database Structure(view)
+		Database Detail(view)
+		Connections(view)
+		SQL History(view)
+		Data Preview(view)
+	包括编辑器
+		Sql Editor(editor)
+		File List Editor(editor)
+	包括首选页
+		Data Explorer(page)
+		JDBC Drivers(page)
+		SQL Editor(page)
+		Confirmations(page)
+
+11.DataProviderHelper
+	帮助从DataProvider或者ModelElement取出和设置相关信息。其中DataProvider和ModelElement都是从EMF产生的接口，且DataProvider实现了ModelElement,但用法不详。
+
+12.Alias
+	保存连接信息的类
+
+
+13.org.talend.dataprofiler.core
+	Data Profiler(category)
+	DQ Repository(view)
+	Detail View(view)
+	Pattern Test ViewScope(view)
+	AnalysisEditor(editor)
+	ConnectionEditor(editor)
+	PatternEditor(editor)
+	DQRuleEditor(editor)
+	IndicatorEdior(editor)
+	
+14.DQRespositoryView
+	继承自CommonNavigator,通过getCommonViewer().getTree能够取得视图上的树。并且通过setMenu(menu)方法能够设置树上的菜单。
+	CommonNavigator类在createPartControl()方法中创建了commonViewer视图并且初始化了输入。
+	treeExpanded()树结点扩展的执行方法。
+	并且在构造函数中，通过DQstructureManager产生了初始文件夹。
+	它的contentprovider和labelProvider都是通过扩展点实现的：
+		DQRepositoryViewContentProvider
+		DQRepositoryViewLabelProvider
+	或
+		ResourceViewContentProvider
+		ResourceViewLabelProvider
+
+	其中视图要显示的内容是还可以通过filter来过滤，这些过滤器在这个视图类中定义。
+
+15.EMFObjFilter
+	继承自AbstractViewerFilter->ViewerFilter,在第一层中有getId()来取得结点ID，后一个类中有select()需要实现，来判断当前选择的是哪些对象。
+
+16.MenuManager
+	可以用来添加addMenuListener(new IMenuListener()
+		menuAboutToShow()当显示菜单时，启动该方法。
+
+17.SwitchHelpers
+	集合了很多的选择方法，帮助确定需要的对象是否包含其中。
+	这里面的属性都是静态的常量。每个属性实现一个内部类，并重载从特定对象中取得变量的方法。这样每次从这里取得的变量地址就相同了。
+
+Microsoft MSSQL Server JDBC Driver
+
+18.AnalysisEditor分析结果编辑器
+	继承自CommonFormEditor,其中包含两页，masterPage和resultPage。
+	字段：
+		masterPage：主要为设计页，设置要分析的参数等。
+		resultPage：主要为结果显示页，包括图形和表格在内的结果数据。
+	方法：
+		getMasterPage():取得主设计页
+
+
+19.参数的新写法
+	定义addActions(Action... theAction);
+	引用toolbar.addActions(saveAction, runAction, refreshAction);
+
+20.PropertyChangeListener接口
+	此接口必须实现方法为propertyChange();
+
+21.ColumnCorrelationNominalIntervalResultPage
+	继承了AbstractAnalysisResultPage
+	实现了PropertyChangeListener
+	主要为列相关性分析结果显示页。
+属性
+	masterPage主页
+	
+方法
+	createFormContent()打开该页时调用	
+
+
+22.SQLExplorerPlugin
+	start方法中初始化数据库驱动信息。
+
+33.WorkbenchPage
+	init方法初始化了input 
+
+34.CommonNavigator
+	createPartControl()方法中为commonViewer设置了input
+
+35.AnalysisHandler
+	方法:
+		getExecuteData()取得当前执行的日期
+
+36.JungGraphGenerator
+	图形产生工具类
+
+37.Color
+	Display.getDefault().getSystemColor(SWT.COLOR_GRAY)
+
+38.LineRender
+	封装了PluggableRenderer
+	区别在于构造函数:
+		通过setEdgeShapeFunction(new EdgeShape.Line())把图形中的边重载为了直线，以及结点和边上的字符串。
+
+39.GraphBuilder
+	为建立一个图形提供数据帮助
+
+40.UndirectedSparseEdge
+	无方向的边图形，继承自UserDataDelegate，可以通过对属性userDatum的的操作，管理图形中所加载的数据。
+
+41.Summary Statistics
+	仅能在整数且不是主键列上使用。
+	mean平均值
+	median 中间几位的平均值
+	Inter Quartile Range "upper quartile"-"lower quartile"
+	lower quartile 排序后较小的一半数据的平均值
+	upper quartile 排序后较大的一半数据的平均值
+	Range maximum-minimum
+	minimum 最小值
+	maximum 最大值
+
+42.Frequency Table
+	如果该列是日期格式的，可以设置讨论的是year、week等
+
+43.tdqee
+	tdqee是发布的独立版本，测试feature的时候，要用这个来进行在oldbuilder中。
+
+44.cnf中对drag的支持
+	首先，在org.eclipse.ui.navigator.viewer扩展中添加结点dragAssisant,把view和一个扩展CommonDragAdapterAssistant的类关联起来。
+	然后，CommonViewer在init()会调用initDragAndDrop()方法，而在该方法中的getSupportedDragTransfers()方法通过contentService
+				.getDnDService().getCommonDragAssistants()取得所有扩展了CommonDragAdapterAssistant的类，从而执行相应的dragStart、dragSetData、dragFinished方法。
+
+Policy的类控制着拖拽的debug参数，查找如何使用。
+
+45.cnf中对drop的支持
+	在org.eclipse.ui.navigator.navigatorContent扩展中添加navigaorContent结点，然后在其中添加dropAssistant的结点，并且在其中定义possibleDropTargets
+
+46.ResourceManager
+	在其中定义了很多判断默认文件夹的方法，如ResourceManager.isAnalysisFolder(folder)
+
+47.ColumnSetMultiValueIndicatorImpl
+	定义了indicator关于列信息的取得方法。且传输多个数据时用BasicEList的类实现的。
+	其中通过eGet方法分配了不同种类数据的取得方法。
+
+48.AnalysisContextImpl
+	与47号类相似，如果想得到某些AnalysedELement就要用这个类的getAnaiysedElements()方法，并以EObjectResolvingElist方式传递，其中涉及到很多参数还不能理解。
+
+49.AnalysisColumnTreeViewer
+	解析器列的树形视图，在AnalysisEditor中的一个视图。列出了要解析的列和参与解析的Indicators
+
+50.IndicatorOptionsWizard
+	编辑指示器(indicator)时的向导，其中只包含了一个DynamicIndicatorOptionsPage向导页，通过它可以为解析器添加参数。
+
+51.DynamicIndicatorOptionsPage
+	动态指示器(indicator)操作页，具体包含了可以操作的参数数量。在这里由于加入的是form所以在构造函数中要加入IndicatorUnit类型的参数，来指示具体建立成哪种样式。
+	在其中有个AbstractIndicatorForm.ICheckListener类型的属性listener负责对用户的输入做监听监测。
+
+52.DefaultMessagesImpl
+	通过继承MessagesCore实现了资源绑定的功能。在这里首先通过ResourceBundle.getBundle(BUNDLE_NAME)定义了ResourceBundle属性，其中BUNDLE_NAME是绑定的文件名称，不包括后缀。
+	还有属性PLUGIN_ID作为参数可以启用国际化，而国际化的实现是通过BabiliTool来实现的。关于BabiliTool以后再说。
+
+53.WizardDialog
+	所有的通过对话框打开的向导页都要调用WizardDialog，而在它的createContents分别调用了我们定义向导的addPage()、又通过createPageControls分别调用了向导中每个向导页的createControl()方法。
+
+54.IndicatorThresholdsForm
+	对话框表单中的一种，在其中添加了各种各样的监听。
+
+55.CheckValueUtils
+	通过正则表达式，在其中定义了很对输入的效验，如isNumberValue(String)
+
+56.DQStructureManager
+	管理了视图中创建初始文件夹得方法。
+	是否需要migration也在这里判断
+
+57.ReponsitoryContextBridge
+	其中定义了项目名称、默认名称、作者而且是以静态变量的形式存储的。
+
+58.project: org.talend.dataquality org.talend.resource.xml 中
+branch3.2 add
+	TdqDatabaseProperties
+	TdqFolderProperties
+	TdqPropertieManager
+	TdqProperties
+	共同完成了为文件夹添加属性的任务，其中Analysis的拖动就是在这里通过FOLDER_CLASSIFY_KEY关键字控制属性的。
+
+59.ResourceService
+	判断了Resource间的从属关系，以及资源的相关属性，只读等等。
+
+60.EResourceConstant
+	定义了重要资源的相关常量，通过getResourceConstant方法可以找到一个file是属于何种根资源的。
+
+61.ResourceConstant
+	定义了资源属性的常量。如只读和有否子文件夹等等。
+
+62.actionProvider
+	在扩展点org.eclipse.ui.navigator.navigatorContent中
+		可以通过新建actionProvider这个导航视图中的特定资源来添加指定的action,并且在它的实现类中会有fillContextMenu方法来通知这个action是否应该添加到当前的弹出菜单中。如NewAnalysisActionProvider类。
+
+63.HelpSystem
+	保存了所有的帮助信息，可以通过getContext(HelpPlugin.getDefault().getAnalysisHelpContextID())来获得所有与解析有关的帮助内容。同样如果用getDQRulesHelpContextID()，就可以获得所有与规则相关的帮助内容。具体的使用，参见NewWizardSelectionPage类的选择监听方法selectionChanged()中。
+
+64.向导页的使用
+	一旦向导页改变了完成状态(setPageComplete(boolean)),通过当前的状态和有否下一页，来判断"下一步"操作是否可用。
+
+65.AnalysisTypeNode
+	在新建一个解析，选择解析类型时，选择树上结点对象为这个类。通过选择事件取得的Element也是这个类的对象。其中getLiteral()方法返回的就是类型名称。
+
+66.ViewerDataFactory
+	用于产生解析类型树的数据。现在这里只有createTreeData()这一种方法。而真正取得的数据还是通过CategoryHandler类，具体如何取得留作以后分解。
+
+67.AnalysisType
+	是一个关于解析类型的集合类，通过AnalysisType.get(相应的解析类型名称)来得到一个AnalysisType的对象。
+
+
+68.往向导中动态添加向导页
+	向导中的下一页由getNextPage来决定，管理好这个方法，就可以很好的管理向导的下一页。
+
+69.AnalysisEditor(重复)
+
+70.OpeningHelpWizardDialog
+	重载了WizardDialog类，并通过showHelp支持了帮助信息的显示。在它所包含的Wizard页中，当点击下一步或者完成按钮时，WizardDialog会收集当前显示的page是属于哪个wizard的，并把这个wizard存储起来，从而当finish被触发时，迭代调用这所有的wizard的performFinish()方法。所以不论在WizardDialog中打开了多少种wizard的不同page，所有的performFinish()都会被执行的。
+
+71.AbstractWizard
+	这里的perforFinish()方法,会打开指定的编辑器并刷新DQ视图。
+	在这里取得具体实现的向导中参数的方法，要到具体的实现中去取。所有的参数都在这里传递。
+
+72.ConnectionParameter
+	包含了很多需要用户输入的信息，用作向导结束后，收集信息的传递。
+
+73.AnalysisParameter
+	扩展了ConnectionParameter类，增加了解析类型名称属性。
+
+74.FactoriesUtil
+	记录了项目中各种文件的后缀名，可以通过它来判断某个文件是属于哪种文件。
+
+75.AnaResourceFileHelper
+	可以通过该类，找出某项资源(文件夹)下包含的全部analysis.或者或者移除某个指定的文件。
+
+76.AnalysisBuilder
+	用来初始化一个Analysis。初始化后，用getAnalysis()方法取到的就是当前初始化的Analysisi。
+
+77.AnalysisHelper
+	可以根据解析器名称创建一个Analysis。
+	取得某个解析对象的相关信息。
+	可以取得analysis中的所有pattern
+
+78.AnalysisImpl ModelElementImpl的继承类
+	Analysis实现类。
+	包括，	context 	AnalysisContext
+		creationDate	Date
+		parameter	AnalysisParameters
+		results		AnalysisResult
+	通过Analysis取得执行引擎：
+	analysis.getParameters().getExecutionLanguage();
+	通过Analysis取得Indicator
+	this.analysis.getResults().getIndicators()
+	通过Analysis取得要执行的数据库元素
+	analysis.getContext().getAnalysedElements()
+	通过Analysis取得Connection
+	1).DataManager datamanager = analysis.getContext().getConnection();
+	2).TdDataProvider dataprovider = SwitchHelpers.TDDATAPROVIDER_SWITCH.doSwitch(datamanager);
+	3). TypedReturnCode<Connection> connection = JavaSqlFactory.createConnection(dataprovider);
+	注意:因为创建connection时要求知道三个dataprovider中的关键属性。所以要确保dataprovider的可靠性，再如此使用这些字。
+
+从column取得connection。
+ try {
+                ConnectionUtils.isMssql(JavaSqlFactory.createConnection(
+                        SwitchHelpers.TDDATAPROVIDER_SWITCH.doSwitch(TableHelper.getParentCatalogOrSchema(
+                                ColumnHelper.getColumnSetOwner((Column) me)).getDataManager().get(0))).getObject());
+            } catch (SQLException e) {
+                // TODO Auto-generated catch block
+                e.printStackTrace();
+            }
+
+
+79.AnalysisFactory
+	通过它的实例，可以用来创建解析和解析的相关属性。
+
+80.CoreFactory
+	创建TaggedValue对象。
+
+81.MetadataHelper
+	在模型上读取和设置各种属性。
+
+82.TaggedValueHelper
+	MetadataHelper设置和读取标签值时，实际调用的类，实际对标签值进行操作。
+
+
+80.AnalysisContextImpl
+	包含
+		connection 	DataManager
+		analysedElement 包含解析中的所有列
+
+81.AnalysisParametersImpl
+	包含
+		analysisType 	AnalysisType 	默认为column
+		dataFilter	Elist		缓存数据
+		dataValidationDomains Elist	
+		deactivatedIndicators Elist
+		executionLanguage     ExecutionLanguage	默认为sql
+		indicatorValidationDomains Elist 
+
+82.AnalysisResultImpl
+	包含
+		indicators		Elist
+		indicatorValues		Elist
+		resultMetadata		ExecutionInformations
+		
+		
+83.AnalysisExecutorSelector
+	解析器的执行专用类，用在某种解析的执行。
+	特定的Analysis要扩展这个类。
+	
+
+84.ViewHelp
+	向视图中添加列
+	从视图中取得所包含的列
+	在集合中过滤出所有的视图。
+
+85.ColumnHelper
+	取得列的相关信息
+
+86.AnalysisHandler
+	通过analysis取得解析下的所有信息。
+
+
+87.取得编辑器的方法
+	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage().getActiveEditor()
+
+88.选择监听的使用
+	监听者要实现ISelectionChangedListener
+	被监听者要实现ISelectionProvider从而把监听者添加进来。
+
+
+89.ColumnSet
+	包括tdViewImpl、tdTableImpl的基本接口。
+
+
+90.取得视图中列的方法
+	ColumnSet columnSet = SwitchHelpers.COLUMN_SET_SWITCH.doSwitch(eObj);
+	if (columnSet != null) {
+                    TdColumn[] columns = EObjectHelper.getColumns(columnSet);
+FolderNodeHelper.getFolderNodes((EObject) parentElement)
+
+91.CategoryHandler
+	通过getAnalysisCategories()方法可以获得所有的analysis对象。
+
+92.*ResourceFileHelper
+	可以帮助取得各种后缀类型的所有文件方法为:
+		*ResourceFileHelper.getInstance().getAll*(folderResource)其中最后的参数为要去的文件所在的文件夹。
+
+93.向工作空间中写入connection文件
+	ElementWriterFactory.getInstance().createDataProviderWriter().create(dataProvider, folder)
+
+94.取得某个文件的内容
+	PrvResourceFileHelper.getInstance().findProvider((IFile) selectedObj)
+	取得相应文件的实例化对象
+	returnVlaue.getObject()
+
+95.reload database list
+	使用两个文件之间的匹配程度来完成重载操作的。
+	一个是点击结点对象本身对应的文件，另一个是叫做.refreshccccccccccccc.comp的文件，其中后面的c的个数越多代表当前的文件越新，在比较时也是用了迭代的方法找到了"c"最多(最新)的那个文件。
+
+96.org.talend.cwm.compare.ui
+	包含:
+		对DQRespositoryView视图的id绑定，通过include结点包含了下面三个actionProvider
+		ReloadDatabaseProvider(actionProvider)
+		PopComparisonUIProvider(actionProvider)
+		SelectedCompareUIProvider(actionProvider)
+
+97.TableFolderNode、ViewFolder
+	用来存放具体table和view的文件夹类，当catalog下有scheam时调用上级的getChildren()方法来取得schema孩子结点。当catalog下没有schema时调用FolderNodeHelper.getFolderNodes((EObject)parentElement);来生成这两个(Table、View)文件夹。
+	在这些文件夹对象创建的同时，还会在其中存储其所属的父对象(catalog\Schema)，当需要展开这个文件夹时，通过它的loadChildren方法就能够通过这个parentNode找到所需要的子对象。
+
+98.FolderNodeHelper
+	创建或者返回一个想要的FolderNode。
+
+99.AbstractTableBuilder
+	getColumnSets()方法中通过DatabaseMetaData.getTables()方法取得了表的名称。并且通过createTable()方法建立了表对象。
+
+boolean odbcExcel = ConnectionUtils.isOdbcExcel(connection);
+        ResultSet tablesSet = null;
+        if (odbcExcel) {
+            tablesSet = getConnectionMetadata(connection).getTables(catalogName, schemaPattern, tablePattern,
+                    new String[] { "TABLE", "SYSTEM TABLE" });
+        } else {
+            tablesSet = getConnectionMetadata(connection).getTables(catalogName, schemaPattern, tablePattern, this.tableType);
+        }
+
+100.Excel可以考虑单独建立如TableBuilder一样的类
+	由于tableType=String[]{"TABLE","SYSTEM TABLE"}
+	并且不能创建和取得主键和外键
+
+101.excel数据select方法
+	表名要用[table1]括起来，系统表用[table1$]括起来。
+	select top n * from [tablename]取得前n条数据。
+
+102.net.sourceforge.sqlexplorer
+	editor
+		SQLEditor(editor)
+		FileListEditor(editor)
+	view	
+		DataExplorer(category)
+		DatabaseStructureView(view)
+		DatabaseDetailView(view)
+		ConnectionsView(view)
+		SQLHistoryView(view)
+		DataPreviewView(view)
+	perspectives
+		DataExplorer(perspctives)
+		
+		
+103.RelationalFactory
+	RelationalFactory.eINSTANCE.createTdSchema()创建Schame
+	
+
+104.CatalogBuilder
+	schemata中存放了所有schame
+	catalog2schemas中存放catalog,当无catalog时，存为一个空值。
+	且这里的schemata只在仅有一层schema的数据库中才会有值，当还有一层catalog时这里集合的值为空。那种情况下取得schema的集合就要使用CatalogHelper了。
+
+105.DataProviderHelper
+	向dataProvider中插入schema:DataProviderHelper.addSchemas(schemata, dataProvider)
+	向dataProvider中插入catalog:DataProviderHelper.addCatalogs(catalogs, dataProvider)
+	从dataProvider中取出Catalog:DataProviderHelper.getTdCatalogs((TdDataProvider) element)
+	
+
+需要进一步理解的内容:
+	类:CategoryHandler
+	类:AnalysisHandler的getAnalyzedColumns()方法。
+
+106.CatalogHelper
+	帮助存取CatalogHelper下的数据，但是由于变量地址的原因，其下方法的catalog对象参数要求使用SwitchHelpers.CATALOG_SWITCH.doSwitch(schema.eContainer())的方式提取。
+
+107.DqRepositoryViewService
+	操作DQRepository视图的服务类，可以通过它取得DQ Repository上指定dataprovider的table或者view等，以及刷新指定包上的table/view/dataprovider和保存一个指定的dataprovider到DQ Repository上。如其中的saveOpenDataProvider方法。
+	操作DQView上的多种信息的存储和刷新等
+
+108.DefinitionHandler
+	帮助操作工程下的存储文件。特指TOP_DEFAULT_PRJ\TDQ_Libraries下的.Talend.definition文件，定义了indicator的读取和存储方法。
+
+109.IndicatorCategoryHelper
+	存储了IndicatorDefinition在文件中的几个常量，定义了一些针对IndicatorDefinition对象的操作。
+
+110.操作analysisEditor所选连接的方法
+	metadataFormPage.getConnCombo().getSelectionIndex()
+	metadataFormPage.getConnCombo().getData(file.getName());
+
+111.JavaSqlFactory
+	可以帮助通过tDataProvider和TdProviderConnection类创建Connection。其实际还是通过ConnectionUtil的createConnection来建立的。
+
+112.ExecutionLanguage
+	存储Java和SQL两种Indicator的执行语言。
+
+113.DbmsLanguage
+	封装了一些对sql语句的操作
+		getSqlExpression方法可以通过
+一个IndicatorDefinition节点ueryWithJoin方法可以将定义的表达式填入相应的值。
+	取得一个上面对象方法是:
+		DataManager connection = this.cachedAnalysis.getContext().getConnection();
+        return DbmsLanguageFactory.createDbmsLanguage(connection);
+	并且这个类是一个基类，通过它实现了很多针对各个数据库的子类，其中封装了不同数据库的特点，如连接符号等等，并且组织不同数据库的sql语句也是通过这样的类来分别实现的。
+
+114.INode
+	INode是编辑器内传递数据库信息的公共接口，TableNode、SchemaNode.
+	取得任意一个INode的结点所属DatabaseProduceName的方法:
+	public static String getDatabaseName(INode node) {
+        if (node == null)
+            return null;
+        if (node instanceof DatabaseNode) {
+            return ((DatabaseNode) node).getDatabaseProductName();
+        }
+
+        return getDatabaseName(node.getParent());
+    	}
+
+115.TypedReturnCode
+	扩展了ReturnCode，在其中可以放入想要返回的object.
+
+116.UIPagination
+	支持把indicator作为ResultPaginationInfo的参数然后传给这个对象，在这个类的对象初始化时统一对每个页进行处理。而渲染这些UI的工作最终还是落在了扩展并实现了PaginaionInfo的Render()方法的ResultPaginationInfo中去了。其中的PaginaionInfo表现得是masterPage的图表情况，ResultPaginationInfo表现的是resultPage的图表情况。
+
+
+117.取得当前活动的编辑器
+	PlatformUI.getWorkbench().getActiveWorkbenchWindow().getActivePage
+
+118.SimpleStatisticsState
+	封装了简单统计的状态信息。().getActiveEditor();
+	实现了IChartTypeStates接口。
+119.TopChartFactory
+	专门用来产生JFreeChart的工厂类。
+
+120.indicator和analysis的关系
+	从analysis的result中可以得出indicator列表。当然如果这个analysis已经被执行。this.analysis.getResults().getIndicators()。
+	indicator中能够取得要进行解析的对象(Table,catalog..)
+	indicator.getAnalyzedElement().
+
+121.coreplugin
+	定义了在工作空间中操作视图和编辑器的基本方法。
+	如:
+		openEditor()
+		refreshDQView()等等。
+	注意这里在打开editor前都是会对input进行equals的判断，所以如果在editor中不想重复的打开某个input，就要先实现这个input。
+
+122.OpenResourceProvider
+	定义了打开文件编辑器的方式，这其中包括analysis。
+
+123.取得所有editor的方法
+	page.getEditorReferences()
+	
+124.EMFSharedResources
+	操作softWareSystem的取得和存取。
+	操作EMF的resource加载和卸载
+
+125.SupportDBUrlType
+	存储了数据库的相关信息，在创建连接或者相应Language时会被调用
+
+126.EDriverName
+	存放了数据库驱动的相关信息。
+
+127.EMFUtil
+	定义了最终存储文件的方法，saveSingleResource()
+
+128. .Talend.definition
+	该文件在org.talend.dataquality中有一个现成版本，如果应用中的同名文件内容为空，则拷贝这个文件到应用中。
+
+129. .softwaresystem.softwaredeployment
+	该文件在程序中先被创建，然后在用到时才被写入到文件中。一般写入时就是在SoftwareSystemManager.getSoftwareSystem时保存的。
+
+130. DbmsLanguageFactory
+	DbmsLanguage的工厂类，用来创建并且判断为当前的数据库准备哪种DbmsLanguage。
+
+131. Executer
+
+
+132.驱动存放位置(SQLDrivers.xml)
+	1）产品中的位置
+		E:\runtime-New_configurationmm\.metadata\.plugins\net.sourceforge.sqlexplorer\SQLDrivers.xml
+		并且会在DriverManager中加载到产品中，SQLExplorerPlugin,DriverProferencePage
+
+	2）代码中的位置
+		net.sourceforge.sqlexplorer工程下的default_drivers.xml
+
+133.IndicatorEnum
+	存储了各种Indicator的集合
+
+134.IndicatorTreeModelBuilder
+	集中生成所有的生成IndicatorCategoryNode
+
+135.EDriverName和SQLDrivers文件之间的关系
+	ENameDriver中的id就是SQLDrivers.xml文件中记录的id号，如果在加载或者查找时对应不上，就会报NPE。
+
+136.Indicator匹配其下的Definiton的方法
+	设置的方法主要通过DefinitionHandler这个类的indicatorSwitch对象来进行。但是这个对象在这里定义成了内部类，且实现了IndicatorsSwitch这个类中的具体方法，而EMF并不知道这些，所以在新创建一个indicator后需要自行实现这个内部类的新方法，否则会根据继承关系，生成相应的名称Label。
+
+137.Java2SqlType
+	talend自己实现的数据类型的判断方法，这样的值可以从TdColumn.getJavaType()方法中取出来。
+
+138.GenericSQLHandler
+	这里面从放了产生sql语句时各个从句的替换模板。
+
+139.AnalysisExecutor
+	各种解析执行器的基类，通过在各个具体的解析执行器中实现createSqlStatement和runAnalysis。
+
+140.indicator的JavaEngin执行过程
+	1)建立IndicatorEvaluator类的实例
+	2)将indicator连同它的colName一同存入这个实例中去eval.storeIndicator(columnName, indicator)
+	3)为eval设置相关的Connection,eval.setConnection(connection.getObject())
+	4)如果有catalog还要为它选择相应的catalog,eval.selectCatalog(catalog.getName())
+	5)执行这个eval,并设置是否要关闭Connection,ReturnCode rc = eval.evaluateIndicators(sqlStatement, closeAtTheEnd);
+
+141.CompositeIndicator
+	在这里有多个List<IndicatorUnit>来分别存储属于自己类型的Indicator的图表。新indicator需要在这里加匹配项。
+
+142.EIndicatorChartType
+	着ocatroCommonUtil
+	这里会为Indicator填值，且分别区分了不同indicator的类型，新indicator需要在这里加匹配项。
+
+144.新建一个indicator的步骤
+	1.EMF建模。。。。
+	2.添加相应的定义，包括(
+		DefinitionHandler:在这里为Indicator建立选择Indicator对话框里的标签，否则就用上一级的标签。
+		EIndicatorChartType:在这里为相应的IndicatorStatistics设置图形样式。
+		DatePatternFreqIndicatorEnum:声明这个Indicator的名称和类名。
+		IndicatorTreeModelBuilder:把这个IndicatorEnum加入到patternFinderEnums的分组中，以便显示在选择对话框中。
+		ChartTypeStatesOperator:添加这个Indicator对应的图形类型。
+		CompositeIndicator:添加这个类对这个Indicator的支持。		
+		IndicatorCommonUtil:在这里添加对于图形中行列值的信息。
+
+		ModelElementIndicatorRule:在这里添加对于这个Indicator的适应哪些数据类型的限制。
+		FormEnum:这里添加对操作的支持。
+
+		
+	)
+
+145.IndicatorSelectDialog
+	指示器选择对话框。配合ModelElementIndicatorRule判断当前指示器是否可用。
+
+146.*explore
+	用来产生相应的查询语句sql
+
+147.modelElementIndicatorRule
+	在打开indicatorDialog时要判断的indicator能否使用的匹配条件。
+
+148.PatternLanguageType
+	匹配并取得所有可用的数据库类型的名称。
+
+149.MDM Connection
+	打开jboss,用户名 admin,密码talend 端口8080
+
+
+150.首选页的存储
+	位置workspace\.metadata\.plugins\org.eclipse.runtime\.settings
+	PreferenceService类来取得存储在上面文件中的首选项结点值，剩下的都是默认的。
+	回来再查查是如何被存的。
+
+151. org.eclipse.core.internal.resources.ResourceException: A resource exists with a different case: '/test/aaa/bbb.txt'. 
+ 
+这个是由于Windows平台文件名不区分大小写，而Eclipse平台的资源系统则是区分大小写的，那么如果在IResource里调用exists()方法的时候，如果有同名但大小写不同的文件存在的话，同样会返回false；于是程序试图去创建文件的时候就抛出了这个异常。
+
+152.Application(org.talend.datacleansing.core.ui)
+	TDQEE的启动类(5.0以前)
+
+153.wpf
+	PasswordBox控件。没有Text这个属性(有Password属性)有三种使用PasswordBox的方法.
+
+	使用其Password属性值（这个是最简单的了） 
+	使用Binding,reBox的SecurePassword属性 
+
+154.reportingPreferencePage
+	相应的类名TdqCorePreferencePage
+	所在的插件org.talend.dataprofiler.core.tdq.ui
+
+155 org.talend.dataprofiler.core.tdq.ui
+	preferencePage
+		Reportion
+	
+	viewer
+		对DQRespositoryView添加了一些action绑定
+	
+	editor
+		ReportEditor
+	
+	cheatSheetContent
+		Report
+		Report Creation
+
+156 tdq 包含插件列表树
+	见tdq包含列表.txt
+
+157 columnBuilder
+	用来取得指定连接下的列信息。
+	
+158 migeration test
+	org.talend.datacleansing.core.tdq
+	在上面的工程中定义了很多合并任务。
+
+159 工作空间版本和当前版本及 datamart版本
+工作空间版本:
+ProductVersion wVersion = WorkspaceVersionHelper.getVesion();
+修改位置:librarily\version.txt文件
+主要功能作用:
+		1.读取一个version.txt文件
+		2.在启动DQRepositoryView时判断workspace version,决定是否需要执行migration
+当前产品版本:
+ProductVersion cVersion = CorePlugin.getDefault().getProductVersion();(VersionUtils.getVersion())
+修改位置:org.talend.commons.runtime
+主要功能作用:
+		1.存储一个TDQ_Libraries\version.txt文件
+		2.在启动DQRepositoryView时判断workspace version,决定是否需要执行migration
+		3.Report更新版本时用
+		4.打开时控制产品版本号-studio.version=5.0.1NB.75045
+
+Talend版本(内部的)
+VersionUtils.getTalendVersion();
+修改位置:org.talend.commons.runtime\talend.properties
+主要功能作用:
+		1.检查TOS的Migration是否正常运行时，logon时生效。
+
+migration版本:
+ProductVersion dVersion = MigrationPlugin.getDefault().getProductVersion();
+修改位置:org.talend.dataprofiler.migration
+主要功能作用:
+		1.存储到数据库中去
+		2.在数据库的migration中作为productVersion使用
+String preVersion = this.getManager().getVersion().toString();
+String updateVersion = MigrationPlugin.getDefault().getProductVersion().toString();
+
+
+160 产品语言的设置
+在运行的配置对话框中设置Program arguments的参数
+英语 -nl en
+日语 -nl jp_JP
+中文 -nl zh
+默认-nl ${target.nl}
+
+161 得到扩展了某个扩展的全部扩展点
+IExtensionPoint point = registry.getExtensionPoint(pluginId, extensionPointId);
+if (point == null) {
+	return;
+}
+IExtension[] extensions = point.getExtensions();
+
+162 透视图的改变
+WorkbenchUtils.changePerspective()
+
+163 tos中的所有组件(components)位置包括tLaunchReport
+E:\Talend_trunk1\org.talend.designer.components.localprovider\components下。
+
+164 tdq自己的组件配置文件
+org.talend.designer.components.tdqprovider
+
+165 取得RCP的相关属性
+CorePlugin.getContext()
+
+166 保存相应的emf文件
+EMFUtil.saveSingleResource(udi.eResource())
+
+167 转换透视图的工具
+WorkbenchUtils.changePerspective("org.talend.rcp.perspective")
+
+168 ETL和ELT
+ETL是指从数据源抽取数据，数据进入ETL系统，经过必要的转换后，将结果数据加载到目标数据仓库中；(Extraction-Transformation, And Load)
+ELT是指从数据源抽取数据，加载到目标数据仓库，之后在目标数据仓库对数据进行必要的转换，得到的结果数据。(Extraction-Load, And Transformation)
+
+169 AnalysisColumnTreeViewer 
+列解析中选择要分析的列的树形视图
+
+170 读入资源流的方法
+SAXReader reader = new SAXReader();
+
+        InputStream inStream = JobTemplateFactory.class.getResourceAsStream("/" + TEMPLATE_FOLDER + "/" + templateName);
+
+        if (inStream == null) {
+            throw new TemplateNotFoundException(Messages.getString("JobTemplateFactory.0", templateName));
+        }
+
+        InputSource source = new InputSource(inStream);
+
+        return reader.read(source);
+
+171 JOB组件的使用
+	组件要完成一个Commond必须要有一系列的正确组合，描述这个组合的文件使用xml文件，放在相应action的项目中templates文件夹下，这里描述了需要的组件和组件间的连接关系。
+	加载这个文件后我们就得到了完成这个Action所需要的所有组件，而这些组件的整体就是IJobTemplate template。
+	而在程序中再对这些结点和边进行建立，实际是为了生成结点和边的对应command从而在编辑器中绘制这些组件并建立连接外观。
+	最后填充这些组件的相关参数，保存这些改变，创建一个Job的工作就完成了。
+
+172 hsql的连接和测试 
+
+java -cp D:\TDDOWNLOAD\hsqldb\lib\hsqldb.jar org.hsqldb.Server -database.0 D:\TDDOWNLOAD\hsqldb\lib\test -dbname.0 test -port 9002 
+java -cp D:\TDDOWNLOAD\hsqldb\lib\hsqldb.jar org.hsqldb.util.DatabaseManager 
+java -cp D:\TDDOWNLOAD\hsqldb\lib\hsqldb.jar 
+
+SELECT COUNT(*) FROM `testtable`.`generaldatanullable` AS t1 , `testtable`.`generaldata` AS t2 WHERE t1.id =t2.id  AND t1.NAME =t2.NAMEorg.hsqldb.util.DatabaseManager
+
+
+
+SELECT COUNT(*) FROM `testtable`.`generaldatanullable` AS t1 , `testtable`.`generaldata` AS t2 WHERE t1.id =t2.id  AND t1.NAME =t2.NAME
+
+173.关于dataProvider XML文件的生成
+所有建立table或column对象的代码都在相应的XXBUILDER中创建table的PK和FK是在创建column时生成的
+
+174.关于视图的选择监听ISelectionListener
+实现ISelectionListener
+用如下的方法注册监听
+getSite().getWorkbenchWindow().getSelectionService().addSelectionListener(this);
+
+175.一般资源文件的存储方法
+AnaResourceFileHelper.getInstance().save
+
+176.compont的代码
+desinger.codegen
+	包含组件的头部代码header.javajet和页脚代码footer.javajet
+desinger.tdqprovider
+	包含了相关组件的开始代码
+
+177.Connection的创建过程
+	创建一个connection不论是mdm、database或者是其它的过程一致的。
+主要是通过DatabaseWizard来进行其中包括DatabaseMetadataWizardPage和
+DatabaseWizardPage两个功能页，完成这样一个操作的。而调用这个想到的操作叫做
+CreateConnectionAction。有个最主要的参数DBConnectionParameter参数就是从这里
+传进来的。其中第二个向导页分为两个部分，前面的部分是公有的，在createControl中
+后一部分是要区分MDM或者DB数据库的，它被放在了rebuildJDBCControls的方法中
+其中又是通过 URLSetupControlFactory这个类创建的具体UI。
+
+178.columnAnalysis以外的Analysis的执行过程
+点击"Run Analysis"后会调用RunAnalysisAction类的方法，然后启动AnalysisExecutorThread类的这个线程。
+这个线程又会执行AnalysisExecutorSelector.executeAnalysis方法，最后同样通过这个类的getAnalysisExecutor方法找到相应解析的执行器。
+而在MutiColumnAnalys	isExecutor中，会把resultSet转换成一个列表，然后存储在ColumnSetMutiValueIndicatorImp的listRow中并且通过getListRows来调用。
+
+179.视图和文件过滤器
+继承自commonViewer的视图和文件都可以定义过滤器，File.listFiles(FileFilter)是这样应用。视图是getCommonViewer().addFilter(filter)这样使用。
+
+	
+180.启动类的不同
+
+	top启动自org.talend.dataprofiler.rcp中的Application
+	tdq启动自org.talend.datacleansing.core.ui中的Application(4.2以前)
+	TOS和TDQ共用org.talend.rcp(4.2以后)
+
+181.取得项目的相关信息比如User and Project
+	ProxyRepositoryFactory.getRepositoryContext() 返回RepositoryContext
+
+182.通过URI还原Resource
+	ResourceSetImpl.createResource(URI uri);
+
+183.pattern 定义文件存放地点
+	org.talend.dataprofiler.core pattern的文件夹下
+
+184.Connection eResource的还原问题
+	EObjectHelper.resolveObject(EObject proxy);
+
+185.DQStructureManager
+	作用:创建project结构
+	
+186.DatabaseContentRetriever可以得到或者转换很多关于Connection的相关信息
+  通过DBConnectionParameter得到DatabaseConnection的具体步骤:
+	this(connParams.getJdbcUrl(), connParams.getDriverClassName(), connParams.getParameters());
+	databaseConnection = DatabaseContentRetriever.getDataProvider(driver, databaseUrl, connectionProperties);
+
+187.MetadataManager
+	添加metadata的辨认信息如注册Component，
+
+188.ResourceFileMap
+	在这个类里面注册了所有的resource,而取得这个resource的方法就是通过
+		URI uri = URI.createPlatformResourceURI(file.getFullPath().toString(), false);
+            	res = EMFSharedResources.getInstance().getResource(uri, true);
+	或者也可以通过
+		URI uri = URI.createFileURI(filePath);
+	        Resource resource = resourceSet.getResource(uri, true);
+	但是后者不能保证resource是一个对象，故要求清空这个类中的注册信息map:registedResourceMap
+
+189.Connection文件的保存
+	在top中建立connection时默认保存的是connection信息和catalog或者schema信息
+	而并没有保存Table或者view的信息，它们的信息保存是在展开TableFolderNode加载孩子的时候。保存的位置DataProviderWriter的save(Item)方法
+
+190.columnAnalysis的connection列表初始化
+	AbstractAnalysisMetadatapage.reloadDataproviderAndFillConnCombo()方法中
+
+191.透视图的切换监听
+	org.talend.datacleansing.core.ui.intro.ApplicationWorkbenchAdvisor line:102
+
+192.判断当前是top还是tdq
+	PluginChecker.isOnlyTopLoaded()
+	ReponsitoryContextBridge.isDefautProject()
+	GlobalServiceRegister.getDefault().isServiceRegistered(IRepositoryService.class)
+	利用的原理IRepositoryService在top中还没有实现
+
+193.启用远程项目的项目需要修改的版本号
+	RemoteProviderPlugin.getVersion()方法。更好的方法见159 5.0后已经无用
+
+194.从TOS过滤TOP中不能识别的connnection
+	TDQDBConnectionReposViewObjDelegator line:55 在取得的时候检查是否被SupportDBUrlType.values()中的类型支持。
+
+195.resource的还原方法
+	 ResourceSet resourceSet = ProxyRepositoryFactory.getInstance().getRepositoryFactoryFromProvider()
+                        .getResourceManager().resourceSet;
+                oldDataProvider = (Connection) EcoreUtil.resolve(oldDataProvider, resourceSet);
+
+196.配置页(Preferences)中取值
+	private static boolean timeout = Platform.getPreferencesService().getBoolean(  
+        CWMPlugin.getDefault().getBundle().getSymbolicName(), PluginConstant.CONNECTION_TIMEOUT, false, null); 
+	
+
+
+197.配置页(IEclipsePreferences)中设值
+	IEclipsePreferences prefs = new DefaultScope().getNode(cwm.getBundle().getSymbolicName());
+        prefs.putBoolean(PluginConstant.CONNECTION_TIMEOUT, false);
+        prefs.putBoolean(PluginConstant.FILTER_TABLE_VIEW_COLUMN, true);
+
+198.trunk向eclipse3.6的迁移
+	配置launcher的时候有几个地方要注意一下:
+		org.eclipse.gef和org.eclipse.draw2d都已经换成本地的3.6版本的了。
+		另外,当提示找不到application id的时候可以试着删除workspace中的launch对应文件。
+
+199.talend 提供的数据库地址
+	http://talendforge.org/wiki/doku.php?id=internals:databases
+
+200.ODBC Excel
+	SQLException no data found.是因为创建stament时没有加
+ResultSet.TYPE_SCROLL_INSENSITIVE,ResultSet.CONCUR_UPDATABLE导致ResultSet不能回滚。
+
+201.ChartTableFactory
+	负责analysis产生图表的相关工作，包括在图表上menu的监听. resultPage menu. ResultPagInationInfo 中会添加各种饼图 bar图的menu
+
+202.Process
+	createMainParameters()负责初始化component的很多信息，如TalendDesignerPrefConstants.COMP_DEFAULT_FILE_DIR执行文件的根目录
+
+203.TalendDesignerPrefConstants
+	存储了TOS Designer透视图中的很多常量key
+
+204.PreferenceInitializer
+	初始化上面的常量key的值到DesignerPlugin.getDefault().getPreferenceStore()
+
+205.Component的创建以及信息的填充
+	LaunchGenerateReportJobAction是一个很好的例子可以具体查看。
+	基本步骤如下:
+	1.得到你想要组件的Template
+	JobTemplateFactory.getInstance().load(getTemplateName());
+
+	2.得到xml文件的信息
+	template.getComponentUnitList().getFreezeComponent()
+	
+	3.初始化Node并且填充基本信息
+	node = new Node(freezeComponent);
+	component就是freezeComponent
+	init(component);
+	EmfComponent.createElementParameters(node);
+	而其中default值是对应的ElementParameter中的一项。
+	具体如何填充看EmfComponent.addPropertyParameters();
+	process中包含了很多初始化的信息，在创建每个Node的时候会具体填充
+
+206.ComponentsFactoryProvider用来取得所有的components
+	ComponentsFactory.init()三种加载插件的方式
+	// 1. Load system components:
+        loadComponentsFromFolder(IComponentsFactory.COMPONENTS_INNER_FOLDER);
+	主要指得是localprovider
+
+        // 3.Load Component from extension point: components_provider
+        loadComponentsFromComponentsProviderExtension();
+	主要指得是tdqprovider
+
+        // 3.Load Component from extension point: component_definition
+        loadComponentsFromExtensions();
+
+207.查找项目中文件的方法 加载文件 jar
+	 Bundle b = Platform.getBundle(IComponentsFactory.COMPONENTS_LOCATION);
+
+        File file = null;
+        try {
+            URL url = FileLocator.find(b, new Path(folder), null);
+            if (url == null) {
+                return null;
+            }
+            URL fileUrl = FileLocator.toFileURL(url);
+            file = new File(fileUrl.getPath());
+        } catch (Exception e) {
+            // e.printStackTrace();
+            ExceptionHandler.process(e);
+        }
+
+        return file;
+
+208.eclipse中定为一个文件
+	URL url = FileLocator.find(TdqComponentProviderActivator.getDefault().getBundle(), new Path("components"), null); //$NON-NLS-1$
+
+209.关于组件的加载
+	启动的时候有两种情况会使得product重新加载components(它们被缓存在条件2的目录下的ComponentsCache.javacache文件中)
+	1.在启动的时候加入如下的参数作为条件
+	--clean_component_cache
+	2.当代码中的E:\tdp_trunk1\.metadata\.plugins\org.eclipse.pde.core\TDQEE_windows不存在
+
+210.记录产品的版本号
+	/TDQ_Libraries/.version.txt
+
+211.AbstractResourceChangesService
+	监听resource改变unload
+
+212.NavigatorContentServiceContentProvider的children与conntentProvider
+AbstractTreeViewer在显示的时候需要判断一个结点是否是expand的，如果是就会调用NavigatorContentServiceContentProvider的hasChildren方法。
+同样的，如果getChildren的时候也会调用NavigatorContentServiceContentProvider的getChildren方法。所以我们在实际的contentProvider中也要实现这两个方法。
+但是如果我们的contentProvider是继承自BaseWorkbenchContentProvider，那么haschildren的时候如果调用父类的haschilren方法那么父类就又会调回getChildren方法通过返回的size来决定retrun。
+因此，如果我们要在getChildren的时候插入孩子到结点，就要注意判断会否node会被重复添加。
+
+213.判断当前工程师TOP还是TDQ
+	转到192
+
+214.analysis产生图表的启动方法
+	每个analysis的masterpage都会实现refresh()方法。
+
+215.TOS和TOP导出的区别
+	TOS叫做ExportItemWizard
+	TOP叫做exportWizard
+	而RunAnalysisAction又会调用fireRuningItemChanged()方法来启动这个refresh()
+
+216.如何判断当前操作系统是windows
+	private static final boolean WINDOWS = java.io.File.separatorChar == '\\';
+
+217.license文件的加载与存放
+   branch4.2以后:
+	检查位置: ModifyJobletProperties.update()
+	加载位置: org.talend.configurator.Utils.getObjectFile()
+
+    branch4.2以前:
+	CreateJoblet这里有license的check方法
+
+218.log文件输出级别的判断
+	org.talend.platform.logging 中的log4j.xml文件中配置
+	
+219. File和IFile的转换
+	WorkspaceUtils.fileToIFile(parentFile);
+	包括URI到IFile的转换
+
+220. preferences的存储位置
+	workspace\.metadata\.plugin\org.eclipse.core.runtime\.settings\org.talend.dataprofiler.core.tdq.ui.prefs
+	
+221.MigrationToolService
+	TOS做的migeration从这里开始MigrationToolService.executeWorspaceTasks()
+	而这个类是从org.talend.rcp.intro.Application这里被调用的
+
+222. PerspectiveReviewUtil.resetPerspective
+stdio启动时透视图的恢复
+	文件存储位置 ..\.metadata\.plugins\org.eclipse.ui.workbench\workbench.xml
+
+223.关于task view里的mark
+新建一个创建mark的操作并且通过这个操作产生一个新的mark
+	new CreateMarkersOperation(type, attrs, resource, getCreateOperationTitle());
+	PlatformUI.getWorkbench().getOperationSupport().getOperationHistory().execute(op, null,
+                        WorkspaceUndoUtil.getUIInfoAdapter(getShell()));
+
+mark属性介绍:
+1.resource,这些操作其实是给mark添加一个resource的属性，这样在task view中双击这个mark通过这个resource打开这个资源
+2.attribute,存放相应的属性，当里面有属性为IDE.EDITOR_ID_ATTR时,及对应EDitorID时方便查找对应的editor.
+
+
+224.ResourceUtil的使用
+IEditorInput 都会要求实现IAdaptable接口，通过实现这个接口可以对所在对象进行相应转化。
+如果一个IEditorInput 实现了IAdaptable接口 ResourceUtil类就可以很容易的得到这个IEditorInpit所对应的IResource或IFile
+
+225.ColumnViewerDND
+控制dq view上的各种拖拽操作。
+
+226.java analysis的drilldown原理
+控制drill down的参数一般都在analysis上，通过analysis.getParameters()分别判断是否存储数据以及存储多少行数据等等。
+具体的数据是存储在analysis.getResult().getIndicatorToRowMap()上的。
+而这个map的对应关系是Map<indicator,AnalyzedDataSet>
+每个analyzedDataSet中存储的值包括Data\patternData\FrequencyData三种。
+这三种数据，由于所要存储的数据结构不同，所以有着不同的结构。
+
+227.注意事项
+report editor的类名写成了reportEditror查找的时候要注意。
+
+228.data explorer
+CWMPlugin.getDefault().addConnetionAliasToSQLPlugin(connection);
+
+
+229.databasewizard
+tos的创建connection向导,top:databaseConnectionWizard
+
+230.DatabaseTableWizard
+TOS retrieve schema的向导
+
+231.TOS migration的全过程
+用户点击logon按钮->LoginDialog.run->ProxyRepositoryFactory.logOnProject()->executeMigrations
+取得projectTask的方法:
+  GetTasksHelper.getProjectTasks(beforeLogon)
+取得workspaceTask的方法:
+  GetTasksHelper.getWorkspaceTasks();
+
+232.ChartDecorator
+图形渲染工具，针对jfreeChart图表
+
+233.图表的创建
+ChartTypeStatesOperator.getChartState(chartType, units).getchart();
+
+234.top取得migration的工具类
+	DefaultMigrationTaskProvider 并不区分workspace还是project task
+
+235.RetrieveColumnRunnable
+	refresh column时调用的方法。
+
+236.TDQResourceChangeHandler
+	tdq的延伸服务，创建TDQItem时要使用这个类包括(LocalRepositoryFactory.create方法)
+
+
+237.取得某个插件对应的节点值
+private IEclipsePreferences preferences = new InstanceScope().getNode(Activator.PLUGIN_ID)
+
+238.刷新eclipse文件缓存的单个文件
+combinIFile.refreshLocal(IResource.DEPTH_INFINITE, null);
+
+239.组件中component视图
+ComponentSettingsView
+
+240.routines 类的位置
+org.talend.librariesmanager(plugin)
+
+241.job中类的位置与类名对应关系控制
+LibrariesIndexManager
+
+242.通过IFile加载property的方法
+xmiResourceManager.loadProperty(current)
+
+243.top和tos文件移动的不同
+TOS:
+	RepositoryDropAdapter
+这里是使用workUnit来执行当前面命令的，所以在执行的时候会释放所有未锁定的resource
+
+TOP:
+	RepositoryNodeDorpAdapterAssistant(不同类型文件的移动对应不同的方法)
+
+244.TOS unloadResource
+LocalRepositoryFactory.unloadUnlockedResources()
+这里面会释放我们的resourece,可以通过过滤掉TDQItem组织我们的资源释放
+
+
+245. TOS componentSettingsView
+	componentSettingsView是TOS显示组件的上属性的View
+	这个View通过调用createDynamicComposite的方法动态被创建
+	而实际的创建view内同的方法是通过MultipleThreadDynamicComposite.refresh()被引起的。
+	List<? extends IElementParameter> listParam = elem.getElementParametersWithChildrens(); // hywang modified for
+	通过上面的方法可以很容易得到一个Node上的所有属性
+	通过DynamicPropertyGenerator  generator.getController(e.getFieldType(),MultipleThreadDynamicComposite.this);
+	可以很容易得到想要的组件。
+实际上
+	这些view上组件的生成是通过不同的扩展点实现的统一接口为IControllerGenerator
+	这些实现了IControllerGenerator的Generator分别对应一个Controller
+
+246. 取得当前的project
+	ProjectManager.getInstance().getCurrentProject()
+
+247.debug产品的方法
+因为产品运行是不能打印输出信息，所以在cmd中填写产品运行路径后跟 -debug就能解决这样的问题。
+
+
+248. pattern和RegexpMatchingIndicator的关系
+	pattern作为RegexpMatchingIndicator中parmeter中的一个domain被存储
+
+249.进度条检测中断的方式
+while (true) {
+                    if (aet.getExecuted() != null) {
+                        executed = aet.getExecuted();
+                        break;
+                    }
+                    if (monitor.isCanceled()) {
+                        thread.interrupt();
+                        closeConnectionPool(analysis);
+                        executed = new ReturnCode(DefaultMessagesImpl.getString("RunAnalysisAction.TaskCancel"), false); //$NON-NLS-1$
+                        break;
+                    }
+                }
+
+250.analysis的connCombo
+这里有一个选择监听，只有在存在column时才会被添加
+
+251.talend可用参数总结
+	英语 -nl en
+	日语 -nl jp_JP
+	中文 -nl zh
+	默认-nl ${target.nl}
+	
+	调试控制台-debug
+	清空component -clean_component_cache
+
+	是否删除project -deleteProjectIfExist 
+	project名称 -project TEST_NOLOGIN 
+	启动的语言类型 -language java 
+	登录的用户名 -login testauto@talend.com 
+	workspace路径 -data "<workspacePath>"
+	指定版本号: -Dtalend.studio.version=5.0.1NB.75045
+			-Dstudio.version=5.0.1NB.75045(vm parameter)
+        指定jar包路径 -talend.library.path
+
+252 PreferencePage
+	preferencePage 是通过扩展点（org.eclipse.ui插件上preferencePage扩展）创建的。
+	其中要存储值的控件要使用org.eclipse.jface.preference下定制的，从这里指定存储该值的名称。
+	因为是org.eclipse.ui上的扩展，所以结果存储在org.eclipse.ui.prefs下。
+存值：
+	memoryScaleField.setPreferenceStore(PlatformUI.getPreferenceStore());
+        memoryScaleField.setPage(this);
+        memoryScaleField.load();
+
+取值：
+	boolean canControl = PlatformUI.getPreferenceStore().getBoolean(
+        AnalysisThreadMemoryChangeNotifier.ANALYSIS_AUTOMATIC_MEMORY_CONTROL);
+
+253 ManagementFactory
+	待续
+
+
+254 ReportDocGenerator
+	负责report文件的生成，report的运行等操作
+
+255 AnalysisExecutorTest
+	手工创建了Connection和Analysis来检测Analysis运行情况。
+	可以作为junit的范例参考
+
+256 FolderItem
+	FolderItem里存储了其下ConnectionItem的缓存，我们的RepositoryView中的结点是通过FolderItem
+	取得的，所以会出现即使做了proxyRepositoryFacotry.save操作还是不能立即反应在view上。
+	我们需要进行一下三步操作:( RepositoryNodeHelper.restoreCorruptedConn)
+	EList<Object> children = folderItem.getChildren();
+	children.remove(removeOne);
+        children.add(property.getItem());
+	另外
+	ProjectManager很好的管理了这些FolderItem
+
+257 compare
+	AbstractComparisonLevel具体执行替换的基类下面有(tableView* dataprovider*)
+	多态后的子类只是完成添加和删除操作，而属性的替换还是在基类中的UpdateTdRelationalSwitch中进行。
+	ModelElementMatchEngine重写了match时的比较方法，这个类被声明在org.talend.cwm.compare中起效。
+	
+258 5.2.1上TOS的driver新加载机制
+首选项:
+	1.PreferencesUtilities.EXTERNAL_LIB_PATH_MODE_SINGLE 设置了是否是用扩展的Lib方式。
+	2.PreferencesUtilities.EXTERNAL_LIB_PATH 扩展lib的安装位置，这个可以在首选项中找到。
+Lib可能存放位置:
+	1.org.talend.librariesmanager\resources\java\lib 重启stdio就会执行
+	2.查询组件插件下的所有jar文件
+	3.系统文件下的lib
+		org.talend.librariesmanager
+	4.当前工程的libs文件夹下(test1)
+	5.首选项中配置的目录下的所有jar
+
+取driver
+	1.检查首选项配置的目录下的jar
+	2.index.xml文件
+
+259. 如何插入菜单在component上(例 org.talend.component.preview)
+	首先，要扩展org.talend.core.component_custom_action这个扩展点
+	其次,实现类要扩展CustomExternalActions
+	最后，重载calculateEnabled方法，配置当前菜单适合哪种component
+
+260. 如何加入双击事件在component上(例 org.talend.component.preview)
+	扩展org.talend.core.external_component扩展点,实现其中的open方法。
+	事件被调用在NodePart.performRequest()
+
+261.tuj的草稿模式:
+	在正常的url后加mode=draft会转到草稿模式，新写的tuj会放在这里先
+
+262.datamart log文件名称bitrock
+
+263.hiveConnectionManager
+	专门负责hive数据库的添加
+
+264.classLoader缓存总结
+	TalendURLClassLoader 缓存所有用这个classLoader加载的class对象到classesMap变量中
+	UDIHelper 缓存所有适配过的JUDI 类实例到JAVAUDIMAP集合，实际上也是用TalendURLClassLoader 加载的
+	CustomAttributeMatcherHelper 缓存实现了IAttributeMatcher的用户定制的类实例在customMatcherMAP集合
+	
+265.jar包的缓存
+stdio :
+\configuration\org.eclipse.osgi\bundles 打patch时候的要清理。
+D:\stdio\Talend-Studio-r118616-V5.5.1\lib\java
+
+
+code:
+D:\code\git\.metadata\.plugins\org.eclipse.pde.core\TDQEE_WINDOWS\lib\java
+D:\worspace\git\tdq\.Java\lib
+D:\worspace\git\tdq\TEST1\temp\dbWizard(db 相关)
+D:\worspace\git\tdq\TEST1\libs
+
+-talend.library.path 指定参数
+位置 LibrariesManagerUtils.calss
+
+266.job Context view
+ProcessView 这个view被包含在processView下的contextComposite组件中。
+组件有下来菜单，选择时context值会设到：
+ProcessManager的实例中和IProcess2的实例中
+
+267.org.talend.themes.talend_theme
+css 样式编辑工具
+alt+shift+f5 查看当前鼠标的样式
+alt+shift+f6 临时改写CSS
+
+268.OntologyIndexInitializer
+用来初始化semantic数据
+
+269.AbstractJavaProcessor.run
+job被导出运行时的build过程
+
+269.ConstantsUtils.getCompatibilityId
+remoteServer 的版本号
+
+270.FutureTask 异步调用同步等待取结果
+FutureTask<Connection> futureTask = new FutureTask<Connection>(new Callable<Connection>() {
+
+            @Override
+            public Connection call() throws Exception {
+                Connection conn = null;
+                String connURL = metadataConn.getUrl();
+                String username = metadataConn.getUsername();
+                String password = metadataConn.getPassword();
+
+                // 1. Get class loader.
+                ClassLoader currClassLoader = Thread.currentThread().getContextClassLoader();
+                ClassLoader hiveClassLoader = HiveClassLoaderFactory.getInstance().getClassLoader(metadataConn);
+                Thread.currentThread().setContextClassLoader(hiveClassLoader);
+                try {
+                    // 2. Fetch the HiveDriver from the new classloader
+                    Class<?> driver = Class.forName(EDatabase4DriverClassName.HIVE2.getDriverClass(), true, hiveClassLoader);
+                    Driver hiveDriver = (Driver) driver.newInstance();
+
+                    // 3. Try to connect by driver
+                    Properties info = new Properties();
+                    username = username != null ? username : ""; //$NON-NLS-1$
+                    password = password != null ? password : "";//$NON-NLS-1$
+                    info.setProperty("user", username);//$NON-NLS-1$
+                    info.setProperty("password", password);//$NON-NLS-1$
+                    conn = hiveDriver.connect(connURL, info);
+                } finally {
+                    Thread.currentThread().setContextClassLoader(currClassLoader);
+                }
+
+                return conn;
+            }
+        });
+
+        ThreadGroup threadGroup = new ThreadGroup(this.getClass().getName() + ".createConnection"); //$NON-NLS-1$
+        Thread newThread = new Thread(threadGroup, futureTask);
+        newThread.start();
+
+        Connection conn = null;
+        try {
+            CoreRuntimePlugin.getInstance().getDesignerCoreService()
+            if(CoreRuntimePlugin.getInstance().getDesignerCoreService()==null){
+                
+            }
+            int timeout = CoreRuntimePlugin.getInstance().getDesignerCoreService().getDBConnectionTimeout();
+            conn = futureTask.get(timeout, TimeUnit.SECONDS);
+
+
+
+271.SvnRepositoryFactory.executeRepositoryWorkUnit
+这里的workUnit分主次，只有主的完成了才提交到服务器。
+WorkUnit 有属性ForceTransaction 可以让次workUnit也做提交
+
+281.获得文件的方法
+1）plugin方式
+	new File(FileLocator.toFileURL(CWMPlugin.getDefault().getBundle().getResource("jdbc/mysql-connector-java-5.1.12-bin.jar")).toURI())
+
+2）java方式
+	this.getClass().getClassLoader().getResources("/jdbc/mysql-connector-java-5.1.12-bin.jar").nextElement().toURI().toURL();
+
+272.如何指定第一个透视图是谁
+
+TdqBrandingConfiguration.getInitialWindowPerspectiveId()
+返回的是哪个透视图的ID,结果就是哪个
+
+273.判断当前是CommandLine
+CWMPlugin.isCommandLine() 判断的是application的启动参数
+
+
+org.talend.libraries.hibernate
+org.talend.libraries.jasperreport
+org.talend.libraries
+TALEND_QXuG1uN78kZ5jisiwDam8KrS6wQ/Qpl3yeSbR1OoWnz+nYH8oc5CgkNzHU2uX2yjgPR80FrEeoX4W39sZyHkkODRS/nz7FUl4JgouUdHHMQpgYjIZ0gYv30zC5Wo2wQ07DHdq6dPtxHtBDpFAusBGGdz4E69ekkm+T4gREwK+rK1XflVhZWSAUNNRNcBpwRh1SbmMN1elJPneUiEcuZu4aUtvw4LkqHvdCUwet1s76zkohSkSdvspEV0R7oLGJX/z86coOGKqqwfw8uXCJTMe9XJF+UMBvpuCMLTlRzA27IEiyS1IPTpSXYAlqNfjgX8pMIjvoAKPq0yNdUUWHZN8Z6P/Xn38WmXMAgW+2ghB4LctEY8oHpMBKWaABXmN+URwhW35DFN2N/qACY+iEKZb5kOnheKbVn7NTRZ0Ox+cEMp12t628ZfdFhNSzeLdiWfH9oMFK4PFNH7ebCbS6VSx0jfyMooLfl2qb6nkXOy8q7/YLIy4nccICB4HOzW0UYIf3KsBHztRQpzbf8Wm6TtDSzPn26ANrMcPurw1hJypcMWglxMC7c04Yog54ZEVZGk+vVNc5cQ2O4wrrnHMgM2KpU6c1qiacrl1SHG9uOzDCkX7ucq6vHfgvIYhyD4Pnj29PH99f71h4bf406+EIsJRl23xbhcuJ50EPxrA+d8o5FWMezTN36bFIyg1XQqghx3m6GvsdX0uEbsQ8WJegroXyI6kjyU2uQJQlhJP3Zvqo27M9cyFtuCPJBfSSukAtBb1VpJ4O56TQhwNmNmIbcr4sEXOs/I7NPF6BQK0Bq6nmn9nQvdIyhFqaoNzR+0ZvFUQYAtMJj0Ihk40530dPYczZ01lMazqUzQcammh/HwT62KDOOmAXC0qClEQlpkghtRO6dKrRPNengwY2TEZsjcA7arKufLJCj39iuLPi8cRGInjp87U1PjG9jj7RxB9fKBrMw5Ea7Su7xkp76PdVysVySg036lL9OlpD52CWSSPKkExPJ+It6Ic0iA4f+oHedCdJMLkh2xISGzAPdDMnfIICzYRox1Ua7+ZqmW9/u9JzGK2+C3U+wYOGwXMt5oT1XE2aTp7r1bFdplW1uO+X0zYNxDKAqVNSTYKPyK2EFBN/+cX/T5+nrQVciUJvnECabUVoza/ac5MBQA8M6shZR/lvFF4DIiOltRdAFxU9WmUni1V6ul1ryxW1fTqW+O573o2v4njstxHqPU1xe7Emtv5VqaJM4Pm06HulJy5euqbvQOyxo4o9U7ttKb00nr2aKZz1l2ZSiB5Sjk7jY7BdJKDUmDPq67hk0eAKyH2y9AZdqF7fB/rNIhQlrIwhnREQdz+UQrOwJ2tfrsCKRV8QIm1wbLjJSUADNQiMMNj5XAqVVT/v09rhIzjOwyG2/w3VelJdg8MtOagd4kq233eTWxL5WcN8JYJo7P
+tdVFcEY8EeCTkIMbCH4RYA
+
+ DriverManager.getConnection(url, props.getProperty("user"), props.getProperty("password"));
+driver.connect(url, props)

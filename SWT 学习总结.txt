@@ -1,0 +1,41 @@
+1.Display
+
+	一个SWT程序中要有且只能有一个活动的Dispaly对象。这个对象其实是一个线程，包括sleep()、wawe()方法等其中有一个方法readAndDispatch()可以判定系统当前有没有排队的活动，如果有返回true否则返回false同时也说明该display对象可以被睡眠了！在display中保存了很多的系统资源，图像、文字、颜色等等。
+
+2.Shell
+
+	和window差不多，包括最大、最小、平常三个状态。同时可以通过赋予它不同的样式来允许它阻塞不同的种类的窗口。包括PRIMARY_MODAL 之阻塞父类的input，APPLICATION_MODAL 阻塞这个应用中所有的input，SYSTEM_MODAL 阻塞各个应用中的所有input。所有的样式都可以被取到通过SWT.这样的形式。
+
+注意:SWT的打开时机要把握清楚，必须把所有的控件都加入到了shell以后再打开，否则初始化界面中不会加载在open后的控件。
+
+
+
+3.Widget 
+	基本的 SWT GUI 组件（类似于 Java AWT 中的 Component 和Swing中的JComponent）Widget是一个抽象类。 
+
+4.Control 
+	拥有操作系统的对等物的窗口小部件（换句话说，在操作系统中具有同一身份）。Control 是一个抽象类。 
+
+5.Composite 
+	包含其他控件的控件（类似于 Java AWT 中的 Container 和Swing 中的 JPanel）。 
+
+6.Item 
+	其他控件包含的窗口小部件（该控件可能不是复合控件），比如列表和表。注意，包含一些项的控件很少包含其他控件，反之亦然。Item 是一个抽象类。 
+
+7.SWT的标签项
+先创建TabFolder就像toolBar一样，然后创建TabItem并以TabFolder为父类。里面的数据(Text、Control、Data)分别对应继承自Tab类型的不同类。
+
+8.CoolBar
+是对ToolBar的上级封装，CoolBar中有CoolItem，每个CoolItem存储一个ToolBar且在界面中是可以拖动的条，每个ToolBar再放入ToolItem;且其插入要在表格建立之前。
+
+action和listening联合使用的时候可以定义一个类，这个类继承Action，实现相应的监听。
+
+9.SWT的绘图监听绘制重叠效果
+	用该绘图监听中的事件PaintEvent来设置异或SetXORMode(true);这样当绘制的图元有焦点时就可以显示重叠的效果了。
+
+10.关于SWT的图片资源泄露问题
+	用eclipse的ImageRegistry配合插件接入类Activator可以接管分配图片的回收机制。并且在ImageRegistry中是使用一个内部类来存储Imagedescriptor和Image，所以它们会关于存入键值互斥，在存入Image时同时存入ImageDescriptor但反过来就不是这样，他会在存入ImageDescriptor时把image留空，在你取Image时通过ImageDescriptor来创建不过这比自己创建的好多了，它每会创建的都是同一个ID的Image
+1
+11.sleak工具的使用
+stdio 安装方式http://www.eclipse.org/swt/tools.php
+launch安装方式http://eclipsesource.com/blogs/2009/04/17/finding-swt-leaks-with-sleak/

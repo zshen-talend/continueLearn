@@ -1,0 +1,4 @@
+1.spy和@Rule的冲突
+	spy不能与@Rule public PowerMockRule powerMockRule = new PowerMockRule();同时使用否则会引起
+	RuntimeException("Failed to instantiate DeepCloner. The DeepCloner implementation must have a one-arg constructor taking a Classloader as parameter.", e)
+	详见:http://code.google.com/p/powermock/source/browse/trunk/classloading/classloading-base/src/main/java/org/powermock/classloading/ClassloaderExecutor.java?r=1566

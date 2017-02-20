@@ -1,0 +1,72 @@
+1.GEF与JFace中相应类型的比较
+	EditPartViewer-->Viewer
+	EditPart-->ContentProvider、LabelProvider
+两者通过setContents方法来设置。
+	GraphicalEditorWithPalette-->Editor(extends editpart)
+
+2.GEF的mvc结构
+	由于模型和Figure之间的通信完全是靠EditPart来实现的，而不同模型元素一般对应着不同的Figure图形，所以一般它们三者之间都具有着相同的结构。
+	
+
+
+3.GEF的构建过程
+	在创建完相应的模型后，首先创建一个GraphicalEditorWithPalette类型的编辑器并且把RootEditPart、EditPartFactory、Contents和Diagram、拖放支持。通过覆盖getPaletteRoot()方法
+
+4.editing domain
+它是负责管理命令堆栈command stack、工具条palette viewer等，以及通知在Graphicalviewer中生成的SWT事件。并且Graphicalviewer的放置位置与选用哪种editing domain有关系。在编辑器中，就用defaultEditDomain否则就要使用它的上一级父类editDomain作为editing domain
+
+5.mvc的构建过程
+	首先，建立模型，而editpart是用来连接视图和模型的,所以有了模型以后建立editpart，在这个editpart中就可以根据我们创建的模型来生成所需要的视图IFigure在每个editpart中都有createFigure方法。
+	接着，而连接控制器(editpart)和模型(model)则是通过partFactory来完成的，在它的createEditpart方法中根据传入的model类型来确定返回的editpart是哪一种类型。
+	接着，创建视图。而视图一般都是放在eclipse的editor编辑器视图中的GraphicalViewer。这里有两个方法很重要，initializeGraphicalViewer和configureGraohicalViewer。先调用配置方法configure...在这里初始化视图并设置工厂，然后通过initialize...方法设置视图的内容setContents，该就是最底层的画布吧！在gef的机制中这时会加入选择监听。
+
+6.EditPart Factory作用
+	一般这个工厂是用来连接model和Editpart的。我们会把相应的model传进去它会通过对象类型来正确定位对应的EditPart。在得到相应的EditPart时工厂还负责把model参数传给EditPart，通过setModel()方法。
+
+7.EditPart作用
+	EditPart一般继承自AbstractGraphicalEditPart,需要实现的方法包括createFigure()和createEditPolicies();以及在工厂中设置对应的模型。
+
+8.GEF编辑器
+	继承自GraphicalEditor,主要实现两个关键方法，configureGraphicalViewer()来初始化视图并指定工厂和监听项，initialzeGraphicalViewer()来连接视图和模型，并设置编辑器所要显示的根对象。
+
+9.GEF中父子关系的确认
+	保证GEF中图形的嵌套父子关系需要从两方面考虑。首先，模型是自己建立的，所以模型的父子关系只要有一个列表类来维护就可以了。其次，GEF框架为相应的EditPart也涉计了父子关系的框架，只要父EditPart重载AbstractEditPart的getModelChildren()方法就可以了，这个方法会返回一个当前对象的孩子列表。
+	而在Editor中添加孩子的过程在AbstractEditPart类中附带了反向的父亲设置。所以我们可以在孩子的EditPart中，通过调用getPartent()方法来取得它的父亲对象。
+
+10.父对象在Editor中的显示
+	因为我们在父对象EditPart中加入了图层，所以要给这个图层设置布局。而子对象想要在设置了布局的父对象中显示，就必须要设置约束，就是如Rectangle这样的边框形状的约束，通过在子对象的EditPart中配置上这些约束就可以定位子对象在父对象中的排列和显示对象了。
+
+11.设置约束的技巧
+	设置约束的时候，如果把Rectangle的长和宽设置成-1,这样就可以使得边框随着显示文字的大小而改变了。
+
+12.EditPolicy
+	实际上是EditPart中的一个改变规则，每个EditPart上可以安装多个EditPolicy，在EditPolicy中对应着不同的请求来取得相应的命令，我们需要在其中给出自己实现的Command类。在每个终端的EditPolicy中都是通过getCommand()方法来找到相应的Command的。而且不论哪种命令都会调用这个getCommand()方法，所以可以在这里输出相应的请求，得知当前执行的是哪种请求。
+	另外在EditPolicy中可以通过getHost方法,取得这个EditPolicy被注册到的那个EditPart所对应的model。
+
+13.Command机制
+	每个Command都继承Command类，并且把需要改变的对象和属性作为自己的字段，在execute()方法中来执行这个改变。要想实现redo/undo方法还要重载Command的undo方法。
+
+14.model与EditPart之间的通信
+	当某个模型被相应的Command改变之后，把这个改变通知给EditPart的任务还是要落在model上，因为EditPart控制着视图的刷新。而这个联系或者叫做通知，就要求我们实现通知机制了。实现的方法是，让model拥有PropertyChangeSupplort字段，它负责属性改变监听的添加和移除，还有改变的通知。EditPart要实现PropertyChangeListener接口，通过activate()和deactivate()方法添加和移除监听，并且实现PropertyChange()方法，来执行相应的通知。
+
+
+15.向整个Workbench添加Editor的toolbar
+	这个实现方法要和org.eclipse.ui.editors扩展点有关系，在其下的editor中设置contributorClass属性，其所指向的连接类必须实现org.eclipse.ui.IEditorActionBarContributor接口，而在gef中为它单独实现了相应的类，只要直接扩展ActionBarContributor类就可以了。要在buildAction()方法中添加相应的action。然后在contributeToToolBar()方法中添加相应的action到toolBar。这样添加的toolbar会随着Editor的打开而出现，随着它的关闭而消失。
+
+16.更新model下的子model
+	调用model对应的editpart下的refreshChildren()方法就可以完成对其下子对象的刷新了。这个方法是在AbstractEditPart上的。
+
+17.带palette的Graphical Editor
+	要想实现如题的Editor，就要扩展GraphicalEditorWithPalette类。在其中的getPaletteRoot()方法中给出所需要的palette。
+
+18.EditPolicy和command的对应扩展关系
+	删除图型-->ComponentEditPolicy
+	改变图元大小或移动位置-->XYLayoutEditPolicy
+	创建图元的命令-->XYLayoutEditPolicy
+
+19.属性视图
+	gef的属性视图主要是让模型实现IPropertySource接口。然后通过PropertyChangeSupport来通知模型的改变给EditPart进而给视图，而在上面实现的接口中的方法连通了属性视图的改变和模型。
+
+20.实现图像的直接编辑
+	实现类：MyDirectEditManager。直接实现在EditPart上，通过performRequest(Request req)方法。
+p82页63
