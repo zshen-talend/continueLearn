@@ -1,0 +1,21 @@
+<?xml version="1.0"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+<!-- Generated Apr 23, 2008 1:33:52 PM by Hibernate Tools 3.2.0.CR1 -->
+<hibernate-mapping>
+    <class name="db.hibernate.student.TdqValues" table="TDQ_VALUES">
+    	<comment>listing the value when frequency table indicator is computed</comment>
+        <id name="valPk" type="java.lang.Integer">
+            <column name="VAL_PK" >
+            	<comment>the primary key (artificial)</comment>
+            </column>
+            <generator class="native"/>
+        </id>
+        <property name="valString" type="java.lang.String">
+            <column name="VAL_STRING" not-null="true">
+            	<comment>the value (among the possible values in frequency tables)</comment>
+            </column>
+        </property>
+       
+    </class>
+</hibernate-mapping>

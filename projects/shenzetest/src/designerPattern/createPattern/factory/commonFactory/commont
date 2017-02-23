@@ -1,0 +1,3 @@
+Common Factory pattern have some not enougth
+if the parameter which used to create new instance is error on the pass way.
+So we need to mutilMethodFactory pattern 

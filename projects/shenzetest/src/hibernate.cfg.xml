@@ -1,0 +1,31 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!DOCTYPE hibernate-configuration PUBLIC
+"-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+"http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+<hibernate-configuration>
+    <session-factory>
+<!--程序执行的时候是否显示真正的sql语句-->
+  <property name="show_sql">true</property>
+  <!--使用的SQL对应的“方言”，此处是Oracle9的“方言”-->
+<property name="dialect">org.hibernate.dialect.Oracle9Dialect
+</property>
+  <!--连接数据库的Driver-->
+<property name="connection.driver_class">
+oracle.jdbc.driver.OracleDriver
+</property>
+  <!--数据库连接url-->
+<property name="connection.url">
+jdbc:oracle:thin:@192.168.0.74:1521:ORCL
+</property>
+<property name="hibernate.connection.useUnicode">true</property>
+<property name="hibernate.connection.characterEncoding">utf-8</property>
+  <!--用户名-->
+<property name="connection.username">shenze</property>
+<!--密码-->
+  <property name="connection.password">shenze</property>
+  <mapping resource="Student.hbm.xml"/>
+  <mapping resource="TdqValues.hbm.xml"/>
+  
+ </session-factory>
+ 
+</hibernate-configuration>

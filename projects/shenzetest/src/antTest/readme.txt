@@ -1,0 +1,2 @@
+调用类在这里，被调用类在shenze1的工程里，会把这两个工程的类打包成一个jar
+到当前工程的lib下名称为result.jar,对应的build文件叫做build.xml

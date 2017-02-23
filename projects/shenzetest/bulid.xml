@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<project default="main">
+	<property name="build" value="build" />
+	<property name="build.classes" value="${build}/classes" />
+	<property name="lib.home" value="lib"/>
+	
+<target name="main" depends="compile" description="Main target">
+
+
+	<echo>
+Building the .jar file.
+</echo>
+	<java classname="antTest.CallStringTest">
+		<classpath >
+		<path location="${build.classes}\bin"></path>
+		</classpath>
+	
+	</java>
+	</target>
+	<path id="compile.classpath">
+			<fileset dir="${lib.home}">
+			  <include name="**/*.jar"/>
+			</fileset>
+		</path>
+<target name="runjar" depends="compile">
+<java jar="${lib.home}\result.jar" fork="true">
+
+</java>
+</target>
+
+	
+<target name="compile" description="Compilation target" depends="copyclassTojar">
+<javac srcdir="src\antTest" destdir="${build.classes}\bin" >
+	<classpath refid="compile.classpath"></classpath>
+	</javac>
+	<jar destfile="${lib.home}\result.jar">
+		<fileset dir="${build.classes}\bin" includes="**\*.class"></fileset>
+		<manifest>
+			<attribute name="Main-Class" value="antTest.CallStringTest"/>
+			<attribute name="Class-Path" value="ojdbc14.jar"/>
+		</manifest>
+	</jar>
+</target>
+	
+<target name="copyclass" depends="perpare">
+	<copy todir="${build.classes}" >
+		<fileset dir="..\shenze1" includes="**/*.class"></fileset>
+	</copy>
+</target>
+
+	<target name="copyclassTojar" depends="copyclass">
+		<jar destfile="${lib.home}\test1.jar" >
+			<fileset dir="${build.classes}" includes="**\*.class"></fileset>
+		</jar>
+	</target>
+<target name="test">
+	<condition property="scondition">
+		            <!--在指定的classpath路径下是否存在资源 TestTest.class-->
+		            <available resource="${build.classes}">
+		                
+		            </available>
+		        </condition>
+</target>
+	
+<target name="perpare" depends="delete">
+	
+
+	
+	<mkdir dir="${build.classes}"/>
+</target>
+	
+	
+<target name="delete" if="scondition"> <!--nless="scondition">-->
+	<delete>
+			
+		<fileset dir="${build.classes}"></fileset>
+		<fileset file="${lib.home}\test1.jar"></fileset>
+		<fileset file="${lib.home}\result.jar"></fileset>
+	</delete>
+</target>
+</project>
