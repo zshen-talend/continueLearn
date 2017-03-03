@@ -244,3 +244,9 @@ public class Test {
 
 8)java.util.Date日期类型的标准格式
 EEE MMM dd HH:mm:ss zzz yyyy
+
+28.javap 来查询class文件的编译版本
+javap -verbose class名字
+50 ->JDK1.6
+51->JDK1.7
+52->JDK1.8
