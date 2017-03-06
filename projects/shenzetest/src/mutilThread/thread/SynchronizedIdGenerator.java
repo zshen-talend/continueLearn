@@ -1,6 +1,6 @@
 package mutilThread.thread;
 
-public class SynchronizedIdGenerator {
+public class SynchronizedIdGenerator extends IdGenerator {
     private int value = 0;
     public synchronized int getNext() {
         return value++;

@@ -5,4 +5,7 @@ public class IdGenerator {
     public int getNext() {
         return value++;
     }
+    public int getNextV2() {
+    	return value++;
+    }
 }
