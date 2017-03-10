@@ -18,6 +18,8 @@ import javax.script.ScriptEngine;
 import javax.script.ScriptEngineManager;
 import javax.script.ScriptException;
 
+import jdk.nashorn.api.scripting.ScriptObjectMirror;
+
 import org.apache.log4j.Logger;
 
 /**
@@ -27,7 +29,7 @@ public class ScriptEngin {
 
     static Logger log = Logger.getLogger(ScriptEngin.class);
 
-    public static void main(String args[]) {
+    public void expersion() {
         ScriptEngineManager manager = new ScriptEngineManager();
         ScriptEngine engine = manager.getEngineByName("javascript");
         Object inputData = "mm";
@@ -46,6 +48,25 @@ public class ScriptEngin {
             // TODO Auto-generated catch block
             e.printStackTrace();
         }
+    }
+
+    public void regex() {
+        ScriptEngineManager manager = new ScriptEngineManager();
+        ScriptEngine engine = manager.getEngineByName("javascript");
+        Object inputData = "mm";
+        String expersion = "\\\\w{2}";
+        engine.put("mm", inputData);
+        try {
+            Object eval = engine.eval(inputData.toString() + ".match(\"" + expersion + "\")");
+            System.out.println(eval == null ? "null" : ((ScriptObjectMirror) eval).get(0));
+        } catch (ScriptException e) {
+            log.error(e, e);
+        }
+    }
+
+    public static void main(String args[]) {
+        ScriptEngin scriptEngin = new ScriptEngin();
+        scriptEngin.regex();
 
     }
 }
