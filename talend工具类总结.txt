@@ -89,6 +89,10 @@
 	通过node取modelElement
 	((ISubRepositoryObject) currentObject).getModelElement();
 	IRepositoryViewObject currentObject = modelElementRepositoryNode.getObject();
+	
+	27.TalendLibsServerManager
+	存储着libraries 下载地址
+	TALEND_LIB_SERVER="https://talend-update.talend.com/nexus/"
 
 tos
   1.ResourceFilenameHelper

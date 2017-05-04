@@ -63,3 +63,7 @@ mvn clean install
       </testResource>
     </testResources>
   </build>
+  
+  7.talend libraries download url
+  TalendLibsServerManager.TALEND_LIB_SERVER  ~https://talend-update.talend.com/nexus/
+  ¹«¹²nexus url ~https://artifacts-zl.talend.com/nexus
