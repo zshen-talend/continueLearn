@@ -27,8 +27,9 @@ mvn clean install
  -Dformat 自动格式化代码
  -DTest 指定测试类
  -DskipITs 跳过集成测试
+ -Dmaven.test.failure.ignore=true 测试失败也不终止
 
-5.剔除不需要的testCase
+6.剔除不需要的testCase
 <plugin>
 	<groupId>org.apache.maven.plugins</groupId>
 	<artifactId>maven-surefire-plugin</artifactId>
@@ -45,7 +46,7 @@ mvn clean install
 	</configuration>
 </plugin>
 
-6.指定文件的build路径
+7.指定文件的build路径
 <build>
     <directory>target</directory>
     <outputDirectory>target/classes</outputDirectory>
@@ -64,6 +65,6 @@ mvn clean install
     </testResources>
   </build>
   
-  7.talend libraries download url
+  8.talend libraries download url
   TalendLibsServerManager.TALEND_LIB_SERVER  ~https://talend-update.talend.com/nexus/
   公共nexus url ~https://artifacts-zl.talend.com/nexus

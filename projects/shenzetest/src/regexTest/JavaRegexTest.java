@@ -15,15 +15,14 @@ package regexTest;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-
 /**
- * DOC zshen  class global comment. Detailled comment
+ * DOC zshen class global comment. Detailled comment
  */
 public class JavaRegexTest {
 
     public static void main(String args[]) {
-        String str = " ";
-        String regex = "^*$";
+        String str = "\u2EF3";
+        String regex = "^\\p{script=Han}$";
         Pattern p = Pattern.compile(regex);
         Matcher m = p.matcher(str);
         System.out.println(m.find());

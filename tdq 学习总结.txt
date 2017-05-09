@@ -1380,6 +1380,12 @@ TdqBrandingConfiguration.getInitialWindowPerspectiveId()
 273.判断当前是CommandLine
 CWMPlugin.isCommandLine() 判断的是application的启动参数
 
+274.批量修改git repository的位置
+D:\code\g631\.metadata\.plugins\org.eclipse.core.runtime\.settings\
+
+275.批量修改git下的project位置
+D:\code\g631\.metadata\.plugins\org.eclipse.core.resources\.projects
+每个工程下面都有.location文件，是二进制的可以用utrledit的文件查找功能批量替换
 
 org.talend.libraries.hibernate
 org.talend.libraries.jasperreport
