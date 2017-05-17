@@ -93,6 +93,9 @@
 	27.TalendLibsServerManager
 	存储着libraries 下载地址
 	TALEND_LIB_SERVER="https://talend-update.talend.com/nexus/"
+	
+	28.org.talend.designer.core.model.components.Expression
+show_if required_if 表达式的最后计算
 
 tos
   1.ResourceFilenameHelper

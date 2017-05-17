@@ -17,7 +17,7 @@ public class Person implements Externalizable {
 
     private String fClub;
 
-    private Egg egg = null;
+    private IEgg egg = null;
 
     public Person() {
         System.out.println("none-arg constructor");
@@ -72,7 +72,7 @@ public class Person implements Externalizable {
     public void readExternal(ObjectInput in) throws IOException, ClassNotFoundException {
         fClub = (String) in.readObject();
         age = in.readInt();
-        egg = (Egg) in.readObject();
+        egg = (IEgg) in.readObject();
         System.out.println("自定义反序列化");
     }
 
@@ -81,7 +81,7 @@ public class Person implements Externalizable {
      * 
      * @return the egg
      */
-    public Egg getEgg() {
+    public IEgg getEgg() {
         return this.egg;
     }
 
@@ -90,7 +90,7 @@ public class Person implements Externalizable {
      * 
      * @param egg the egg to set
      */
-    public void setEgg(Egg egg) {
+    public void setEgg(IEgg egg) {
         this.egg = egg;
     }
 

@@ -13,3 +13,7 @@
 4.tmatchGroupHadoop 执行后的查看位置
 	http://hadoopmaster1.talend.lan:50070/ 文件查看
 	http://hadoopmaster1.talend.lan:50030/ 运行结果查看
+	
+5.org.talend.designer.core.model.components.Expression
+show_if required_if 表达式的最后计算
+	
