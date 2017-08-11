@@ -1387,6 +1387,10 @@ D:\code\g631\.metadata\.plugins\org.eclipse.core.runtime\.settings\
 D:\code\g631\.metadata\.plugins\org.eclipse.core.resources\.projects
 每个工程下面都有.location文件，是二进制的可以用utrledit的文件查找功能批量替换
 
+
+276.java 8不支持这个参数，会引起调试时闪退
+-XX:MaxPermSize=256m
+
 org.talend.libraries.hibernate
 org.talend.libraries.jasperreport
 org.talend.libraries

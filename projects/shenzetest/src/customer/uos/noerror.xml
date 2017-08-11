@@ -1,0 +1,103 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<cprover>
+<program>CBMC 4.5</program>
+<message type="STATUS-MESSAGE">
+  <location file="t2.c">
+    <file>t2.c</file>
+    <line/>
+    <function/>
+  </location>
+  <text>Parsing</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Converting</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Type-checking t2</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Generating GOTO Program</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Adding CPROVER library</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Function Pointer Removal</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Partial Inlining</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Generic Property Instrumentation</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Starting Bounded Model Checking</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 1 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 2 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 3 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 4 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 5 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 6 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 7 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 8 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 9 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Unwinding loop c::sum.0 iteration 10 file t2.c line 6 function sum thread 0</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>size of program expression: 71 steps</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>simple slicing removed 0 assignments</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>Generated 10 VCC(s), 0 remaining after simplification</text>
+</message>
+
+<message type="STATUS-MESSAGE">
+  <text>VERIFICATION SUCCESSFUL</text>
+</message>
+
+<cprover-status>SUCCESS</cprover-status>
+
+</cprover>

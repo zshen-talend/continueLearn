@@ -11,7 +11,7 @@
 	<classpathentry kind="lib" path="lib/jfreechart-1.0.12.jar"/>
 	<classpathentry kind="lib" path="lib/jcommon-1.0.15.jar"/>
 	<classpathentry kind="lib" path="lib/jface/org.eclipse.jface_3.10.1.v20140813-1009.jar"/>
-	<classpathentry kind="lib" path="lib/org.eclipse.equinox.common_3.6.200.v20130402-1505.jar"/>
+	<classpathentry kind="lib" path="lib/org.eclipse.equinox.common_3.6.200.v20130402-1505.jar" sourcepath="lib_src/org.eclipse.equinox.common.source_3.6.200.v20130402-1505.jar"/>
 	<classpathentry kind="lib" path="lib/jena/jena-core-2.13.0.jar"/>
 	<classpathentry kind="lib" path="lib/jena/slf4j-api.jar"/>
 	<classpathentry kind="lib" path="lib/jena/jena-iri-1.1.2.jar"/>
@@ -40,6 +40,11 @@
 	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="lib/apache/commons-io-2.5.jar" sourcepath="lib_src/commons-io-2.5-src.zip"/>
 	<classpathentry kind="lib" path="lib/apache/commons-lang-2.4.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-core_2.11-2.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-sql_2.11-2.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-catalyst_2.11-2.0.0.jar"/>
+	<classpathentry kind="lib" path="lib/spark/scala-library-2.11.8.jar"/>
+	<classpathentry kind="lib" path="lib/spark/scala-reflect-2.11.8.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>

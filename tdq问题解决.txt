@@ -71,3 +71,8 @@ org.ops4j.pax.url.mvn this plugin need to be started by hand
 
 13.job不能被导入
 org.talend.components.api.service.osgi 要设置成自动启动
+
+14.matchAnalysis不能创建和打开的问题
+org.talend.dataquality.record.linkage 插件manifest 里build页面要到处.包。
+对应java源码文件夹。
+这样才能代码直接被本地使用

@@ -57,7 +57,7 @@ public class ScriptEngin {
         String expersion = "\\\\w{2}";
         engine.put("mm", inputData);
         try {
-            Object eval = engine.eval(inputData.toString() + ".match(\"" + expersion + "\")");
+            Object eval = engine.eval("mm.match(\"" + expersion + "\")");
             System.out.println(eval == null ? "null" : ((ScriptObjectMirror) eval).get(0));
         } catch (ScriptException e) {
             log.error(e, e);
