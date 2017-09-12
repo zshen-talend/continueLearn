@@ -151,3 +151,9 @@ IBM Developer Kit, Java(TM) Technology Edition 1.3 Linux µÄÈ±Ê¡ VM ÉèÖÃÊÊºÏ½øĞĞ³
 -console -noexit
 ÔÚÆô¶¯µÄÊ±ºò´ò¿ªÒ»¸ö¿ØÖÆÌ¨
 osgi> ÊäÈë bundel ²å¼şid¾Í¿ÉÒÔÖªµÀµ±Ç°²å¼şÊÇ·ñ±»¼ÓÔØ
+
+java 8²»Ö§³ÖÕâ¸ö²ÎÊı£¬»áÒıÆğµ÷ÊÔÊ±ÉÁÍË
+-XX:MaxPermSize=256m
+
+eclipseºÍJDKµÄ°æ±¾¹ØÏµ
+¿´eclipseÏÂÃæµÄreadmeÎÄ¼ş
