@@ -54,6 +54,7 @@ public class StringTest {
         "HOUSTON".hashCode(); //$NON-NLS-1$
         System.out.println("context.new1".split("context.")[1]);
         System.out.println(Integer.valueOf(String.valueOf('9')));
+        System.out.println("aa" + System.getProperty("line.separator") + "bb");
     }
 
     public void ListOperation() {

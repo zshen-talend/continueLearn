@@ -17,3 +17,7 @@
 5.org.talend.designer.core.model.components.Expression
 show_if required_if 表达式的最后计算
 	
+	
+6.Shawdom job 不能支持log信息
+	tMatchGroupIn_begin.javajet
+	org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.OFF);（6.3.1以上才有）

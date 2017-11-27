@@ -49,6 +49,7 @@ public class CharSetUtil {
 
     public static void main(String[] args) {
         System.out.println(decodeUnicode("\\u5907abbbbbs\\u5907"));
+        System.out.println(convert("备备"));
     }
 
     /**

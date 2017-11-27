@@ -1,0 +1,19 @@
+1.一键安装build所需全部工具
+npm install --global windows-build-tools
+以下两个方法解决安装慢的问题
+1)由于npm需要翻墙访问所以需要先安装cnpm包（不太好使）
+npm install cnpm -g
+之后用snpm代替npm出publish外所有的操作
+npm install --global windows-build-tools==>cnpm install --global windows-build-tools
+2）注册镜像服务器
+npm config set registry https://registry.npm.taobao.org
+
+2.intellij设置快捷键为eclipse
+file->settig->keyMap->eclipse
+
+
+3.启动webApp
+npm run serve
+
+4.url
+http://localhost:3000

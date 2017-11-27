@@ -16,7 +16,7 @@ import java.nio.charset.Charset;
 
 public class EncodingExplainer {
 
-    private static final String[] TEST_CASES = { "éàùïô", "中国", "锟矫伙拷锟斤拷锟斤拷" };
+    private static final String[] TEST_CASES = { "éàùïô", "中国", "北京" };
 
     private static final String[] CHARSETS = { "cp1252", "iso8859-1", "gb2312", "utf-8" };
 

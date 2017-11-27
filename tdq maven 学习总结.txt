@@ -68,3 +68,8 @@ mvn clean install
   8.talend libraries download url
   TalendLibsServerManager.TALEND_LIB_SERVER  ~https://talend-update.talend.com/nexus/
   公共nexus url ~https://artifacts-zl.talend.com/nexus
+  
+  9. -amd -pl dataquality-record-linkage
+	-pl 指定一个modules的id列表来决定build哪些工程
+	-am 是否需要同时build列表中工程依赖的工程
+	-amd 是否需要同时build依赖列表中工程的工程

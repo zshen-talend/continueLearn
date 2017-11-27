@@ -1,0 +1,6 @@
+eclipse -->     intellij
+ctrl+o          ctrl+f12                    打开outline
+ctrl+alt+up     ctrl+D                      区域复制（多行复制）
+ctrl+D          ctrl+Y                      删除整行
+alt+/           ctrl+shit+space             代码提示
+ctrl+k          F3                          查找下一个

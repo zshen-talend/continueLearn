@@ -895,6 +895,7 @@ CreateConnectionAction。有个最主要的参数DBConnectionParameter参数就是从这里
 	ReponsitoryContextBridge.isDefautProject()
 	GlobalServiceRegister.getDefault().isServiceRegistered(IRepositoryService.class)
 	利用的原理IRepositoryService在top中还没有实现
+	类似的判断277
 
 193.启用远程项目的项目需要修改的版本号
 	RemoteProviderPlugin.getVersion()方法。更好的方法见159 5.0后已经无用
@@ -1390,6 +1391,15 @@ D:\code\g631\.metadata\.plugins\org.eclipse.core.resources\.projects
 
 276.java 8不支持这个参数，会引起调试时闪退
 -XX:MaxPermSize=256m
+
+277.判断是否在eclipse平台下运行
+Platform.isRunning() 类似的判断192
+
+278.senmatic 分析数据类型的类
+MainCategory
+
+279.判断数据的category类型
+UserDefinedClassifier.classify(String str, MainCategory mainCategory)
 
 org.talend.libraries.hibernate
 org.talend.libraries.jasperreport
