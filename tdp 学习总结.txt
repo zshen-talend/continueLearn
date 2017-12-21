@@ -17,3 +17,9 @@ npm run serve
 
 4.url
 http://localhost:3000
+
+5.Analyzers
+analyze() 用来效验数据的有效性和基础分析（数据类型等等）
+
+6.SemanticQualityAnalyzer
+isValid()效验数据的有效性
