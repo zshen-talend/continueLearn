@@ -23,3 +23,15 @@ analyze() 用来效验数据的有效性和基础分析（数据类型等等）
 
 6.SemanticQualityAnalyzer
 isValid()效验数据的有效性
+
+7.CustomMetadataIndexAccess
+custom的DQCategory创建删除和更新
+
+8.文件的存储结构
+t_default存储修改后的信息
+shared存储默认信息
+metadata文件下存储的是semantic type信息包括用户通过UI修改的设置也在这里
+
+9.luke
+源码位置:D:\code\toolsCode\luke
+mvn clean install 后的jar包位置：C:\Users\Administrator\.m2\repository\luke\luke\4.10.4

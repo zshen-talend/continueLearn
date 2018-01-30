@@ -76,3 +76,6 @@ org.talend.components.api.service.osgi 要设置成自动启动
 org.talend.dataquality.record.linkage 插件manifest 里build页面要到处.包。
 对应java源码文件夹。
 这样才能代码直接被本地使用
+
+15.-Dformat问题
+这个样式是通过org.talend.tools这个repository过来的，所以要及时更新

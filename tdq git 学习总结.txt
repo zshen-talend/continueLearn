@@ -15,3 +15,6 @@ git 源名称 pull
 
 6.指定添加某个源
 git remote add 源名称 地址
+
+7.同步本地与服务器的远程分支
+git fetch -p 

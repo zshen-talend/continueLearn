@@ -1,9 +1,13 @@
+
 1.pom.xml下属性详解
 
+http://maven.apache.org/index.html帮助文档
 1)modules 指定子项目
 2)properties 定义属性 使用时用${变量名}的方式调用
 3)dependenyes 定义依赖关系（需要声明flix插件否则依赖关系是typo通过manifest来确定）
 4)package 指定大包的类型（bundle意味着打包成插件的形式.jar以为的不带manifest里的依赖）
+5)configuration 这个标签下定义的都是当前插件的参数，所以要去当前插件下找解释
+
 
 2.build的顺序
 mvn clean install 默认找当前目录所在的pom.xml文件进行build
@@ -73,3 +77,15 @@ mvn clean install
 	-pl 指定一个modules的id列表来决定build哪些工程
 	-am 是否需要同时build列表中工程依赖的工程
 	-amd 是否需要同时build依赖列表中工程的工程
+	
+	10.拷贝依赖的jar包到指定目录下
+	mvn dependency:copy-dependencies -DoutputDirectory=libs
+	
+	11.-Dformat的问题解决
+	dataquality-libraries里面配置了format的具体插件
+	net.revelc.code.formatter就是这个功能插件(这个配置文件可以从eclipse里面导出)
+	configFile标签定义了样式文件的名字默认从org.talend.tools下面找（所以要保证org.talend.tools是最新的）
+	net.revelc.code.formatter的解释在http://code.revelc.net/formatter-maven-plugin/examples.html
+	
+	12.debug打印configation信息
+	mvn clean install -X可以打印maven执行过程中的信息，包括configation下面的参数和文件位置
