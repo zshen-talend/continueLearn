@@ -1,0 +1,12 @@
+1.lucene index文件的查看工具luke 
+版本关系，一个lucene版本都有自己对应的luke版本，下载对应源码然后mvn clean install生成可执行文件
+启动方式：
+java -XX:MaxPermSize=512m -jar luke-with-deps.jar
+jar包位置mvn clean install后生成的target文件夹下
+git:https://github.com/DmitryKey/luke/
+
+2.Document term field的区别
+一个doucment代表一个存储单元
+一个term是一个查询单元
+一个field是doucment中存储的内容
+一个document中包含多个field

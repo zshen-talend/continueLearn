@@ -37,11 +37,12 @@ public class MifmifGenerexTest {
     public static void main(String[] args) {
         // "^(\\+44[[:space:]]?7[[:digit:]]{3}|\\(?07[[:digit:]]{3}\\)?)[[:space:]]?[[:digit:]]{3}[[:space:]]?[[:digit:]]{3}$"
         // String patternStr = stringStartTrim("^(?:01000|99999)(0[1-9]\\d{3}|[1-9]\\d{4})$", "\\^");
-        String patternStr = stringStartTrim("[\\u4E00-\\u4E01]", "\\^");
+        String patternStr = stringStartTrim("^(([01][\\d][\\d])|(2[0-4][\\d])|(25[0-5]))", "\\^");
         System.out.println(patternStr);
         patternStr = stringEndTrim(patternStr, "\\$");
         System.out.println(patternStr);
         patternStr = patternStr + "$";
+        System.out.println("input pattern is" + patternStr);
         generex = new Generex(patternStr);
         generex.setSeed(105l);
         String maskResult = generex.random();
