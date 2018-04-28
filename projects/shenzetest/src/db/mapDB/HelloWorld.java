@@ -34,9 +34,8 @@ public class HelloWorld {
         // open an collection, TreeMap has better performance then HashMap
         ConcurrentNavigableMap<Integer, String> map = db.getTreeMap("collectionName");
 
-        map.put(1, "one");
-        map.put(2, "two");
-        map.put(2, "two1");
+        map.put(2, "one");
+        map.put(1, "two");
         // map.keySet() is now [1,2] even before commit
 
         db.commit(); // persist changes into disk
@@ -45,9 +44,11 @@ public class HelloWorld {
         // map.keySet() is now [1,2,3]
         db.rollback(); // revert recent changes
         // map.keySet() is now [1,2]
-        for (Integer tempInt : map.keySet()) {
-            System.out.println(map.get(tempInt));
+
+        for (Integer key : map.keySet()) {
+            System.out.println(key);
         }
+
         db.close();
 
     }

@@ -1,0 +1,2 @@
+maven 的编译方法，研究下做个demo了解编译API的使用
+JobScriptsExportWizardPage.buildJobWithMaven
