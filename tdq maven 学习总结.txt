@@ -89,3 +89,8 @@ mvn clean install
 	
 	12.debug打印configation信息
 	mvn clean install -X可以打印maven执行过程中的信息，包括configation下面的参数和文件位置
+	
+	13.回退提交
+	mvn reset --head HEAD^ 每个^代表一次回退
+	mvn reset --head HEAD~5 代码回退5个提交
+	git push --force 强制提交代码操作remote端

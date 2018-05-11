@@ -46,14 +46,14 @@ public class HelloWorld1 {
 
         // Configure and open database using builder pattern.
         // All options are available with code auto-completion.
-        dbFile = File.createTempFile("mapdb1", "db");
+        File dbFile = new File("E://mapDBaa.db");
         db = DBMaker.newFileDB(dbFile).closeOnJvmShutdown().encryptionEnable("password").make();
 
         // open an collection, TreeMap has better performance then HashMap
 
         final ConcurrentNavigableMap<List<Object>, Integer> map =
                 db.createTreeMap("splitDB").comparator(new DBMapCompartor()).makeOrGet();
-        for (int index = 0; index < 10000; index++) {
+        for (int index = 0; index < 100000; index++) {
             List<Object> inputList = new ArrayList<>();
             int nextInt = ran.nextInt();
             inputList.add(nextInt);

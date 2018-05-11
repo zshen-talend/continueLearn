@@ -47,7 +47,7 @@ public class HelloWorld {
         ConcurrentNavigableMap<List<Object>, Integer> map =
                 db.createTreeMap("reorderWhenClick").comparator(new DBMapCompartor()).makeOrGet();
 
-        for (int index = 0; index < 10000000; index++) {
+        for (int index = 0; index < 1000; index++) {
             // map.put(2, "two");
             // map.put(1, "one");
             // map.put(4, "four");
