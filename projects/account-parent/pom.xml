@@ -9,7 +9,6 @@
 	<modules>
 		<module>account-email</module>
 		<module>account-persist</module>
-		<module>account-captcha</module>
 	</modules>
 	<properties>
 		<springframework.version>2.5.6</springframework.version>
