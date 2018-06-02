@@ -35,3 +35,10 @@ metadata文件下存储的是semantic type信息包括用户通过UI修改的设置也在这里
 9.luke
 源码位置:D:\code\toolsCode\luke
 mvn clean install 后的jar包位置：C:\Users\Administrator\.m2\repository\luke\luke\4.10.4
+
+10.把如下信息拷贝到用户目录下C:\Users\Administrator
+init.author.name=Talend Frontend
+init.author.email=frontend@talend.com
+init.author.url=http://www.talend.com
+email=frontend@talend.com
+//registry.npmjs.org/:_authToken=7de649cd-5c43-47d9-83f0-dede07e5ef59

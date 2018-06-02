@@ -407,3 +407,13 @@ public class DoubleClickTreeNodeAction extends Action {
     }   
   
 }  
+
+47.插件间共享jar包
+插件间共享jar包需要在manifest页面上配置runtime时导出的jar.如果不配置可能编译都通不过。
+对于版本冲突的一些jar包，最后设置导出该包时的版本，这样在导入时可以指定package的版本来解决冲突。
+例如：org.talend.dataquality.semantic里面依赖的org.talend.libraries.apache.lucene4
+与org.talend.dataquality.ontology下面依赖的org.talend.libraries.elasticsearch就会冲突lucene的包
+org.talend.dataquality.ontology->(org.talend.dataquality.semantic and org.talend.libraries.apache.lucene4)
+org.talend.dataquality.semantic->org.talend.libraries.elasticsearch
+org.talend.libraries.apache.lucene4->lucene-core-4.10.4.jar
+org.talend.libraries.elasticsearch->lucene-core-7.1.0.jar

@@ -55,6 +55,7 @@ public class StringTest {
         System.out.println("context.new1".split("context.")[1]);
         System.out.println(Integer.valueOf(String.valueOf('9')));
         System.out.println("aa" + System.getProperty("line.separator") + "bb");
+        System.out.println("aa" + null + "bb");
     }
 
     public void ListOperation() {

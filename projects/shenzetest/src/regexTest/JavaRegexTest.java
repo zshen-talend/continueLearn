@@ -12,6 +12,7 @@
 // ============================================================================
 package regexTest;
 
+import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -20,7 +21,8 @@ import java.util.regex.Pattern;
  */
 public class JavaRegexTest {
 
-    static String[][] checkRanges = { { "4E00", "9FFF", "CJK Unified Ideographs" },// CJK Unified Ideographs (Han) (35MB)
+    static String[][] checkRanges = { { "4E00", "9FFF", "CJK Unified Ideographs" },// CJK Unified Ideographs (Han)
+                                                                                   // (35MB)
             { "3400", "4DBF", "CJK Extension-A" },// CJK Extension-A (6MB)
             { "20000", "2A6DF", "CJK Extension B" },// CJK Extension B (40MB)
             { "2A700", "2B73F", "CJK Extension C" },// CJK Extension C (3MB)
@@ -59,12 +61,17 @@ public class JavaRegexTest {
             { "18800", "18AFF", "Tangut Components" }, // Tangut Components
             { "A000", "A48F", "Yi Syllables" }, // Yi Syllables
             { "A490", "A4CF", "Yi Radicals" } // Yi Radicals
-    };
+            };
 
     public static void main(String args[]) {
-        JavaRegexTest javaRegexTest = new JavaRegexTest();
-        javaRegexTest.printRangeOfHan();
+        // JavaRegexTest javaRegexTest = new JavaRegexTest();
+        // javaRegexTest.printRangeOfHan();
         // javaRegexTest.checkSingleCharacter();
+        for (int i = 0; i < 3; i++) {
+            SecureRandom secureRandom = new SecureRandom();
+            // secureRandom.setSeed(100L);
+            System.out.println(secureRandom.nextInt());
+        }
 
     }
 

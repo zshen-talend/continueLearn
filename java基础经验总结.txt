@@ -250,3 +250,8 @@ javap -verbose class名字
 50 ->JDK1.6
 51->JDK1.7
 52->JDK1.8
+
+29.java.security.SecureRandom
+这个类如果直接实例化会导致linux和windwos上执行的算法不一致
+所以要考虑如下声明来保持一致性
+SecureRandom.getInstance("SHA1PRNG");
