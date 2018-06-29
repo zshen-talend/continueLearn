@@ -42,3 +42,7 @@ init.author.email=frontend@talend.com
 init.author.url=http://www.talend.com
 email=frontend@talend.com
 //registry.npmjs.org/:_authToken=7de649cd-5c43-47d9-83f0-dede07e5ef59
+
+11.让dictionary 的配置文件指向指定的位置（本地代码调试customer的type）
+E:\code\g5\data-prep\dataprep-dataset\src\main\resources\application.properties
+位置不止一个所以最好把配置文件放到系统的临时目录去

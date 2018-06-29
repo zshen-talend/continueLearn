@@ -255,3 +255,6 @@ javap -verbose class名字
 这个类如果直接实例化会导致linux和windwos上执行的算法不一致
 所以要考虑如下声明来保持一致性
 SecureRandom.getInstance("SHA1PRNG");
+
+30.查看虚拟机加载类的加载路径(解决类加载相关的问题，jar包冲突问题)
+-verbose（加在vm arguments下）

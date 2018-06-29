@@ -1403,3 +1403,9 @@ UserDefinedClassifier.classify(String str, MainCategory mainCategory)
 
 280.TableViewerCreatorNotModifiable
 TUP组的表一般都出于这个类(样式 监听...)
+
+281.java.lang.IllegalAccessError
+这个错误是由于访问了不能访问的类\属性\构造函数所造成的。
+但是造成的原因一般是由于一个jar编译的环境和运行的环境不一致导致的。
+当没有明确指明那个类出错时可以用-verbose作为虚拟机参数来打印运行时的所有类加载信息。
+从而得到蛛丝马迹

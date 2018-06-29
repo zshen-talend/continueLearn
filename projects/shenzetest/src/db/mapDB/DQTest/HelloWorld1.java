@@ -53,7 +53,7 @@ public class HelloWorld1 {
 
         final ConcurrentNavigableMap<List<Object>, Integer> map =
                 db.createTreeMap("splitDB").comparator(new DBMapCompartor()).makeOrGet();
-        for (int index = 0; index < 100000; index++) {
+        for (int index = 0; index < 1000; index++) {
             List<Object> inputList = new ArrayList<>();
             int nextInt = ran.nextInt();
             inputList.add(nextInt);
