@@ -10,7 +10,7 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package javatest.map;
+package javatest.hashMap;
 
 import java.util.HashMap;
 

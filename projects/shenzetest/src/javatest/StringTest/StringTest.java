@@ -46,7 +46,7 @@ public class StringTest {
         // String a = Integer.toString("中".charAt(0), 16);
         // // System.out.println('20013');
         // System.out.println((char) Integer.valueOf(a, 16).intValue());
-        // System.out.println("\\u" + a);
+        // System.out.println(new Character("\\u" + a));
         // String aa = null;
         // System.out.println("111111111111111111111111111111111111111111111" + Integer.valueOf(aa));
         // StringBuffer stringBuffer = new StringBuffer();

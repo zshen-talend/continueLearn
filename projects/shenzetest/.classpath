@@ -51,8 +51,8 @@
 	<classpathentry kind="lib" path="lib/MapDB/elsa-3.0.0-M5.jar"/>
 	<classpathentry kind="lib" path="lib/MapDB/eclipse-collections-api-9.2.0.M1.jar"/>
 	<classpathentry kind="lib" path="lib/lookUpManager/advancedPersistentLookupLib-1.0.jar"/>
-	<classpathentry kind="lib" path="lib/MapDB/mapdb-1.0.9.jar" sourcepath="lib_src/mapdb/mapdb-1.0.9-sources.jar"/>
 	<classpathentry kind="lib" path="lib/jxl-2.6.10.jar"/>
+	<classpathentry kind="lib" path="lib/MapDB/mapdb-1.0.3.jar"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry combineaccessrules="false" kind="src" path="/generex"/>
 	<classpathentry kind="output" path="bin"/>
