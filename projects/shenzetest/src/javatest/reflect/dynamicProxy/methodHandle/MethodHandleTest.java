@@ -31,5 +31,12 @@ public class MethodHandleTest {
         MethodHandle mh = lookup.findVirtual(String.class, "substring", type); //$NON-NLS-1$
         String str = (String) mh.invokeExact("Hello world", 1, 3); //$NON-NLS-1$
         System.out.println(str);
+        try {
+            MethodHandle findGetter = lookup.findGetter(demoClass.class, "name1", String.class);
+            System.out.println(findGetter.invoke(new demoClass()));
+        } catch (NoSuchFieldException e) {
+            System.out.println(e);
+        }
+
     }
 }
