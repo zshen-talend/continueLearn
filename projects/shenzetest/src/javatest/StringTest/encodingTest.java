@@ -28,6 +28,7 @@ public class encodingTest {
         // System.out.println(URLEncoder.encode("中", chartSet));
         // System.out.println(URLDecoder.decode("%E4%B8%81", chartSet));
         System.out.println(decode("\\U3041"));
+        System.out.println(decode(convertUnicode(0X3041)));
     }
 
     private static byte[] encodeWith(String text, String charsetName) {
@@ -61,5 +62,9 @@ public class encodingTest {
             }
         }
         return retBuf.toString();
+    }
+
+    public static String convertUnicode(int codeVlaue) {
+        return "\\u" + Integer.toHexString(codeVlaue);
     }
 }

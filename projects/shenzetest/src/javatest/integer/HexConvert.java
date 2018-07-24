@@ -24,5 +24,6 @@ public class HexConvert {
         System.out.println("二转十：" + Integer.valueOf("1010", 2));
         System.out.println("八转十：" + Integer.valueOf("125", 8));
         System.out.println("十六转十：" + Integer.valueOf("ABCDEF", 16));
+        System.out.println(0XA + 1);
     }
 }
