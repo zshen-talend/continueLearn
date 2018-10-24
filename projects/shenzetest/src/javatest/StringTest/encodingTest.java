@@ -27,7 +27,7 @@ public class encodingTest {
         // System.out.println(decodeWith(encodeWith("中", chartSet), chartSet));
         // System.out.println(URLEncoder.encode("中", chartSet));
         // System.out.println(URLDecoder.decode("%E4%B8%81", chartSet));
-        System.out.println(decode("\\U3041"));
+        System.out.println(decode("\\u30A1"));
         System.out.println(decode(convertUnicode(0X3041)));
     }
 

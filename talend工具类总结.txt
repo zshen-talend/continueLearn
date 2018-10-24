@@ -1,4 +1,4 @@
-公共类
+TUP
   1.FactoriesUtil
 	作用:提供多种后缀名，并帮助判断文件类型。
 	     通过item得到后缀名对应的集合类:EElementEName
@@ -93,9 +93,20 @@
 	27.TalendLibsServerManager
 	存储着libraries 下载地址
 	TALEND_LIB_SERVER="https://talend-update.talend.com/nexus/"
+	https://talend-update.talend.com/nexus/content/repositories/libraries/org/talend/libraries/
 	
 	28.org.talend.designer.core.model.components.Expression
-show_if required_if 表达式的最后计算
+		show_if required_if 表达式的最后计算
+
+	29.org.talend.designer.core.utils.JavaProcessUtil
+		这个类里包含着很多查找job的maven工程下module的方法(也就是一般java工程下的jar，包括driver)
+		
+	30.org.talend.core.model.general.ModuleNeeded
+	生成module的mavuri等各种信息
+	配合maven Setting文件夹统计目录下的MavenUriIndex.xml来为指定的jar生成mavUri信息。如果没有在这里声明就会猜这个uri会带-SNAPSHOT
+	
+	31.PomUtil
+		这个类可以帮助更新maven工程下的pom文件信息
 
 tos
   1.ResourceFilenameHelper

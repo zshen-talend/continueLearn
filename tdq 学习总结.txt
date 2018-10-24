@@ -719,7 +719,8 @@ ProductVersion cVersion = CorePlugin.getDefault().getProductVersion();(VersionUt
 		1.存储一个TDQ_Libraries\version.txt文件
 		2.在启动DQRepositoryView时判断workspace version,决定是否需要执行migration
 		3.Report更新版本时用
-		4.打开时控制产品版本号-studio.version=5.0.1NB.75045
+		4.打开时控制产品版本号-Dstudio.version=5.0.1NB.75045 
+		!!!最新的变化现在版本被存在当前插件的talend.properties文件中，属性名叫做talend.version=7.2.1
 
 Talend版本(内部的)
 VersionUtils.getTalendVersion();
@@ -1409,3 +1410,12 @@ TUP组的表一般都出于这个类(样式 监听...)
 但是造成的原因一般是由于一个jar编译的环境和运行的环境不一致导致的。
 当没有明确指明那个类出错时可以用-verbose作为虚拟机参数来打印运行时的所有类加载信息。
 从而得到蛛丝马迹
+
+282.pom驱动的job project寻找jar或者driver的方法
+1.xml文件中定义的import
+2.Job的item文件下会定义数据driver的jar 参数的名字一般为elementParameter field="TABLE" name="DRIVER_JAR"
+参考代码位置:JavaProcessUtil.addNodeRelatedModules
+
+
+283. .Java 工程的pom.xml文件如何加入依赖
+PomUtil.updatePomDependenciesFromProcessor 每次打开tmatchGroup的dialog都会调用这个方法来更新依赖

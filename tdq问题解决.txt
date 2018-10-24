@@ -84,3 +84,5 @@ org.talend.dataquality.record.linkage 插件manifest 里build页面要到处.包。
 1)sap.api.jar 和 sap.imp.jar 位于org.talend.libraries.sap下
 2)org.talend.designer.runprocess.remote 需要导入**zmq.jar下的 jeromq-0.4.2.jar 和jnacl-0.1.0.jar
 3)org.talend.designer.jobtemplate需要导入org.talend.libraries.jasperreport下面的jxl-2.6.10.jar
+
+17.如果当前产品版本有问题会导致.Java工程的pom文件生成不完整
