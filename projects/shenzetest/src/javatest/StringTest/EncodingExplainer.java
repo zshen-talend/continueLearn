@@ -16,9 +16,9 @@ import java.nio.charset.Charset;
 
 public class EncodingExplainer {
 
-    private static final String[] TEST_CASES = { "éàùïô", "中国", "北京" };
+    private static final String[] TEST_CASES = { "éàùïô", "中国", "北京", "2#娌夐檷" };
 
-    private static final String[] CHARSETS = { "cp1252", "iso8859-1", "gb2312", "utf-8" };
+    private static final String[] CHARSETS = { "cp1252", "iso8859-1", "gb2312", "utf-8", "GBK" };
 
     private static final String TOP_LEFT_LABEL = "Encode\\Decode";
 
@@ -48,7 +48,8 @@ public class EncodingExplainer {
                     if (j == 0) {
                         System.out.print(appendWhitespaces(CHARSETS[i - 1]));
                     } else {
-                        System.out.print(appendWhitespaces(decodeWith(encodeWith(text, CHARSETS[i - 1]), CHARSETS[j - 1])));
+                        System.out.print(appendWhitespaces(decodeWith(encodeWith(text, CHARSETS[i - 1]),
+                                CHARSETS[j - 1])));
                     }
                 }
                 if (j == CHARSETS.length) {

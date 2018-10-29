@@ -513,3 +513,9 @@ SFC [/SCANNOW] [/SCANONCE] [/SCANBOOT] [/REVERT] [/PURGECACHE] [/CACHESIZE=x]
 	/REVERT         将扫描返回到默认设置。
 	/PURGECACHE     清除文件缓存。
 	/CACHESIZE=x    设置文件缓存大小。
+	
+	CMD显示乱码的问题
+	Windows的CMD有自己的编码和字体
+	当前编码用CHCP来查询其中936代码GBK(default)
+	UTF-8用65001表示。
+	除此之外要显示utf-8编码的数据还要修改字体为Lucida Console或者 Console
