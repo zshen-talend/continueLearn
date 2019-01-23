@@ -33,6 +33,7 @@ import org.openjdk.jmh.annotations.Scope;
 import org.openjdk.jmh.annotations.Setup;
 import org.openjdk.jmh.annotations.State;
 import org.openjdk.jmh.annotations.TearDown;
+import org.openjdk.jmh.infra.Blackhole;
 import org.openjdk.jmh.runner.Runner;
 import org.openjdk.jmh.runner.RunnerException;
 import org.openjdk.jmh.runner.options.Options;
@@ -98,11 +99,12 @@ public class TSwooshGroupingJMHTest {
     }
 
     @Benchmark
-    public void execute() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException,
-            InterruptedException {
+    public void execute(Blackhole bh) throws InstantiationException, IllegalAccessException, ClassNotFoundException,
+            IOException, InterruptedException {
 
         tSwooshGrouping.swooshMatch(RecordMatcherFactory.createCombinedRecordMatcher(),
                 survivorShipAlgorithmParams_tMatchGroup_1);
+        bh.consume(1);
     }
 
     @TearDown(Level.Iteration)
@@ -222,7 +224,7 @@ public class TSwooshGroupingJMHTest {
         Options opt =
                 new OptionsBuilder()
                         .include(TSwooshGroupingJMHTest.class.getSimpleName())
-                        .forks(1)
+                        .forks(2)
                         .warmupIterations(3)
                         .measurementIterations(5)
                         .build();
