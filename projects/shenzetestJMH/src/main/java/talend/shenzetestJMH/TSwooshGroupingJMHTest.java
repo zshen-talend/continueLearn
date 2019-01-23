@@ -48,7 +48,7 @@ import org.talend.dataquality.record.linkage.grouping.swoosh.SurvivorshipUtils;
 import org.talend.dataquality.record.linkage.record.RecordMatcherFactory;
 
 @BenchmarkMode(Mode.SampleTime)
-@OutputTimeUnit(TimeUnit.MICROSECONDS)
+@OutputTimeUnit(TimeUnit.MILLISECONDS)
 @State(Scope.Thread)
 public class TSwooshGroupingJMHTest {
 
@@ -66,7 +66,7 @@ public class TSwooshGroupingJMHTest {
     @Setup
     public void initData() throws InstantiationException, IllegalAccessException, ClassNotFoundException, IOException,
             InterruptedException {
-        inputData = getTableValue("/jmhData.csv", 10, 3, true);
+        inputData = getTableValue("/jmhData.csv", 10000, 3, true);
         List<java.util.Map<String, String>> defaultSurvivorshipRules_tMatchGroup_1 = new ArrayList<>();
         List<java.util.Map<String, String>> particularSurvivorshipRules_tMatchGroup_1 = new ArrayList<>();
         Map<String, String> columnWithType_tMatchGroup_1 = initColumnType();
@@ -126,35 +126,42 @@ public class TSwooshGroupingJMHTest {
         List<java.util.Map<String, String>> matcherList_tMatchGroup_1 = new ArrayList<>();
         Map<String, String> columnDatePattern_tMatchGroup_1 = new HashMap<>();
         Map<String, String> tmpMap_tMatchGroup_1 = new HashMap<>();
-        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Levenshtein"); //$NON-NLS-1$//$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN", "id"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN_IDX", "0"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.6 + ""); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "city"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostCommon"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", 1 + ""); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "1"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + ""); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", //$NON-NLS-1$
-                "TSWOOSH_MATCHER"); //$NON-NLS-1$
-        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "No"); //$NON-NLS-1$ //$NON-NLS-2$
+        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN_IDX", "0");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", 1 + "");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "1");
+        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "No");
+        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN", "id");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Levenshtein");
+        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "city");
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostCommon");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
+        tmpMap_tMatchGroup_1.put("PARAMETER", ",");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
-        tmpMap_tMatchGroup_1 = new java.util.HashMap<>();
-        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN_IDX", "0"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN", "id"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "id"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "0"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + ""); //$NON-NLS-1$ //$NON-NLS-2$
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN_IDX", "0");
+        tmpMap_tMatchGroup_1.put("HANDLE_NULL", "nullMatchNull");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_THRESHOLD", 1 + "");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2");
+        tmpMap_tMatchGroup_1.put("MATCHING_ALGORITHM", "TSWOOSH_MATCHER");
+        tmpMap_tMatchGroup_1.put("TOKENIZATION_TYPE", "No");
+        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN", "id");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "Exact");
+        tmpMap_tMatchGroup_1.put("RECORD_MATCH_THRESHOLD", 0.85 + "");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "groupName");
+        tmpMap_tMatchGroup_1.put("SURVIVORSHIP_FUNCTION", "MostCommon");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 1 + "");
+        tmpMap_tMatchGroup_1.put("PARAMETER", ",");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
-        tmpMap_tMatchGroup_1 = new java.util.HashMap<>();
-        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN_IDX", "2"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN", "groupName"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "groupName"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "2"); //$NON-NLS-1$ //$NON-NLS-2$
-        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + ""); //$NON-NLS-1$ //$NON-NLS-2$
+        tmpMap_tMatchGroup_1 = new java.util.HashMap<String, String>();
+        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN_IDX", "0");
+        tmpMap_tMatchGroup_1.put("REFERENCE_COLUMN", "id");
+        tmpMap_tMatchGroup_1.put("MATCHING_TYPE", "dummy");
+        tmpMap_tMatchGroup_1.put("ATTRIBUTE_NAME", "id");
+        tmpMap_tMatchGroup_1.put("COLUMN_IDX", "0");
+        tmpMap_tMatchGroup_1.put("CONFIDENCE_WEIGHT", 0 + "");
         matcherList_tMatchGroup_1.add(tmpMap_tMatchGroup_1);
         java.util.Collections.sort(matcherList_tMatchGroup_1, new Comparator<java.util.Map<String, String>>() {
 
@@ -226,7 +233,7 @@ public class TSwooshGroupingJMHTest {
                         .include(TSwooshGroupingJMHTest.class.getSimpleName())
                         .forks(2)
                         .warmupIterations(3)
-                        .measurementIterations(5)
+                        .measurementIterations(4)
                         .build();
 
         new Runner(opt).run();

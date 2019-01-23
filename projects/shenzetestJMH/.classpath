@@ -5,7 +5,7 @@
 			<attribute name="maven.pomderived" value="true"/>
 		</attributes>
 	</classpathentry>
-	<classpathentry kind="lib" path="lib/dataquality-record-linkage-6.2.0-SNAPSHOT(after).jar"/>
+	<classpathentry kind="lib" path="lib/dataquality-record-linkage-6.2.0-SNAPSHOT(before).jar"/>
 	<classpathentry kind="src" output="target/classes" path="src/main/java">
 		<attributes>
 			<attribute name="optional" value="true"/>

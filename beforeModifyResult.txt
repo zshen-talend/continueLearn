@@ -3,107 +3,140 @@
 # VM invoker: C:\Program Files\Java\jre1.8.0_51\bin\java.exe
 # VM options: -Dfile.encoding=UTF-8
 # Warmup: 3 iterations, 10 s each
-# Measurement: 5 iterations, 10 s each
+# Measurement: 4 iterations, 10 s each
 # Timeout: 10 min per iteration
 # Threads: 1 thread, will synchronize iterations
 # Benchmark mode: Sampling time
 # Benchmark: talend.shenzetestJMH.TSwooshGroupingJMHTest.execute
 
-# Run progress: 0.00% complete, ETA 00:01:20
-# Fork: 1 of 1
+# Run progress: 0.00% complete, ETA 00:02:20
+# Fork: 1 of 2
 # Warmup Iteration   1: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
 SLF4J: Defaulting to no-operation (NOP) logger implementation
 SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
-8.842 ＼(99.9%) 0.206 us/op
-# Warmup Iteration   2: 8.402 ＼(99.9%) 0.438 us/op
-# Warmup Iteration   3: 8.356 ＼(99.9%) 0.128 us/op
-Iteration   1: 8.405 ＼(99.9%) 0.050 us/op
-                 execute，p0.00:   7.240 us/op
-                 execute，p0.50:   7.848 us/op
-                 execute，p0.90:   8.448 us/op
-                 execute，p0.95:   10.864 us/op
-                 execute，p0.99:   15.984 us/op
-                 execute，p0.999:  26.560 us/op
-                 execute，p0.9999: 633.647 us/op
-                 execute，p1.00:   1204.224 us/op
+658.047 ＼(99.9%) 56.218 ms/op
+# Warmup Iteration   2: 629.473 ＼(99.9%) 18.433 ms/op
+# Warmup Iteration   3: 619.523 ＼(99.9%) 6.150 ms/op
+Iteration   1: 626.721 ＼(99.9%) 15.983 ms/op
+                 execute，p0.00:   612.368 ms/op
+                 execute，p0.50:   621.281 ms/op
+                 execute，p0.90:   657.038 ms/op
+                 execute，p0.95:   673.186 ms/op
+                 execute，p0.99:   673.186 ms/op
+                 execute，p0.999:  673.186 ms/op
+                 execute，p0.9999: 673.186 ms/op
+                 execute，p1.00:   673.186 ms/op
 
-Iteration   2: 8.389 ＼(99.9%) 0.403 us/op
-                 execute，p0.00:   7.240 us/op
-                 execute，p0.50:   7.848 us/op
-                 execute，p0.90:   8.144 us/op
-                 execute，p0.95:   8.448 us/op
-                 execute，p0.99:   15.984 us/op
-                 execute，p0.999:  25.952 us/op
-                 execute，p0.9999: 699.861 us/op
-                 execute，p1.00:   36700.160 us/op
+Iteration   2: 624.951 ＼(99.9%) 16.877 ms/op
+                 execute，p0.00:   607.126 ms/op
+                 execute，p0.50:   620.757 ms/op
+                 execute，p0.90:   655.465 ms/op
+                 execute，p0.95:   675.283 ms/op
+                 execute，p0.99:   675.283 ms/op
+                 execute，p0.999:  675.283 ms/op
+                 execute，p0.9999: 675.283 ms/op
+                 execute，p1.00:   675.283 ms/op
 
-Iteration   3: 8.278 ＼(99.9%) 0.046 us/op
-                 execute，p0.00:   7.240 us/op
-                 execute，p0.50:   7.848 us/op
-                 execute，p0.90:   8.144 us/op
-                 execute，p0.95:   8.448 us/op
-                 execute，p0.99:   15.984 us/op
-                 execute，p0.999:  26.560 us/op
-                 execute，p0.9999: 144.169 us/op
-                 execute，p1.00:   957.440 us/op
+Iteration   3: 636.223 ＼(99.9%) 21.158 ms/op
+                 execute，p0.00:   614.466 ms/op
+                 execute，p0.50:   628.621 ms/op
+                 execute，p0.90:   669.935 ms/op
+                 execute，p0.95:   694.157 ms/op
+                 execute，p0.99:   694.157 ms/op
+                 execute，p0.999:  694.157 ms/op
+                 execute，p0.9999: 694.157 ms/op
+                 execute，p1.00:   694.157 ms/op
 
-Iteration   4: 8.318 ＼(99.9%) 0.122 us/op
-                 execute，p0.00:   7.240 us/op
-                 execute，p0.50:   7.848 us/op
-                 execute，p0.90:   8.144 us/op
-                 execute，p0.95:   8.448 us/op
-                 execute，p0.99:   15.984 us/op
-                 execute，p0.999:  26.240 us/op
-                 execute，p0.9999: 753.083 us/op
-                 execute，p1.00:   9846.784 us/op
+Iteration   4: 623.039 ＼(99.9%) 9.471 ms/op
+                 execute，p0.00:   611.320 ms/op
+                 execute，p0.50:   618.660 ms/op
+                 execute，p0.90:   638.583 ms/op
+                 execute，p0.95:   651.166 ms/op
+                 execute，p0.99:   651.166 ms/op
+                 execute，p0.999:  651.166 ms/op
+                 execute，p0.9999: 651.166 ms/op
+                 execute，p1.00:   651.166 ms/op
 
-Iteration   5: 8.281 ＼(99.9%) 0.062 us/op
-                 execute，p0.00:   7.240 us/op
-                 execute，p0.50:   7.848 us/op
-                 execute，p0.90:   8.144 us/op
-                 execute，p0.95:   8.448 us/op
-                 execute，p0.99:   15.984 us/op
-                 execute，p0.999:  26.240 us/op
-                 execute，p0.9999: 715.059 us/op
-                 execute，p1.00:   2297.856 us/op
+
+# Run progress: 50.00% complete, ETA 00:01:12
+# Fork: 2 of 2
+# Warmup Iteration   1: SLF4J: Failed to load class "org.slf4j.impl.StaticLoggerBinder".
+SLF4J: Defaulting to no-operation (NOP) logger implementation
+SLF4J: See http://www.slf4j.org/codes.html#StaticLoggerBinder for further details.
+657.588 ＼(99.9%) 44.651 ms/op
+# Warmup Iteration   2: 628.687 ＼(99.9%) 7.787 ms/op
+# Warmup Iteration   3: 634.323 ＼(99.9%) 26.765 ms/op
+Iteration   1: 635.896 ＼(99.9%) 11.163 ms/op
+                 execute，p0.00:   619.708 ms/op
+                 execute，p0.50:   637.534 ms/op
+                 execute，p0.90:   653.368 ms/op
+                 execute，p0.95:   658.506 ms/op
+                 execute，p0.99:   658.506 ms/op
+                 execute，p0.999:  658.506 ms/op
+                 execute，p0.9999: 658.506 ms/op
+                 execute，p1.00:   658.506 ms/op
+
+Iteration   2: 629.801 ＼(99.9%) 9.714 ms/op
+                 execute，p0.00:   615.514 ms/op
+                 execute，p0.50:   627.573 ms/op
+                 execute，p0.90:   645.923 ms/op
+                 execute，p0.95:   653.263 ms/op
+                 execute，p0.99:   653.263 ms/op
+                 execute，p0.999:  653.263 ms/op
+                 execute，p0.9999: 653.263 ms/op
+                 execute，p1.00:   653.263 ms/op
+
+Iteration   3: 628.752 ＼(99.9%) 6.740 ms/op
+                 execute，p0.00:   620.757 ms/op
+                 execute，p0.50:   626.524 ms/op
+                 execute，p0.90:   638.897 ms/op
+                 execute，p0.95:   639.631 ms/op
+                 execute，p0.99:   639.631 ms/op
+                 execute，p0.999:  639.631 ms/op
+                 execute，p0.9999: 639.631 ms/op
+                 execute，p1.00:   639.631 ms/op
+
+Iteration   4: 630.325 ＼(99.9%) 5.924 ms/op
+                 execute，p0.00:   620.757 ms/op
+                 execute，p0.50:   630.194 ms/op
+                 execute，p0.90:   638.897 ms/op
+                 execute，p0.95:   639.631 ms/op
+                 execute，p0.99:   639.631 ms/op
+                 execute，p0.999:  639.631 ms/op
+                 execute，p0.9999: 639.631 ms/op
+                 execute，p1.00:   639.631 ms/op
 
 
 
 Result "talend.shenzetestJMH.TSwooshGroupingJMHTest.execute":
-  N = 1505911
-  mean =      8.334 ＼(99.9%) 0.087 us/op
+  N = 129
+  mean =    629.414 ＼(99.9%) 3.949 ms/op
 
-  Histogram, us/op:
-    [    0.000,  2500.000) = 1505909 
-    [ 2500.000,  5000.000) = 0 
-    [ 5000.000,  7500.000) = 0 
-    [ 7500.000, 10000.000) = 1 
-    [10000.000, 12500.000) = 0 
-    [12500.000, 15000.000) = 0 
-    [15000.000, 17500.000) = 0 
-    [17500.000, 20000.000) = 0 
-    [20000.000, 22500.000) = 0 
-    [22500.000, 25000.000) = 0 
-    [25000.000, 27500.000) = 0 
-    [27500.000, 30000.000) = 0 
-    [30000.000, 32500.000) = 0 
-    [32500.000, 35000.000) = 0 
-    [35000.000, 37500.000) = 1 
+  Histogram, ms/op:
+    [600.000, 610.000) = 1 
+    [610.000, 620.000) = 28 
+    [620.000, 630.000) = 52 
+    [630.000, 640.000) = 32 
+    [640.000, 650.000) = 5 
+    [650.000, 660.000) = 8 
+    [660.000, 670.000) = 0 
+    [670.000, 680.000) = 2 
+    [680.000, 690.000) = 0 
 
-  Percentiles, us/op:
-      p(0.0000) =      7.240 us/op
-     p(50.0000) =      7.848 us/op
-     p(90.0000) =      8.144 us/op
-     p(95.0000) =      8.448 us/op
-     p(99.0000) =     15.984 us/op
-     p(99.9000) =     26.240 us/op
-     p(99.9900) =    693.248 us/op
-     p(99.9990) =    975.751 us/op
-     p(99.9999) =  23114.715 us/op
-    p(100.0000) =  36700.160 us/op
+  Percentiles, ms/op:
+      p(0.0000) =    607.126 ms/op
+     p(50.0000) =    627.048 ms/op
+     p(90.0000) =    645.923 ms/op
+     p(95.0000) =    655.884 ms/op
+     p(99.0000) =    688.495 ms/op
+     p(99.9000) =    694.157 ms/op
+     p(99.9900) =    694.157 ms/op
+     p(99.9990) =    694.157 ms/op
+     p(99.9999) =    694.157 ms/op
+    p(100.0000) =    694.157 ms/op
 
 
-# Run complete. Total time: 00:01:20
+# Run complete. Total time: 00:02:24
 
 REMEMBER: The numbers below are just data. To gain reusable insights, you need to follow up on
 why the numbers are the way they are. Use profilers (see -prof, -lprof), design factorial
@@ -111,13 +144,13 @@ experiments, perform baseline and negative tests that provide experimental contr
 the benchmarking environment is safe on JVM/OS/HW level, ask for reviews from the domain experts.
 Do not assume the numbers tell you what you want them to tell.
 
-Benchmark                                                       Mode      Cnt      Score   Error  Units
-shenzetestJMH.TSwooshGroupingJMHTest.execute                  sample  1505911      8.334 ＼ 0.087  us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.00    sample               7.240          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.50    sample               7.848          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.90    sample               8.144          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.95    sample               8.448          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.99    sample              15.984          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.999   sample              26.240          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.9999  sample             693.248          us/op
-shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p1.00    sample           36700.160          us/op
+Benchmark                                                       Mode  Cnt    Score   Error  Units
+shenzetestJMH.TSwooshGroupingJMHTest.execute                  sample  129  629.414 ＼ 3.949  ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.00    sample       607.126          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.50    sample       627.048          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.90    sample       645.923          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.95    sample       655.884          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.99    sample       688.495          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.999   sample       694.157          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p0.9999  sample       694.157          ms/op
+shenzetestJMH.TSwooshGroupingJMHTest.execute:execute，p1.00    sample       694.157          ms/op
