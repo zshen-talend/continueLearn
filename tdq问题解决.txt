@@ -86,3 +86,19 @@ org.talend.dataquality.record.linkage 插件manifest 里build页面要到处.包。
 3)org.talend.designer.jobtemplate需要导入org.talend.libraries.jasperreport下面的jxl-2.6.10.jar
 
 17.如果当前产品版本有问题会导致.Java工程的pom文件生成不完整
+
+18.tmatchGroup的Job可以运行但是dailog总是build失败，缺少routinse的依赖
+可能是缺少builder-maven-plugin-7.2.1.jar
+这个jar在开发环境下不能自动下载，对应版本手当前版本的限制
+路径为org\talend\ci\builder-maven-plugin\7.2.1
+
+19.database wizard找不到JDBC选项
+需要components-JDBC的插件，还是repository.generic插件里的service同时支持
+
+20.tFileOutputDelimited 组件不能通过pattern右键自动创建
+原因是我们有些组件已经实现了java模式，通过扩展点引入
+而components.filedelimited插件下也定义了TFileOutputDelimitedProperties组件
+这个与localprovider下的tFileOutputDelimited冲突，从而导致无从选择
+
+21.tDBInput 不能加载
+org.talend.designer.unifiedcomponent 这些相关的组件以java代码的方式定义在这个插件下

@@ -31,7 +31,7 @@ public class EggExt implements IEgg, Externalizable {
 
     int number = 0;
 
-    private List<String> brother = new ArrayList<String>();
+    private List<NewEgg> brother = new ArrayList<>();
 
     public EggExt() {
         System.out.println("egg 构造函数"); //$NON-NLS-1$
@@ -60,7 +60,7 @@ public class EggExt implements IEgg, Externalizable {
      * 
      * @return the brother
      */
-    public List<String> getBrother() {
+    public List<NewEgg> getBrother() {
         return this.brother;
     }
 
@@ -69,7 +69,7 @@ public class EggExt implements IEgg, Externalizable {
      * 
      * @param brother the brother to set
      */
-    public void setBrother(List<String> brother) {
+    public void setBrother(List<NewEgg> brother) {
         this.brother = brother;
     }
 

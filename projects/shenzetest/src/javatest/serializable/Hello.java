@@ -10,10 +10,10 @@ import java.util.List;
 public class Hello {
 
     public static void main(String[] args) {
-        List<String> brother = new ArrayList<String>();
-        brother.add("1");
-        brother.add("2");
-        brother.add("3");
+        List<NewEgg> brother = new ArrayList<>();
+        brother.add(new NewEgg("1"));
+        brother.add(new NewEgg("2"));
+        brother.add(new NewEgg("3"));
         Person person = new Person(26, "Juventus");
         person.setWorkDay(7);
         EggSer egg = new EggSer();
@@ -31,9 +31,16 @@ public class Hello {
             FileInputStream in = new FileInputStream("foo.ser");
             ObjectInputStream s = new ObjectInputStream(in);
             Person p = (Person) s.readObject();
-            System.out.println("name==" + Person.name + " age==" + p.getAge() + " workDay==" + p.getWorkDay() + " fClub=="
-                    + p.getfClub() + " egg=" + p.getEgg().toString() + " egg brother is "
-                    + (((EggSer) p.getEgg()).getBrother() == null ? "null" : ((EggSer) p.getEgg()).getBrother().size()));
+            List<?> brothers = ((EggSer) p.getEgg()).getBrother();
+            System.out.println("name==" + Person.name + " age==" + p.getAge() + " workDay==" + p.getWorkDay()
+                    + " fClub==" + p.getfClub() + " egg=" + p.getEgg().toString() + " egg brother is "
+                    + (brothers == null ? "null" : brothers.size()));
+            if (brothers != null) {
+                for (Object newEgg : brothers) {
+
+                    System.out.println(((NewEgg) newEgg).getId());
+                }
+            }
         } catch (Exception e) {
             e.printStackTrace();
         }

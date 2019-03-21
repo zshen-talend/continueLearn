@@ -12,7 +12,6 @@
 // ============================================================================
 package regexTest;
 
-import java.security.SecureRandom;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
@@ -64,15 +63,27 @@ public class JavaRegexTest {
             };
 
     public static void main(String args[]) {
-        // JavaRegexTest javaRegexTest = new JavaRegexTest();
+        JavaRegexTest javaRegexTest = new JavaRegexTest();
         // javaRegexTest.printRangeOfHan();
         // javaRegexTest.checkSingleCharacter();
-        for (int i = 0; i < 3; i++) {
-            SecureRandom secureRandom = new SecureRandom();
-            // secureRandom.setSeed(100L);
-            System.out.println(secureRandom.nextInt());
-        }
+        javaRegexTest.checkSpcialCharacter();
+        // for (int i = 0; i < 3; i++) {
+        // SecureRandom secureRandom = new SecureRandom();
+        // // secureRandom.setSeed(100L);
+        // System.out.println(secureRandom.nextInt());
+        // }
 
+    }
+
+    public void checkSpcialCharacter() {
+        String str = String.valueOf("あ");
+        // str = "^\\u4E00$";
+        String regex = "^\\p{L}$";
+
+        Pattern p = Pattern.compile(regex);
+        Matcher m = p.matcher(str);
+        System.out.println(m.find());
+        System.out.println(m.matches());
     }
 
     public void checkSingleCharacter() {

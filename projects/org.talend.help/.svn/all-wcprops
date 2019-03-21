@@ -1,0 +1,59 @@
+K 25
+svn:wc:ra_dav:version-url
+V 45
+/svn/!svn/ver/51526/tos/trunk/org.talend.help
+END
+developer_guide.xml
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/49432/tos/trunk/org.talend.help/developer_guide.xml
+END
+user_guide.xml
+K 25
+svn:wc:ra_dav:version-url
+V 60
+/svn/!svn/ver/82683/tos/trunk/org.talend.help/user_guide.xml
+END
+build.properties
+K 25
+svn:wc:ra_dav:version-url
+V 62
+/svn/!svn/ver/79801/tos/trunk/org.talend.help/build.properties
+END
+.checkstyle
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/tos/!svn/ver/3351/trunk/org.talend.help/.checkstyle
+END
+context.xml
+K 25
+svn:wc:ra_dav:version-url
+V 57
+/svn/!svn/ver/82651/tos/trunk/org.talend.help/context.xml
+END
+.project
+K 25
+svn:wc:ra_dav:version-url
+V 53
+/svn/tos/!svn/ver/6985/trunk/org.talend.help/.project
+END
+plugin.xml
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/72669/tos/trunk/org.talend.help/plugin.xml
+END
+community_tools.xml
+K 25
+svn:wc:ra_dav:version-url
+V 65
+/svn/!svn/ver/24287/tos/trunk/org.talend.help/community_tools.xml
+END
+.classpath
+K 25
+svn:wc:ra_dav:version-url
+V 56
+/svn/!svn/ver/52560/tos/trunk/org.talend.help/.classpath
+END

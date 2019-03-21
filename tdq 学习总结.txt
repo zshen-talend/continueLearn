@@ -1419,3 +1419,10 @@ TUP组的表一般都出于这个类(样式 监听...)
 
 283. .Java 工程的pom.xml文件如何加入依赖
 PomUtil.updatePomDependenciesFromProcessor 每次打开tmatchGroup的dialog都会调用这个方法来更新依赖
+
+284.swoosh 算法如何做到master匹配不到的情况下再去匹配子条目的
+类结构：
+Record包含多个Attribute，每个Attribute包含value和values
+其中value 是当前属性的值
+values 是子条目当前值的集合
+swoosh通过value匹配不成功的基础上还会去匹配values

@@ -18,7 +18,7 @@ import java.util.List;
 /**
  * DOC talend class global comment. Detailled comment
  */
-public class EggSer implements IEgg, java.io.Serializable {
+public class EggSer<T extends NewEgg> implements IEgg, java.io.Serializable {
 
     /**
      * 
@@ -27,7 +27,7 @@ public class EggSer implements IEgg, java.io.Serializable {
 
     int number = 0;
 
-    private transient List<String> brother = new ArrayList<String>();
+    private transient List<T> brother = new ArrayList<>();
 
     public EggSer() {
         System.out.println("egg 构造函数"); //$NON-NLS-1$
@@ -56,7 +56,7 @@ public class EggSer implements IEgg, java.io.Serializable {
      * 
      * @return the brother
      */
-    public List<String> getBrother() {
+    public List<T> getBrother() {
         return this.brother;
     }
 
@@ -65,7 +65,7 @@ public class EggSer implements IEgg, java.io.Serializable {
      * 
      * @param brother the brother to set
      */
-    public void setBrother(List<String> brother) {
+    public void setBrother(List<T> brother) {
         this.brother = brother;
     }
 
