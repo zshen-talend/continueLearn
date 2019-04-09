@@ -104,7 +104,7 @@ public class AsynchronouslyJobTest {
                 t2.setText(t2.getText() + t2.getLineDelimiter() + content + "2");
                 monitor.worked(2);
 
-                return UIJob.ASYNC_FINISH;
+                return Status.OK_STATUS;
             }
 
             @Override
@@ -124,43 +124,43 @@ public class AsynchronouslyJobTest {
 
         shell.setLayout(new GridLayout(2, false));
 
-        Label label = new Label(shell, SWT.NONE);
-        label.setText("first button:");
-
-        Button button = new Button(shell, SWT.PUSH);
-        button.addSelectionListener(new SelectionAdapter() {
-
-            @Override
-            public void widgetSelected(SelectionEvent e) {
-                AsynchronouslyJobTest.this.execute(5000, "backgroup work");
-            }
-        });
-        button.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         Label label1 = new Label(shell, SWT.NONE);
-        label1.setText("second button:");
+        label1.setText("first button:");
 
         Button button1 = new Button(shell, SWT.PUSH);
         button1.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                AsynchronouslyJobTest.this.executeUI(100, "UI work syn with backgroup work", true);
+                AsynchronouslyJobTest.this.execute(5000, "backgroup work");
             }
         });
         button1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
-
         Label label2 = new Label(shell, SWT.NONE);
-        label2.setText("third button:");
+        label2.setText("second button:");
 
         Button button2 = new Button(shell, SWT.PUSH);
         button2.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                AsynchronouslyJobTest.this.executeUI(100, "Another UI work", false);
+                AsynchronouslyJobTest.this.executeUI(100, "UI work syn with backgroup work", true);
             }
         });
         button2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
+
+        Label label3 = new Label(shell, SWT.NONE);
+        label3.setText("third button:");
+
+        Button button3 = new Button(shell, SWT.PUSH);
+        button3.addSelectionListener(new SelectionAdapter() {
+
+            @Override
+            public void widgetSelected(SelectionEvent e) {
+                AsynchronouslyJobTest.this.executeUI(100, "Another UI work", false);
+            }
+        });
+        button3.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         t2 = new Text(shell, SWT.BORDER | SWT.MULTI);
         GridData gd = new GridData(GridData.FILL_BOTH);
