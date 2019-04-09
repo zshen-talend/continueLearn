@@ -62,7 +62,7 @@ public class AsynchronouslyJobTest {
                 //
                 // @Override
                 // public void run() {
-                System.out.println(content + "1");
+                System.out.println(content + "1"); //$NON-NLS-1$
                 // t2.setText(t2.getText() + t2.getLineDelimiter() + content + "1");
                 monitor.worked(1);
                 try {
@@ -71,7 +71,7 @@ public class AsynchronouslyJobTest {
                     // TODO Auto-generated catch block
                     e.printStackTrace();
                 }
-                System.out.println(content + "2");
+                System.out.println(content + "2"); //$NON-NLS-1$
                 // t2.setText(t2.getText() + t2.getLineDelimiter() + content + "2");
                 monitor.worked(2);
                 // }
@@ -86,13 +86,13 @@ public class AsynchronouslyJobTest {
     }
 
     public void executeUI(final long sleep, final String content, boolean isSyn) {
-        UIJob job = new UIJob("main job") {
+        UIJob job = new UIJob("main job") { //$NON-NLS-1$
 
             @Override
             public IStatus runInUIThread(IProgressMonitor monitor) {
                 monitor.beginTask("Start the jobs", 2); //$NON-NLS-1$
                 // System.out.println(content + "1");
-                t2.setText(t2.getText() + t2.getLineDelimiter() + content + "1");
+                t2.setText(t2.getText() + t2.getLineDelimiter() + content + "1"); //$NON-NLS-1$
                 monitor.worked(1);
                 try {
                     Thread.sleep(sleep);
@@ -101,7 +101,7 @@ public class AsynchronouslyJobTest {
                     e.printStackTrace();
                 }
                 // System.out.println(content + "2");
-                t2.setText(t2.getText() + t2.getLineDelimiter() + content + "2");
+                t2.setText(t2.getText() + t2.getLineDelimiter() + content + "2"); //$NON-NLS-1$
                 monitor.worked(2);
 
                 return Status.OK_STATUS;
@@ -125,39 +125,39 @@ public class AsynchronouslyJobTest {
         shell.setLayout(new GridLayout(2, false));
 
         Label label1 = new Label(shell, SWT.NONE);
-        label1.setText("first button:");
+        label1.setText("first button:"); //$NON-NLS-1$
 
         Button button1 = new Button(shell, SWT.PUSH);
         button1.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                AsynchronouslyJobTest.this.execute(5000, "backgroup work");
+                AsynchronouslyJobTest.this.execute(5000, "backgroup work"); //$NON-NLS-1$
             }
         });
         button1.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
         Label label2 = new Label(shell, SWT.NONE);
-        label2.setText("second button:");
+        label2.setText("second button:"); //$NON-NLS-1$
 
         Button button2 = new Button(shell, SWT.PUSH);
         button2.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                AsynchronouslyJobTest.this.executeUI(100, "UI work syn with backgroup work", true);
+                AsynchronouslyJobTest.this.executeUI(100, "UI work syn with backgroup work", true); //$NON-NLS-1$
             }
         });
         button2.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
 
         Label label3 = new Label(shell, SWT.NONE);
-        label3.setText("third button:");
+        label3.setText("third button:"); //$NON-NLS-1$
 
         Button button3 = new Button(shell, SWT.PUSH);
         button3.addSelectionListener(new SelectionAdapter() {
 
             @Override
             public void widgetSelected(SelectionEvent e) {
-                AsynchronouslyJobTest.this.executeUI(100, "Another UI work", false);
+                AsynchronouslyJobTest.this.executeUI(100, "Another UI work", false); //$NON-NLS-1$
             }
         });
         button3.setLayoutData(new GridData(GridData.FILL_HORIZONTAL));
@@ -166,9 +166,12 @@ public class AsynchronouslyJobTest {
         GridData gd = new GridData(GridData.FILL_BOTH);
         gd.horizontalSpan = 2;
         t2.setLayoutData(gd);
-        t2.setText("example...");
+        t2
+                .setText(
+                        "Click first button to start a backgroud thread.\nSecond button to start a UI thread and syn with the background thread.\nThird button start another UI thread asyn with others UI thread"); //$NON-NLS-1$
 
         shell.setSize(500, 500);
+        shell.setText("UI thread test"); //$NON-NLS-1$
         shell.open();
 
         while (!shell.isDisposed()) {
