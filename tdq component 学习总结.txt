@@ -21,3 +21,8 @@ show_if required_if 表达式的最后计算
 6.Shawdom job 不能支持log信息
 	tMatchGroupIn_begin.javajet
 	org.apache.log4j.Logger.getRootLogger().setLevel(org.apache.log4j.Level.OFF);（6.3.1以上才有）
+	
+7.org.talend.designer.unifiedcomponent
+这里定义了一些未定义的组件，这些组件配合之前的带javajet的组件来起作用。
+新的组件被以代理组件的模式使用，参数还是根据带javajet的组件得来的。
+代理组件和原始组件之间的参数传递是通过DelegateComponent.java来完成的
