@@ -37,8 +37,10 @@ public class TestForSameClass {
             Object obj2 = class2.newInstance();
             Method setSampleMethod = class1.getMethod("setSample", java.lang.Object.class);
             setSampleMethod.invoke(obj1, obj2);
+            Method getSampleMethod = class1.getMethod("getSample");
+            Object returnObject = getSampleMethod.invoke(obj1);
 
-            System.out.println(obj1);
+            System.out.println(returnObject.equals(obj2));
         } catch (Exception e) {
             e.printStackTrace();
         }

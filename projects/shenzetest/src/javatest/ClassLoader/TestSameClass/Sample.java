@@ -19,4 +19,14 @@ public class Sample {
     public void setSample(Object instance) {
         this.instance = (Sample) instance;
     }
+
+    /**
+     * Getter for instance.
+     * 
+     * @return the instance
+     */
+    public Sample getSample() {
+        return this.instance;
+    }
+
 }
