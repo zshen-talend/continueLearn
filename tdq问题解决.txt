@@ -102,3 +102,6 @@ org.talend.dataquality.record.linkage 插件manifest 里build页面要到处.包。
 
 21.tDBInput 不能加载
 org.talend.designer.unifiedcomponent 这些相关的组件以java代码的方式定义在这个插件下
+
+22.NightlyBuild出问题的解决办法
+ref: talend build过程总结-->1

@@ -1,0 +1,11 @@
+1.NightlyBuild的执行过程
+对应的jenkins URL: http://newbuild.talend.com:8180/view/NIGHTLY/job/GIT%20-%20NightlyBuild%20(Maven)/
+这个链接下就是我们nightlyBuild对应的jenkins的job。
+里面列了我们一次build所要执行的全部步骤
+其中
+1.0-GENERATE-STUDIO-DEPS-P2-SE (manual)(non-blocking)
+2.0-GENERATE-STUDIO-DEPS-P2-ZEE (manual)(non-blocking)
+3.11-TUP_Maven_Java8(non-blocking)
+这三步跟我们关系最为密切。
+前两个是dataquality libraries的build过程(TUJ某个jar有问题，需查看)，
+最后一个是studio这些plugin的build过程(studio的某个plugin有问题，需查看)。
