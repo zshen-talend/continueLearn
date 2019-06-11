@@ -176,7 +176,7 @@ public class EncryptionUtils {
     private static void testDaikonMethodByDifferentLength() {
         for (int i = 0; i <= 256; i++) {
             try {
-                testDaikonMethod(i);
+                testDaikonMethod(12);
             } catch (Exception e) {
                 System.out.println(e.getMessage());
             }

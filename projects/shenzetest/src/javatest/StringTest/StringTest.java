@@ -56,6 +56,10 @@ public class StringTest {
         System.out.println(Integer.valueOf(String.valueOf('9')));
         System.out.println("aa" + System.getProperty("line.separator") + "bb");
         System.out.println("aa" + null + "bb");
+        String null1 = "aa";
+        String null2 = null;
+        System.out.println(null1 instanceof Comparable);
+        System.out.println(null1.compareTo(null2));
     }
 
     public void ListOperation() {
