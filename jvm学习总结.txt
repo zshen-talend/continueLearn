@@ -1,0 +1,17 @@
+1. -verbose:class
+加载类时打印出处
+如:[Loaded java.util.regex.Pattern from /Library/Java/JavaVirtualMachines/jdk1.7.0_80.jdk/Contents/Home/jre/lib/rt.jar]
+
+2.打印jar包路径
+Class<?> c = Class.forName("org.aa.bb.XXClass");
+System.out.println(c.getProtectionDomain().getCodeSource().getLocation())
+然后启动，查看打印的jar路径，即就是当前实际加载的那个包下的类。
+
+3.打印正在运行的jvm参数
+
+	1) jps -lm
+	打印jvm端口号
+
+	2）jinfo + 进程号
+	根据进程号查看jvm参数
+
