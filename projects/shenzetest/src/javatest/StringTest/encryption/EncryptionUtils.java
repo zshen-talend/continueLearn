@@ -165,10 +165,10 @@ public class EncryptionUtils {
 
     public static void main(String[] args) throws Exception {
         // testASE();
-        // testASEGCM();
+        testASEGCM();
         // testASEGCMSameWithDaikon(); //need to modify aesGcm.get method first
         // testParameter();
-        testDaikonMethodByDifferentLength();
+        // testDaikonMethodByDifferentLength();
         // testDaikonMethod(8);
 
     }
