@@ -107,6 +107,9 @@ TUP
 	
 	31.PomUtil
 		这个类可以帮助更新maven工程下的pom文件信息
+		
+	32.生成预定义的jar包
+	org.talend.designer.maven.tis/resource 下面有个pom文件自动生成studio所需要的第三方jar包
 
 tos
   1.ResourceFilenameHelper

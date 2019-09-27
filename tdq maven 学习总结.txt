@@ -94,3 +94,12 @@ mvn clean install
 	mvn reset --head HEAD^ 每个^代表一次回退
 	mvn reset --head HEAD~5 代码回退5个提交
 	git push --force 强制提交代码操作remote端
+
+14.跳过整个module的junit
+<plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <skip>true</skip>
+        </configuration>
+      </plugin>
