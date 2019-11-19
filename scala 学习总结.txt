@@ -1,0 +1,18 @@
+1.object 
+类似static 但是可以多继承如 object MatchIndexPredict extends ClusterStatsHandlers with A with B
+
+2.val VS var 
+val常量声明  
+var变量声明
+
+3.def 声明方法
+
+4.Option[T] 
+是一个类型为 T 的可选值的容器： 如果值存在， Option[T] 就是一个 Some[T] ，如果不存在， Option[T] 就是对象 None 。
+
+5.Seq[Int]
+Int 类型的一个集合。
+val l1: Seq[Int]可用 l1(0)来取第一个element
+
+6.$
+字符串连接符
