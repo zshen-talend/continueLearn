@@ -1201,7 +1201,7 @@ while (true) {
 	workspace路径 -data "<workspacePath>"
 	指定版本号: -Dtalend.studio.version=5.0.1NB.75045
 			-Dstudio.version=5.0.1NB.75045(vm parameter)
-        指定jar包路径 -talend.library.path
+        指定jar包路径 -Dtalend.library.path
 
 252 PreferencePage
 	preferencePage 是通过扩展点（org.eclipse.ui插件上preferencePage扩展）创建的。

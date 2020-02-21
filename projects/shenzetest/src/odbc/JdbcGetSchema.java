@@ -24,7 +24,7 @@ import org.hsqldb.jdbc.jdbcDataSource;
 public class JdbcGetSchema {
 
     public static void main(String[] args) throws Exception {
-        Connection conn = getSybaseConnection();
+        Connection conn = getSQLServerConnection();
         System.out.println("Got Connection.");
         // Statement st = conn.createStatement();
         //
@@ -151,16 +151,29 @@ public class JdbcGetSchema {
     public static Connection getSQLServerConnection() throws Exception {
         String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
 
-        String url = "jdbc:sqlserver://192.168.30.151:1433;";
+        String url = "jdbc:sqlserver://192.168.33.103:1433;noDatetimeStringSync=true";
         // String url = "jdbc:sqlserver://192.168.0.87:1433;databaseName=talend;";
         // String url = "jdbc:sqlserver://192.168.0.29:1433;";
-        String username = "UserName";// "fzhong";//"sa";// "UserName";
-        String password = "#Silence406"; // "fzhong";//"1234";// "#Silence406";
+        String username = "sa";// "fzhong";//"sa";// "UserName";
+        String password = "sa"; // "fzhong";//"1234";// "#Silence406";
 
         Class.forName(driver); // load Oracle driver
         Connection conn = DriverManager.getConnection(url, username, password);
         return conn;
     }
+    // public static Connection getSQLServerConnection() throws Exception {
+    // String driver = "com.microsoft.sqlserver.jdbc.SQLServerDriver";
+    //
+    // String url = "jdbc:sqlserver://192.168.30.151:1433;";
+    // // String url = "jdbc:sqlserver://192.168.0.87:1433;databaseName=talend;";
+    // // String url = "jdbc:sqlserver://192.168.0.29:1433;";
+    // String username = "UserName";// "fzhong";//"sa";// "UserName";
+    // String password = "#Silence406"; // "fzhong";//"1234";// "#Silence406";
+    //
+    // Class.forName(driver); // load Oracle driver
+    // Connection conn = DriverManager.getConnection(url, username, password);
+    // return conn;
+    // }
 
     public static Connection getSybaseConnection() throws Exception {
         String driver = "com.sybase.jdbc3.jdbc.SybDriver";
