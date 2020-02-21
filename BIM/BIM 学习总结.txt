@@ -1,0 +1,6 @@
+1.BIM 名词解释
+Building information managment+Building information modeling
+3D+1D(时间)+1D(造价)
+
+2.相关软件
+生产:revit 应用:Navisworks+fuzor 管理:广联达BIM5D
