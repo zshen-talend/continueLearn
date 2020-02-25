@@ -51,8 +51,12 @@ public class DataFormateTest {
             e.printStackTrace();
         }
         System.out.println(date3);
-        Date date4 = ParserUtils.parseTo_Date("Mon Sep 04 13:53:45 CST 2017", "EEE MMM dd HH:mm:ss zzz yyyy");
+//        Date date4 = ParserUtils.parseTo_Date("Mon Sep 04 13:53:45 CST 2017", "EEE MMM dd HH:mm:ss zzz yyyy");
         System.out.println(FormatterUtils.format_Date(date3, "yyyy-MM-dd"));
+        
+        String dateStr="14-05-2019";
+        Date readDate = ParserUtils.parseTo_Date(dateStr, "dd-MM-yyyy");
+        System.out.println(new java.sql.Date(readDate.getTime()).toString());
     }
 
 }
