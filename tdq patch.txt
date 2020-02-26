@@ -1,0 +1,16 @@
+2. patch 过程总结
+1）the wiki page(monthly patch):
+https://in.talend.com/24946736
+我总结的dataquality打patch的wiki
+https://in.talend.com/24952105
+2）The console of the patch jenkins
+https://jenkins-studio.datapwn.com/job/patches/job/patch-manual-build/181/consoleText
+3） Which zip file contains which plugins
+https://artifacts-zl.talend.com/nexus/content/unzip/TalendP2UnzipRelease/org/talend/repo/dependencies.p2.tup/7.0.1/dependencies.p2.tup-7.0.1.zip-unzip/
+survivorship
+https://artifacts-oss.talend.com/nexus/content/unzip/TalendP2UnzipOpenSourceRelease/org/talend/repo/dependencies.p2.tos/7.0.1/dependencies.p2.tos-7.0.1.zip-unzip/plugins/
+record.linkage
+semantic
+statistics
+4）The modify about p2.tup
+https://github.com/Talend/studio-full-master/commit/ea79d4d49833642e8f7daa4975b2b52456c60651
