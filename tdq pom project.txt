@@ -1,0 +1,5 @@
+1.AbstractMavenProcessorPom
+这里有个addDependencies方法负责给pom的model注入dependency信息，如果发现Pom生成不全或者依赖不够可以优先查这里
+
+2.MavenJavaProcessor
+这里有个generatePom方法负责生成job porject里面的pom文件，并且注意spark有子类，暂时没发现对该方法有重载

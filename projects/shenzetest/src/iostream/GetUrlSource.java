@@ -36,13 +36,15 @@ import javax.swing.filechooser.FileNameExtensionFilter;
  * @author hadeslee
  */
 
-public class Test4 extends javax.swing.JFrame {
+public class GetUrlSource extends javax.swing.JFrame {
+
+    private static final long serialVersionUID = -3956207558790295425L;
 
     private Task task; // 只存在的一个方法
 
     /** Creates new form Test4 */
 
-    public Test4() {
+    public GetUrlSource() {
 
         try {
 
@@ -385,7 +387,7 @@ public class Test4 extends javax.swing.JFrame {
 
             } catch (IOException ex) {
 
-                Logger.getLogger(Test4.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GetUrlSource.class.getName()).log(Level.SEVERE, null, ex);
 
             } finally {
 
@@ -399,7 +401,7 @@ public class Test4 extends javax.swing.JFrame {
 
                 } catch (IOException ex) {
 
-                    Logger.getLogger(Test4.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(GetUrlSource.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
 
@@ -459,7 +461,7 @@ public class Test4 extends javax.swing.JFrame {
 
                         } catch (Exception ex) {
 
-                            Logger.getLogger(Test4.class.getName()).log(Level.SEVERE, null, ex);
+                            Logger.getLogger(GetUrlSource.class.getName()).log(Level.SEVERE, null, ex);
 
                         }
 
@@ -485,7 +487,7 @@ public class Test4 extends javax.swing.JFrame {
 
                 if (s == null || s.equals("")) {
 
-                    JOptionPane.showMessageDialog(Test4.this, "网址不能为空!!");
+                    JOptionPane.showMessageDialog(GetUrlSource.this, "网址不能为空!!");
 
                     input.requestFocus();
 
@@ -515,9 +517,9 @@ public class Test4 extends javax.swing.JFrame {
 
             } catch (MalformedURLException ex) {
 
-                Logger.getLogger(Test4.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GetUrlSource.class.getName()).log(Level.SEVERE, null, ex);
 
-                JOptionPane.showMessageDialog(Test4.this, "域名解析出错!!");
+                JOptionPane.showMessageDialog(GetUrlSource.this, "域名解析出错!!");
 
             }
 
@@ -691,7 +693,7 @@ public class Test4 extends javax.swing.JFrame {
 
             } catch (IOException ex) {
 
-                Logger.getLogger(Test4.class.getName()).log(Level.SEVERE, null, ex);
+                Logger.getLogger(GetUrlSource.class.getName()).log(Level.SEVERE, null, ex);
 
                 if (isCanceled) {
 
@@ -699,7 +701,7 @@ public class Test4 extends javax.swing.JFrame {
 
                 } else {
 
-                    JOptionPane.showMessageDialog(Test4.this, "打开网页失败!!");
+                    JOptionPane.showMessageDialog(GetUrlSource.this, "打开网页失败!!");
 
                 }
 
@@ -711,7 +713,7 @@ public class Test4 extends javax.swing.JFrame {
 
                 } else {
 
-                    JOptionPane.showMessageDialog(Test4.this, "打开网页失败!!");
+                    JOptionPane.showMessageDialog(GetUrlSource.this, "打开网页失败!!");
 
                 }
 
@@ -729,7 +731,7 @@ public class Test4 extends javax.swing.JFrame {
 
                 } catch (IOException ex) {
 
-                    Logger.getLogger(Test4.class.getName()).log(Level.SEVERE, null, ex);
+                    Logger.getLogger(GetUrlSource.class.getName()).log(Level.SEVERE, null, ex);
 
                 }
 
@@ -756,7 +758,7 @@ public class Test4 extends javax.swing.JFrame {
 
             public void run() {
 
-                new Test4().setVisible(true);
+                new GetUrlSource().setVisible(true);
 
             }
 
