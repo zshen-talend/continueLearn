@@ -26,3 +26,14 @@ show_if required_if 表达式的最后计算
 这里定义了一些未定义的组件，这些组件配合之前的带javajet的组件来起作用。
 新的组件被以代理组件的模式使用，参数还是根据带javajet的组件得来的。
 代理组件和原始组件之间的参数传递是通过DelegateComponent.java来完成的
+
+8.spark component加载dependency 过程
+tSparkConfiguration
+tbd-ee下面有这么一个组件，用来记录每种cluster的所需要的jar。
+这个组件并不会存储在job的item文件中，而且把属性分散的存在job的属性里。
+在它的xml里声明了每种distribution 所需要的不同jar的组合以及生效条件
+
+除此之外还有专门的plugin 去声明每种distribution 所对应的jar包。比如org.talend.hadoop.distribution.dbr550
+的plugin.xml里就声明了libraryNeeded的扩展，如果某个jar找不到就先看这两个地方。
+
+另外，如果缺少某个jar可以用tLibraryLoad来临时解决
