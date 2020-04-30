@@ -1,2 +1,54 @@
 1.package-info.java
-family categories Icon
+该类有用的属性是 family categories Icon
+其中Icon 最好是png格式的并以_icon32.png来结束
+
+2.国际化的方式
+${family}.${configurationType}.${name}._displayName=****
+
+3.参数的约束限制类包
+org.talend.sdk.component.api.configuration.constraint
+
+4.取消上面的效验通过JVM参数
+talend.component.configuration.validation.skip=true
+
+5.条件表达式作用在属性上
+@Option
+    @ActiveIf(target = "checkbox1", value = "true")//checkbox1==true时
+    @Documentation("Active if checkbox1 is selected")
+    private String configuration4;
+
+    @Option
+    @ActiveIfs(operator = ActiveIfs.Operator.OR, value = {checkbox2==true||checkbox3==true
+            @ActiveIf(target = "checkbox2", value = "true"),
+            @ActiveIf(target = "checkbox3", value = "true")
+    })
+    @Documentation("Active if checkbox2 or checkbox 3 are selected")
+    private String configuration5;
+
+    @Option
+    @ActiveIfs(operator = ActiveIfs.Operator.AND, value = {checkbox2==true&&checkbox3==true
+            @ActiveIf(target = "checkbox2", value = "true"),
+            @ActiveIf(target = "checkbox3", value = "true")
+    })
+    @Documentation("Active if checkbox2 and checkbox 3 are selected")
+    private String configuration6;
+
+6.org.talend.sdk.component.api.configuration.ui.widget
+控件的类的包名
+
+7. 定义控件是加密显示@Credential
+    @Option
+    @Credential
+    private String password;
+
+8. 帮助 talend-component
+mvn talend-component:help -Ddetail=true -Dgoal=<goal-name>
+
+9.通过.car文件部署到studio
+# for a studio
+java -jar mycomponent.car studio-deploy /path/to/my/studio
+or
+java -jar mycomponent.car studio-deploy --location /path/to/my/studio
+
+10.通过TCK生成的project和maven部署到studio
+mvn talend-component:deploy-in-studio -Dtalend.component.studioHome="<studio_path>"
