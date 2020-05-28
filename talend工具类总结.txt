@@ -115,6 +115,9 @@ TUP
 	这个repository 的功能越来越强大了
 	org.talend.ci.builder和org.talend.signature都是job运行的利器
 	patch-maven-plugin 是打patch的工具
+	
+	34.RefreshTemplatesAction
+	ctrl+shift+F3不起作用的看这里，如果插件已经被加载，并且成功启动，那么只要在首选项找到refresh Template项并且设定快捷键就可以
 	 	
 
 tos

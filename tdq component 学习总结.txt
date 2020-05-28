@@ -37,3 +37,7 @@ tbd-ee下面有这么一个组件，用来记录每种cluster的所需要的jar。
 的plugin.xml里就声明了libraryNeeded的扩展，如果某个jar找不到就先看这两个地方。
 
 另外，如果缺少某个jar可以用tLibraryLoad来临时解决
+
+9. normal component加载dependency过程
+LocalLibraryManager.installModules 用这个方法去maven或其他地方查找jar
+EmfComponent.getModulesNeeded 用这个方法去指定的component的xml的import去搜集依赖的jar
