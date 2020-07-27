@@ -26,7 +26,7 @@ import routines.system.ParserUtils;
 public class DataFormateTest {
 
     public static void main(String args[]) {
-        String x = "Mon Mar 02 13:57:49 CST 2015";
+        String x = "Wed May 06 16:22:55 CST 2020";
         SimpleDateFormat sdf1 = new SimpleDateFormat("EEE MMM dd HH:mm:ss Z yyyy", Locale.UK);
         try {
             Date date = sdf1.parse(x);

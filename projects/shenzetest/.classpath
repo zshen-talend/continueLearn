@@ -1,6 +1,5 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <classpath>
-	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER/org.eclipse.jdt.internal.debug.ui.launcher.StandardVMType/openjdk-11"/>
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.junit.JUNIT_CONTAINER/4"/>
 	<classpathentry kind="lib" path="lib/jconn3.jar"/>
@@ -38,9 +37,6 @@
 	<classpathentry kind="lib" path="lib/ojdbc14.jar"/>
 	<classpathentry kind="lib" path="lib/apache/commons-io-2.5.jar" sourcepath="lib_src/commons-io-2.5-src.zip"/>
 	<classpathentry kind="lib" path="lib/apache/commons-lang-2.4.jar"/>
-	<classpathentry kind="lib" path="lib/spark/spark-core_2.11-2.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/spark/spark-sql_2.11-2.0.0.jar"/>
-	<classpathentry kind="lib" path="lib/spark/spark-catalyst_2.11-2.0.0.jar"/>
 	<classpathentry kind="lib" path="lib/spark/scala-library-2.11.8.jar"/>
 	<classpathentry kind="lib" path="lib/spark/scala-reflect-2.11.8.jar"/>
 	<classpathentry kind="lib" path="lib/regex/xeger-1.0-SNAPSHOT.jar" sourcepath="lib_src/regex/source-archive.zip"/>
@@ -54,13 +50,13 @@
 	<classpathentry kind="lib" path="lib/lucene/lucene-core-4.10.4.jar"/>
 	<classpathentry kind="lib" path="lib/lucene/lucene-analyzers-common-4.10.4.jar"/>
 	<classpathentry kind="lib" path="lib/lucene/lucene-queryparser-4.10.4.jar"/>
-	<classpathentry kind="lib" path="lib/eclipse/org.eclipse.core.jobs_3.10.200.v20180912-1356.jar" sourcepath="D:/code/TargetPlatformE410/plugins/org.eclipse.core.jobs.source_3.10.200.v20180912-1356.jar"/>
-	<classpathentry kind="lib" path="lib/eclipse/org.eclipse.osgi_3.13.200.v20181130-2106.jar"/>
-	<classpathentry kind="lib" path="lib/eclipse/org.eclipse.equinox.common_3.10.200.v20181021-1645.jar"/>
-	<classpathentry kind="lib" path="lib/eclipse/org.eclipse.ui.workbench_3.112.100.v20181127-1518.jar" sourcepath="D:/code/TargetPlatformE410/plugins/org.eclipse.ui.workbench.source_3.112.100.v20181127-1518.jar"/>
-	<classpathentry kind="lib" path="lib/eclipse/org.eclipse.e4.ui.workbench3_0.14.200.v20180828-0227.jar"/>
-	<classpathentry kind="lib" path="lib/eclipse/org.eclipse.core.runtime_3.15.100.v20181107-1343.jar"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/generex"/>
-	<classpathentry combineaccessrules="false" kind="src" path="/crypto-utils"/>
+	<classpathentry kind="lib" path="lib/jgit/org.eclipse.jgit-5.1.3.201810200350-r.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-core_2.11-2.4.5.jar"/>
+	<classpathentry kind="lib" path="lib/spark/spark-network-common_2.11-2.4.5.jar"/>
+	<classpathentry kind="lib" path="lib/jgit/JavaEWAH-1.1.6.jar"/>
+	<classpathentry kind="lib" path="lib/jgit/jsch-0.1.54.jar"/>
+	<classpathentry kind="lib" path="lib/jgit/jzlib-1.1.1.jar"/>
+	<classpathentry kind="lib" path="lib/jgit/slf4j-api-1.7.2.jar"/>
+	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="output" path="bin"/>
 </classpath>
