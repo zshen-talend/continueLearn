@@ -51,16 +51,15 @@ public class StringTest {
         // System.out.println("111111111111111111111111111111111111111111111" + Integer.valueOf(aa));
         // StringBuffer stringBuffer = new StringBuffer();
         // stringBuffer.append(aa);
-        // "HOUSTON".hashCode(); //$NON-NLS-1$
-        // System.out.println("context.new1".split("context.")[1]);
-        // System.out.println(Integer.valueOf(String.valueOf('9')));
-        // System.out.println("aa" + System.getProperty("line.separator") + "bb");
-        // System.out.println("aa" + null + "bb");
-        // String null1 = "aa";
-        // String null2 = null;
-        // System.out.println(null1 instanceof Comparable);
-        // System.out.println(null1.compareTo(null2));
-        System.out.println("一二三四你我他".toLowerCase());
+        "HOUSTON".hashCode(); //$NON-NLS-1$
+        System.out.println("context.new1".split("context.")[1]);
+        System.out.println(Integer.valueOf(String.valueOf('9')));
+        System.out.println("aa" + System.getProperty("line.separator") + "bb");
+        System.out.println("aa" + null + "bb");
+        String null1 = "aa";
+        String null2 = null;
+        System.out.println(null1 instanceof Comparable);
+        System.out.println(null1.compareTo(null2));
     }
 
     public void ListOperation() {

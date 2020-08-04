@@ -553,17 +553,6 @@ oracle的缺省角色有connect、resource、dba。它是一组可以分配给其它role
 　　个权限。给一般连接用户赋connect，给一般编程人员赋connect加resource, 
 　　
 　　只有数据库管理员才有dba的权限。 
-
-创建oracle的测试表
-create table l123p_114wrow as
-select rownum as id,
-               to_char(sysdate + rownum/24/3600, 'yyyy-mm-dd hh24:mi:ss') as inc_datetime,
-               trunc(dbms_random.value(0, 100)) as random_id,
-               dbms_random.string('x', 20) random_string
-          from dual
-        connect by level <= 1000000;
-————————————————
-
 【转自www.bitsCN.com】
 一、允许连接
 

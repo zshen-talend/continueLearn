@@ -105,6 +105,3 @@ org.talend.designer.unifiedcomponent ÕâĞ©Ïà¹ØµÄ×é¼şÒÔjava´úÂëµÄ·½Ê½¶¨ÒåÔÚÕâ¸ö²å¼
 
 22.NightlyBuild³öÎÊÌâµÄ½â¾ö°ì·¨
 ref: talend build¹ı³Ì×Ü½á-->1
-
-22. no main class findÎÊÌâµ±ÔËĞĞjobÊ±
-signer-maven-plugin-7.2.1.jar »òÕß builder-maven-plugin-7.2.1.jarÎ´±»ÕıÈ·ÏÂÔØ

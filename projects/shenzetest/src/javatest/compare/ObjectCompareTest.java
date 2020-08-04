@@ -24,8 +24,6 @@ import java.util.Set;
  * DOC zshen class global comment. Detailled comment
  */
 public class ObjectCompareTest {
-    
-    private final static double THRESHOLD = 0.0000001;
 
     public static void main(String[] args) throws ParseException {
         Date date = new Date();
@@ -42,36 +40,5 @@ public class ObjectCompareTest {
         set.add(date1);
         set.add(date2);
         System.out.println("set size is " + set.size());
-        
-        double d1=0.8d;
-        Float F1=0.8f;
-        if(d1<F1) {
-            System.out.println(d1+"<" + F1);
-        }
-        if(F1.doubleValue()>d1) {
-            System.out.println(F1+">" + d1);
-        }
-        if(F1.doubleValue()-d1>0) {
-            System.out.println(F1+"-" + d1+">0");
-            System.out.println(F1+"-" + d1+"="+(F1.doubleValue()-d1));
-        }
-        if(F1.floatValue()-d1>0) {
-            System.out.println(F1+"-" + d1+">0");
-            System.out.println(F1+"-" + d1+"="+(F1.floatValue()-d1));
-        }
-        if(Double.compare(F1.doubleValue(), d1)==0) {
-            System.out.println(F1+"Double.compare("+F1.doubleValue()+","+d1+" )" + d1+"==0");
-        }
-        if(d1-F1>0.0000001) {
-            System.out.println(F1+"-"+d1+" >0.0000001");
-        }
-        if(0.8F-0.8d>0.0000001) {
-            System.out.println(F1+"-"+d1+" >0.0000001");
-        }else {
-            System.out.println(F1+"-"+d1+" ="+(0.8d-0.8f));
-        }
-        if(String.valueOf(d1).compareToIgnoreCase(String.valueOf(F1))==0) {
-            System.out.println(String.valueOf(d1)+"-"+String.valueOf(F1)+"equals");
-        }
     }
 }

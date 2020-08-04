@@ -12,15 +12,3 @@ you need to loop back to the rebase operation, --> checkout master, fetch master
 
 9 - git merge [--squash] <branch-name>
 10 - git push origin master
-11.预清理无效的远程分支
-git remote prune origin --dry-run
-12.清理无效的远程分支
-git remote prune origin
-13. 列出所有的git配置项并且指出所在文件位置
- git config --list --show-origin
-git config 有全局的，有针对用户的，还有针对库的
-file:"C:\\ProgramData/Git/config"       color.diff=auto(全局)
-file:C:/Users/zshen.TALEND/.gitconfig   user.name=zshen-talend(用户级)
-file:C:/Users/zshen.TALEND/.gitconfig   user.email=zshen@talend.com(用户级)
-file:.git/config        http.sslverify=false(库级)
-
