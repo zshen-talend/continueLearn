@@ -10,12 +10,12 @@
 // 9 rue Pages 92150 Suresnes, France
 //
 // ============================================================================
-package javatest.hook;
+package javatest.process;
 
 
-public class hookTest {
+public class HelloWorld {
 
-    public static void main(String args[]) throws InterruptedException {
+    public static void main(String[] args) throws InterruptedException {
         Runtime.getRuntime().addShutdownHook(new Thread(new Runnable() {
 
             public void run() {
@@ -23,8 +23,12 @@ public class hookTest {
             }
         }));
         for (int i = 0; i < 10; i++) {
+            if (i == 5) {
+                System.exit(1);
+            }
             System.out.println(i);
             Thread.sleep(1000);
         }
     }
+
 }
