@@ -59,7 +59,15 @@ public class StringTest {
         String null1 = "aa";
         String null2 = null;
         System.out.println(null1 instanceof Comparable);
-        System.out.println(null1.compareTo(null2));
+        // System.out.println(null1.compareTo(null2));
+        System.out
+                .println("aaa \r\n  bbb".trim().replaceAll("\r|\n|   ", "").replaceAll("   ", ""));
+        String formatStr = "\"Message-ID:  9371922.1072131931298.JavaMail.evans@thyme\r\n"
+                + "Date: Tue, 16 Oct 2001 08:51:10 -0700 (PDT)\r\n" + "From: liz.taylor@enron.com\r\n"
+                + "Subject: Mtg w/Mike Mears & Gene Vinogradoffw/the U.S. Gov. & Mr. Lay\r\n" + "Mime-Version: 1.0\r\n"
+                + "Content-Type: text/plain; charset=us-ascii\r\n" + "Content-Transfer-Encoding: 7bit";
+        System.out
+                .println(formatStr.trim().replaceAll("\r|\n|   ", "").replaceAll("   ", ""));
     }
 
     public void ListOperation() {

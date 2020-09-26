@@ -108,6 +108,12 @@ TUP
 	31.PomUtil
 		这个类可以帮助更新maven工程下的pom文件信息
 
+	32.EParameterFieldType
+		component控件类型都声明在这里
+	
+	33.PropertiesTableEditorView
+		table里的column加特殊field在这里加
+
 tos
   1.ResourceFilenameHelper
 	作用:帮助构建可以帮助取得相应item的名称(label,version)

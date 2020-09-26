@@ -24,10 +24,10 @@ public class HelloWorld {
         }));
         for (int i = 0; i < 10; i++) {
             if (i == 5) {
-                System.exit(1);
+                System.exit(0);
             }
             System.out.println(i);
-            Thread.sleep(1000);
+            Thread.sleep(10000);
         }
     }
 
