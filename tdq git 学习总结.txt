@@ -18,3 +18,8 @@ git remote add 源名称 地址
 
 7.同步本地与服务器的远程分支
 git fetch -p 
+
+8.回退提交
+	git reset --head HEAD^ 每个^代表一次回退
+	git reset --head HEAD~5 代码回退5个提交
+	git push --force 强制提交代码操作remote端
