@@ -1,123 +1,175 @@
 
-活动连接
+Active Connections
 
-  协议  本地地址          外部地址        状态
-  TCP    0.0.0.0:80             URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:135            URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:443            URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:445            URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:3389           URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:35396          URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:49152          URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:49153          URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:49154          URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:49157          URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    0.0.0.0:49158          URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    127.0.0.1:4300         URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    127.0.0.1:4301         URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    127.0.0.1:8087         URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    127.0.0.1:28317        URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    127.0.0.1:50904        URXDGRL2FNT4VZ7:50905  ESTABLISHED
-  TCP    127.0.0.1:50905        URXDGRL2FNT4VZ7:50904  ESTABLISHED
-  TCP    127.0.0.1:52158        URXDGRL2FNT4VZ7:52159  ESTABLISHED
-  TCP    127.0.0.1:52159        URXDGRL2FNT4VZ7:52158  ESTABLISHED
-  TCP    192.168.32.185:139     URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    192.168.32.185:49162   61.155.185.109:8099    CLOSE_WAIT
-  TCP    192.168.32.185:49175   119.189.1.245:http     CLOSE_WAIT
-  TCP    192.168.32.185:49176   119.189.1.245:http     CLOSE_WAIT
-  TCP    192.168.32.185:49186   61.155.185.109:8099    CLOSE_WAIT
-  TCP    192.168.32.185:51668   123.151.76.22:https    CLOSE_WAIT
-  TCP    192.168.32.185:52235   123.151.76.117:https   CLOSE_WAIT
-  TCP    192.168.32.185:52510   218.30.116.19:http     ESTABLISHED
-  TCP    192.168.32.185:52513   106.120.166.89:http    ESTABLISHED
-  TCP    192.168.32.185:52541   157.55.235.147:40026   ESTABLISHED
-  TCP    192.168.32.185:52542   40.68.103.84:https     ESTABLISHED
-  TCP    192.168.32.185:52543   ec2-54-169-236-197:https  ESTABLISHED
-  TCP    192.168.32.185:52561   91.190.216.54:12350    ESTABLISHED
-  TCP    192.168.32.185:52566   218.241.149.77:http    ESTABLISHED
-  TCP    192.168.32.185:52573   65.55.252.167:https    ESTABLISHED
-  TCP    192.168.32.185:52574   192.30.253.125:https   ESTABLISHED
-  TCP    192.168.32.185:52575   192.30.253.125:https   ESTABLISHED
-  TCP    192.168.32.185:52578   bay406-m:https         ESTABLISHED
-  TCP    192.168.32.185:52589   192.30.253.125:https   ESTABLISHED
-  TCP    192.168.32.185:52590   192.30.253.125:https   ESTABLISHED
-  TCP    192.168.32.185:52595   182.254.78.139:http    ESTABLISHED
-  TCP    192.168.32.185:52980   192.30.253.125:https   ESTABLISHED
-  TCP    192.168.32.185:53175   40.96.1.210:https      ESTABLISHED
-  TCP    192.168.32.185:58354   bogon:microsoft-ds     ESTABLISHED
-  TCP    192.168.32.185:58850   218.30.98.20:http      CLOSE_WAIT
-  TCP    192.168.32.185:58856   203.208.39.192:https   ESTABLISHED
-  TCP    192.168.32.185:58859   a23-2-12-111:http      ESTABLISHED
-  TCP    192.168.32.185:58860   a23-2-12-111:http      ESTABLISHED
-  TCP    192.168.32.185:58862   50.58.197.228:http     ESTABLISHED
-  TCP    192.168.32.185:58863   a23-210-202-226:http   ESTABLISHED
-  TCP    192.168.32.185:58864   a23-2-12-111:http      ESTABLISHED
-  TCP    192.168.32.185:58867   203.208.39.216:https   ESTABLISHED
-  TCP    192.168.32.185:58868   203.208.39.216:https   ESTABLISHED
-  TCP    192.168.32.185:58871   a23-210-202-226:http   ESTABLISHED
-  TCP    192.168.32.185:58873   203.208.39.227:http    ESTABLISHED
-  TCP    192.168.32.185:58876   a104-70-212-251:http   ESTABLISHED
-  TCP    192.168.32.185:58878   198:http               ESTABLISHED
-  TCP    192.168.32.185:58879   198:http               ESTABLISHED
-  TCP    192.168.32.185:58884   70:http                ESTABLISHED
-  TCP    192.168.32.185:58888   a23-210-202-232:http   ESTABLISHED
-  TCP    192.168.32.185:58892   66.117.28.68:http      ESTABLISHED
-  TCP    192.168.32.185:58901   a104-70-217-166:http   ESTABLISHED
-  TCP    192.168.32.185:58906   40.127.129.109:https   ESTABLISHED
-  TCP    192.168.32.185:58907   40.127.129.109:https   ESTABLISHED
-  TCP    [::]:135               URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:445               URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:3389              URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:49152             URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:49153             URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:49154             URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:49157             URXDGRL2FNT4VZ7:0      LISTENING
-  TCP    [::]:49158             URXDGRL2FNT4VZ7:0      LISTENING
-  UDP    0.0.0.0:443            *:*                    
+  Proto  Local Address          Foreign Address        State
+  TCP    0.0.0.0:135            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:443            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:445            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:554            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:843            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:902            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:912            tal-zshen:0            LISTENING
+  TCP    0.0.0.0:2869           tal-zshen:0            LISTENING
+  TCP    0.0.0.0:5040           tal-zshen:0            LISTENING
+  TCP    0.0.0.0:5357           tal-zshen:0            LISTENING
+  TCP    0.0.0.0:5700           tal-zshen:0            LISTENING
+  TCP    0.0.0.0:7000           tal-zshen:0            LISTENING
+  TCP    0.0.0.0:8000           tal-zshen:0            LISTENING
+  TCP    0.0.0.0:10243          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49664          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49665          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49666          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49667          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49668          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49672          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:49708          tal-zshen:0            LISTENING
+  TCP    0.0.0.0:59100          tal-zshen:0            LISTENING
+  TCP    127.0.0.1:5354         tal-zshen:0            LISTENING
+  TCP    127.0.0.1:5939         tal-zshen:0            LISTENING
+  TCP    127.0.0.1:8307         tal-zshen:0            LISTENING
+  TCP    127.0.0.1:8884         tal-zshen:0            LISTENING
+  TCP    127.0.0.1:9012         tal-zshen:0            LISTENING
+  TCP    127.0.0.1:11456        tal-zshen:0            LISTENING
+  TCP    127.0.0.1:16308        tal-zshen:0            LISTENING
+  TCP    127.0.0.1:16308        licensing:59113        ESTABLISHED
+  TCP    127.0.0.1:49903        tal-zshen:0            LISTENING
+  TCP    127.0.0.1:59099        tal-zshen:0            LISTENING
+  TCP    127.0.0.1:59103        tal-zshen:0            LISTENING
+  TCP    127.0.0.1:59113        licensing:16308        ESTABLISHED
+  TCP    127.0.0.1:59151        licensing:59152        ESTABLISHED
+  TCP    127.0.0.1:59152        licensing:59151        ESTABLISHED
+  TCP    127.0.0.1:59153        licensing:59154        ESTABLISHED
+  TCP    127.0.0.1:59154        licensing:59153        ESTABLISHED
+  TCP    127.0.0.1:59224        tal-zshen:0            LISTENING
+  TCP    127.0.0.1:59487        licensing:59488        ESTABLISHED
+  TCP    127.0.0.1:59488        licensing:59487        ESTABLISHED
+  TCP    127.0.0.1:59499        licensing:59500        ESTABLISHED
+  TCP    127.0.0.1:59500        licensing:59499        ESTABLISHED
+  TCP    127.0.0.1:59506        licensing:59507        ESTABLISHED
+  TCP    127.0.0.1:59507        licensing:59506        ESTABLISHED
+  TCP    127.0.0.1:59508        licensing:59509        ESTABLISHED
+  TCP    127.0.0.1:59509        licensing:59508        ESTABLISHED
+  TCP    127.0.0.1:59548        licensing:59549        ESTABLISHED
+  TCP    127.0.0.1:59549        licensing:59548        ESTABLISHED
+  TCP    127.0.0.1:59550        licensing:59551        ESTABLISHED
+  TCP    127.0.0.1:59551        licensing:59550        ESTABLISHED
+  TCP    127.0.0.1:59615        licensing:59616        ESTABLISHED
+  TCP    127.0.0.1:59616        licensing:59615        ESTABLISHED
+  TCP    127.0.0.1:60657        licensing:60658        ESTABLISHED
+  TCP    127.0.0.1:60658        licensing:60657        ESTABLISHED
+  TCP    127.0.0.1:60699        licensing:60700        ESTABLISHED
+  TCP    127.0.0.1:60700        licensing:60699        ESTABLISHED
+  TCP    192.168.1.105:139      tal-zshen:0            LISTENING
+  TCP    192.168.1.105:58963    40.119.211.203:https   ESTABLISHED
+  TCP    192.168.1.105:58981    ec2-54-183-142-105:https  ESTABLISHED
+  TCP    192.168.1.105:59036    104.18.25.243:http     ESTABLISHED
+  TCP    192.168.1.105:59056    116.128.133.100:http   ESTABLISHED
+  TCP    192.168.1.105:59077    183.232.64.24:1028     ESTABLISHED
+  TCP    192.168.1.105:59091    61.48.115.178:http     ESTABLISHED
+  TCP    192.168.1.105:59109    118.178.85.238:https   ESTABLISHED
+  TCP    192.168.1.105:59264    ec2-18-178-165-242:https  ESTABLISHED
+  TCP    192.168.1.105:59335    60.210.8.160:https     ESTABLISHED
+  TCP    192.168.1.105:59336    60.210.8.160:https     ESTABLISHED
+  TCP    192.168.1.105:59337    60.210.8.160:https     ESTABLISHED
+  TCP    192.168.1.105:59339    a23-73-130-68:http     ESTABLISHED
+  TCP    192.168.1.105:59340    a23-73-130-68:http     ESTABLISHED
+  TCP    192.168.1.105:59341    a23-73-130-68:http     ESTABLISHED
+  TCP    192.168.1.105:59342    60.210.8.160:https     ESTABLISHED
+  TCP    192.168.1.105:60173    115.182.47.77:http     ESTABLISHED
+  TCP    192.168.1.105:62159    40.119.211.203:https   ESTABLISHED
+  TCP    192.168.1.105:62418    111.202.83.186:http    ESTABLISHED
+  TCP    192.168.1.105:62470    ec2-34-216-3-76:https  ESTABLISHED
+  TCP    192.168.1.105:62495    lb-140-82-113-26-iad:https  ESTABLISHED
+  TCP    192.168.1.105:62500    ec2-52-198-217-116:https  TIME_WAIT
+  TCP    192.168.1.105:62507    server-13-225-176-125:https  ESTABLISHED
+  TCP    192.168.1.105:62513    ec2-52-198-217-116:https  ESTABLISHED
+  TCP    192.168.1.105:62518    151.101.228.106:https  ESTABLISHED
+  TCP    192.168.1.105:62519    server-13-225-176-61:https  ESTABLISHED
+  TCP    192.168.1.105:62520    ec2-52-198-217-116:https  ESTABLISHED
+  TCP    192.168.1.105:62526    115.182.47.65:http     CLOSE_WAIT
+  TCP    192.168.1.105:62527    123.125.114.39:http    CLOSE_WAIT
+  TCP    192.168.1.105:62528    115.182.47.66:http     CLOSE_WAIT
+  TCP    192.168.1.105:62529    dns233:https           TIME_WAIT
+  TCP    192.168.1.105:62530    lts:http               CLOSE_WAIT
+  TCP    192.168.1.105:62533    dns233:https           TIME_WAIT
+  TCP    192.168.1.105:62534    dns233:https           TIME_WAIT
+  TCP    192.168.1.105:62536    115.182.47.66:http     CLOSE_WAIT
+  TCP    192.168.1.105:62537    r-199-59-148-97:https  SYN_SENT
+  TCP    [::]:135               tal-zshen:0            LISTENING
+  TCP    [::]:443               tal-zshen:0            LISTENING
+  TCP    [::]:445               tal-zshen:0            LISTENING
+  TCP    [::]:554               tal-zshen:0            LISTENING
+  TCP    [::]:2869              tal-zshen:0            LISTENING
+  TCP    [::]:5357              tal-zshen:0            LISTENING
+  TCP    [::]:5700              tal-zshen:0            LISTENING
+  TCP    [::]:10243             tal-zshen:0            LISTENING
+  TCP    [::]:49664             tal-zshen:0            LISTENING
+  TCP    [::]:49665             tal-zshen:0            LISTENING
+  TCP    [::]:49666             tal-zshen:0            LISTENING
+  TCP    [::]:49667             tal-zshen:0            LISTENING
+  TCP    [::]:49668             tal-zshen:0            LISTENING
+  TCP    [::]:49672             tal-zshen:0            LISTENING
+  TCP    [::]:49708             tal-zshen:0            LISTENING
+  TCP    [::1]:8307             tal-zshen:0            LISTENING
+  TCP    [::1]:49941            tal-zshen:0            LISTENING
+  UDP    0.0.0.0:123            *:*                    
   UDP    0.0.0.0:500            *:*                    
-  UDP    0.0.0.0:3600           *:*                    
-  UDP    0.0.0.0:4024           *:*                    
+  UDP    0.0.0.0:3702           *:*                    
+  UDP    0.0.0.0:3702           *:*                    
+  UDP    0.0.0.0:3702           *:*                    
+  UDP    0.0.0.0:3702           *:*                    
   UDP    0.0.0.0:4500           *:*                    
+  UDP    0.0.0.0:5004           *:*                    
+  UDP    0.0.0.0:5004           *:*                    
+  UDP    0.0.0.0:5005           *:*                    
+  UDP    0.0.0.0:5005           *:*                    
+  UDP    0.0.0.0:5050           *:*                    
+  UDP    0.0.0.0:5353           *:*                    
   UDP    0.0.0.0:5355           *:*                    
-  UDP    0.0.0.0:35396          *:*                    
-  UDP    0.0.0.0:49816          *:*                    
-  UDP    0.0.0.0:50430          *:*                    
-  UDP    0.0.0.0:50431          *:*                    
-  UDP    0.0.0.0:50728          *:*                    
-  UDP    0.0.0.0:51902          *:*                    
-  UDP    0.0.0.0:52492          *:*                    
-  UDP    0.0.0.0:53985          *:*                    
-  UDP    0.0.0.0:53987          *:*                    
-  UDP    0.0.0.0:53988          *:*                    
-  UDP    0.0.0.0:53989          *:*                    
-  UDP    0.0.0.0:53991          *:*                    
-  UDP    0.0.0.0:53992          *:*                    
-  UDP    0.0.0.0:55283          *:*                    
-  UDP    0.0.0.0:55447          *:*                    
-  UDP    0.0.0.0:57255          *:*                    
-  UDP    0.0.0.0:57256          *:*                    
-  UDP    0.0.0.0:57738          *:*                    
-  UDP    0.0.0.0:57949          *:*                    
-  UDP    0.0.0.0:58989          *:*                    
-  UDP    0.0.0.0:58990          *:*                    
-  UDP    0.0.0.0:59187          *:*                    
-  UDP    0.0.0.0:61617          *:*                    
-  UDP    0.0.0.0:62852          *:*                    
+  UDP    0.0.0.0:8000           *:*                    
+  UDP    0.0.0.0:9000           *:*                    
+  UDP    0.0.0.0:15995          *:*                    
+  UDP    0.0.0.0:15998          *:*                    
+  UDP    0.0.0.0:16109          *:*                    
+  UDP    0.0.0.0:50937          *:*                    
+  UDP    0.0.0.0:52993          *:*                    
+  UDP    0.0.0.0:53698          *:*                    
+  UDP    0.0.0.0:58445          *:*                    
+  UDP    0.0.0.0:63642          *:*                    
   UDP    127.0.0.1:1900         *:*                    
-  UDP    127.0.0.1:49536        *:*                    
-  UDP    127.0.0.1:50702        *:*                    
-  UDP    127.0.0.1:50703        *:*                    
-  UDP    127.0.0.1:50726        *:*                    
-  UDP    127.0.0.1:51332        *:*                    
-  UDP    127.0.0.1:51741        *:*                    
-  UDP    127.0.0.1:55006        *:*                    
-  UDP    127.0.0.1:55024        *:*                    
-  UDP    192.168.32.185:137     *:*                    
-  UDP    192.168.32.185:138     *:*                    
-  UDP    192.168.32.185:1900    *:*                    
-  UDP    192.168.32.185:50725   *:*                    
+  UDP    127.0.0.1:51634        *:*                    
+  UDP    127.0.0.1:60462        *:*                    
+  UDP    127.0.0.1:63637        *:*                    
+  UDP    127.0.0.1:63748        *:*                    
+  UDP    192.168.1.105:137      *:*                    
+  UDP    192.168.1.105:138      *:*                    
+  UDP    192.168.1.105:1900     *:*                    
+  UDP    192.168.1.105:2177     *:*                    
+  UDP    192.168.1.105:5353     *:*                    
+  UDP    192.168.1.105:5656     *:*                    
+  UDP    192.168.1.105:50126    *:*                    
+  UDP    192.168.1.105:63747    *:*                    
+  UDP    192.168.1.105:63999    *:*                    
+  UDP    192.168.33.172:5353    *:*                    
+  UDP    [::]:123               *:*                    
   UDP    [::]:500               *:*                    
+  UDP    [::]:3702              *:*                    
+  UDP    [::]:3702              *:*                    
+  UDP    [::]:3702              *:*                    
+  UDP    [::]:3702              *:*                    
   UDP    [::]:4500              *:*                    
-  UDP    [::]:51902             *:*                    
+  UDP    [::]:5004              *:*                    
+  UDP    [::]:5005              *:*                    
+  UDP    [::]:5353              *:*                    
+  UDP    [::]:5355              *:*                    
+  UDP    [::]:52994             *:*                    
+  UDP    [::]:53699             *:*                    
+  UDP    [::]:58446             *:*                    
+  UDP    [::]:63643             *:*                    
   UDP    [::1]:1900             *:*                    
-  UDP    [::1]:50724            *:*                    
+  UDP    [::1]:5353             *:*                    
+  UDP    [::1]:5353             *:*                    
+  UDP    [::1]:63746            *:*                    
+  UDP    [fe80::a025:1730:7c46:4f50%18]:1900  *:*                    
+  UDP    [fe80::a025:1730:7c46:4f50%18]:2177  *:*                    
+  UDP    [fe80::a025:1730:7c46:4f50%18]:63745  *:*                    

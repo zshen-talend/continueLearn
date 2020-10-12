@@ -68,6 +68,19 @@ public class StringTest {
                 + "Content-Type: text/plain; charset=us-ascii\r\n" + "Content-Transfer-Encoding: 7bit";
         System.out
                 .println(formatStr.trim().replaceAll("\r|\n|   ", "").replaceAll("   ", ""));
+        String[] split = "context.new1, context.new2".split(",");
+        String fileNameStr = "";
+        String result = "";
+        for (int i = 0; i < split.length; i++) {
+            if (i > 0) {
+                fileNameStr += "+\",\"+";
+            }
+            fileNameStr += split[i];
+        }
+        if (fileNameStr.length() > 0) {
+            result = fileNameStr;
+        }
+        System.out.println("the result is: " + result);
     }
 
     public void ListOperation() {
