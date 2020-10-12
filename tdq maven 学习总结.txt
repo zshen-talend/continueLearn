@@ -98,3 +98,6 @@ mvn clean install
           <skip>true</skip>
         </configuration>
       </plugin>
+
+14. 拷贝dependency jar到指定位置
+mvn dependency:copy-dependencies -DoutputDirectory=lib 
