@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+	
+	 <modelVersion>4.0.0</modelVersion>
+    <groupId>org.talend.dataquality</groupId>
+    <artifactId>dataquality-parent</artifactId>
+    <version>8.0.6-SNAPSHOT</version>
+    <packaging>pom</packaging>
+    <name>dataquality-parent</name>
+	<properties>
+		<talend.groupid>org.talend.components</talend.groupid>
+		<talend.version.610>6.1.0</talend.version.610>
+		<talend.version.600>6.0.0</talend.version.600>
+	</properties>
+
+	<dependencies>
+		<dependency>
+									<groupId>org.apache.poi</groupId>
+									<artifactId>poi-scratchpad</artifactId>
+									<version>4.1.2-20200903124306_modified_talend</version>
+								</dependency>
+								<dependency>
+									<groupId>org.apache.poi</groupId>
+									<artifactId>poi</artifactId>
+									<version>4.1.2-20200903124306_modified_talend</version>
+								</dependency>
+								<dependency>
+									<groupId>org.apache.poi</groupId>
+									<artifactId>poi-ooxml-schemas</artifactId>
+									<version>4.1.2-20200903124306_modified_talend</version>
+								</dependency>
+								<dependency>
+									<groupId>org.apache.poi</groupId>
+									<artifactId>poi-ooxml</artifactId>
+									<version>4.1.2-20200903124306_modified_talend</version>
+								</dependency>
+	<dependency>
+                                    <groupId>${talend.groupid}</groupId>
+                                    <artifactId>simpleexcel</artifactId>
+                                    <version>2.4-20200923</version>
+                                </dependency>
+                                <dependency>
+                                    <groupId>${talend.groupid}</groupId>
+                                    <artifactId>talendMsgMailUtil</artifactId>
+                                    <version>1.2-20200923</version>
+                                </dependency>
+                                <dependency>
+                                    <groupId>${talend.groupid}</groupId>
+                                    <artifactId>talendExcel</artifactId>
+                                    <version>1.6-20200923</version>
+                                </dependency>
+	</dependencies>
+
+
+</project>
