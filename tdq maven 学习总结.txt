@@ -101,3 +101,10 @@ mvn clean install
 
 14. 拷贝dependency jar到指定位置
 mvn dependency:copy-dependencies -DoutputDirectory=lib 
+
+15. 使用Tycho来转换把plugin项目转换成maven项目
+Tycho可以用来做这种转换，转换后maven通过tycho这个plugin把manifest中的内容解释给maven(包括依赖之类的)
+
+16. child pom继承parent pom的依赖和插件
+方案1：dependencyManagement/pluginManagement多加这两个标签在parent的pom中，可以声明这个依赖和插件但并不使用和下载，child pom在使用前需要显示声明为dependency/plugin才有效
+方案2：直接把依赖和插件放到parent pom的dependency/plugin下，这样所有的child pom不必再次声明。但缺点是，不能精细控制
