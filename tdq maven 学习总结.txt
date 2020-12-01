@@ -101,6 +101,7 @@ mvn clean install
 
 14. 拷贝dependency jar到指定位置
 mvn dependency:copy-dependencies -DoutputDirectory=lib 
+配合\download_dependency\下的pom使用
 
 15. 使用Tycho来转换把plugin项目转换成maven项目
 Tycho可以用来做这种转换，转换后maven通过tycho这个plugin把manifest中的内容解释给maven(包括依赖之类的)
