@@ -81,6 +81,8 @@ public class StringTest {
             result = fileNameStr;
         }
         System.out.println("the result is: " + result);
+        String aa = (String) null;
+        System.out.println("the aa is: " + aa);
     }
 
     public void ListOperation() {
