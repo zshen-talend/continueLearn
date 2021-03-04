@@ -109,3 +109,8 @@ Tycho可以用来做这种转换，转换后maven通过tycho这个plugin把manifest中的内容解释给m
 16. child pom继承parent pom的依赖和插件
 方案1：dependencyManagement/pluginManagement多加这两个标签在parent的pom中，可以声明这个依赖和插件但并不使用和下载，child pom在使用前需要显示声明为dependency/plugin才有效
 方案2：直接把依赖和插件放到parent pom的dependency/plugin下，这样所有的child pom不必再次声明。但缺点是，不能精细控制
+
+17. maven setting 文件中repository的声明
+<repository>声明是通过<id>匹配<server>中的用户密码从而认证的。
+但是这只是默认的匹配，我们也可以从pom文件中声明<repository>这时候新的<repository>就会覆盖我们setting中的id，而如果这个id又不能和本地的<server>对上就会出现认证失败的问题
+talend的声明在 \studio-full-master\talend.studio.tup.parent.pom\pom.xml
