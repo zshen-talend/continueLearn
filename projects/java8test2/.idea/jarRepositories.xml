@@ -1,0 +1,80 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="RemoteRepositoriesConfiguration">
+    <remote-repository>
+      <option name="id" value="talend_p2" />
+      <option name="name" value="talend_p2" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/unzip/TalendP2UnzipSnapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Central Repository" />
+      <option name="url" value="https://repo.maven.apache.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="zl-tos" />
+      <option name="name" value="snapshots" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/repositories/TalendOpenSourceSnapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="central" />
+      <option name="name" value="Maven Central repository" />
+      <option name="url" value="https://repo1.maven.org/maven2" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="tos-snapshots" />
+      <option name="name" value="tos-snapshots" />
+      <option name="url" value="https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceSnapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="releases" />
+      <option name="name" value="releases" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/repositories/releases" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="tos-releases" />
+      <option name="name" value="tos-releases" />
+      <option name="url" value="https://artifacts-oss.talend.com/nexus/content/repositories/TalendOpenSourceRelease" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="thirdparty-snapshots" />
+      <option name="name" value="thirdparty-snapshots" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/repositories/thirdparty-snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="oss-public" />
+      <option name="name" value="oss-public" />
+      <option name="url" value="https://artifacts-oss.talend.com/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="talend-tpsvc" />
+      <option name="name" value="talend-tpsvc" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/repositories/tpsvc" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="snapshots" />
+      <option name="name" value="snapshots" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/repositories/snapshots" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="jboss.community" />
+      <option name="name" value="JBoss Community repository" />
+      <option name="url" value="https://repository.jboss.org/nexus/content/repositories/public/" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="p2-unzip-snapshot" />
+      <option name="name" value="p2-unzip-snapshot" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/unzip/TalendP2UnzipSnapshot" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="talend-public" />
+      <option name="name" value="talend-public" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/groups/public" />
+    </remote-repository>
+    <remote-repository>
+      <option name="id" value="thirdparty-releases" />
+      <option name="name" value="thirdparty-releases" />
+      <option name="url" value="https://artifacts-zl.talend.com/nexus/content/repositories/thirdparty-releases" />
+    </remote-repository>
+  </component>
+</project>
