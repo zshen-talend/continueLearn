@@ -5,6 +5,7 @@ import lombok.Data;
 import java.io.BufferedReader;
 import java.io.InputStreamReader;
 import java.util.*;
+import java.util.function.Function;
 import java.util.regex.Pattern;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
@@ -207,7 +208,7 @@ public class StreamTest {
 //分组
         Map<Integer, List<Student>> ageMap = list.stream().collect(Collectors.groupingBy(Student::getAge));
 //多重分组,先根据类型分再根据年龄分
-        Map<Integer, Map<Integer, List<Student>>> typeAgeMap = list.stream().collect(Collectors.groupingBy(Student::getType, Collectors.groupingBy(Student::getAge)));
+//        Map<Integer, Map<Integer, List<Student>>> typeAgeMap = list.stream().collect(Collectors.groupingBy(Student::getType, Collectors.groupingBy(Student::getAge)));
 
 //分区
 //分成两部分，一部分大于10岁，一部分小于等于10岁
@@ -216,9 +217,15 @@ public class StreamTest {
 //规约
         Integer allAge = list.stream().map(Student::getAge).collect(Collectors.reducing(Integer::sum)).get(); //40
 
+        Student s4 = new Student("cc", 100,4);
+        List<Student> dupList = Arrays.asList(s1, s2, s3,s4);
+        final LinkedHashMap<String, Integer> collectResult = dupList.stream()
+                .collect(
+                        Collectors.toMap(name->name.getName(), type -> type.getType(), (x, y) -> x+y, LinkedHashMap::new));
+        collectResult.keySet().forEach(key->System.out.println(key+":"+collectResult.get(key)));
     }
     public static void main(String[] args) {
-       new StreamTest().reduce();
+       new StreamTest().collectors();
     }
 
     @Data
@@ -234,6 +241,7 @@ public class StreamTest {
         public Student(String name, int age,int type) {
             this.age=age;
             this.name=name;
+            this.type=type;
         }
     }
 }
